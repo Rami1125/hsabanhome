@@ -650,25 +650,24 @@
     </button>
 
     <!-- Scripts -->
-    <script>
-fetch('https://script.google.com/macros/s/AKfycbyzdkvb4wOMILaPIq-oalk6IRA7UKxCfcsRYW0VPjF5LHO3qYLewgicT8Ua6GCdQnTn/exec')
-  .then(res => res.json())
-  .then(data => {
-    allProducts = data;
-    renderProducts(data);
-  })
-  .catch(err => {
-    console.error("שגיאה בטעינת מוצרים:", err);
-    alert("❌ לא ניתן לטעון את המוצרים כרגע");
-  });
-  .then(res => res.json())
-  .then(data => {
-    const grid = document.getElementById('products-grid');
-   grid.innerHTML = products.map(prod => `
-  <div class="card">
-    <h3>${prod && prod.title}</h3>
-  </div>
-`).join('');
+<script>
+    fetch('https://script.google.com/macros/s/AKfycbyzdkvb4wOMILaPIq-oalk6IRA7UKxCfcsRYW0VPjF5LHO3qYLewgicT8Ua6GCdQnTn/exec')
+      .then(response => response.json())
+      .then(products => {
+        const grid = document.getElementById('products');
+        grid.innerHTML = products.map(prod => `
+          <div class="bg-white shadow rounded p-4 flex flex-col justify-between">
+            <img src="${prod.image}" alt="${prod.title}" class="h-40 w-full object-cover rounded mb-2"/>
+            <h3 class="text-lg font-bold text-gray-800">${prod.title}</h3>
+            <p class="text-sm text-gray-600 mb-2">${prod.description}</p>
+            <span class="text-blue-600 font-bold">${prod.price}</span>
+          </div>
+        `).join('');
+      })
+      .catch(error => {
+        console.error("שגיאה בטעינת מוצרים:", error);
+        document.getElementById('products').innerHTML = "<p class='text-red-600'>שגיאה בטעינת מוצרים. נסה שוב מאוחר יותר.</p>";
+      });
 
       <div class="glass-card product-card">
         <div class="image-transition h-56">
