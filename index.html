@@ -664,7 +664,12 @@ fetch('https://script.google.com/macros/s/AKfycbyzdkvb4wOMILaPIq-oalk6IRA7UKxCfc
   .then(res => res.json())
   .then(data => {
     const grid = document.getElementById('products-grid');
-    grid.innerHTML = data.map(prod => `
+   grid.innerHTML = products.map(prod => `
+  <div class="card">
+    <h3>${prod && prod.title}</h3>
+  </div>
+`).join('');
+
       <div class="glass-card product-card">
         <div class="image-transition h-56">
           <img src="${prod.image}" alt="${prod.title}" class="w-full h-full object-cover object-top">
