@@ -1,6 +1,4 @@
-# נבנה קובץ index.html עם טעינה תקינה של מוצרים מ-Google Sheets דרך Apps Script
 
-index_html_content = """
 <!DOCTYPE html>
 <html lang="he" dir="rtl">
 <head>
@@ -47,11 +45,3 @@ index_html_content = """
 
 </body>
 </html>
-"""
-
-# שמירה לקובץ
-index_path = "/mnt/data/index.html"
-with open(index_path, "w", encoding="utf-8") as f:
-    f.write(index_html_content)
-
-index_path
