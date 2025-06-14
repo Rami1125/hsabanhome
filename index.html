@@ -692,7 +692,7 @@
                     </div>
                     
                     <!-- Product 11 -->
-                    <div class="glass-card rounded-lg overflow-hidden shadow-md product-card">
+                        <div id="products-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"></div>
                         <div class="image-transition h-56">
                             <img src="https://readdy.ai/api/search-image?query=Electrical%2520socket%252C%2520power%2520outlet%252C%2520electrical%2520supplies%252C%2520detailed%2520product%2520photography%2520on%2520clean%2520white%2520background%252C%2520soft%2520blue%2520lighting&width=600&height=400&seq=20&orientation=landscape" alt="שקע חשמל" class="w-full h-full object-cover object-top">
                             <div class="image-overlay"></div>
@@ -976,7 +976,7 @@ fetch('https://script.google.com/macros/s/AKfycbyzdkvb4wOMILaPIq-oalk6IRA7UKxCfc
             <img src="${prod.image}" alt="${prod.title}" class="h-40 w-full object-cover rounded mb-2"/>
             <h3 class="text-lg font-bold text-gray-800">${prod.title}</h3>
             <p class="text-sm text-gray-600 mb-2">${prod.description}</p>
-            <span class="text-primary font-bold">${prod["price "] || "₪0"}</span>
+            <span class="text-primary font-bold">${prod["price"] || "₪0"}</span>
           </div>
         `).join('');
       })
