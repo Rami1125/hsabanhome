@@ -59,12 +59,8 @@
       const searchInput = document.getElementById('search-input');
       let allProducts = [];
 
-      fetch('products.json')
-        .then(res => res.json())
-        .then(data => {
-          allProducts = data;
-          renderProducts(data);
-        });
+fetch('https://script.google.com/macros/s/AKfycbyzdkvb4wOMILaPIq-oalk6IRA7UKxCfcsRYW0VPjF5LHO3qYLewgicT8Ua6GCdQnTn/exec')
+
 
       function renderProducts(products) {
         grid.innerHTML = products.map(prod => `
