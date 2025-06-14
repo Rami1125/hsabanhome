@@ -1,0 +1,32 @@
+[
+  {
+    "title": "מלט פורטלנד 50 ק״ג",
+    "price": "₪35.90",
+    "description": "מלט פורטלנד איכותי לעבודות בניה, יציקות בטון ותיקונים. עומד בתקן ישראלי.",
+    "image": "https://readdy.ai/api/search-image?query=High%2520quality%2520cement%2520bag%252C%2520professional%2520construction%2520material%252C%2520clean%2520white%2520background%252C%2520detailed%2520product%2520shot%2520with%2520texture%2520visible%252C%2520soft%2520blue%2520lighting%252C%2520commercial%2520photography&width=600&height=400&seq=10&orientation=landscape"
+  },
+  {
+    "title": "בלוק בטון חלול 20",
+    "price": "₪4.50 / יח׳",
+    "description": "בלוק בטון חלול איכותי במידות 20x20x40 ס״מ. מתאים לבניית קירות חוץ ופנים.",
+    "image": "https://readdy.ai/api/search-image?query=Stack%2520of%2520concrete%2520blocks%252C%2520construction%2520material%252C%2520professional%2520building%2520blocks%2520with%2520smooth%2520texture%252C%2520clean%2520white%2520background%252C%2520detailed%2520product%2520photography%252C%2520soft%2520blue%2520lighting&width=600&height=400&seq=11&orientation=landscape"
+  },
+  {
+    "title": "צינור PVC קשיח 110 מ״מ",
+    "price": "₪89.90",
+    "description": "צינור PVC קשיח לביוב באורך 3 מטר. עמיד בפני קורוזיה וחומרים כימיים.",
+    "image": "https://readdy.ai/api/search-image?query=PVC%2520pipes%2520and%2520fittings%252C%2520plumbing%2520materials%252C%2520professional%2520plumbing%2520supplies%252C%2520clean%2520white%2520background%252C%2520detailed%2520product%2520photography%252C%2520soft%2520blue%2520lighting&width=600&height=400&seq=12&orientation=landscape"
+  },
+  {
+    "title": "כבל חשמל 3x2.5 N2XY",
+    "price": "₪450.00",
+    "description": "כבל חשמל תקני באורך 100 מטר. מתאים להתקנות ביתיות ותעשייתיות.",
+    "image": "https://readdy.ai/api/search-image?query=Electrical%2520cables%2520and%2520wiring%252C%2520professional%2520electrical%2520supplies%252C%2520coiled%2520cables%252C%2520clean%2520white%2520background%252C%2520detailed%2520product%2520photography%252C%2520soft%2520blue%2520lighting&width=600&height=400&seq=13&orientation=landscape"
+  },
+  {
+    "title": "צבע סופרקריל 18 ליטר",
+    "price": "₪289.00",
+    "description": "צבע אקרילי איכותי לקירות פנים וחוץ. עמיד בפני שמש וגשם, קל לניקוי.",
+    "image": "https://readdy.ai/api/search-image?query=Paint%2520buckets%2520and%2520cans%252C%2520professional%2520painting%2520supplies%252C%2520various%2520colors%252C%2520clean%2520white%2520background%252C%2520detailed%2520product%2520photography%252C%2520soft%2520blue%2520lighting&width=600&height=400&seq=14&orientation=landscape"
+  }
+]
