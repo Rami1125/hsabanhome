@@ -62,22 +62,39 @@
           </div>`;
       });
     }
+function addProduct() {
+  const title = document.getElementById('title').value;
+  const price = document.getElementById('price').value;
+  const image = document.getElementById('image').value;
+  const description = document.getElementById('description').value;
 
-    function addProduct() {
-      const title = document.getElementById('title').value;
-      const price = document.getElementById('price').value;
-      const image = document.getElementById('image').value;
-      const description = document.getElementById('description').value;
+  if (!title || !price || !image) {
+    alert("נא למלא את כל השדות הנדרשים.");
+    return;
+  }
 
-      if (!title || !price || !image) {
-        alert("נא למלא את כל השדות הנדרשים.");
-        return;
-      }
-
-      products.push({ title, price, description, image });
-      renderProducts();
-      clearForm();
+  // שליחה ל-Google Apps Script Web App
+  fetch('https://script.google.com/macros/s/AKfycbyzdkvb4wOMILaPIq-oalk6IRA7UKxCfcsRYW0VPjF5LHO3qYLewgicT8Ua6GCdQnTn/exec', {
+    method: 'POST',
+    body: JSON.stringify({ title, price, description, image }),
+    headers: {
+      'Content-Type': 'application/json'
     }
+  })
+  .then(res => {
+    if (res.ok) {
+      alert("✅ המוצר נוסף בהצלחה!");
+      clearForm();
+      loadProducts(); // רענון מוצרים אחרי הוספה
+    } else {
+      alert("❌ אירעה שגיאה בהוספה.");
+    }
+  })
+  .catch(error => {
+    console.error('Error:', error);
+    alert("❌ שגיאה בחיבור לשרת.");
+  });
+}
 
     function clearForm() {
       ['title', 'price', 'image', 'description'].forEach(id => document.getElementById(id).value = '');
