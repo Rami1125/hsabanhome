@@ -1427,7 +1427,651 @@
             });
         });
     </script>
-    
+        <!-- Product Modal -->
+    <div id="product-modal" class="fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center z-50 hidden">
+        <div class="bg-white rounded-lg shadow-lg p-6 max-w-md w-full relative">
+            <button onclick="closeModal()" class="absolute top-2 left-2 text-gray-500 hover:text-red-500 text-xl">&times;</button>
+            <img src="" alt="מוצר" class="w-full h-48 object-cover rounded mb-4 modal-image"/>
+            <h2 class="text-xl font-bold mb-2 modal-title"></h2>
+            <p class="text-gray-600 text-sm mb-2 modal-description"></p>
+            <span class="text-primary font-bold text-lg modal-price"></span>
+            <div class="mt-4 flex items-center justify-center">
+                <button onclick="addToCartFromModal()" class="bg-primary text-white px-6 py-3 rounded-button hover:bg-primary/90 transition shine-button">הוסף לעגלה</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Cart Modal -->
+    <div id="cart-modal" class="fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center z-50 hidden">
+        <div class="glass-effect rounded-lg shadow-lg p-6 max-w-lg w-full relative">
+            <button onclick="closeCartModal()" class="absolute top-2 left-2 text-gray-500 hover:text-red-500 text-xl">&times;</button>
+            <h2 class="text-2xl font-bold mb-4 text-gray-800">עגלת הקניות שלך</h2>
+            
+            <div id="cart-items" class="mb-6 max-h-60 overflow-y-auto">
+                <!-- Cart items will be loaded here by JavaScript -->
+                <p id="empty-cart-message" class="text-gray-600 text-center hidden">העגלה ריקה. התחל להוסיף מוצרים!</p>
+            </div>
+
+            <div class="mb-4">
+                <h3 class="text-lg font-bold text-gray-800 mb-2">פרטי לקוח ואספקה</h3>
+                <input type="text" id="customer-name" placeholder="שם מלא" class="w-full px-4 py-2 mb-3 rounded-button border glass-effect" required>
+                <input type="tel" id="customer-phone" placeholder="מספר טלפון" class="w-full px-4 py-2 mb-3 rounded-button border glass-effect" required>
+                <input type="text" id="customer-address" placeholder="כתובת אספקה" class="w-full px-4 py-2 mb-3 rounded-button border glass-effect">
+                <textarea id="order-notes" placeholder="הערות נוספות להזמנה (לדוגמה: מוצר נוסף, דרישות מיוחדות)" rows="3" class="w-full px-4 py-2 rounded-button border glass-effect"></textarea>
+            </div>
+            
+            <button onclick="sendOrder()" class="w-full bg-primary text-white py-3 rounded-button hover:bg-primary/90 transition shine-button">שלח הזמנה ל-WhatsApp</button>
+        </div>
+    </div>
+
+    <!-- Newsletter -->
+    <section class="py-12 glass-effect mt-10">
+        <div class="container mx-auto px-4">
+            <div class="max-w-3xl mx-auto text-center">
+                <h2 class="text-2xl md:text-3xl font-bold mb-4 text-gray-800">הישארו מעודכנים</h2>
+                <p class="text-gray-600 mb-6">הירשמו לניוזלטר שלנו וקבלו עדכונים על מבצעים, מוצרים חדשים וטיפים מקצועיים.</p>
+                <div class="flex flex-col sm:flex-row gap-3 justify-center">
+                    <input type="email" placeholder="הזינו את כתובת המייל שלכם" class="px-4 py-3 rounded-button border-none glass-effect w-full sm:w-96">
+                    <button class="bg-primary text-white px-6 py-3 rounded-button hover:bg-primary/90 transition whitespace-nowrap shine-button">הרשמה</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-[#1565C0] text-white py-12 mt-10">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <!-- Column 1 - About -->
+                <div>
+                    <h3 class="text-xl font-bold mb-4">אודות ח.סבן</h3>
+                    <p class="text-white/90 mb-4">ח.סבן חומרי בניין 1994 בע"מ הינה חברה משפחתית המספקת חומרי בניין איכותיים מאז 1994. אנו מתמחים במגוון רחב של מוצרים לענף הבנייה.</p>
+                    <div class="flex space-x-4 space-x-reverse">
+                        <a href="#" class="text-white/90 hover:text-white">
+                            <div class="w-8 h-8 flex items-center justify-center">
+                                <i class="ri-facebook-fill"></i>
+                            </div>
+                        </a>
+                        <a href="#" class="text-white/90 hover:text-white">
+                            <div class="w-8 h-8 flex items-center justify-center">
+                                <i class="ri-instagram-line"></i>
+                            </div>
+                        </a>
+                        <a href="#" class="text-white/90 hover:text-white">
+                            <div class="w-8 h-8 flex items-center justify-center">
+                                <i class="ri-whatsapp-line"></i>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Column 2 - Quick Links -->
+                <div>
+                    <h3 class="text-xl font-bold mb-4">קישורים מהירים</h3>
+                    <ul class="space-y-2">
+                        <li><a href="https://readdy.ai/home/20fb88f3-f689-4ee4-95ee-53c5efe8bc7d/f195f37e-9e34-4662-a971-05a152507a0f" data-readdy="true" class="text-white/90 hover:text-white">דף הבית</a></li>
+                        <li><a href="#" class="text-white/90 hover:text-white">החזון שלנו</a></li>
+                        <li><a href="#" class="text-white/90 hover:text-white">מוצרים</a></li>
+                        <li><a href="#" class="text-white/90 hover:text-white">מחלקת חישובים</a></li>
+                        <li><a href="#" class="text-white/90 hover:text-white">סניפים</a></li>
+                        <li><a href="#" class="text-white/90 hover:text-white">המלצות</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Column 3 - Categories (Hardcoded for footer, dynamic in sidebar) -->
+                <div>
+                    <h3 class="text-xl font-bold mb-4">קטגוריות מוצרים</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-white/90 hover:text-white">חומרי בניין</a></li>
+                        <li><a href="#" class="text-white/90 hover:text-white">חשמל ותאורה</a></li>
+                        <li><a href="#" class="text-white/90 hover:text-white">אינסטלציה</a></li>
+                        <li><a href="#" class="text-white/90 hover:text-white">צבעים וציפויים</a></li>
+                        <li><a href="#" class="text-white/90 hover:text-white">כלי עבודה</a></li>
+                        <li><a href="#" class="text-white/90 hover:text-white">בטיחות בעבודה</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Column 4 - Contact -->
+                <div>
+                    <h3 class="text-xl font-bold mb-4">צור קשר</h3>
+                    <ul class="space-y-3">
+                        <li class="flex items-start">
+                            <div class="w-5 h-5 flex items-center justify-center text-white/90 mt-1">
+                                <i class="ri-map-pin-line"></i>
+                            </div>
+                            <span class="mr-2 text-white/90">רחוב התלמיד 6, הוד השרון</span>
+                        </li>
+                        <li class="flex items-start">
+                            <div class="w-5 h-5 flex items-center justify-center text-white/90 mt-1">
+                                <i class="ri-phone-line"></i>
+                            </div>
+                            <span class="mr-2 text-white/90">09-7408854</span>
+                        </li>
+                        <li class="flex items-start">
+                            <div class="w-5 h-5 flex items-center justify-center text-white/90 mt-1">
+                                <i class="ri-mail-line"></i>
+                            </div>
+                            <span class="mr-2 text-white/90">info@hsaban.co.il</span>
+                        </li>
+                        <li class="flex items-start">
+                            <div class="w-5 h-5 flex items-center justify-center text-white/90 mt-1">
+                                <i class="ri-time-line"></i>
+                            </div>
+                            <div class="mr-2 text-white/90">
+                                <p>ימים א'-ה': 07:00-17:00</p>
+                                <p>יום ו': 07:00-13:00</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-white/20 mt-8 pt-8 flex flex-col md:flex-row justify-between items-center">
+                <p class="text-white/70 text-sm mb-4 md:mb-0">© 2025 ח.סבן חומרי בניין 1994 בע"מ. כל הזכויות שמורות.</p>
+                <div class="flex items-center space-x-4 space-x-reverse">
+                    <div class="w-8 h-8 flex items-center justify-center text-white/70">
+                        <i class="ri-visa-line ri-lg"></i>
+                    </div>
+                    <div class="w-8 h-8 flex items-center justify-center text-white/70">
+                        <i class="ri-mastercard-line ri-lg"></i>
+                    </div>
+                    <div class="w-8 h-8 flex items-center justify-center text-white/70">
+                        <i class="ri-paypal-line ri-lg"></i>
+                    </div>
+                    <div class="w-8 h-8 flex items-center justify-center text-white/70">
+                        <i class="ri-bank-card-line ri-lg"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to top button -->
+    <button id="back-to-top" class="fixed bottom-6 left-6 w-12 h-12 glass-effect rounded-full flex items-center justify-center text-primary shadow-lg opacity-0 invisible transition-all duration-300">
+        <i class="ri-arrow-up-line ri-lg"></i>
+    </button>
+
+    <!-- Scripts -->
+    <script id="main-scripts">
+        // Global variables for cart and product data
+        const cart = [];
+        let currentProductForModal = null; // Stores product details when modal is opened
+        let allProducts = []; // Stores all fetched products for filtering
+        let filteredProducts = []; // Stores products after applying filters
+
+        // Object to hold current filter selections
+        let currentFilters = {
+            categories: ['all'], // Default to 'all' categories
+            price: 1000, // Default max price
+            availability: ['במלאי'], // Default to 'במלאי', assuming the sheet uses this string
+            brands: [] // Default to no specific brand filter
+        };
+
+        // Event listener for DOM content loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            // Mobile menu toggle logic
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            
+            mobileMenuButton.addEventListener('click', function() {
+                mobileMenu.classList.toggle('hidden');
+            });
+            
+            const mobileMenuLinks = mobileMenu.querySelectorAll('a');
+            mobileMenuLinks.forEach(link => {
+                link.addEventListener('click', function() {
+                    mobileMenu.classList.add('hidden');
+                });
+            });
+
+            // Price range slider logic
+            const priceRange = document.getElementById('price-range');
+            const priceValue = document.getElementById('price-value');
+            
+            priceRange.addEventListener('input', function() {
+                priceValue.textContent = '₪' + this.value;
+                currentFilters.price = parseInt(this.value); // Update filter value
+                applyFilters(); // Apply filters immediately on price change
+            });
+
+            // Back to top button logic
+            const backToTopButton = document.getElementById('back-to-top');
+            
+            window.addEventListener('scroll', function() {
+                if (window.pageYOffset > 300) {
+                    backToTopButton.classList.remove('opacity-0', 'invisible');
+                    backToTopButton.classList.add('opacity-100', 'visible');
+                } else {
+                    backToTopButton.classList.remove('opacity-100', 'visible');
+                    backToTopButton.classList.add('opacity-0', 'invisible');
+                }
+            });
+            
+            backToTopButton.addEventListener('click', function() {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+
+            // Fetch products from Google Sheet
+            fetch('https://script.google.com/macros/s/AKfycbyzdkvb4wOMILaPIq-oalk6IRA7UKxCfcsRYW0VPjF5LHO3qYLewgicT8Ua6GCdQnTn/exec')
+                .then(res => res.json())
+                .then(products => {
+                    allProducts = products; // Store all products
+                    filteredProducts = [...allProducts]; // Initialize filtered products
+                    renderProducts(filteredProducts); // Render all products initially
+                    populateCategories(allProducts); // Populate categories from fetched data
+                    addFilterListeners(); // Attach listeners for availability and brands
+                })
+                .catch(err => {
+                    console.error("שגיאה בטעינת מוצרים:", err);
+                    document.getElementById('products-grid').innerHTML = "<p class='text-red-600'>שגיאה בטעינת מוצרים. נסה שוב מאוחר יותר.</p>";
+                });
+
+            // Attach event listeners for apply and clear filters buttons
+            document.getElementById('apply-filters-btn').addEventListener('click', applyFilters);
+            document.getElementById('clear-filters-btn').addEventListener('click', clearAllFilters);
+
+            // Attach event listener for sort select
+            document.getElementById('sort-select').addEventListener('change', applyFilters);
+        });
+
+        /**
+         * Renders products to the products grid.
+         * @param {Array} productsToRender - The array of products to display.
+         */
+        function renderProducts(productsToRender) {
+            const grid = document.getElementById('products-grid');
+            if (productsToRender.length === 0) {
+                grid.innerHTML = "<p class='text-gray-600 text-center col-span-full'>לא נמצאו מוצרים התואמים לסינון.</p>";
+                return;
+            }
+            grid.innerHTML = productsToRender.map(prod => `
+                <div onclick="openModal('${encodeURIComponent(prod.title)}', '${encodeURIComponent(prod.description)}', '${encodeURIComponent(prod.image)}', '${encodeURIComponent(prod["price "] || prod.price || "—")}', '${encodeURIComponent(JSON.stringify(prod))}')"
+                    class="glass-card product-card cursor-pointer rounded-lg overflow-hidden shadow-md transition hover:shadow-xl bg-white">
+                    <div class="image-transition h-56 relative">
+                        <img src="${prod.image}" alt="${prod.title}" class="w-full h-full object-cover object-top">
+                        <div class="absolute inset-0 bg-black/10 opacity-0 hover:opacity-100 transition duration-300"></div>
+                    </div>
+                    <div class="p-4">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="text-lg font-bold text-gray-800">${prod.title}</h3>
+                            <span class="bg-primary/10 text-primary text-xs px-2 py-1 rounded-full">${prod.availability || 'במלאי'}</span>
+                        </div>
+                        <p class="text-gray-600 text-sm mb-3">${prod.description}</p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-primary font-bold">₪${prod["price "] || prod.price || "—"}</span>
+                            <button onclick='event.stopPropagation(); addToCart(${JSON.stringify(prod)})' class="bg-primary text-white px-4 py-2 rounded-button text-sm hover:bg-primary/90 transition shine-button">
+                                הוסף לעגלה
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        /**
+         * Populates the category filter list in the sidebar.
+         * Assumes `product.category` field exists in the fetched data.
+         * @param {Array} products - The full list of products.
+         */
+        function populateCategories(products) {
+            const categoriesContainer = document.getElementById('sidebar-categories');
+            const categories = new Set();
+            
+            // Collect unique categories, excluding 'all' which is hardcoded
+            products.forEach(p => {
+                if (p.category && p.category !== 'all') { // Ensure 'category' column exists
+                    categories.add(p.category);
+                }
+            });
+
+            // Clear existing categories (except 'הכל')
+            categoriesContainer.innerHTML = `
+                <li>
+                    <label class="custom-checkbox">
+                        <input type="checkbox" data-category="all" checked>
+                        <span class="checkmark ml-2"></span>
+                        <span class="text-gray-800">הכל</span>
+                    </label>
+                </li>
+            `; 
+            
+            // Add dynamic categories
+            categories.forEach(cat => {
+                categoriesContainer.innerHTML += `
+                    <li>
+                        <label class="custom-checkbox">
+                            <input type="checkbox" data-category="${cat}">
+                            <span class="checkmark ml-2"></span>
+                            <span class="text-gray-800">${cat}</span>
+                        </label>
+                    </li>
+                `;
+            });
+
+            // Add event listeners for dynamic category checkboxes
+            addCategoryFilterListeners();
+        }
+
+        /**
+         * Attaches event listeners to category checkboxes.
+         */
+        function addCategoryFilterListeners() {
+            document.querySelectorAll('#sidebar-categories input[type="checkbox"]').forEach(checkbox => {
+                checkbox.addEventListener('change', function() {
+                    const category = this.dataset.category;
+                    if (category === 'all') {
+                        // If 'all' is selected, deselect all other categories
+                        document.querySelectorAll('#sidebar-categories input[type="checkbox"]').forEach(cb => {
+                            cb.checked = (cb === this);
+                        });
+                        currentFilters.categories = ['all'];
+                    } else {
+                        // If a specific category is selected, deselect 'all'
+                        const allCheckbox = document.querySelector('#sidebar-categories input[data-category="all"]');
+                        if (allCheckbox) allCheckbox.checked = false;
+
+                        if (this.checked) {
+                            currentFilters.categories.push(category);
+                        } else {
+                            currentFilters.categories = currentFilters.categories.filter(c => c !== category);
+                        }
+                        // If no specific category is selected, re-select 'all'
+                        if (currentFilters.categories.length === 0) {
+                            allCheckbox.checked = true;
+                            currentFilters.categories.push('all');
+                        }
+                    }
+                    applyFilters();
+                });
+            });
+        }
+
+        /**
+         * Attaches event listeners to availability and brand checkboxes.
+         */
+        function addFilterListeners() {
+            // Availability filters
+            document.querySelectorAll('#sidebar-availability input[type="checkbox"]').forEach(checkbox => {
+                checkbox.addEventListener('change', function() {
+                    const availability = this.dataset.availability;
+                    if (this.checked) {
+                        currentFilters.availability.push(availability);
+                    } else {
+                        currentFilters.availability = currentFilters.availability.filter(a => a !== availability);
+                    }
+                    applyFilters();
+                });
+            });
+
+            // Brand filters
+            document.querySelectorAll('#sidebar-brands input[type="checkbox"]').forEach(checkbox => {
+                checkbox.addEventListener('change', function() {
+                    const brand = this.dataset.brand;
+                    if (this.checked) {
+                        currentFilters.brands.push(brand);
+                    } else {
+                        currentFilters.brands = currentFilters.brands.filter(b => b !== brand);
+                    }
+                    applyFilters();
+                });
+            });
+        }
+
+        /**
+         * Applies all active filters to the product list and re-renders the grid.
+         */
+        function applyFilters() {
+            let tempFilteredProducts = [...allProducts]; // Start with all products
+
+            // Filter by categories
+            if (!currentFilters.categories.includes('all') && currentFilters.categories.length > 0) {
+                tempFilteredProducts = tempFilteredProducts.filter(p => p.category && currentFilters.categories.includes(p.category));
+            }
+
+            // Filter by price
+            tempFilteredProducts = tempFilteredProducts.filter(p => {
+                const price = parseFloat(p["price "] || p.price);
+                return !isNaN(price) && price <= currentFilters.price;
+            });
+
+            // Filter by availability
+            if (currentFilters.availability.length > 0) {
+                tempFilteredProducts = tempFilteredProducts.filter(p => p.availability && currentFilters.availability.includes(p.availability));
+            }
+
+            // Filter by brands
+            if (currentFilters.brands.length > 0) {
+                tempFilteredProducts = tempFilteredProducts.filter(p => p.brand && currentFilters.brands.includes(p.brand));
+            }
+
+            // Apply sorting
+            const sortOrder = document.getElementById('sort-select').value;
+            if (sortOrder === 'price-asc') {
+                tempFilteredProducts.sort((a, b) => (parseFloat(a["price "] || a.price) || 0) - (parseFloat(b["price "] || b.price) || 0));
+            } else if (sortOrder === 'price-desc') {
+                tempFilteredProducts.sort((a, b) => (parseFloat(b["price "] || b.price) || 0) - (parseFloat(a["price "] || a.price) || 0));
+            }
+            // 'popularity' and 'newest' would require corresponding data fields and sorting logic
+
+            filteredProducts = tempFilteredProducts; // Update global filtered list
+            renderProducts(filteredProducts); // Render filtered products
+        }
+
+        /**
+         * Resets all filters to their default states and re-applies them.
+         */
+        function clearAllFilters() {
+            // Reset filter object
+            currentFilters = {
+                categories: ['all'],
+                price: 1000,
+                availability: ['במלאי'],
+                brands: []
+            };
+
+            // Reset UI elements
+            // Categories checkboxes
+            document.querySelectorAll('#sidebar-categories input[type="checkbox"]').forEach(cb => {
+                cb.checked = (cb.dataset.category === 'all');
+            });
+            // Price range slider
+            const priceRange = document.getElementById('price-range');
+            const priceValue = document.getElementById('price-value');
+            priceRange.value = 1000;
+            priceValue.textContent = '₪1000';
+            // Availability checkboxes
+            document.querySelectorAll('#sidebar-availability input[type="checkbox"]').forEach(cb => {
+                cb.checked = (cb.dataset.availability === 'במלאי');
+            });
+            // Brands checkboxes
+            document.querySelectorAll('#sidebar-brands input[type="checkbox"]').forEach(cb => {
+                cb.checked = false;
+            });
+            // Sort select
+            document.getElementById('sort-select').value = 'popularity';
+
+
+            applyFilters(); // Apply cleared filters
+        }
+
+
+        // Product Modal functions
+        /**
+         * Opens the product modal with details of a specific product.
+         * @param {string} title - Product title (URI encoded).
+         * @param {string} description - Product description (URI encoded).
+         * @param {string} image - Product image URL (URI encoded).
+         * @param {string} price - Product price (URI encoded).
+         * @param {string} productJson - JSON string of the full product object (URI encoded).
+         */
+        function openModal(title, description, image, price, productJson) {
+            currentProductForModal = JSON.parse(decodeURIComponent(productJson));
+            document.querySelector('#product-modal .modal-title').innerText = decodeURIComponent(title);
+            document.querySelector('#product-modal .modal-description').innerText = decodeURIComponent(description);
+            document.querySelector('#product-modal .modal-image').src = decodeURIComponent(image);
+            document.querySelector('#product-modal .modal-price').innerText = "₪" + decodeURIComponent(price);
+            document.getElementById('product-modal').classList.remove('hidden');
+        }
+
+        /**
+         * Closes the product modal.
+         */
+        function closeModal() {
+            document.getElementById('product-modal').classList.add('hidden');
+            currentProductForModal = null;
+        }
+
+        // Cart functions
+        /**
+         * Adds a product to the cart or increments its quantity if already present.
+         * @param {Object} product - The product object to add.
+         */
+        function addToCart(product) {
+            const existingProduct = cart.find(item => item.title === product.title);
+            if (existingProduct) {
+                existingProduct.quantity = (existingProduct.quantity || 1) + 1;
+            } else {
+                cart.push({ ...product, quantity: 1 });
+            }
+            updateCartUI(); // Update cart display and count
+        }
+
+        /**
+         * Adds the product currently displayed in the modal to the cart.
+         */
+        function addToCartFromModal() {
+            if (currentProductForModal) {
+                addToCart(currentProductForModal);
+                closeModal();
+            }
+        }
+
+        /**
+         * Updates the cart icon count and re-renders cart items in the cart modal.
+         */
+        function updateCartUI() {
+            const cartCount = document.getElementById('cart-count');
+            cartCount.textContent = cart.reduce((sum, item) => sum + (item.quantity || 1), 0);
+            renderCartItems(); // Re-render cart items in modal
+        }
+
+        /**
+         * Renders the list of items in the cart modal.
+         */
+        function renderCartItems() {
+            const cartItemsContainer = document.getElementById('cart-items');
+            if (cart.length === 0) {
+                cartItemsContainer.innerHTML = `<p id="empty-cart-message" class="text-gray-600 text-center">העגלה ריקה. התחל להוסיף מוצרים!</p>`;
+            } else {
+                cartItemsContainer.innerHTML = cart.map((item, index) => `
+                    <div class="flex justify-between items-center bg-gray-50 p-3 rounded-md mb-2 glass-effect">
+                        <div class="flex-1">
+                            <h4 class="font-semibold text-gray-800">${item.title}</h4>
+                            <p class="text-sm text-gray-600">₪${item["price "] || item.price}</p>
+                        </div>
+                        <div class="flex items-center">
+                            <button onclick="updateQuantity(${index}, -1)" class="bg-blue-100 text-primary px-2 py-1 rounded-sm mr-2">-</button>
+                            <span class="font-bold">${item.quantity || 1}</span>
+                            <button onclick="updateQuantity(${index}, 1)" class="bg-blue-100 text-primary px-2 py-1 rounded-sm ml-2">+</button>
+                            <button onclick="removeFromCart(${index})" class="text-red-500 ml-4"><i class="ri-delete-bin-line"></i></button>
+                        </div>
+                    </div>
+                `).join('');
+            }
+        }
+
+        /**
+         * Updates the quantity of a product in the cart.
+         * If quantity becomes 0 or less, the item is removed.
+         * @param {number} index - The index of the product in the cart array.
+         * @param {number} change - The amount to change the quantity by (+1 or -1).
+         */
+        function updateQuantity(index, change) {
+            if (cart[index]) {
+                cart[index].quantity = (cart[index].quantity || 1) + change;
+                if (cart[index].quantity <= 0) {
+                    cart.splice(index, 1); // Remove if quantity is zero or less
+                }
+                updateCartUI();
+            }
+        }
+
+        /**
+         * Removes a product from the cart.
+         * @param {number} index - The index of the product in the cart array.
+         */
+        function removeFromCart(index) {
+            cart.splice(index, 1);
+            updateCartUI();
+        }
+
+        /**
+         * Opens the cart modal.
+         * @param {Event} event - The click event.
+         */
+        function openCartModal(event) {
+            event.preventDefault(); // Prevent default link behavior
+            renderCartItems();
+            document.getElementById('cart-modal').classList.remove('hidden');
+        }
+
+        /**
+         * Closes the cart modal.
+         */
+        function closeCartModal() {
+            document.getElementById('cart-modal').classList.add('hidden');
+        }
+
+        /**
+         * Constructs and sends the order message via WhatsApp.
+         */
+        function sendOrder() {
+            const name = document.getElementById('customer-name').value;
+            const phone = document.getElementById('customer-phone').value;
+            const address = document.getElementById('customer-address').value;
+            const notes = document.getElementById('order-notes').value;
+
+            if (!name || !phone) {
+                // Using alert for simplicity, consider a custom modal/message for better UX
+                alert("אנא מלא שם מלא ומספר טלפון.");
+                return;
+            }
+
+            let message = `📦 *הזמנה חדשה מח.סבן חומרי בניין*\n\n`;
+            message += `👤 *פרטי לקוח:*\n`;
+            message += `שם: ${name}\n`;
+            message += `טלפון: ${phone}\n`;
+            if (address) {
+                message += `כתובת: ${address}\n`;
+            }
+            message += `\n🧾 *מוצרים:*\n`;
+
+            if (cart.length === 0) {
+                message += `❗ לא נבחרו מוצרים\n`;
+            } else {
+                cart.forEach(item => {
+                    message += `✅ ${item.title} - ${item.quantity || 1} יח' - ₪${item["price "] || item.price}\n`;
+                });
+            }
+
+            if (notes) {
+                message += `\n📝 *הערות להזמנה:*\n${notes}\n`;
+            }
+
+            const encodedMessage = encodeURIComponent(message);
+            window.open(`https://wa.me/972508860896?text=${encodedMessage}`, '_blank');
+            
+            // Optionally, clear the cart and close modal after sending
+            cart.length = 0; // Clear the cart array
+            updateCartUI();
+            closeCartModal();
+            // Using alert for simplicity, consider a custom modal/message for better UX
+            alert("ההזמנה נשלחה בהצלחה ל-WhatsApp!");
+        }
+    </script>
     <script id="calculator-tabs-script">
         document.addEventListener('DOMContentLoaded', function() {
             const calcTabButtons = document.querySelectorAll('.calc-tab-button');
