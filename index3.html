@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>קטלוג מוצרים - ח.סבן חומרי בניין 1994 בע"מ</title>
+    <title>ח.סבן חומרי בניין 1994 בע"מ</title>
     <script src="https://cdn.tailwindcss.com/3.4.16"></script>
     <script>
-        // הגדרות Tailwind CSS
+        // Tailwind CSS configuration
         tailwind.config = {
             theme: {
                 extend: {
@@ -16,27 +16,50 @@
             }
         }
     </script>
-    <!-- קישורי פונטים ואייקונים -->
+    <!-- Font and icon links -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@200;300;400;500;600;700;800&family=Rubik:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css">
     <style>
+        /* General CSS and existing effects */
         :where([class^="ri-"])::before { content: "\f3c2"; }
         
         body {
             font-family: 'Assistant', sans-serif;
             overflow-x: hidden;
+            background: linear-gradient(135deg, #f0f8ff 0%, #ffffff 100%);
         }
         
         .secondary-font {
             font-family: 'Rubik', sans-serif;
         }
         
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            box-shadow: 0 8px 32px rgba(31, 38, 135, 0.15);
+        }
+        
+        .glass-card {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            transition: all 0.3s ease;
+        }
+        
+        .glass-card:hover {
+            background: rgba(255, 255, 255, 0.9);
+            box-shadow: 0 10px 30px rgba(31, 38, 135, 0.2);
+            transform: translateY(-5px);
+        }
+        
         .shine-button {
             position: relative;
             overflow: hidden;
+            z-index: 1; /* Ensure effect is above text */
         }
         
         .shine-button::before {
@@ -62,14 +85,14 @@
         
         @keyframes glow {
             from {
-                text-shadow: 0 0 5px rgba(139,94,60,0.3),
-                             0 0 10px rgba(139,94,60,0.2),
-                             0 0 15px rgba(139,94,60,0.1);
+                text-shadow: 0 0 5px rgba(33, 150, 243, 0.3), /* Primary color glow */
+                             0 0 10px rgba(33, 150, 243, 0.2),
+                             0 0 15px rgba(33, 150, 243, 0.1);
             }
             to {
-                text-shadow: 0 0 10px rgba(139,94,60,0.4),
-                             0 0 20px rgba(139,94,60,0.3),
-                             0 0 30px rgba(139,94,60,0.2);
+                text-shadow: 0 0 10px rgba(33, 150, 243, 0.4),
+                             0 0 20px rgba(33, 150, 243, 0.3),
+                             0 0 30px rgba(33, 150, 243, 0.2);
             }
         }
         
@@ -103,7 +126,7 @@
             left: 0;
             width: 0;
             height: 2px;
-            background: #8B5E3C;
+            background: #2196F3; /* Primary color */
             transition: width 0.3s ease;
         }
         
@@ -161,7 +184,7 @@
             height: 20px;
             width: 20px;
             background-color: #f5f5f5;
-            border: 2px solid #8B5E3C;
+            border: 2px solid #2196F3; /* Primary color */
             border-radius: 4px;
             display: flex;
             align-items: center;
@@ -169,7 +192,7 @@
         }
         
         .custom-checkbox input:checked ~ .checkmark {
-            background-color: #8B5E3C;
+            background-color: #2196F3; /* Primary color */
         }
         
         .checkmark:after {
@@ -224,7 +247,7 @@
         }
         
         input:checked + .slider {
-            background-color: #8B5E3C;
+            background-color: #2196F3; /* Primary color */
         }
         
         input:checked + .slider:before {
@@ -236,9 +259,9 @@
             width: 100%;
             height: 8px;
             border-radius: 5px;
-            background: #f5f5f5;
+            background: #E3F2FD; /* Light blue */
             outline: none;
-            border: 1px solid #ddd;
+            border: 1px solid #BBDEFB; /* Lighter blue */
         }
         
         .custom-range::-webkit-slider-thumb {
@@ -247,7 +270,7 @@
             width: 20px;
             height: 20px;
             border-radius: 50%;
-            background: #8B5E3C;
+            background: #2196F3; /* Primary color */
             cursor: pointer;
         }
         
@@ -255,12 +278,12 @@
             width: 20px;
             height: 20px;
             border-radius: 50%;
-            background: #8B5E3C;
+            background: #2196F3; /* Primary color */
             cursor: pointer;
         }
         
         .tab-active {
-            background-color: #8B5E3C;
+            background-color: #2196F3; /* Primary color */
             color: white;
         }
         
@@ -340,7 +363,7 @@
         .typing-dot {
             width: 8px;
             height: 8px;
-            background: #8B5E3C;
+            background: #2196F3; /* Primary color */
             border-radius: 50%;
             margin: 0 2px;
             animation: typing 1.5s infinite;
@@ -362,7 +385,7 @@
 </head>
 <body class="bg-gradient-to-br from-blue-50 to-white font-sans p-6">
     <!-- Header -->
-    <header class="bg-white shadow-md">
+    <header class="glass-effect sticky top-0 z-50 shadow-md">
         <div class="container mx-auto px-4 py-3 flex justify-between items-center">
             <div class="flex items-center">
                 <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSUVp7CP06twn9tobIG19ihDfKLm9MmowW73Q&s" alt="לוגו ח.סבן" class="h-12">
@@ -370,34 +393,36 @@
             </div>
             
             <nav class="hidden md:flex space-x-6 space-x-reverse">
-                <a href="#" class="text-gray-800 hover:text-primary highlight-hover py-2">ראשי</a>
+                <a href="index.html" class="text-gray-800 hover:text-primary highlight-hover py-2">ראשי</a>
                 <a href="#vision" class="text-gray-800 hover:text-primary highlight-hover py-2">החזון</a>
-                <a href="#products" class="text-gray-800 hover:text-primary highlight-hover py-2">מוצרים</a>
-                <a href="#calculator" class="text-gray-800 hover:text-primary highlight-hover py-2 font-semibold">מחלקת חישובים</a>
+                <a href="catalog.html" class="text-primary font-semibold highlight-hover py-2 border-b-2 border-primary">מוצרים</a>
+                <a href="#calculator" class="text-gray-800 hover:text-primary highlight-hover py-2">מחלקת חישובים</a>
                 <a href="#branches" class="text-gray-800 hover:text-primary highlight-hover py-2">סניפים</a>
                 <a href="#testimonials" class="text-gray-800 hover:text-primary highlight-hover py-2">המלצות</a>
             </nav>
             
             <div class="flex items-center space-x-4 space-x-reverse">
-                <a href="#" class="relative">
-                    <div class="w-10 h-10 flex items-center justify-center text-gray-700 hover:text-primary">
+                <!-- Cart icon on main page (no specific count needed here, or if it means total site items, it's a placeholder) -->
+                <a href="catalog.html#cart-modal" class="relative">
+                    <div class="w-10 h-10 flex items-center justify-center text-gray-700 hover:text-primary glass-effect rounded-full">
                         <i class="ri-shopping-cart-line ri-xl"></i>
                     </div>
-                    <span class="absolute -top-1 -right-1 bg-primary text-white text-xs w-5 h-5 flex items-center justify-center rounded-full">3</span>
+                    <!-- Cart count on landing page is often omitted or static, keeping it simple -->
+                    <span class="absolute -top-1 -right-1 bg-primary text-white text-xs w-5 h-5 flex items-center justify-center rounded-full">0</span>
                 </a>
-                <div class="w-10 h-10 flex items-center justify-center text-gray-700 hover:text-primary md:hidden cursor-pointer" id="mobile-menu-button">
+                <div class="w-10 h-10 flex items-center justify-center text-primary md:hidden cursor-pointer glass-effect rounded-full" id="mobile-menu-button">
                     <i class="ri-menu-line ri-xl"></i>
                 </div>
             </div>
         </div>
         
         <!-- Mobile Menu -->
-        <div id="mobile-menu" class="md:hidden bg-white py-4 px-4 hidden">
+        <div id="mobile-menu" class="md:hidden glass-effect py-4 px-4 hidden">
             <nav class="flex flex-col space-y-3">
-                <a href="#" class="text-gray-800 hover:text-primary py-2 border-b border-gray-100">ראשי</a>
+                <a href="index.html" class="text-gray-800 hover:text-primary py-2 border-b border-gray-100">ראשי</a>
                 <a href="#vision" class="text-gray-800 hover:text-primary py-2 border-b border-gray-100">החזון</a>
-                <a href="#products" class="text-gray-800 hover:text-primary py-2 border-b border-gray-100">מוצרים</a>
-                <a href="#calculator" class="text-gray-800 hover:text-primary py-2 border-b border-gray-100 font-semibold">מחלקת חישובים</a>
+                <a href="catalog.html" class="text-primary font-semibold py-2 border-b border-gray-100">מוצרים</a>
+                <a href="#calculator" class="text-gray-800 hover:text-primary py-2 border-b border-gray-100">מחלקת חישובים</a>
                 <a href="#branches" class="text-gray-800 hover:text-primary py-2 border-b border-gray-100">סניפים</a>
                 <a href="#testimonials" class="text-gray-800 hover:text-primary py-2">המלצות</a>
             </nav>
@@ -405,14 +430,14 @@
     </header>
 
     <!-- Hero Section -->
-    <section class="relative h-[600px]" style="background-image: url('https://readdy.ai/api/search-image?query=Modern%20construction%20site%20with%20building%20materials%2C%20concrete%20blocks%2C%20cement%20bags%2C%20tools%2C%20and%20equipment%20arranged%20neatly.%20Professional%20construction%20workers%20in%20background.%20Clean%2C%20organized%20workspace%20with%20natural%20lighting.%20Warm%20amber%20and%20olive%20green%20tones.&width=1920&height=600&seq=1&orientation=landscape'); background-size: cover; background-position: center;">
+    <section class="relative h-[600px] mb-12" style="background-image: url('https://readdy.ai/api/search-image?query=Modern%20construction%20site%20with%20building%20materials%2C%20concrete%20blocks%2C%20cement%20bags%2C%20tools%2C%20and%20equipment%20arranged%20neatly.%20Professional%20construction%20workers%20in%20background.%20Clean%2C%20organized%20workspace%20with%20natural%20lighting.%20Warm%20amber%20and%20olive%20green%20tones.&width=1920&height=600&seq=1&orientation=landscape'); background-size: cover; background-position: center;">
         <div class="absolute inset-0 bg-gradient-to-r from-[#00000099] to-transparent"></div>
         <div class="container mx-auto px-4 h-full flex items-center">
             <div class="max-w-2xl text-white relative z-10">
                 <h1 class="text-4xl md:text-5xl font-bold mb-4 glowing-text">חומרי בניין איכותיים לכל פרויקט</h1>
                 <p class="text-lg md:text-xl mb-8">ח.סבן חומרי בניין - המקום המקצועי ביותר לרכישת חומרי בניין איכותיים במחירים משתלמים. מאז 1994 אנו מספקים את מיטב המוצרים והשירות המקצועי ביותר.</p>
                 <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4 sm:space-x-reverse">
-                    <a href="#products" class="shine-button bg-primary text-white px-8 py-3 rounded-button text-lg font-semibold whitespace-nowrap">גלה את המוצרים שלנו</a>
+                    <a href="catalog.html" class="shine-button bg-primary text-white px-8 py-3 rounded-button text-lg font-semibold whitespace-nowrap">גלה את המוצרים שלנו</a>
                     <a href="#calculator" class="bg-white text-primary px-8 py-3 rounded-button text-lg font-semibold hover:bg-gray-100 transition whitespace-nowrap">מחלקת החישובים</a>
                 </div>
             </div>
@@ -462,153 +487,17 @@
         </div>
     </section>
 
-   <!-- Products Grid -->
-            <div class="md:w-3/4 lg:w-4/5">
-                <!-- Category Title and Sort -->
-                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6">
-                    <h2 class="text-2xl font-bold text-gray-800 mb-3 sm:mb-0">כל המוצרים</h2>
-                    
-                    <div class="flex flex-wrap gap-2">
-                        <div class="glass-effect rounded-lg px-3 py-2 text-sm flex items-center">
-                            <span class="text-gray-700 ml-2">מיון:</span>
-                            <div class="relative">
-                                <select id="sort-select" class="bg-transparent border-none outline-none text-primary appearance-none pr-2 pl-6">
-                                    <option value="popularity">פופולריות</option>
-                                    <option value="price-asc">מחיר: מהנמוך לגבוה</option>
-                                    <option value="price-desc">מחיר: מהגבוה לנמוך</option>
-                                    <option value="newest">חדש ביותר</option>
-                                </select>
-                                <div class="absolute left-1 top-1/2 transform -translate-y-1/2 w-4 h-4 flex items-center justify-center text-primary">
-                                    <i class="ri-arrow-down-s-line"></i>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="glass-effect rounded-lg px-3 py-2 text-sm flex items-center">
-                            <span class="text-gray-700 ml-2">הצג:</span>
-                            <div class="flex items-center">
-                                <button class="w-8 h-8 flex items-center justify-center text-primary">
-                                    <i class="ri-grid-line"></i>
-                                </button>
-                                <button class="w-8 h-8 flex items-center justify-center text-gray-400">
-                                    <i class="ri-list-check"></i>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Hero Image Section -->
-                <div class="mb-8">
-                    <div class="hero-image-grid">
-                        <div class="hero-image-item glass-card">
-                            <img src="https://img.d.co.il/Umbraco/1509/795x348.3402a7cf-cb70-4066-8ed8-bf55d2795e01.png" alt="חומרי בניין">
-                            <div class="hero-image-overlay">
-                                <a href="#" class="bg-primary text-white px-4 py-2 rounded-button shine-button">לדף המוצר</a>
-                            </div>
-                        </div>
-                        <div class="hero-image-item glass-card">
-                            <img src="https://readdy.ai/api/search-image?query=Electrical%2520socket%252C%2520power%2520outlet%252C%2520electrical%2520supplies%252C%2520detailed%2520product%2520photography%2520on%2520clean%2520white%2520background%252C%2520soft%2520blue%2520lighting&width=600&height=400&seq=20&orientation=landscape" alt="חשמל ותאורה">
-                            <div class="hero-image-overlay">
-                                <a href="#" class="bg-primary text-white px-4 py-2 rounded-button shine-button">לדף המוצר</a>
-                            </div>
-                        </div>
-                        <div class="hero-image-item glass-card">
-                            <img src="https://readdy.ai/api/search-image?query=Professional%2520power%2520drill%252C%2520construction%2520tool%252C%2520detailed%2520product%2520photography%2520on%2520clean%2520white%2520background%252C%2520high%2520quality%2520tool%252C%2520soft%2520blue%2520lighting&width=600&height=400&seq=15&orientation=landscape" alt="כלי עבודה">
-                            <div class="hero-image-overlay">
-                                <a href="#" class="bg-primary text-white px-4 py-2 rounded-button shine-button">לדף המוצר</a>
-                            </div>
-                        </div>
-                        <div class="hero-image-item glass-card">
-                            <img src="https://readdy.ai/api/search-image?query=Paint%2520buckets%2520and%2520cans%252C%2520professional%2520painting%2520supplies%252C%2520various%2520colors%252C%2520clean%2520white%2520background%252C%2520detailed%2520product%2520photography%252C%2520soft%2520blue%2520lighting&width=600&height=400&seq=14&orientation=landscape" alt="צבעים וציפויים">
-                            <div class="hero-image-overlay">
-                                <a href="#" class="bg-primary text-white px-4 py-2 rounded-button shine-button">לדף המוצר</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Category Pills (could also be dynamic if needed, currently hardcoded for demonstration) -->
-                <div class="flex flex-wrap gap-2 mb-6" id="category-pills">
-                    <button class="glass-effect rounded-full px-4 py-2 text-sm filter-active whitespace-nowrap" data-category-pill="all">הכל</button>
-                    <!-- Other category pills can be added here or generated dynamically -->
-                </div>
-                <main>
-                    <div id="products-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-6"></div>
-                </main>
-
-                <!-- Pagination -->
-                <div class="flex justify-center mt-10">
-                    <nav class="glass-effect rounded-lg inline-flex">
-                        <a href="#" class="w-10 h-10 flex items-center justify-center text-gray-500 hover:text-primary border-l border-blue-100">
-                            <i class="ri-arrow-right-s-line"></i>
-                        </a>
-                        <a href="#" class="w-10 h-10 flex items-center justify-center pagination-active">1</a>
-                        <a href="#" class="w-10 h-10 flex items-center justify-center text-gray-700 hover:text-primary hover:bg-primary/10">2</a>
-                        <a href="#" class="w-10 h-10 flex items-center justify-center text-gray-700 hover:text-primary hover:bg-primary/10">3</a>
-                        <a href="#" class="w-10 h-10 flex items-center justify-center text-gray-700 hover:text-primary hover:bg-primary/10">4</a>
-                        <a href="#" class="w-10 h-10 flex items-center justify-center text-gray-700 hover:text-primary hover:bg-primary/10">5</a>
-                        <a href="#" class="w-10 h-10 flex items-center justify-center text-gray-500 hover:text-primary border-r border-blue-100">
-                            <i class="ri-arrow-left-s-line"></i>
-                        </a>
-                    </nav>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Product Modal -->
-    <div id="product-modal" class="fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center z-50 hidden">
-        <div class="bg-white rounded-lg shadow-lg p-6 max-w-md w-full relative">
-            <button onclick="closeModal()" class="absolute top-2 left-2 text-gray-500 hover:text-red-500 text-xl">&times;</button>
-            <img src="" alt="מוצר" class="w-full h-48 object-cover rounded mb-4 modal-image"/>
-            <h2 class="text-xl font-bold mb-2 modal-title"></h2>
-            <p class="text-gray-600 text-sm mb-2 modal-description"></p>
-            <span class="text-primary font-bold text-lg modal-price"></span>
-            <div class="mt-4 flex items-center justify-center">
-                <button onclick="addToCartFromModal()" class="bg-primary text-white px-6 py-3 rounded-button hover:bg-primary/90 transition shine-button">הוסף לעגלה</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Cart Modal -->
-    <div id="cart-modal" class="fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center z-50 hidden">
-        <div class="glass-effect rounded-lg shadow-lg p-6 max-w-lg w-full relative">
-            <button onclick="closeCartModal()" class="absolute top-2 left-2 text-gray-500 hover:text-red-500 text-xl">&times;</button>
-            <h2 class="text-2xl font-bold mb-4 text-gray-800">עגלת הקניות שלך</h2>
-            
-            <div id="cart-items" class="mb-6 max-h-60 overflow-y-auto">
-                <!-- Cart items will be loaded here by JavaScript -->
-                <p id="empty-cart-message" class="text-gray-600 text-center hidden">העגלה ריקה. התחל להוסיף מוצרים!</p>
-            </div>
-
-            <div class="mb-4">
-                <h3 class="text-lg font-bold text-gray-800 mb-2">פרטי לקוח ואספקה</h3>
-                <input type="text" id="customer-name" placeholder="שם מלא" class="w-full px-4 py-2 mb-3 rounded-button border glass-effect" required>
-                <input type="tel" id="customer-phone" placeholder="מספר טלפון" class="w-full px-4 py-2 mb-3 rounded-button border glass-effect" required>
-                <input type="text" id="customer-address" placeholder="כתובת אספקה" class="w-full px-4 py-2 mb-3 rounded-button border glass-effect">
-                <textarea id="order-notes" placeholder="הערות נוספות להזמנה (לדוגמה: מוצר נוסף, דרישות מיוחדות)" rows="3" class="w-full px-4 py-2 rounded-button border glass-effect"></textarea>
-            </div>
-            
-            <button onclick="sendOrder()" class="w-full bg-primary text-white py-3 rounded-button hover:bg-primary/90 transition shine-button">שלח הזמנה ל-WhatsApp</button>
-        </div>
-    </div>
-
-            <!-- Product Categories Tabs -->
-            <div class="mb-10 flex flex-wrap justify-center gap-2">
-                <button class="tab-button tab-active px-4 py-2 rounded-full whitespace-nowrap" data-category="all">הכל</button>
-                <button class="tab-button px-4 py-2 rounded-full bg-gray-200 text-gray-700 whitespace-nowrap" data-category="building">חומרי בניין</button>
-                <button class="tab-button px-4 py-2 rounded-full bg-gray-200 text-gray-700 whitespace-nowrap" data-category="electricity">חשמל ותאורה</button>
-                <button class="tab-button px-4 py-2 rounded-full bg-gray-200 text-gray-700 whitespace-nowrap" data-category="plumbing">אינסטלציה</button>
-                <button class="tab-button px-4 py-2 rounded-full bg-gray-200 text-gray-700 whitespace-nowrap" data-category="paint">צבעים וציפויים</button>
-                <button class="tab-button px-4 py-2 rounded-full bg-gray-200 text-gray-700 whitespace-nowrap" data-category="tools">כלי עבודה</button>
-            </div>
-            
-           
-            
-            <div class="text-center mt-10">
-                <a href="#" class="shine-button bg-primary text-white px-8 py-3 rounded-button text-lg font-semibold inline-block whitespace-nowrap">צפה בכל המוצרים</a>
-            </div>
+    <!-- Catalog Cover Section (New) -->
+    <section id="catalog-cover" class="relative h-[400px] bg-cover bg-center rounded-lg shadow-lg mb-12 flex items-center justify-center p-6"
+        style="background-image: url('https://readdy.ai/api/search-image?query=organized+warehouse+building+materials+shelves+catalog+professional+industrial+wide+shot+natural+light&width=1200&height=400&seq=10');">
+        <div class="absolute inset-0 bg-black/50 rounded-lg"></div>
+        <div class="text-center text-white z-10">
+            <h2 class="text-4xl md:text-5xl font-bold mb-4">קטלוג מוצרים עדכני</h2>
+            <p class="text-lg md:text-xl mb-8 max-w-2xl mx-auto">גלו את מגוון חומרי הבניין האיכותיים שלנו - החל מבלוקים, דרך מוצרי ברזל ועד פתרונות פינוי פסולת.</p>
+            <a href="catalog.html" class="shine-button bg-primary text-white px-8 py-4 rounded-button text-xl font-semibold hover:bg-primary/90 transition-colors">
+                לצפייה בקטלוג המלא
+                <i class="ri-arrow-left-line ml-2"></i>
+            </a>
         </div>
     </section>
 
@@ -1045,7 +934,7 @@
             </div>
             
             <div class="text-center mt-10">
-                <a href="#" class="shine-button bg-primary text-white px-8 py-3 rounded-button text-lg font-semibold inline-block whitespace-nowrap">צפה בכל המחשבונים</a>
+                <a href="#calculator" class="shine-button bg-primary text-white px-8 py-3 rounded-button text-lg font-semibold inline-block whitespace-nowrap">צפה בכל המחשבונים</a>
             </div>
         </div>
     </section>
@@ -1222,399 +1111,11 @@
             <p class="text-lg text-white/90 max-w-3xl mx-auto mb-8">אנחנו כאן לעזור לכם בכל שלב, מהתכנון ועד הביצוע. צרו קשר עוד היום ונשמח לייעץ לכם.</p>
             <div class="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-4 sm:space-x-reverse">
                 <a href="tel:0508860896" class="bg-white text-primary px-8 py-3 rounded-button text-lg font-semibold hover:bg-gray-100 transition whitespace-nowrap">התקשרו עכשיו</a>
-                <button id="open-whatsapp" class="bg-[#25D366] text-white px-8 py-3 rounded-button text-lg font-semibold hover:bg-[#25D366]/90 transition whitespace-nowrap">שלחו הודעה בוואטסאפ</button>
+                <button id="open-whatsapp-main" class="bg-[#25D366] text-white px-8 py-3 rounded-button text-lg font-semibold hover:bg-[#25D366]/90 transition whitespace-nowrap">שלחו הודעה בוואטסאפ</button>
             </div>
         </div>
     </section>
  
-            <!-- Products Grid -->
-            <div class="md:w-3/4 lg:w-4/5">
-                <!-- Category Title and Sort -->
-                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6">
-                    <h2 class="text-2xl font-bold text-gray-800 mb-3 sm:mb-0">כל המוצרים</h2>
-                    
-                    <div class="flex flex-wrap gap-2">
-                        <div class="glass-effect rounded-lg px-3 py-2 text-sm flex items-center">
-                            <span class="text-gray-700 ml-2">מיון:</span>
-                            <div class="relative">
-                                <select id="sort-select" class="bg-transparent border-none outline-none text-primary appearance-none pr-2 pl-6">
-                                    <option value="popularity">פופולריות</option>
-                                    <option value="price-asc">מחיר: מהנמוך לגבוה</option>
-                                    <option value="price-desc">מחיר: מהגבוה לנמוך</option>
-                                    <option value="newest">חדש ביותר</option>
-                                </select>
-                                <div class="absolute left-1 top-1/2 transform -translate-y-1/2 w-4 h-4 flex items-center justify-center text-primary">
-                                    <i class="ri-arrow-down-s-line"></i>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="glass-effect rounded-lg px-3 py-2 text-sm flex items-center">
-                            <span class="text-gray-700 ml-2">הצג:</span>
-                            <div class="flex items-center">
-                                <button class="w-8 h-8 flex items-center justify-center text-primary">
-                                    <i class="ri-grid-line"></i>
-                                </button>
-                                <button class="w-8 h-8 flex items-center justify-center text-gray-400">
-                                    <i class="ri-list-check"></i>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Hero Image Section -->
-                <div class="mb-8">
-                    <div class="hero-image-grid">
-                        <div class="hero-image-item glass-card">
-                            <img src="https://img.d.co.il/Umbraco/1509/795x348.3402a7cf-cb70-4066-8ed8-bf55d2795e01.png" alt="חומרי בניין">
-                            <div class="hero-image-overlay">
-                                <a href="#" class="bg-primary text-white px-4 py-2 rounded-button shine-button">לדף המוצר</a>
-                            </div>
-                        </div>
-                        <div class="hero-image-item glass-card">
-                            <img src="https://readdy.ai/api/search-image?query=Electrical%2520socket%252C%2520power%2520outlet%252C%2520electrical%2520supplies%252C%2520detailed%2520product%2520photography%2520on%2520clean%2520white%2520background%252C%2520soft%2520blue%2520lighting&width=600&height=400&seq=20&orientation=landscape" alt="חשמל ותאורה">
-                            <div class="hero-image-overlay">
-                                <a href="#" class="bg-primary text-white px-4 py-2 rounded-button shine-button">לדף המוצר</a>
-                            </div>
-                        </div>
-                        <div class="hero-image-item glass-card">
-                            <img src="https://readdy.ai/api/search-image?query=Professional%2520power%2520drill%252C%2520construction%2520tool%252C%2520detailed%2520product%2520photography%2520on%2520clean%2520white%2520background%252C%2520high%2520quality%2520tool%252C%2520soft%2520blue%2520lighting&width=600&height=400&seq=15&orientation=landscape" alt="כלי עבודה">
-                            <div class="hero-image-overlay">
-                                <a href="#" class="bg-primary text-white px-4 py-2 rounded-button shine-button">לדף המוצר</a>
-                            </div>
-                        </div>
-                        <div class="hero-image-item glass-card">
-                            <img src="https://readdy.ai/api/search-image?query=Paint%2520buckets%2520and%2520cans%252C%2520professional%2520painting%2520supplies%252C%2520various%2520colors%252C%2520clean%2520white%2520background%252C%2520detailed%2520product%2520photography%252C%2520soft%2520blue%2520lighting&width=600&height=400&seq=14&orientation=landscape" alt="צבעים וציפויים">
-                            <div class="hero-image-overlay">
-                                <a href="#" class="bg-primary text-white px-4 py-2 rounded-button shine-button">לדף המוצר</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Category Pills (could also be dynamic if needed, currently hardcoded for demonstration) -->
-                <div class="flex flex-wrap gap-2 mb-6" id="category-pills">
-                    <button class="glass-effect rounded-full px-4 py-2 text-sm filter-active whitespace-nowrap" data-category-pill="all">הכל</button>
-                    <!-- Other category pills can be added here or generated dynamically -->
-                </div>
-                <main>
-                    <div id="products-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-6"></div>
-                </main>
-
-                <!-- Pagination -->
-                <div class="flex justify-center mt-10">
-                    <nav class="glass-effect rounded-lg inline-flex">
-                        <a href="#" class="w-10 h-10 flex items-center justify-center text-gray-500 hover:text-primary border-l border-blue-100">
-                            <i class="ri-arrow-right-s-line"></i>
-                        </a>
-                        <a href="#" class="w-10 h-10 flex items-center justify-center pagination-active">1</a>
-                        <a href="#" class="w-10 h-10 flex items-center justify-center text-gray-700 hover:text-primary hover:bg-primary/10">2</a>
-                        <a href="#" class="w-10 h-10 flex items-center justify-center text-gray-700 hover:text-primary hover:bg-primary/10">3</a>
-                        <a href="#" class="w-10 h-10 flex items-center justify-center text-gray-700 hover:text-primary hover:bg-primary/10">4</a>
-                        <a href="#" class="w-10 h-10 flex items-center justify-center text-gray-700 hover:text-primary hover:bg-primary/10">5</a>
-                        <a href="#" class="w-10 h-10 flex items-center justify-center text-gray-500 hover:text-primary border-r border-blue-100">
-                            <i class="ri-arrow-left-s-line"></i>
-                        </a>
-                    </nav>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Product Modal -->
-    <div id="product-modal" class="fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center z-50 hidden">
-        <div class="bg-white rounded-lg shadow-lg p-6 max-w-md w-full relative">
-            <button onclick="closeModal()" class="absolute top-2 left-2 text-gray-500 hover:text-red-500 text-xl">&times;</button>
-            <img src="" alt="מוצר" class="w-full h-48 object-cover rounded mb-4 modal-image"/>
-            <h2 class="text-xl font-bold mb-2 modal-title"></h2>
-            <p class="text-gray-600 text-sm mb-2 modal-description"></p>
-            <span class="text-primary font-bold text-lg modal-price"></span>
-            <div class="mt-4 flex items-center justify-center">
-                <button onclick="addToCartFromModal()" class="bg-primary text-white px-6 py-3 rounded-button hover:bg-primary/90 transition shine-button">הוסף לעגלה</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Cart Modal -->
-    <div id="cart-modal" class="fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center z-50 hidden">
-        <div class="glass-effect rounded-lg shadow-lg p-6 max-w-lg w-full relative">
-            <button onclick="closeCartModal()" class="absolute top-2 left-2 text-gray-500 hover:text-red-500 text-xl">&times;</button>
-            <h2 class="text-2xl font-bold mb-4 text-gray-800">עגלת הקניות שלך</h2>
-            
-            <div id="cart-items" class="mb-6 max-h-60 overflow-y-auto">
-                <!-- Cart items will be loaded here by JavaScript -->
-                <p id="empty-cart-message" class="text-gray-600 text-center hidden">העגלה ריקה. התחל להוסיף מוצרים!</p>
-            </div>
-
-            <div class="mb-4">
-                <h3 class="text-lg font-bold text-gray-800 mb-2">פרטי לקוח ואספקה</h3>
-                <input type="text" id="customer-name" placeholder="שם מלא" class="w-full px-4 py-2 mb-3 rounded-button border glass-effect" required>
-                <input type="tel" id="customer-phone" placeholder="מספר טלפון" class="w-full px-4 py-2 mb-3 rounded-button border glass-effect" required>
-                <input type="text" id="customer-address" placeholder="כתובת אספקה" class="w-full px-4 py-2 mb-3 rounded-button border glass-effect">
-                <textarea id="order-notes" placeholder="הערות נוספות להזמנה (לדוגמה: מוצר נוסף, דרישות מיוחדות)" rows="3" class="w-full px-4 py-2 rounded-button border glass-effect"></textarea>
-            </div>
-            
-            <button onclick="sendOrder()" class="w-full bg-primary text-white py-3 rounded-button hover:bg-primary/90 transition shine-button">שלח הזמנה ל-WhatsApp</button>
-        </div>
-    </div>
-
-    <!-- Newsletter -->
-    <section class="py-12 glass-effect mt-10">
-        <div class="container mx-auto px-4">
-            <div class="max-w-3xl mx-auto text-center">
-                <h2 class="text-2xl md:text-3xl font-bold mb-4 text-gray-800">הישארו מעודכנים</h2>
-                <p class="text-gray-600 mb-6">הירשמו לניוזלטר שלנו וקבלו עדכונים על מבצעים, מוצרים חדשים וטיפים מקצועיים.</p>
-                <div class="flex flex-col sm:flex-row gap-3 justify-center">
-                    <input type="email" placeholder="הזינו את כתובת המייל שלכם" class="px-4 py-3 rounded-button border-none glass-effect w-full sm:w-96">
-                    <button class="bg-primary text-white px-6 py-3 rounded-button hover:bg-primary/90 transition whitespace-nowrap shine-button">הרשמה</button>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="bg-gray-800 text-white py-12">
-        <div class="container mx-auto px-4">
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
-                <!-- Column 1 - About -->
-                <div>
-                    <h3 class="text-xl font-bold mb-4">אודות ח.סבן</h3>
-                    <p class="text-gray-300 mb-4">ח.סבן חומרי בניין 1994 בע"מ הינה חברה משפחתית המספקת חומרי בניין איכותיים מאז 1994. אנו מתמחים במגוון רחב של מוצרים לענף הבנייה.</p>
-                    <div class="flex space-x-4 space-x-reverse">
-                        <a href="#" class="text-gray-300 hover:text-white">
-                            <div class="w-8 h-8 flex items-center justify-center">
-                                <i class="ri-facebook-fill"></i>
-                            </div>
-                        </a>
-                        <a href="#" class="text-gray-300 hover:text-white">
-                            <div class="w-8 h-8 flex items-center justify-center">
-                                <i class="ri-instagram-line"></i>
-                            </div>
-                        </a>
-                        <a href="#" class="text-gray-300 hover:text-white">
-                            <div class="w-8 h-8 flex items-center justify-center">
-                                <i class="ri-whatsapp-line"></i>
-                            </div>
-                        </a>
-                    </div>
-                </div>
-                
-                <!-- Column 2 - Quick Links -->
-                <div>
-                    <h3 class="text-xl font-bold mb-4">קישורים מהירים</h3>
-                    <ul class="space-y-2">
-                        <li><a href="#" class="text-gray-300 hover:text-white">דף הבית</a></li>
-                        <li><a href="#vision" class="text-gray-300 hover:text-white">החזון שלנו</a></li>
-                        <li><a href="#products" class="text-gray-300 hover:text-white">מוצרים</a></li>
-                        <li><a href="#calculator" class="text-gray-300 hover:text-white">מחלקת חישובים</a></li>
-                        <li><a href="#branches" class="text-gray-300 hover:text-white">סניפים</a></li>
-                        <li><a href="#testimonials" class="text-gray-300 hover:text-white">המלצות</a></li>
-                    </ul>
-                </div>
-                
-                <!-- Column 3 - Categories -->
-                <div>
-                    <h3 class="text-xl font-bold mb-4">קטגוריות מוצרים</h3>
-                    <ul class="space-y-2">
-                        <li><a href="#" class="text-gray-300 hover:text-white">חומרי בניין</a></li>
-                        <li><a href="#" class="text-gray-300 hover:text-white">חשמל ותאורה</a></li>
-                        <li><a href="#" class="text-gray-300 hover:text-white">אינסטלציה</a></li>
-                        <li><a href="#" class="text-gray-300 hover:text-white">צבעים וציפויים</a></li>
-                        <li><a href="#" class="text-gray-300 hover:text-white">כלי עבודה</a></li>
-                        <li><a href="#" class="text-gray-300 hover:text-white">בטיחות בעבודה</a></li>
-                    </ul>
-                </div>
-                
-                <!-- Column 4 - Contact -->
-                <div>
-                    <h3 class="text-xl font-bold mb-4">צור קשר</h3>
-                    <ul class="space-y-3">
-                        <li class="flex items-start">
-                            <div class="w-5 h-5 flex items-center justify-center text-primary mt-1">
-                                <i class="ri-map-pin-line"></i>
-                            </div>
-                            <span class="mr-2 text-gray-300">רחוב התלמיד 6, הוד השרון</span>
-                        </li>
-                        <li class="flex items-start">
-                            <div class="w-5 h-5 flex items-center justify-center text-primary mt-1">
-                                <i class="ri-phone-line"></i>
-                            </div>
-                            <span class="mr-2 text-gray-300">09-7408854</span>
-                        </li>
-                        <li class="flex items-start">
-                            <div class="w-5 h-5 flex items-center justify-center text-primary mt-1">
-                                <i class="ri-mail-line"></i>
-                            </div>
-                            <span class="mr-2 text-gray-300">info@hsaban.co.il</span>
-                        </li>
-                        <li class="flex items-start">
-                            <div class="w-5 h-5 flex items-center justify-center text-primary mt-1">
-                                <i class="ri-time-line"></i>
-                            </div>
-                            <div class="mr-2 text-gray-300">
-                                <p>ימים א'-ה': 07:00-17:00</p>
-                                <p>יום ו': 07:00-13:00</p>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-            
-            <div class="border-t border-gray-700 mt-8 pt-8 flex flex-col md:flex-row justify-between items-center">
-                <p class="text-gray-400 text-sm mb-4 md:mb-0">© 2025 ח.סבן חומרי בניין 1994 בע"מ. כל הזכויות שמורות.</p>
-                <div class="flex items-center space-x-4 space-x-reverse">
-                    <div class="w-8 h-8 flex items-center justify-center text-gray-400">
-                        <i class="ri-visa-line ri-lg"></i>
-                    </div>
-                    <div class="w-8 h-8 flex items-center justify-center text-gray-400">
-                        <i class="ri-mastercard-line ri-lg"></i>
-                    </div>
-                    <div class="w-8 h-8 flex items-center justify-center text-gray-400">
-                        <i class="ri-paypal-line ri-lg"></i>
-                    </div>
-                    <div class="w-8 h-8 flex items-center justify-center text-gray-400">
-                        <i class="ri-bank-card-line ri-lg"></i>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </footer>
-
-    <!-- WhatsApp Chat -->
-    <div class="whatsapp-chat">
-        <button id="whatsapp-button" class="w-16 h-16 bg-[#25D366] rounded-full flex items-center justify-center shadow-lg hover:bg-[#22c15e] transition-colors">
-            <div class="w-8 h-8 flex items-center justify-center text-white">
-                <i class="ri-whatsapp-line ri-2x"></i>
-            </div>
-        </button>
-        
-        <div id="chat-container" class="chat-container">
-            <div class="chat-header">
-                <div class="flex items-center">
-                    <div class="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center">
-                        <div class="w-6 h-6 flex items-center justify-center text-white">
-                            <i class="ri-customer-service-2-line"></i>
-                        </div>
-                    </div>
-                    <div class="mr-3">
-                        <h3 class="font-bold">שירות לקוחות ח.סבן</h3>
-                        <p class="text-xs text-white/80">זמן תגובה: בדרך כלל תוך שעה</p>
-                    </div>
-                </div>
-            </div>
-            
-            <div id="chat-body" class="chat-body flex flex-col">
-                <div class="chat-message received">
-                    <p>שלום! כיצד אוכל לעזור לך היום?</p>
-                </div>
-                
-                <div class="typing-indicator hidden" id="typing-indicator">
-                    <div class="typing-dot"></div>
-                    <div class="typing-dot"></div>
-                    <div class="typing-dot"></div>
-                </div>
-            </div>
-            
-            <div class="chat-footer">
-                <input type="text" id="chat-input" class="chat-input" placeholder="הקלד הודעה...">
-                <button id="send-message" class="bg-[#25D366] text-white w-10 h-10 rounded-full flex items-center justify-center">
-                    <div class="w-5 h-5 flex items-center justify-center">
-                        <i class="ri-send-plane-fill"></i>
-                    </div>
-                </button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Scripts -->
-    <script id="mobile-menu-script">
-        document.addEventListener('DOMContentLoaded', function() {
-            const mobileMenuButton = document.getElementById('mobile-menu-button');
-            const mobileMenu = document.getElementById('mobile-menu');
-            
-            mobileMenuButton.addEventListener('click', function() {
-                mobileMenu.classList.toggle('hidden');
-            });
-            
-            // Close menu when clicking on a link
-            const mobileMenuLinks = mobileMenu.querySelectorAll('a');
-            mobileMenuLinks.forEach(link => {
-                link.addEventListener('click', function() {
-                    mobileMenu.classList.add('hidden');
-                });
-            });
-        });
-    </script>
-    
-    <script id="product-tabs-script">
-        document.addEventListener('DOMContentLoaded', function() {
-            const tabButtons = document.querySelectorAll('.tab-button');
-            const productCards = document.querySelectorAll('.product-card');
-            
-            tabButtons.forEach(button => {
-                button.addEventListener('click', function() {
-                    // Remove active class from all buttons
-                    tabButtons.forEach(btn => {
-                        btn.classList.remove('tab-active');
-                        btn.classList.add('bg-gray-200', 'text-gray-700');
-                    });
-                    
-                    // Add active class to clicked button
-                    this.classList.add('tab-active');
-                    this.classList.remove('bg-gray-200', 'text-gray-700');
-                    
-                    const category = this.dataset.category;
-                    
-                    // Show/hide products based on category
-                    productCards.forEach(card => {
-                        if (category === 'all' || card.dataset.category === category) {
-                            card.style.display = 'block';
-                        } else {
-                            card.style.display = 'none';
-                        }
-                    });
-                });
-            });
-        });
-    </script>
-        <!-- Product Modal -->
-    <div id="product-modal" class="fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center z-50 hidden">
-        <div class="bg-white rounded-lg shadow-lg p-6 max-w-md w-full relative">
-            <button onclick="closeModal()" class="absolute top-2 left-2 text-gray-500 hover:text-red-500 text-xl">&times;</button>
-            <img src="" alt="מוצר" class="w-full h-48 object-cover rounded mb-4 modal-image"/>
-            <h2 class="text-xl font-bold mb-2 modal-title"></h2>
-            <p class="text-gray-600 text-sm mb-2 modal-description"></p>
-            <span class="text-primary font-bold text-lg modal-price"></span>
-            <div class="mt-4 flex items-center justify-center">
-                <button onclick="addToCartFromModal()" class="bg-primary text-white px-6 py-3 rounded-button hover:bg-primary/90 transition shine-button">הוסף לעגלה</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Cart Modal -->
-    <div id="cart-modal" class="fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center z-50 hidden">
-        <div class="glass-effect rounded-lg shadow-lg p-6 max-w-lg w-full relative">
-            <button onclick="closeCartModal()" class="absolute top-2 left-2 text-gray-500 hover:text-red-500 text-xl">&times;</button>
-            <h2 class="text-2xl font-bold mb-4 text-gray-800">עגלת הקניות שלך</h2>
-            
-            <div id="cart-items" class="mb-6 max-h-60 overflow-y-auto">
-                <!-- Cart items will be loaded here by JavaScript -->
-                <p id="empty-cart-message" class="text-gray-600 text-center hidden">העגלה ריקה. התחל להוסיף מוצרים!</p>
-            </div>
-
-            <div class="mb-4">
-                <h3 class="text-lg font-bold text-gray-800 mb-2">פרטי לקוח ואספקה</h3>
-                <input type="text" id="customer-name" placeholder="שם מלא" class="w-full px-4 py-2 mb-3 rounded-button border glass-effect" required>
-                <input type="tel" id="customer-phone" placeholder="מספר טלפון" class="w-full px-4 py-2 mb-3 rounded-button border glass-effect" required>
-                <input type="text" id="customer-address" placeholder="כתובת אספקה" class="w-full px-4 py-2 mb-3 rounded-button border glass-effect">
-                <textarea id="order-notes" placeholder="הערות נוספות להזמנה (לדוגמה: מוצר נוסף, דרישות מיוחדות)" rows="3" class="w-full px-4 py-2 rounded-button border glass-effect"></textarea>
-            </div>
-            
-            <button onclick="sendOrder()" class="w-full bg-primary text-white py-3 rounded-button hover:bg-primary/90 transition shine-button">שלח הזמנה ל-WhatsApp</button>
-        </div>
-    </div>
-
     <!-- Newsletter -->
     <section class="py-12 glass-effect mt-10">
         <div class="container mx-auto px-4">
@@ -1660,12 +1161,12 @@
                 <div>
                     <h3 class="text-xl font-bold mb-4">קישורים מהירים</h3>
                     <ul class="space-y-2">
-                        <li><a href="https://readdy.ai/home/20fb88f3-f689-4ee4-95ee-53c5efe8bc7d/f195f37e-9e34-4662-a971-05a152507a0f" data-readdy="true" class="text-white/90 hover:text-white">דף הבית</a></li>
-                        <li><a href="#" class="text-white/90 hover:text-white">החזון שלנו</a></li>
-                        <li><a href="#" class="text-white/90 hover:text-white">מוצרים</a></li>
-                        <li><a href="#" class="text-white/90 hover:text-white">מחלקת חישובים</a></li>
-                        <li><a href="#" class="text-white/90 hover:text-white">סניפים</a></li>
-                        <li><a href="#" class="text-white/90 hover:text-white">המלצות</a></li>
+                        <li><a href="index.html" class="text-white/90 hover:text-white">דף הבית</a></li>
+                        <li><a href="#vision" class="text-white/90 hover:text-white">החזון שלנו</a></li>
+                        <li><a href="catalog.html" class="text-white/90 hover:text-white">מוצרים</a></li>
+                        <li><a href="#calculator" class="text-white/90 hover:text-white">מחלקת חישובים</a></li>
+                        <li><a href="#branches" class="text-white/90 hover:text-white">סניפים</a></li>
+                        <li><a href="#testimonials" class="text-white/90 hover:text-white">המלצות</a></li>
                     </ul>
                 </div>
                 
@@ -1673,12 +1174,12 @@
                 <div>
                     <h3 class="text-xl font-bold mb-4">קטגוריות מוצרים</h3>
                     <ul class="space-y-2">
-                        <li><a href="#" class="text-white/90 hover:text-white">חומרי בניין</a></li>
-                        <li><a href="#" class="text-white/90 hover:text-white">חשמל ותאורה</a></li>
-                        <li><a href="#" class="text-white/90 hover:text-white">אינסטלציה</a></li>
-                        <li><a href="#" class="text-white/90 hover:text-white">צבעים וציפויים</a></li>
-                        <li><a href="#" class="text-white/90 hover:text-white">כלי עבודה</a></li>
-                        <li><a href="#" class="text-white/90 hover:text-white">בטיחות בעבודה</a></li>
+                        <li><a href="catalog.html" class="text-white/90 hover:text-white">חומרי בניין</a></li>
+                        <li><a href="catalog.html" class="text-white/90 hover:text-white">חשמל ותאורה</a></li>
+                        <li><a href="catalog.html" class="text-white/90 hover:text-white">אינסטלציה</a></li>
+                        <li><a href="catalog.html" class="text-white/90 hover:text-white">צבעים וציפויים</a></li>
+                        <li><a href="catalog.html" class="text-white/90 hover:text-white">כלי עבודה</a></li>
+                        <li><a href="catalog.html" class="text-white/90 hover:text-white">בטיחות בעבודה</a></li>
                     </ul>
                 </div>
                 
@@ -1742,23 +1243,54 @@
         <i class="ri-arrow-up-line ri-lg"></i>
     </button>
 
-    <!-- Scripts -->
-    <script id="main-scripts">
-        // Global variables for cart and product data
-        const cart = [];
-        let currentProductForModal = null; // Stores product details when modal is opened
-        let allProducts = []; // Stores all fetched products for filtering
-        let filteredProducts = []; // Stores products after applying filters
+    <!-- WhatsApp Chat -->
+    <div class="whatsapp-chat">
+        <button id="whatsapp-button" class="w-16 h-16 bg-[#25D366] rounded-full flex items-center justify-center shadow-lg hover:bg-[#22c15e] transition-colors">
+            <div class="w-8 h-8 flex items-center justify-center text-white">
+                <i class="ri-whatsapp-line ri-2x"></i>
+            </div>
+        </button>
+        
+        <div id="chat-container" class="chat-container">
+            <div class="chat-header">
+                <div class="flex items-center">
+                    <div class="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center">
+                        <div class="w-6 h-6 flex items-center justify-center text-white">
+                            <i class="ri-customer-service-2-line"></i>
+                        </div>
+                    </div>
+                    <div class="mr-3">
+                        <h3 class="font-bold">שירות לקוחות ח.סבן</h3>
+                        <p class="text-xs text-white/80">זמן תגובה: בדרך כלל תוך שעה</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div id="chat-body" class="chat-body flex flex-col">
+                <div class="chat-message received">
+                    <p>שלום! כיצד אוכל לעזור לך היום?</p>
+                </div>
+                
+                <div class="typing-indicator hidden" id="typing-indicator">
+                    <div class="typing-dot"></div>
+                    <div class="typing-dot"></div>
+                    <div class="typing-dot"></div>
+                </div>
+            </div>
+            
+            <div class="chat-footer">
+                <input type="text" id="chat-input" class="chat-input" placeholder="הקלד הודעה...">
+                <button id="send-message" class="bg-[#25D366] text-white w-10 h-10 rounded-full flex items-center justify-center">
+                    <div class="w-5 h-5 flex items-center justify-center">
+                        <i class="ri-send-plane-fill"></i>
+                    </div>
+                </button>
+            </div>
+        </div>
+    </div>
 
-        // Object to hold current filter selections
-        let currentFilters = {
-            categories: ['all'], // Default to 'all' categories
-            price: 1000, // Default max price
-            availability: ['במלאי'], // Default to 'במלאי', assuming the sheet uses this string
-            brands: [] // Default to no specific brand filter
-        };
-
-        // Event listener for DOM content loaded
+    <!-- Main page scripts (only for features on this page) -->
+    <script>
         document.addEventListener('DOMContentLoaded', function() {
             // Mobile menu toggle logic
             const mobileMenuButton = document.getElementById('mobile-menu-button');
@@ -1773,16 +1305,6 @@
                 link.addEventListener('click', function() {
                     mobileMenu.classList.add('hidden');
                 });
-            });
-
-            // Price range slider logic
-            const priceRange = document.getElementById('price-range');
-            const priceValue = document.getElementById('price-value');
-            
-            priceRange.addEventListener('input', function() {
-                priceValue.textContent = '₪' + this.value;
-                currentFilters.price = parseInt(this.value); // Update filter value
-                applyFilters(); // Apply filters immediately on price change
             });
 
             // Back to top button logic
@@ -1805,444 +1327,22 @@
                 });
             });
 
-            // Fetch products from Google Sheet
-            fetch('https://script.google.com/macros/s/AKfycbyzdkvb4wOMILaPIq-oalk6IRA7UKxCfcsRYW0VPjF5LHO3qYLewgicT8Ua6GCdQnTn/exec')
-                .then(res => res.json())
-                .then(products => {
-                    allProducts = products; // Store all products
-                    filteredProducts = [...allProducts]; // Initialize filtered products
-                    renderProducts(filteredProducts); // Render all products initially
-                    populateCategories(allProducts); // Populate categories from fetched data
-                    addFilterListeners(); // Attach listeners for availability and brands
-                })
-                .catch(err => {
-                    console.error("שגיאה בטעינת מוצרים:", err);
-                    document.getElementById('products-grid').innerHTML = "<p class='text-red-600'>שגיאה בטעינת מוצרים. נסה שוב מאוחר יותר.</p>";
-                });
-
-            // Attach event listeners for apply and clear filters buttons
-            document.getElementById('apply-filters-btn').addEventListener('click', applyFilters);
-            document.getElementById('clear-filters-btn').addEventListener('click', clearAllFilters);
-
-            // Attach event listener for sort select
-            document.getElementById('sort-select').addEventListener('change', applyFilters);
-        });
-
-        /**
-         * Renders products to the products grid.
-         * @param {Array} productsToRender - The array of products to display.
-         */
-        function renderProducts(productsToRender) {
-            const grid = document.getElementById('products-grid');
-            if (productsToRender.length === 0) {
-                grid.innerHTML = "<p class='text-gray-600 text-center col-span-full'>לא נמצאו מוצרים התואמים לסינון.</p>";
-                return;
-            }
-            grid.innerHTML = productsToRender.map(prod => `
-                <div onclick="openModal('${encodeURIComponent(prod.title)}', '${encodeURIComponent(prod.description)}', '${encodeURIComponent(prod.image)}', '${encodeURIComponent(prod["price "] || prod.price || "—")}', '${encodeURIComponent(JSON.stringify(prod))}')"
-                    class="glass-card product-card cursor-pointer rounded-lg overflow-hidden shadow-md transition hover:shadow-xl bg-white">
-                    <div class="image-transition h-56 relative">
-                        <img src="${prod.image}" alt="${prod.title}" class="w-full h-full object-cover object-top">
-                        <div class="absolute inset-0 bg-black/10 opacity-0 hover:opacity-100 transition duration-300"></div>
-                    </div>
-                    <div class="p-4">
-                        <div class="flex justify-between items-start mb-2">
-                            <h3 class="text-lg font-bold text-gray-800">${prod.title}</h3>
-                            <span class="bg-primary/10 text-primary text-xs px-2 py-1 rounded-full">${prod.availability || 'במלאי'}</span>
-                        </div>
-                        <p class="text-gray-600 text-sm mb-3">${prod.description}</p>
-                        <div class="flex justify-between items-center">
-                            <span class="text-primary font-bold">₪${prod["price "] || prod.price || "—"}</span>
-                            <button onclick='event.stopPropagation(); addToCart(${JSON.stringify(prod)})' class="bg-primary text-white px-4 py-2 rounded-button text-sm hover:bg-primary/90 transition shine-button">
-                                הוסף לעגלה
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            `).join('');
-        }
-
-        /**
-         * Populates the category filter list in the sidebar.
-         * Assumes `product.category` field exists in the fetched data.
-         * @param {Array} products - The full list of products.
-         */
-        function populateCategories(products) {
-            const categoriesContainer = document.getElementById('sidebar-categories');
-            const categories = new Set();
-            
-            // Collect unique categories, excluding 'all' which is hardcoded
-            products.forEach(p => {
-                if (p.category && p.category !== 'all') { // Ensure 'category' column exists
-                    categories.add(p.category);
-                }
-            });
-
-            // Clear existing categories (except 'הכל')
-            categoriesContainer.innerHTML = `
-                <li>
-                    <label class="custom-checkbox">
-                        <input type="checkbox" data-category="all" checked>
-                        <span class="checkmark ml-2"></span>
-                        <span class="text-gray-800">הכל</span>
-                    </label>
-                </li>
-            `; 
-            
-            // Add dynamic categories
-            categories.forEach(cat => {
-                categoriesContainer.innerHTML += `
-                    <li>
-                        <label class="custom-checkbox">
-                            <input type="checkbox" data-category="${cat}">
-                            <span class="checkmark ml-2"></span>
-                            <span class="text-gray-800">${cat}</span>
-                        </label>
-                    </li>
-                `;
-            });
-
-            // Add event listeners for dynamic category checkboxes
-            addCategoryFilterListeners();
-        }
-
-        /**
-         * Attaches event listeners to category checkboxes.
-         */
-        function addCategoryFilterListeners() {
-            document.querySelectorAll('#sidebar-categories input[type="checkbox"]').forEach(checkbox => {
-                checkbox.addEventListener('change', function() {
-                    const category = this.dataset.category;
-                    if (category === 'all') {
-                        // If 'all' is selected, deselect all other categories
-                        document.querySelectorAll('#sidebar-categories input[type="checkbox"]').forEach(cb => {
-                            cb.checked = (cb === this);
-                        });
-                        currentFilters.categories = ['all'];
-                    } else {
-                        // If a specific category is selected, deselect 'all'
-                        const allCheckbox = document.querySelector('#sidebar-categories input[data-category="all"]');
-                        if (allCheckbox) allCheckbox.checked = false;
-
-                        if (this.checked) {
-                            currentFilters.categories.push(category);
-                        } else {
-                            currentFilters.categories = currentFilters.categories.filter(c => c !== category);
-                        }
-                        // If no specific category is selected, re-select 'all'
-                        if (currentFilters.categories.length === 0) {
-                            allCheckbox.checked = true;
-                            currentFilters.categories.push('all');
-                        }
-                    }
-                    applyFilters();
-                });
-            });
-        }
-
-        /**
-         * Attaches event listeners to availability and brand checkboxes.
-         */
-        function addFilterListeners() {
-            // Availability filters
-            document.querySelectorAll('#sidebar-availability input[type="checkbox"]').forEach(checkbox => {
-                checkbox.addEventListener('change', function() {
-                    const availability = this.dataset.availability;
-                    if (this.checked) {
-                        currentFilters.availability.push(availability);
-                    } else {
-                        currentFilters.availability = currentFilters.availability.filter(a => a !== availability);
-                    }
-                    applyFilters();
-                });
-            });
-
-            // Brand filters
-            document.querySelectorAll('#sidebar-brands input[type="checkbox"]').forEach(checkbox => {
-                checkbox.addEventListener('change', function() {
-                    const brand = this.dataset.brand;
-                    if (this.checked) {
-                        currentFilters.brands.push(brand);
-                    } else {
-                        currentFilters.brands = currentFilters.brands.filter(b => b !== brand);
-                    }
-                    applyFilters();
-                });
-            });
-        }
-
-        /**
-         * Applies all active filters to the product list and re-renders the grid.
-         */
-        function applyFilters() {
-            let tempFilteredProducts = [...allProducts]; // Start with all products
-
-            // Filter by categories
-            if (!currentFilters.categories.includes('all') && currentFilters.categories.length > 0) {
-                tempFilteredProducts = tempFilteredProducts.filter(p => p.category && currentFilters.categories.includes(p.category));
-            }
-
-            // Filter by price
-            tempFilteredProducts = tempFilteredProducts.filter(p => {
-                const price = parseFloat(p["price "] || p.price);
-                return !isNaN(price) && price <= currentFilters.price;
-            });
-
-            // Filter by availability
-            if (currentFilters.availability.length > 0) {
-                tempFilteredProducts = tempFilteredProducts.filter(p => p.availability && currentFilters.availability.includes(p.availability));
-            }
-
-            // Filter by brands
-            if (currentFilters.brands.length > 0) {
-                tempFilteredProducts = tempFilteredProducts.filter(p => p.brand && currentFilters.brands.includes(p.brand));
-            }
-
-            // Apply sorting
-            const sortOrder = document.getElementById('sort-select').value;
-            if (sortOrder === 'price-asc') {
-                tempFilteredProducts.sort((a, b) => (parseFloat(a["price "] || a.price) || 0) - (parseFloat(b["price "] || b.price) || 0));
-            } else if (sortOrder === 'price-desc') {
-                tempFilteredProducts.sort((a, b) => (parseFloat(b["price "] || b.price) || 0) - (parseFloat(a["price "] || a.price) || 0));
-            }
-            // 'popularity' and 'newest' would require corresponding data fields and sorting logic
-
-            filteredProducts = tempFilteredProducts; // Update global filtered list
-            renderProducts(filteredProducts); // Render filtered products
-        }
-
-        /**
-         * Resets all filters to their default states and re-applies them.
-         */
-        function clearAllFilters() {
-            // Reset filter object
-            currentFilters = {
-                categories: ['all'],
-                price: 1000,
-                availability: ['במלאי'],
-                brands: []
-            };
-
-            // Reset UI elements
-            // Categories checkboxes
-            document.querySelectorAll('#sidebar-categories input[type="checkbox"]').forEach(cb => {
-                cb.checked = (cb.dataset.category === 'all');
-            });
-            // Price range slider
-            const priceRange = document.getElementById('price-range');
-            const priceValue = document.getElementById('price-value');
-            priceRange.value = 1000;
-            priceValue.textContent = '₪1000';
-            // Availability checkboxes
-            document.querySelectorAll('#sidebar-availability input[type="checkbox"]').forEach(cb => {
-                cb.checked = (cb.dataset.availability === 'במלאי');
-            });
-            // Brands checkboxes
-            document.querySelectorAll('#sidebar-brands input[type="checkbox"]').forEach(cb => {
-                cb.checked = false;
-            });
-            // Sort select
-            document.getElementById('sort-select').value = 'popularity';
-
-
-            applyFilters(); // Apply cleared filters
-        }
-
-
-        // Product Modal functions
-        /**
-         * Opens the product modal with details of a specific product.
-         * @param {string} title - Product title (URI encoded).
-         * @param {string} description - Product description (URI encoded).
-         * @param {string} image - Product image URL (URI encoded).
-         * @param {string} price - Product price (URI encoded).
-         * @param {string} productJson - JSON string of the full product object (URI encoded).
-         */
-        function openModal(title, description, image, price, productJson) {
-            currentProductForModal = JSON.parse(decodeURIComponent(productJson));
-            document.querySelector('#product-modal .modal-title').innerText = decodeURIComponent(title);
-            document.querySelector('#product-modal .modal-description').innerText = decodeURIComponent(description);
-            document.querySelector('#product-modal .modal-image').src = decodeURIComponent(image);
-            document.querySelector('#product-modal .modal-price').innerText = "₪" + decodeURIComponent(price);
-            document.getElementById('product-modal').classList.remove('hidden');
-        }
-
-        /**
-         * Closes the product modal.
-         */
-        function closeModal() {
-            document.getElementById('product-modal').classList.add('hidden');
-            currentProductForModal = null;
-        }
-
-        // Cart functions
-        /**
-         * Adds a product to the cart or increments its quantity if already present.
-         * @param {Object} product - The product object to add.
-         */
-        function addToCart(product) {
-            const existingProduct = cart.find(item => item.title === product.title);
-            if (existingProduct) {
-                existingProduct.quantity = (existingProduct.quantity || 1) + 1;
-            } else {
-                cart.push({ ...product, quantity: 1 });
-            }
-            updateCartUI(); // Update cart display and count
-        }
-
-        /**
-         * Adds the product currently displayed in the modal to the cart.
-         */
-        function addToCartFromModal() {
-            if (currentProductForModal) {
-                addToCart(currentProductForModal);
-                closeModal();
-            }
-        }
-
-        /**
-         * Updates the cart icon count and re-renders cart items in the cart modal.
-         */
-        function updateCartUI() {
-            const cartCount = document.getElementById('cart-count');
-            cartCount.textContent = cart.reduce((sum, item) => sum + (item.quantity || 1), 0);
-            renderCartItems(); // Re-render cart items in modal
-        }
-
-        /**
-         * Renders the list of items in the cart modal.
-         */
-        function renderCartItems() {
-            const cartItemsContainer = document.getElementById('cart-items');
-            if (cart.length === 0) {
-                cartItemsContainer.innerHTML = `<p id="empty-cart-message" class="text-gray-600 text-center">העגלה ריקה. התחל להוסיף מוצרים!</p>`;
-            } else {
-                cartItemsContainer.innerHTML = cart.map((item, index) => `
-                    <div class="flex justify-between items-center bg-gray-50 p-3 rounded-md mb-2 glass-effect">
-                        <div class="flex-1">
-                            <h4 class="font-semibold text-gray-800">${item.title}</h4>
-                            <p class="text-sm text-gray-600">₪${item["price "] || item.price}</p>
-                        </div>
-                        <div class="flex items-center">
-                            <button onclick="updateQuantity(${index}, -1)" class="bg-blue-100 text-primary px-2 py-1 rounded-sm mr-2">-</button>
-                            <span class="font-bold">${item.quantity || 1}</span>
-                            <button onclick="updateQuantity(${index}, 1)" class="bg-blue-100 text-primary px-2 py-1 rounded-sm ml-2">+</button>
-                            <button onclick="removeFromCart(${index})" class="text-red-500 ml-4"><i class="ri-delete-bin-line"></i></button>
-                        </div>
-                    </div>
-                `).join('');
-            }
-        }
-
-        /**
-         * Updates the quantity of a product in the cart.
-         * If quantity becomes 0 or less, the item is removed.
-         * @param {number} index - The index of the product in the cart array.
-         * @param {number} change - The amount to change the quantity by (+1 or -1).
-         */
-        function updateQuantity(index, change) {
-            if (cart[index]) {
-                cart[index].quantity = (cart[index].quantity || 1) + change;
-                if (cart[index].quantity <= 0) {
-                    cart.splice(index, 1); // Remove if quantity is zero or less
-                }
-                updateCartUI();
-            }
-        }
-
-        /**
-         * Removes a product from the cart.
-         * @param {number} index - The index of the product in the cart array.
-         */
-        function removeFromCart(index) {
-            cart.splice(index, 1);
-            updateCartUI();
-        }
-
-        /**
-         * Opens the cart modal.
-         * @param {Event} event - The click event.
-         */
-        function openCartModal(event) {
-            event.preventDefault(); // Prevent default link behavior
-            renderCartItems();
-            document.getElementById('cart-modal').classList.remove('hidden');
-        }
-
-        /**
-         * Closes the cart modal.
-         */
-        function closeCartModal() {
-            document.getElementById('cart-modal').classList.add('hidden');
-        }
-
-        /**
-         * Constructs and sends the order message via WhatsApp.
-         */
-        function sendOrder() {
-            const name = document.getElementById('customer-name').value;
-            const phone = document.getElementById('customer-phone').value;
-            const address = document.getElementById('customer-address').value;
-            const notes = document.getElementById('order-notes').value;
-
-            if (!name || !phone) {
-                // Using alert for simplicity, consider a custom modal/message for better UX
-                alert("אנא מלא שם מלא ומספר טלפון.");
-                return;
-            }
-
-            let message = `📦 *הזמנה חדשה מח.סבן חומרי בניין*\n\n`;
-            message += `👤 *פרטי לקוח:*\n`;
-            message += `שם: ${name}\n`;
-            message += `טלפון: ${phone}\n`;
-            if (address) {
-                message += `כתובת: ${address}\n`;
-            }
-            message += `\n🧾 *מוצרים:*\n`;
-
-            if (cart.length === 0) {
-                message += `❗ לא נבחרו מוצרים\n`;
-            } else {
-                cart.forEach(item => {
-                    message += `✅ ${item.title} - ${item.quantity || 1} יח' - ₪${item["price "] || item.price}\n`;
-                });
-            }
-
-            if (notes) {
-                message += `\n📝 *הערות להזמנה:*\n${notes}\n`;
-            }
-
-            const encodedMessage = encodeURIComponent(message);
-            window.open(`https://wa.me/972508860896?text=${encodedMessage}`, '_blank');
-            
-            // Optionally, clear the cart and close modal after sending
-            cart.length = 0; // Clear the cart array
-            updateCartUI();
-            closeCartModal();
-            // Using alert for simplicity, consider a custom modal/message for better UX
-            alert("ההזמנה נשלחה בהצלחה ל-WhatsApp!");
-        }
-    </script>
-    <script id="calculator-tabs-script">
-        document.addEventListener('DOMContentLoaded', function() {
+            // Calculator tab logic (from original index3.html)
             const calcTabButtons = document.querySelectorAll('.calc-tab-button');
             const calcContents = document.querySelectorAll('.calc-content');
             
             calcTabButtons.forEach(button => {
                 button.addEventListener('click', function() {
-                    // Remove active class from all buttons
                     calcTabButtons.forEach(btn => {
                         btn.classList.remove('calc-tab-active');
                         btn.classList.add('bg-gray-200', 'text-gray-700');
                     });
                     
-                    // Add active class to clicked button
                     this.classList.add('calc-tab-active');
                     this.classList.remove('bg-gray-200', 'text-gray-700');
                     
                     const calcType = this.dataset.calc;
                     
-                    // Show/hide calculator contents based on type
                     calcContents.forEach(content => {
                         content.classList.add('hidden');
                         content.classList.remove('active');
@@ -2252,325 +1352,215 @@
                     document.getElementById(`${calcType}-calc`).classList.add('active');
                 });
             });
-        });
-    </script>
-    
-    <script id="concrete-calculator-script">
-        document.addEventListener('DOMContentLoaded', function() {
-            const calculateButton = document.getElementById('calculate-concrete');
-            const resultDiv = document.getElementById('concrete-result');
-            const volumeSpan = document.getElementById('concrete-volume');
-            const costSpan = document.getElementById('concrete-cost');
-            
-            calculateButton.addEventListener('click', function() {
+
+            // Concrete Calculator Logic
+            const calculateConcreteButton = document.getElementById('calculate-concrete');
+            calculateConcreteButton.addEventListener('click', function() {
                 const length = parseFloat(document.getElementById('concrete-length').value) || 0;
                 const width = parseFloat(document.getElementById('concrete-width').value) || 0;
                 const height = parseFloat(document.getElementById('concrete-height').value) || 0;
                 const concreteType = document.getElementById('concrete-type').value;
+                const resultDiv = document.getElementById('concrete-result');
+                const volumeSpan = document.getElementById('concrete-volume');
+                const costSpan = document.getElementById('concrete-cost');
                 
                 if (length > 0 && width > 0 && height > 0) {
-                    // Convert height from cm to m
                     const heightInMeters = height / 100;
-                    
-                    // Calculate volume in cubic meters
                     const volume = length * width * heightInMeters;
-                    
-                    // Add 10% waste
                     const volumeWithWaste = volume * 1.1;
                     
-                    // Calculate cost based on concrete type
                     let pricePerCubicMeter = 0;
                     switch (concreteType) {
-                        case 'b30':
-                            pricePerCubicMeter = 350;
-                            break;
-                        case 'b40':
-                            pricePerCubicMeter = 380;
-                            break;
-                        case 'b50':
-                            pricePerCubicMeter = 420;
-                            break;
+                        case 'b30': pricePerCubicMeter = 350; break;
+                        case 'b40': pricePerCubicMeter = 380; break;
+                        case 'b50': pricePerCubicMeter = 420; break;
                     }
-                    
                     const totalCost = volumeWithWaste * pricePerCubicMeter;
                     
-                    // Display results
                     volumeSpan.textContent = volumeWithWaste.toFixed(2);
                     costSpan.textContent = totalCost.toFixed(2);
                     resultDiv.classList.remove('hidden');
                 } else {
-                    alert('נא להזין את כל המידות');
+                    alert('נא להזין את כל המידות לחישוב בטון.');
                 }
             });
-        });
-    </script>
-    
-    <script id="blocks-calculator-script">
-        document.addEventListener('DOMContentLoaded', function() {
+
+            // Blocks Calculator Logic
             const hasOpeningsCheckbox = document.getElementById('has-openings');
             const openingsSection = document.getElementById('openings-section');
-            const calculateButton = document.getElementById('calculate-blocks');
-            const resultDiv = document.getElementById('blocks-result');
-            
-            hasOpeningsCheckbox.addEventListener('change', function() {
-                if (this.checked) {
-                    openingsSection.classList.remove('hidden');
-                } else {
-                    openingsSection.classList.add('hidden');
-                }
-            });
-            
-            calculateButton.addEventListener('click', function() {
+            const calculateBlocksButton = document.getElementById('calculate-blocks');
+
+            if (hasOpeningsCheckbox) {
+                hasOpeningsCheckbox.addEventListener('change', function() {
+                    if (this.checked) {
+                        openingsSection.classList.remove('hidden');
+                    } else {
+                        openingsSection.classList.add('hidden');
+                    }
+                });
+            }
+
+            calculateBlocksButton.addEventListener('click', function() {
                 const length = parseFloat(document.getElementById('blocks-length').value) || 0;
                 const height = parseFloat(document.getElementById('blocks-height').value) || 0;
                 const blockType = document.getElementById('block-type').value;
                 const hasOpenings = document.getElementById('has-openings').checked;
+                const resultDiv = document.getElementById('blocks-result');
                 
                 if (length > 0 && height > 0) {
-                    // Calculate wall area
                     let wallArea = length * height;
                     
-                    // Subtract openings area if applicable
                     if (hasOpenings) {
                         const openingWidth = parseFloat(document.getElementById('opening-width').value) || 0;
                         const openingHeight = parseFloat(document.getElementById('opening-height').value) || 0;
-                        
                         if (openingWidth > 0 && openingHeight > 0) {
                             const openingArea = openingWidth * openingHeight;
                             wallArea -= openingArea;
                         }
                     }
                     
-                    // Get block dimensions based on type
                     let blockWidth, blockHeight, blockPrice;
                     switch (blockType) {
-                        case 'block10':
-                            blockWidth = 0.4; // 40 cm
-                            blockHeight = 0.2; // 20 cm
-                            blockPrice = 3.5;
-                            break;
-                        case 'block15':
-                            blockWidth = 0.4;
-                            blockHeight = 0.2;
-                            blockPrice = 4.0;
-                            break;
-                        case 'block20':
-                            blockWidth = 0.4;
-                            blockHeight = 0.2;
-                            blockPrice = 4.5;
-                            break;
-                        case 'block22':
-                            blockWidth = 0.4;
-                            blockHeight = 0.2;
-                            blockPrice = 5.0;
-                            break;
+                        case 'block10': blockWidth = 0.4; blockHeight = 0.2; blockPrice = 3.5; break;
+                        case 'block15': blockWidth = 0.4; blockHeight = 0.2; blockPrice = 4.0; break;
+                        case 'block20': blockWidth = 0.4; blockHeight = 0.2; blockPrice = 4.5; break;
+                        case 'block22': blockWidth = 0.4; blockHeight = 0.2; blockPrice = 5.0; break;
                     }
                     
-                    // Calculate number of blocks
-                    const blockArea = blockWidth * blockHeight;
-                    let blocksCount = Math.ceil(wallArea / blockArea);
-                    
-                    // Add 5% waste
+                    let blocksCount = Math.ceil(wallArea / (blockWidth * blockHeight));
                     blocksCount = Math.ceil(blocksCount * 1.05);
-                    
-                    // Calculate mortar amount (1 bag per 20 blocks)
-                    const mortarAmount = Math.ceil(blocksCount / 20);
-                    
-                    // Calculate total cost
+                    const mortarAmount = Math.ceil(blocksCount / 20); // Placeholder
                     const blocksCost = blocksCount * blockPrice;
-                    const mortarCost = mortarAmount * 25; // 25 NIS per bag
+                    const mortarCost = mortarAmount * 25; // Placeholder price
                     const totalCost = blocksCost + mortarCost;
                     
-                    // Display results
                     document.getElementById('blocks-count').textContent = blocksCount;
                     document.getElementById('wall-area').textContent = wallArea.toFixed(2);
                     document.getElementById('mortar-amount').textContent = mortarAmount;
                     document.getElementById('blocks-cost').textContent = totalCost.toFixed(2);
                     resultDiv.classList.remove('hidden');
                 } else {
-                    alert('נא להזין את אורך וגובה הקיר');
+                    alert('נא להזין את אורך וגובה הקיר לחישוב בלוקים.');
                 }
             });
-        });
-    </script>
-    
-    <script id="paint-calculator-script">
-        document.addEventListener('DOMContentLoaded', function() {
+
+            // Paint Calculator Logic
             const newWallSwitch = document.getElementById('new-wall');
-            const calculateButton = document.getElementById('calculate-paint');
-            const resultDiv = document.getElementById('paint-result');
-            const primerSection = document.getElementById('primer-section');
-            
-            calculateButton.addEventListener('click', function() {
+            const calculatePaintButton = document.getElementById('calculate-paint');
+            calculatePaintButton.addEventListener('click', function() {
                 const area = parseFloat(document.getElementById('paint-area').value) || 0;
                 const layers = parseInt(document.getElementById('paint-layers').value) || 2;
                 const paintType = document.getElementById('paint-type').value;
                 const isNewWall = newWallSwitch.checked;
+                const resultDiv = document.getElementById('paint-result');
+                const primerSection = document.getElementById('primer-section');
                 
                 if (area > 0) {
-                    // Calculate paint amount based on coverage
                     let coveragePerLiter = 0;
                     let paintPrice = 0;
                     
                     switch (paintType) {
-                        case 'supercryl':
-                            coveragePerLiter = 10; // 10 m² per liter
-                            paintPrice = 70; // NIS per liter
-                            break;
-                        case 'extracryl':
-                            coveragePerLiter = 8;
-                            paintPrice = 80;
-                            break;
-                        case 'acrylic':
-                            coveragePerLiter = 12;
-                            paintPrice = 60;
-                            break;
-                        case 'plastic':
-                            coveragePerLiter = 14;
-                            paintPrice = 40;
-                            break;
+                        case 'supercryl': coveragePerLiter = 10; paintPrice = 70; break;
+                        case 'extracryl': coveragePerLiter = 8; paintPrice = 80; break;
+                        case 'acrylic': coveragePerLiter = 12; paintPrice = 60; break;
+                        case 'plastic': coveragePerLiter = 14; paintPrice = 40; break;
                     }
                     
-                    // Calculate paint amount
                     const paintAmount = (area * layers) / coveragePerLiter;
-                    
-                    // Recommend package size
                     let packageSize = '';
-                    if (paintAmount <= 1) {
-                        packageSize = '1 ליטר';
-                    } else if (paintAmount <= 3) {
-                        packageSize = '3 ליטר';
-                    } else if (paintAmount <= 5) {
-                        packageSize = '5 ליטר';
-                    } else {
-                        packageSize = '18 ליטר';
-                    }
+                    if (paintAmount <= 1) packageSize = '1 ליטר';
+                    else if (paintAmount <= 3) packageSize = '3 ליטר';
+                    else if (paintAmount <= 5) packageSize = '5 ליטר';
+                    else packageSize = '18 ליטר';
                     
-                    // Calculate primer if needed
                     let primerAmount = 0;
                     let primerCost = 0;
                     
                     if (isNewWall) {
-                        primerAmount = area / 15; // 15 m² per liter
-                        primerCost = primerAmount * 50; // 50 NIS per liter
+                        primerAmount = area / 15;
+                        primerCost = primerAmount * 50;
                         primerSection.classList.remove('hidden');
                         document.getElementById('primer-amount').textContent = primerAmount.toFixed(2);
                     } else {
                         primerSection.classList.add('hidden');
                     }
                     
-                    // Calculate total cost
                     const paintCost = paintAmount * paintPrice;
                     const totalCost = paintCost + primerCost;
                     
-                    // Display results
                     document.getElementById('paint-amount').textContent = paintAmount.toFixed(2);
                     document.getElementById('paint-package').textContent = packageSize;
                     document.getElementById('paint-cost').textContent = totalCost.toFixed(2);
                     resultDiv.classList.remove('hidden');
                 } else {
-                    alert('נא להזין את שטח הצביעה');
+                    alert('נא להזין את שטח הצביעה.');
                 }
             });
-        });
-    </script>
-    
-    <script id="tiles-calculator-script">
-        document.addEventListener('DOMContentLoaded', function() {
-            const calculateButton = document.getElementById('calculate-tiles');
-            const resultDiv = document.getElementById('tiles-result');
-            
-            calculateButton.addEventListener('click', function() {
+
+            // Tiles Calculator Logic
+            const calculateTilesButton = document.getElementById('calculate-tiles');
+            calculateTilesButton.addEventListener('click', function() {
                 const length = parseFloat(document.getElementById('tiles-length').value) || 0;
                 const width = parseFloat(document.getElementById('tiles-width').value) || 0;
                 const tileSize = document.getElementById('tile-size').value;
-                const groutWidth = parseFloat(document.getElementById('grout-width').value) || 3; // in mm
+                const groutWidth = parseFloat(document.getElementById('grout-width').value) || 3;
+                const resultDiv = document.getElementById('tiles-result');
                 
                 if (length > 0 && width > 0) {
-                    // Calculate total area
                     const totalArea = length * width;
-                    
-                    // Get tile dimensions
                     const tileDimensions = tileSize.split('x');
-                    const tileWidth = parseInt(tileDimensions[0]) / 100; // convert cm to m
-                    const tileLength = parseInt(tileDimensions[1]) / 100; // convert cm to m
+                    const tileWidth = parseInt(tileDimensions[0]) / 100;
+                    const tileLength = parseInt(tileDimensions[1]) / 100;
                     
-                    // Calculate tile area including grout
-                    const groutWidthM = groutWidth / 1000; // convert mm to m
-                    const effectiveTileWidth = tileWidth + groutWidthM;
-                    const effectiveTileLength = tileLength + groutWidthM;
-                    const effectiveTileArea = effectiveTileWidth * effectiveTileLength;
-                    
-                    // Calculate number of tiles
                     let tilesCount = Math.ceil(totalArea / (tileWidth * tileLength));
+                    tilesCount = Math.ceil(tilesCount * 1.1); // Add 10% waste
                     
-                    // Add 10% waste
-                    tilesCount = Math.ceil(tilesCount * 1.1);
-                    
-                    // Calculate adhesive amount (1 bag per 5 m²)
-                    const adhesiveAmount = Math.ceil(totalArea / 5);
-                    
-                    // Calculate grout amount
-                    // Formula: (tileWidth + tileLength) × 2 × tileCount × groutWidth × groutDepth × density / 1000
-                    const groutDepth = 0.01; // 10 mm
-                    const groutDensity = 1.6; // g/cm³
+                    const adhesiveAmount = Math.ceil(totalArea / 5); // Placeholder
+                    const groutDepth = 0.01; // Example for calculation
+                    const groutDensity = 1.6; // Example for calculation
                     const groutAmount = ((tileWidth + tileLength) * 2 * tilesCount * (groutWidth / 1000) * groutDepth * groutDensity);
                     
-                    // Display results
                     document.getElementById('tiles-area').textContent = totalArea.toFixed(2);
                     document.getElementById('tiles-count').textContent = tilesCount;
                     document.getElementById('adhesive-amount').textContent = adhesiveAmount;
                     document.getElementById('grout-amount').textContent = Math.ceil(groutAmount);
                     resultDiv.classList.remove('hidden');
                 } else {
-                    alert('נא להזין את אורך ורוחב השטח');
+                    alert('נא להזין את אורך ורוחב השטח לחישוב אריחים.');
                 }
             });
-        });
-    </script>
-    
-    <script id="stairs-calculator-script">
-        document.addEventListener('DOMContentLoaded', function() {
-            const calculateButton = document.getElementById('calculate-stairs');
-            const resultDiv = document.getElementById('stairs-result');
-            const materialsButton = document.getElementById('stairs-materials');
-            const materialsResultDiv = document.getElementById('stairs-materials-result');
-            
-            calculateButton.addEventListener('click', function() {
+
+            // Stairs Calculator Logic
+            const calculateStairsButton = document.getElementById('calculate-stairs');
+            const stairsMaterialsButton = document.getElementById('stairs-materials');
+            const stairsResultDiv = document.getElementById('stairs-result');
+            const stairsMaterialsResultDiv = document.getElementById('stairs-materials-result');
+
+            calculateStairsButton.addEventListener('click', function() {
                 const height = parseFloat(document.getElementById('stairs-height').value) || 0;
                 const length = parseFloat(document.getElementById('stairs-length').value) || 0;
                 
                 if (height > 0 && length > 0) {
-                    // Calculate number of steps
-                    // Ideal step height is between 15-20 cm
-                    const idealStepHeight = 17; // cm
+                    const idealStepHeight = 17;
                     let stepsCount = Math.round(height / idealStepHeight);
-                    
-                    // Ensure minimum 3 steps
                     stepsCount = Math.max(3, stepsCount);
                     
-                    // Calculate actual step height
                     const stepHeight = height / stepsCount;
-                    
-                    // Calculate step depth
                     const stepDepth = length / stepsCount;
-                    
-                    // Check Blondel's formula: 2 × riser + tread = 63-65 cm
                     const blondelValue = (2 * stepHeight) + stepDepth;
                     
-                    // Display results
                     document.getElementById('stairs-count').textContent = stepsCount;
                     document.getElementById('step-height').textContent = stepHeight.toFixed(2);
                     document.getElementById('step-depth').textContent = stepDepth.toFixed(2);
                     document.getElementById('blondel-formula').textContent = `2 × ${stepHeight.toFixed(1)} + ${stepDepth.toFixed(1)} = ${blondelValue.toFixed(1)} ס"מ`;
                     
-                    resultDiv.classList.remove('hidden');
+                    stairsResultDiv.classList.remove('hidden');
                 } else {
-                    alert('נא להזין את הגובה והאורך האופקי');
+                    alert('נא להזין את הגובה והאורך האופקי לחישוב מדרגות.');
                 }
             });
-            
-            materialsButton.addEventListener('click', function() {
+
+            stairsMaterialsButton.addEventListener('click', function() {
                 const height = parseFloat(document.getElementById('stairs-height').value) || 0;
                 const length = parseFloat(document.getElementById('stairs-length').value) || 0;
                 const width = parseFloat(document.getElementById('stairs-width').value) || 100;
@@ -2578,76 +1568,52 @@
                 const stepsCount = parseInt(document.getElementById('stairs-count').textContent) || 0;
                 
                 if (stepsCount > 0) {
-                    // Hide all materials sections
                     document.getElementById('concrete-materials').classList.add('hidden');
                     document.getElementById('wood-materials').classList.add('hidden');
                     document.getElementById('metal-materials').classList.add('hidden');
                     
-                    // Show relevant section based on stairs type
                     document.getElementById(`${stairsType}-materials`).classList.remove('hidden');
                     
-                    // Calculate materials based on type
                     let totalCost = 0;
                     
                     switch (stairsType) {
                         case 'concrete':
-                            // Calculate concrete volume (trapezoidal prism)
-                            const concreteVolume = (height * length * width / 100) / 2; // in m³
-                            
-                            // Calculate rebar (approx. 100 kg per m³)
-                            const rebarWeight = concreteVolume * 100;
-                            
-                            // Calculate cost
-                            const concreteCost = concreteVolume * 350; // 350 NIS per m³
-                            const rebarCost = rebarWeight * 5; // 5 NIS per kg
+                            const concreteVolume = (height * length * width / 10000); // Simple volume calculation for stairs
+                            const rebarWeight = concreteVolume * 100; // Approx 100kg rebar per cubic meter concrete
+                            const concreteCost = concreteVolume * 350; // Example
+                            const rebarCost = rebarWeight * 5; // Example
                             totalCost = concreteCost + rebarCost;
-                            
                             document.getElementById('stairs-concrete').textContent = concreteVolume.toFixed(2);
                             document.getElementById('stairs-rebar').textContent = rebarWeight.toFixed(2);
                             break;
                             
                         case 'wood':
-                            // Calculate wood area for steps
-                            const woodArea = stepsCount * (width / 100) * (parseFloat(document.getElementById('step-depth').textContent) / 100); // in m²
-                            
-                            // Calculate support beams (2 per step)
+                            const woodArea = stepsCount * (width / 100) * (parseFloat(document.getElementById('step-depth').textContent) / 100);
                             const beamsCount = stepsCount * 2;
-                            
-                            // Calculate cost
-                            const woodCost = woodArea * 300; // 300 NIS per m²
-                            const beamsCost = beamsCount * 50; // 50 NIS per beam
+                            const woodCost = woodArea * 300; // Example
+                            const beamsCost = beamsCount * 50; // Example
                             totalCost = woodCost + beamsCost;
-                            
                             document.getElementById('stairs-wood').textContent = woodArea.toFixed(2);
                             document.getElementById('stairs-beams').textContent = beamsCount;
                             break;
                             
                         case 'metal':
-                            // Calculate metal profiles length
-                            const profilesLength = (stepsCount * 2) + (length / 100) + (height / 100); // in m
-                            
-                            // Calculate weight (approx. 7.5 kg per m)
-                            const metalWeight = profilesLength * 7.5;
-                            
-                            // Calculate cost
-                            totalCost = profilesLength * 120; // 120 NIS per m
-                            
+                            const profilesLength = (stepsCount * 2) + (length / 100) + (height / 100);
+                            const metalWeight = profilesLength * 7.5; // Example
+                            totalCost = profilesLength * 120; // Example
                             document.getElementById('stairs-profiles').textContent = profilesLength.toFixed(2);
                             document.getElementById('stairs-weight').textContent = metalWeight.toFixed(2);
                             break;
                     }
                     
                     document.getElementById('stairs-cost').textContent = totalCost.toFixed(2);
-                    materialsResultDiv.classList.remove('hidden');
+                    stairsMaterialsResultDiv.classList.remove('hidden');
                 }
             });
-        });
-    </script>
-    
-    <script id="whatsapp-chat-script">
-        document.addEventListener('DOMContentLoaded', function() {
+
+            // WhatsApp Chat Logic (from original index3.html)
             const whatsappButton = document.getElementById('whatsapp-button');
-            const openWhatsappButton = document.getElementById('open-whatsapp');
+            const openWhatsappMainButton = document.getElementById('open-whatsapp-main');
             const chatContainer = document.getElementById('chat-container');
             const chatInput = document.getElementById('chat-input');
             const sendButton = document.getElementById('send-message');
@@ -2658,9 +1624,8 @@
                 chatContainer.style.display = chatContainer.style.display === 'block' ? 'none' : 'block';
             });
             
-            openWhatsappButton.addEventListener('click', function() {
+            openWhatsappMainButton.addEventListener('click', function() {
                 chatContainer.style.display = 'block';
-                // Scroll to chat
                 whatsappButton.scrollIntoView({ behavior: 'smooth' });
             });
             
@@ -2668,24 +1633,19 @@
                 const message = chatInput.value.trim();
                 
                 if (message) {
-                    // Add user message
                     const userMessageDiv = document.createElement('div');
                     userMessageDiv.className = 'chat-message sent';
                     userMessageDiv.innerHTML = `<p>${message}</p>`;
                     chatBody.appendChild(userMessageDiv);
                     
-                    // Clear input
                     chatInput.value = '';
                     
-                    // Show typing indicator
                     typingIndicator.classList.remove('hidden');
                     chatBody.scrollTop = chatBody.scrollHeight;
                     
-                    // Simulate response after delay
                     setTimeout(function() {
                         typingIndicator.classList.add('hidden');
                         
-                        // Add response message
                         const responseMessageDiv = document.createElement('div');
                         responseMessageDiv.className = 'chat-message received';
                         
@@ -2703,7 +1663,6 @@
                         responseMessageDiv.innerHTML = `<p>${response}</p>`;
                         chatBody.appendChild(responseMessageDiv);
                         
-                        // Scroll to bottom
                         chatBody.scrollTop = chatBody.scrollHeight;
                     }, 1500);
                 }
