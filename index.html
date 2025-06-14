@@ -895,8 +895,15 @@
             });
         });
       <script>
-        fetch('https://script.google.com/macros/s/AKfycbyzdkvb4wOMILaPIq-oalk6IRA7UKxCfcsRYW0VPjF5LHO3qYLewgicT8Ua6GCdQnTn/exec')
-          .then(response => response.json())
+fetch('https://script.google.com/macros/s/AKfycbyz.../exec')
+  .then(response => response.json())
+  .then(data => {
+    console.log("✅ מוצרים נטענו", data);
+    // הצגה בעמוד
+  })
+  .catch(error => {
+    console.error("❌ שגיאה בטעינת מוצרים:", error);
+  });          .then(response => response.json())
           .then(products => {
             const grid = document.getElementById('products-grid');
             grid.innerHTML = products.map(prod => `
