@@ -651,7 +651,16 @@
 
     <!-- Scripts -->
     <script>
-fetch('products.json')
+fetch('https://script.google.com/macros/s/AKfycbyzdkvb4wOMILaPIq-oalk6IRA7UKxCfcsRYW0VPjF5LHO3qYLewgicT8Ua6GCdQnTn/exec')
+  .then(res => res.json())
+  .then(data => {
+    allProducts = data;
+    renderProducts(data);
+  })
+  .catch(err => {
+    console.error("שגיאה בטעינת מוצרים:", err);
+    alert("❌ לא ניתן לטעון את המוצרים כרגע");
+  });
   .then(res => res.json())
   .then(data => {
     const grid = document.getElementById('products-grid');
