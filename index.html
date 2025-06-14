@@ -23,6 +23,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.0.0/fonts/remixicon.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@200;300;400;500;600;700;800&family=Rubik:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css">
     <style>
@@ -275,7 +276,7 @@
     </style>
 </head>
 <body>
-    <!-- Header --><body class="bg-gradient-to-br from-blue-50 to-white font-sans p-6">
+  <body class="bg-gradient-to-br from-blue-50 to-white font-sans p-6">
     <header class="glass-effect sticky top-0 z-50 shadow-md">
         <div class="container mx-auto px-4 py-3 flex justify-between items-center">
             <div class="flex items-center">
@@ -470,21 +471,16 @@
                 </div>
             </div>
             <div id="products-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"></div>
-
-            <!-- Products Grid -->
-            <div class="md:w-3/4 lg:w-4/5">
-                <!-- Category Title and Sort -->
-                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6">
-  <!-- מודל מוצר -->
-  <div id="product-modal" class="fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center z-50 hidden">
-    <div class="bg-white rounded-lg shadow-lg p-6 max-w-md w-full relative">
-      <button onclick="closeModal()" class="absolute top-2 left-2 text-gray-500 hover:text-red-500 text-xl">&times;</button>
-      <img src="" alt="מוצר" class="w-full h-48 object-cover rounded mb-4 modal-image"/>
-      <h2 class="text-xl font-bold mb-2 modal-title"></h2>
-      <p class="text-gray-600 text-sm mb-2 modal-description"></p>
-      <span class="text-primary font-bold text-lg modal-price"></span>
-    </div>
-  </div>
+<!-- מודל מוצר -->
+              <div id="product-modal" class="fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center z-50 hidden">
+             <div class="bg-white rounded-lg shadow-lg p-6 max-w-md w-full relative">
+          <button onclick="closeModal()" class="absolute top-2 left-2 text-gray-500 hover:text-red-500 text-xl">&times;</button>
+         <img src="" alt="מוצר" class="w-full h-48 object-cover rounded mb-4 modal-image"/>
+          <h2 class="text-xl font-bold mb-2 modal-title"></h2>
+          <p class="text-gray-600 text-sm mb-2 modal-description"></p>
+          <span class="text-primary font-bold text-lg modal-price"></span>
+           </div>
+                </div>
                     </div>
                     <div class="flex flex-wrap gap-2">
                         <div class="glass-effect rounded-lg px-3 py-2 text-sm flex items-center">
