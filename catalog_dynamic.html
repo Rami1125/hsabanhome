@@ -1,0 +1,104 @@
+
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <title>קטלוג דינמי - ח.סבן</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50 font-sans p-6">
+
+  <h1 class="text-3xl font-bold text-blue-700 mb-6">🔨 קטלוג מוצרים - ח.סבן</h1>
+
+  <div class="flex gap-4 items-center mb-6">
+    <input type="text" placeholder="חיפוש מוצרים..." class="border rounded px-4 py-2" id="search-input">
+    <div class="relative cursor-pointer">
+      <i class="ri-shopping-cart-line text-blue-600 text-2xl"></i>
+      <span class="absolute -top-2 -right-2 bg-blue-600 text-white text-xs w-5 h-5 flex justify-center items-center rounded-full">0</span>
+    </div>
+  </div>
+
+  <!-- עגלת קניות -->
+  <div id="cart-popup" class="fixed top-20 left-4 w-80 bg-white rounded shadow p-4 z-50 hidden">
+    <h3 class="text-lg font-bold mb-2 text-blue-600">🛒 עגלת הקניות</h3>
+    <ul id="cart-list" class="text-sm text-gray-800 space-y-2 mb-4"></ul>
+    <button onclick="sendToWhatsApp()" class="bg-green-500 text-white px-4 py-2 rounded w-full hover:bg-green-600">📤 שלח לוואטסאפ</button>
+  </div>
+
+  <main class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6" id="products-grid"></main>
+
+  <script>
+    const cart = [];
+
+    function updateCartBadge() {
+      document.querySelector('.ri-shopping-cart-line + span').innerText = cart.length;
+    }
+
+    function updateCartPopup() {
+      const list = document.getElementById('cart-list');
+      if (cart.length === 0) {
+        list.innerHTML = "<li>🕳️ העגלה ריקה</li>";
+      } else {
+        list.innerHTML = cart.map(item => `<li>📦 ${item.title} - ${item.price}</li>`).join('');
+      }
+    }
+
+    function sendToWhatsApp() {
+      const phone = '972508860896';
+      const message = cart.length === 0 
+        ? 'עגלה ריקה 😕'
+        : '📦 הזמנה מח.סבן:\n\n' + cart.map(item => `✅ ${item.title} (${item.price})`).join('\n');
+
+      const encoded = encodeURIComponent(message);
+      window.open(`https://wa.me/${phone}?text=${encoded}`, '_blank');
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const grid = document.getElementById('products-grid');
+      const searchInput = document.getElementById('search-input');
+      let allProducts = [];
+
+      fetch('products.json')
+        .then(res => res.json())
+        .then(data => {
+          allProducts = data;
+          renderProducts(data);
+        });
+
+      function renderProducts(products) {
+        grid.innerHTML = products.map(prod => `
+          <div class="bg-white p-4 rounded shadow">
+            <img src="${prod.image}" alt="${prod.title}" class="h-48 w-full object-cover rounded mb-2"/>
+            <h3 class="text-lg font-bold text-gray-800">${prod.title}</h3>
+            <p class="text-sm text-gray-600 mb-2">${prod.description}</p>
+            <div class="flex justify-between items-center">
+              <span class="text-blue-600 font-bold">${prod.price}</span>
+              <button class="bg-blue-600 text-white px-4 py-1 rounded" onclick="addToCart('${prod.title}', '${prod.price}')">הוסף לעגלה</button>
+            </div>
+          </div>
+        `).join('');
+      }
+
+      function addToCart(title, price) {
+        cart.push({ title, price });
+        updateCartBadge();
+      }
+
+      document.querySelector('.ri-shopping-cart-line').addEventListener('click', () => {
+        const popup = document.getElementById('cart-popup');
+        updateCartPopup();
+        popup.classList.toggle('hidden');
+      });
+
+      searchInput.addEventListener('input', function () {
+        const query = this.value.trim().toLowerCase();
+        const filtered = allProducts.filter(p => p.title.toLowerCase().includes(query));
+        renderProducts(filtered);
+      });
+    });
+  </script>
+
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@4.0.0/fonts/remixicon.css" rel="stylesheet">
+</body>
+</html>
