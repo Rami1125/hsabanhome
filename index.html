@@ -899,12 +899,12 @@
          */
         function populateCategories(products) {
             const categoriesContainer = document.getElementById('sidebar-categories');
-            const categories = new Set();
+            const dynamicCategories = new Set();
             
-            // Collect unique categories, excluding 'all' which is hardcoded
+            // Collect unique categories from products
             products.forEach(p => {
-                if (p.category && p.category !== 'all') { // Ensure 'category' column exists
-                    categories.add(p.category);
+                if (p.category) {
+                    dynamicCategories.add(p.category);
                 }
             });
 
