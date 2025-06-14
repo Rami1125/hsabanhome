@@ -80,13 +80,15 @@
         });
     });
 
-    function openModal(title, description, image, price) {
-      document.querySelector('.modal-title').innerText = title;
-      document.querySelector('.modal-description').innerText = description;
-      document.querySelector('.modal-image').src = image;
-      document.querySelector('.modal-price').innerText = "₪" + price;
-      document.getElementById('product-modal').classList.remove('hidden');
-    }
+function openModal(title, description, image, price) {
+  const modal = document.getElementById("product-modal");
+  modal.querySelector('h2').innerText = title;
+  modal.querySelector('img').src = image;
+  modal.querySelector('p').innerText = description;
+  modal.querySelector('span').innerText = "₪" + price;
+  modal.classList.remove("hidden");
+}
+
 
     function closeModal() {
       document.getElementById('product-modal').classList.add('hidden');
