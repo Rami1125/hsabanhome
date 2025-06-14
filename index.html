@@ -966,24 +966,35 @@ fetch('https://script.google.com/macros/s/AKfycbyzdkvb4wOMILaPIq-oalk6IRA7UKxCfc
             });
         });
     </script>
-     <script>
-    fetch('https://script.google.com/macros/s/AKfycbyzdkvb4wOMILaPIq-oalk6IRA7UKxCfcsRYW0VPjF5LHO3qYLewgicT8Ua6GCdQnTn/exec')
-      .then(response => response.json())
-      .then(products => {
-        const grid = document.getElementById('products');
-        grid.innerHTML = products.map(prod => `
-          <div class="bg-white shadow rounded p-4 flex flex-col justify-between">
-            <img src="${prod.image}" alt="${prod.title}" class="h-40 w-full object-cover rounded mb-2"/>
-            <h3 class="text-lg font-bold text-gray-800">${prod.title}</h3>
-            <p class="text-sm text-gray-600 mb-2">${prod.description}</p>
-            <span class="text-primary font-bold">${prod["price"] || "₪0"}</span>
-          </div>
-        `).join('');
-      })
-      .catch(error => {
-        console.error("שגיאה בטעינת מוצרים:", error);
-        document.getElementById('products').innerHTML = "<p class='text-red-600'>שגיאה בטעינת מוצרים. נסה שוב מאוחר יותר.</p>";
-      });
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const grid = document.getElementById("products-grid");
+
+      if (!grid) {
+        console.error("❌ אלמנט #products-grid לא נמצא");
+        return;
+      }
+
+      fetch('https://script.google.com/macros/s/AKfycbyzdkvb4wOMILaPIq-oalk6IRA7UKxCfcsRYW0VPjF5LHO3qYLewgicT8Ua6GCdQnTn/exec')
+        .then(res => {
+          if (!res.ok) throw new Error("תגובת fetch נכשלה");
+          return res.json();
+        })
+        .then(products => {
+          grid.innerHTML = products.map(prod => `
+            <div class="bg-white shadow rounded p-4 flex flex-col justify-between">
+              <img src="${prod.image}" alt="${prod.title}" class="h-40 w-full object-cover rounded mb-2"/>
+              <h3 class="text-lg font-bold text-gray-800">${prod.title}</h3>
+              <p class="text-sm text-gray-600 mb-2">${prod.description}</p>
+              <span class="text-blue-600 font-bold">₪${prod["price "] || prod.price || "—"}</span>
+            </div>
+          `).join('');
+        })
+        .catch(error => {
+          console.error("שגיאה בטעינת מוצרים:", error);
+          grid.innerHTML = "<p class='text-red-600'>שגיאה בטעינת מוצרים. נסה שוב מאוחר יותר.</p>";
+        });
+    });
   </script>
 </body>
 </html>
