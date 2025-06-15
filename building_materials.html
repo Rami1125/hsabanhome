@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>חומרי בניין - ח.סבן חומרי בניין 1994 בע"מ</title>
+    <title>קטלוג מוצרים - ח.סבן חומרי בניין 1994 בע"מ</title>
     <script src="https://cdn.tailwindcss.com/3.4.16"></script>
     <script>
         // Tailwind CSS configuration
@@ -16,13 +16,14 @@
             }
         }
     </script>
+    <!-- Font and icon links -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@200;300;400;500;600;700;800&family=Rubik:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css">
     <style>
-        /* General CSS and existing effects - Copied from catalog.html */
+        /* General CSS and existing effects */
         :where([class^="ri-"])::before { content: "\f3c2"; }
         
         body {
@@ -320,27 +321,10 @@
         .hero-image-item:hover .hero-image-overlay {
             opacity: 1;
         }
-
-        /* Styles for video container in modal */
-        .video-container {
-            position: relative;
-            width: 100%;
-            padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
-            height: 0;
-            overflow: hidden;
-            margin-bottom: 1rem;
-        }
-        .video-container iframe {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            border: 0;
-        }
     </style>
 </head>
 <body class="bg-gradient-to-br from-blue-50 to-white font-sans p-6">
+    <!-- Header -->
     <header class="glass-effect sticky top-0 z-50 shadow-md">
         <div class="container mx-auto px-4 py-3 flex justify-between items-center">
             <div class="flex items-center">
@@ -349,11 +333,11 @@
             </div>
             
             <nav class="hidden md:flex space-x-6 space-x-reverse">
-                <a href="index.html" class="text-gray-800 hover:text-primary highlight-hover py-2">ראשי</a>
-                <a href="catalog.html" class="text-gray-800 hover:text-primary highlight-hover py-2">קטלוג מוצרים</a>
-                <a href="building_materials.html" class="text-primary font-semibold highlight-hover py-2 border-b-2 border-primary">חומרי בניין</a> <a href="index.html#calculator" class="text-gray-800 hover:text-primary highlight-hover py-2">מחלקת חישובים</a>
-                <a href="index.html#branches" class="text-gray-800 hover:text-primary highlight-hover py-2">סניפים</a>
-                <a href="index.html#testimonials" class="text-gray-800 hover:text-primary highlight-hover py-2">המלצות</a>
+                <a href="https://readdy.ai/home/20fb88f3-f689-4ee4-95ee-53c5efe8bc7d/f195f37e-9e34-4662-a971-05a152507a0f" data-readdy="true" class="text-gray-800 hover:text-primary highlight-hover py-2">ראשי</a>
+                <a href="#" class="text-primary font-semibold highlight-hover py-2 border-b-2 border-primary">מוצרים</a>
+                <a href="#" class="text-gray-800 hover:text-primary highlight-hover py-2">מחלקת חישובים</a>
+                <a href="#" class="text-gray-800 hover:text-primary highlight-hover py-2">סניפים</a>
+                <a href="#" class="text-gray-800 hover:text-primary highlight-hover py-2">צור קשר</a>
             </nav>
             
             <div class="flex items-center space-x-4 space-x-reverse">
@@ -377,36 +361,50 @@
             </div>
         </div>
         
+        <!-- Mobile Menu -->
         <div id="mobile-menu" class="md:hidden glass-effect py-4 px-4 hidden">
             <nav class="flex flex-col space-y-3">
-                <a href="index.html" class="text-gray-800 hover:text-primary py-2 border-b border-gray-100">ראשי</a>
-                <a href="catalog.html" class="text-gray-800 hover:text-primary py-2 border-b border-gray-100">קטלוג מוצרים</a>
-                <a href="building_materials.html" class="text-primary font-semibold py-2 border-b border-gray-100">חומרי בניין</a>
-                <a href="index.html#calculator" class="text-gray-800 hover:text-primary py-2 border-b border-gray-100">מחלקת חישובים</a>
-                <a href="index.html#branches" class="text-gray-800 hover:text-primary py-2 border-b border-gray-100">סניפים</a>
-                <a href="index.html#testimonials" class="text-gray-800 hover:text-primary py-2">המלצות</a>
+                <a href="https://readdy.ai/home/20fb88f3-f689-4ee4-95ee-53c5efe8bc7d/f195f37e-9e34-4662-a971-05a152507a0f" data-readdy="true" class="text-gray-800 hover:text-primary py-2 border-b border-gray-100">ראשי</a>
+                <a href="#" class="text-primary font-semibold py-2 border-b border-gray-100">מוצרים</a>
+                <a href="#" class="text-gray-800 hover:text-primary py-2 border-b border-gray-100">מחלקת חישובים</a>
+                <a href="#" class="text-gray-800 hover:text-primary py-2 border-b border-gray-100">סניפים</a>
+                <a href="#" class="text-gray-800 hover:text-primary py-2">צור קשר</a>
             </nav>
         </div>
     </header>
 
+    <!-- Breadcrumbs -->
     <div class="container mx-auto px-4 py-3">
         <div class="flex items-center text-sm text-gray-600">
-            <a href="index.html" class="hover:text-primary">ראשי</a>
+            <a href="https://readdy.ai/home/20fb88f3-f689-4ee4-95ee-53c5efe8bc7d/f195f37e-9e34-4662-a971-05a152507a0f" data-readdy="true" class="hover:text-primary">ראשי</a>
             <div class="w-4 h-4 flex items-center justify-center mx-1">
                 <i class="ri-arrow-left-s-line"></i>
             </div>
-            <a href="catalog.html" class="hover:text-primary">קטלוג מוצרים</a>
-            <div class="w-4 h-4 flex items-center justify-center mx-1">
-                <i class="ri-arrow-left-s-line"></i>
-            </div>
-            <span class="text-primary font-medium">חומרי בניין</span>
+            <span class="text-primary font-medium">קטלוג מוצרים</span>
         </div>
     </div>
 
+    <!-- Main Content -->
     <div class="container mx-auto px-4 py-6">
         <div class="flex flex-col md:flex-row gap-6">
+            <!-- Sidebar Filters -->
             <div class="md:w-1/4 lg:w-1/5">
-                <div class="glass-effect rounded-lg p-5 sticky top-24 sidebar-filters">
+                <div class="glass-effect rounded-lg p-5 sticky top-24 sidebar-filters"> <!-- Added sidebar-filters class -->
+                    <div class="mb-6">
+                        <h3 class="text-lg font-bold text-gray-800 mb-3">קטגוריות</h3>
+                        <ul id="sidebar-categories" class="space-y-2">
+                            <!-- Categories will be dynamically loaded here by JavaScript -->
+                            <li>
+                                <label class="custom-checkbox">
+                                    <input type="checkbox" data-category="all" checked>
+                                    <span class="checkmark ml-2"></span>
+                                    <span class="text-gray-800">הכל</span>
+                                </label>
+                            </li>
+                            <!-- Existing categories will be replaced by dynamic ones -->
+                        </ul>
+                    </div>
+                    
                     <div class="mb-6">
                         <h3 class="text-lg font-bold text-gray-800 mb-3">מחיר</h3>
                         <div class="space-y-3">
@@ -447,7 +445,57 @@
                     <div class="mb-6">
                         <h3 class="text-lg font-bold text-gray-800 mb-3">מותגים</h3>
                         <ul id="sidebar-brands" class="space-y-2">
-                            </ul>
+                            <!-- Brands will be dynamically loaded or managed here -->
+                           <li>
+                                <label class="custom-checkbox">
+                                    <input type="checkbox" data-brand="גבס">
+                                    <span class="checkmark ml-2"></span>
+                                    <span class="text-gray-800">גבס</span>
+                                </label>
+                            </li>
+                            <li>
+                                <label class="custom-checkbox">
+                                    <input type="checkbox" data-brand="פרופילים לגבס">
+                                    <span class="checkmark ml-2"></span>
+                                    <span class="text-gray-800">פרופילים לגבס</span>
+                                </label>
+                            </li>
+                             <li>
+                                <label class="custom-checkbox">
+                                    <input type="checkbox" data-brand="מסלולים לגבס">
+                                    <span class="checkmark ml-2"></span>
+                                    <span class="text-gray-800">מסלולים לגבס</span>
+                                </label>
+                            </li>
+                            <li>
+                                <label class="custom-checkbox">
+                                    <input type="checkbox" data-brand="טמבור">
+                                    <span class="checkmark ml-2"></span>
+                                    <span class="text-gray-800">טמבור</span>
+                                </label>
+                            </li>
+                            <li>
+                                <label class="custom-checkbox">
+                                    <input type="checkbox" data-brand="דבקים">
+                                    <span class="checkmark ml-2"></span>
+                                    <span class="text-gray-800">דבקים</span>
+                                </label>
+                            </li>
+                            <li>
+                                <label class="custom-checkbox">
+                                    <input type="checkbox" data-brand="בוש">
+                                    <span class="checkmark ml-2"></span>
+                                    <span class="text-gray-800">בוש</span>
+                                </label>
+                            </li>
+                            <li>
+                                <label class="custom-checkbox">
+                                    <input type="checkbox" data-brand="פלסאון">
+                                    <span class="checkmark ml-2"></span>
+                                    <span class="text-gray-800">פלסאון</span>
+                                </label>
+                            </li>
+                        </ul>
                     </div>
                     
                     <div>
@@ -457,9 +505,11 @@
                 </div>
             </div>
             
+            <!-- Products Grid -->
             <div class="md:w-3/4 lg:w-4/5">
+                <!-- Category Title and Sort -->
                 <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6">
-                    <h2 class="text-2xl font-bold text-gray-800 mb-3 sm:mb-0">מוצרי חומרי בניין</h2>
+                    <h2 class="text-2xl font-bold text-gray-800 mb-3 sm:mb-0">כל המוצרים</h2>
                     
                     <div class="flex flex-wrap gap-2">
                         <div class="glass-effect rounded-lg px-3 py-2 text-sm flex items-center">
@@ -491,13 +541,23 @@
                     </div>
                 </div>
 
-                <div class="flex flex-wrap gap-2 mb-6" id="category-pills">
-                    <button class="glass-effect rounded-full px-4 py-2 text-sm filter-active whitespace-nowrap" data-category-pill="חומרי בניין">חומרי בניין</button>
+                <!-- Hero Image Section - Now dynamic -->
+                <div class="mb-8">
+                    <div class="hero-image-grid" id="dynamic-hero-categories">
+                        <!-- Dynamic content will be inserted here -->
                     </div>
+                </div>
+                
+                <!-- Category Pills (could also be dynamic if needed, currently hardcoded for demonstration) -->
+                <div class="flex flex-wrap gap-2 mb-6" id="category-pills">
+                    <button class="glass-effect rounded-full px-4 py-2 text-sm filter-active whitespace-nowrap" data-category-pill="all">הכל</button>
+                    <!-- Other category pills can be added here or generated dynamically -->
+                </div>
                 <main>
                     <div id="products-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-6"></div>
                 </main>
 
+                <!-- Pagination -->
                 <div class="flex justify-center mt-10">
                     <nav class="glass-effect rounded-lg inline-flex">
                         <a href="#" class="w-10 h-10 flex items-center justify-center text-gray-500 hover:text-primary border-l border-blue-100">
@@ -517,28 +577,28 @@
         </div>
     </div>
 
+    <!-- Product Modal -->
     <div id="product-modal" class="fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center z-50 hidden">
         <div class="bg-white rounded-lg shadow-lg p-6 max-w-md w-full relative">
-            <button onclick="closeModal()" class="absolute top-2 left-2 text-gray-500 hover:text-red-500 text-xl">×</button>
-            <div class="modal-content">
-                <img src="" alt="Product" class="w-full h-48 object-cover rounded mb-4 modal-image hidden"/> <div class="video-container hidden"> <iframe id="product-video-iframe" src="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-                </div>
-                <h2 class="text-xl font-bold mb-2 modal-title"></h2>
-                <p class="text-gray-600 text-sm mb-2 modal-description"></p>
-                <span class="text-primary font-bold text-lg modal-price"></span>
-            </div>
+            <button onclick="closeModal()" class="absolute top-2 left-2 text-gray-500 hover:text-red-500 text-xl">&times;</button>
+            <img src="" alt="מוצר" class="w-full h-48 object-cover rounded mb-4 modal-image"/>
+            <h2 class="text-xl font-bold mb-2 modal-title"></h2>
+            <p class="text-gray-600 text-sm mb-2 modal-description"></p>
+            <span class="text-primary font-bold text-lg modal-price"></span>
             <div class="mt-4 flex items-center justify-center">
                 <button onclick="addToCartFromModal()" class="bg-primary text-white px-6 py-3 rounded-button hover:bg-primary/90 transition shine-button">הוסף לעגלה</button>
             </div>
         </div>
     </div>
 
+    <!-- Cart Modal -->
     <div id="cart-modal" class="fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center z-50 hidden">
         <div class="glass-effect rounded-lg shadow-lg p-6 max-w-lg w-full relative">
-            <button onclick="closeCartModal()" class="absolute top-2 left-2 text-gray-500 hover:text-red-500 text-xl">×</button>
+            <button onclick="closeCartModal()" class="absolute top-2 left-2 text-gray-500 hover:text-red-500 text-xl">&times;</button>
             <h2 class="text-2xl font-bold mb-4 text-gray-800">עגלת הקניות שלך</h2>
             
             <div id="cart-items" class="mb-6 max-h-60 overflow-y-auto">
+                <!-- Cart items will be loaded here by JavaScript -->
                 <p id="empty-cart-message" class="text-gray-600 text-center hidden">העגלה ריקה. התחל להוסיף מוצרים!</p>
             </div>
 
@@ -554,6 +614,7 @@
         </div>
     </div>
 
+    <!-- Newsletter -->
     <section class="py-12 glass-effect mt-10">
         <div class="container mx-auto px-4">
             <div class="max-w-3xl mx-auto text-center">
@@ -567,9 +628,11 @@
         </div>
     </section>
 
+    <!-- Footer -->
     <footer class="bg-[#1565C0] text-white py-12 mt-10">
         <div class="container mx-auto px-4">
             <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <!-- Column 1 - About -->
                 <div>
                     <h3 class="text-xl font-bold mb-4">אודות ח.סבן</h3>
                     <p class="text-white/90 mb-4">ח.סבן חומרי בניין 1994 בע"מ הינה חברה משפחתית המספקת חומרי בניין איכותיים מאז 1994. אנו מתמחים במגוון רחב של מוצרים לענף הבנייה.</p>
@@ -592,31 +655,33 @@
                     </div>
                 </div>
                 
+                <!-- Column 2 - Quick Links -->
                 <div>
                     <h3 class="text-xl font-bold mb-4">קישורים מהירים</h3>
                     <ul class="space-y-2">
-                        <li><a href="index.html" class="text-white/90 hover:text-white">דף הבית</a></li>
-                        <li><a href="index.html#vision" class="text-white/90 hover:text-white">החזון שלנו</a></li>
-                        <li><a href="catalog.html" class="text-white/90 hover:text-white">קטלוג מוצרים</a></li>
-                        <li><a href="building_materials.html" class="text-white/90 hover:text-white">חומרי בניין</a></li>
-                        <li><a href="index.html#calculator" class="text-white/90 hover:text-white">מחלקת חישובים</a></li>
-                        <li><a href="index.html#branches" class="text-white/90 hover:text-white">סניפים</a></li>
-                        <li><a href="index.html#testimonials" class="text-white/90 hover:text-white">המלצות</a></li>
+                        <li><a href="https://readdy.ai/home/20fb88f3-f689-4ee4-95ee-53c5efe8bc7d/f195f37e-9e34-4662-a971-05a152507a0f" data-readdy="true" class="text-white/90 hover:text-white">דף הבית</a></li>
+                        <li><a href="#" class="text-white/90 hover:text-white">החזון שלנו</a></li>
+                        <li><a href="#" class="text-white/90 hover:text-white">מוצרים</a></li>
+                        <li><a href="#" class="text-white/90 hover:text-white">מחלקת חישובים</a></li>
+                        <li><a href="#" class="text-white/90 hover:text-white">סניפים</a></li>
+                        <li><a href="#" class="text-white/90 hover:text-white">המלצות</a></li>
                     </ul>
                 </div>
                 
+                <!-- Column 3 - Categories (Hardcoded for footer, dynamic in sidebar) -->
                 <div>
                     <h3 class="text-xl font-bold mb-4">קטגוריות מוצרים</h3>
                     <ul class="space-y-2">
-                        <li><a href="catalog.html" class="text-white/90 hover:text-white">חומרי בניין</a></li>
-                        <li><a href="catalog.html" class="text-white/90 hover:text-white">חשמל ותאורה</a></li>
-                        <li><a href="catalog.html" class="text-white/90 hover:text-white">אינסטלציה</a></li>
-                        <li><a href="catalog.html" class="text-white/90 hover:text-white">צבעים וציפויים</a></li>
-                        <li><a href="catalog.html" class="text-white/90 hover:text-white">כלי עבודה</a></li>
-                        <li><a href="catalog.html" class="text-white/90 hover:text-white">בטיחות בעבודה</a></li>
+                        <li><a href="#" class="text-white/90 hover:text-white">חומרי בניין</a></li>
+                        <li><a href="#" class="text-white/90 hover:text-white">חשמל ותאורה</a></li>
+                        <li><a href="#" class="text-white/90 hover:text-white">אינסטלציה</a></li>
+                        <li><a href="#" class="text-white/90 hover:text-white">צבעים וציפויים</a></li>
+                        <li><a href="#" class="text-white/90 hover:text-white">כלי עבודה</a></li>
+                        <li><a href="#" class="text-white/90 hover:text-white">בטיחות בעבודה</a></li>
                     </ul>
                 </div>
                 
+                <!-- Column 4 - Contact -->
                 <div>
                     <h3 class="text-xl font-bold mb-4">צור קשר</h3>
                     <ul class="space-y-3">
@@ -671,30 +736,26 @@
         </div>
     </footer>
 
+    <!-- Back to top button -->
     <button id="back-to-top" class="fixed bottom-6 left-6 w-12 h-12 glass-effect rounded-full flex items-center justify-center text-primary shadow-lg opacity-0 invisible transition-all duration-300">
         <i class="ri-arrow-up-line ri-lg"></i>
     </button>
 
+    <!-- Scripts -->
     <script id="main-scripts">
         // Global variables for cart and product data
         const cart = [];
         let currentProductForModal = null; // Stores product details when modal is opened
-        let allProducts = []; // Stores all fetched products (filtered for this page's category)
+        let allProducts = []; // Stores all fetched products for filtering
         let filteredProducts = []; // Stores products after applying filters
 
         // Object to hold current filter selections
         let currentFilters = {
+            categories: ['all'], // Default to 'all' categories
             price: 1000, // Default max price
             availability: ['במלאי'], // Default to 'במלאי', assuming the sheet uses this string
             brands: [] // Default to no specific brand filter
         };
-
-        // Helper function to extract YouTube video ID from various URLs
-        function getYouTubeVideoId(url) {
-            const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
-            const match = url.match(regExp);
-            return (match && match[2].length === 11) ? match[2] : null;
-        }
 
         // Event listener for DOM content loaded
         document.addEventListener('DOMContentLoaded', function() {
@@ -747,17 +808,16 @@
             fetch('https://script.google.com/macros/s/AKfycbyzdkvb4wOMILaPIq-oalk6IRA7UKxCfcsRYW0VPjF5LHO3qYLewgicT8Ua6GCdQnTn/exec')
                 .then(res => res.json())
                 .then(products => {
-                    // Filter products specifically for "חומרי בניין"
-                    allProducts = products.filter(p => p.category === 'חומרי בניין');
-                    
+                    allProducts = products; // Store all products
                     filteredProducts = [...allProducts]; // Initialize filtered products
-                    renderProducts(filteredProducts); // Render products
-                    populateBrands(allProducts); // Populate brands from fetched data
+                    renderProducts(filteredProducts); // Render all products initially
+                    populateCategories(allProducts); // Populate categories from fetched data
                     addFilterListeners(); // Attach listeners for availability and brands
+                    populateHeroCategories(); // Populate the Hero Image Section
                 })
                 .catch(err => {
-                    console.error("Error loading products:", err);
-                    document.getElementById('products-grid').innerHTML = "<p class='text-red-600'>Error loading products. Please try again later.</p>";
+                    console.error("שגיאה בטעינת מוצרים:", err);
+                    document.getElementById('products-grid').innerHTML = "<p class='text-red-600'>שגיאה בטעינת מוצרים. נסה שוב מאוחר יותר.</p>";
                 });
 
             // Attach event listeners for apply and clear filters buttons
@@ -775,7 +835,7 @@
         function renderProducts(productsToRender) {
             const grid = document.getElementById('products-grid');
             if (productsToRender.length === 0) {
-                grid.innerHTML = "<p class='text-gray-600 text-center col-span-full'>No products found matching the filters.</p>";
+                grid.innerHTML = "<p class='text-gray-600 text-center col-span-full'>לא נמצאו מוצרים התואמים לסינון.</p>";
                 return;
             }
             grid.innerHTML = productsToRender.map(prod => `
@@ -789,12 +849,13 @@
                         <div class="flex justify-between items-start mb-2">
                             <h3 class="text-lg font-bold text-gray-800">${prod.title}</h3>
                             <div class="flex items-center space-x-1 space-x-reverse">
-                                <span class="bg-primary/10 text-primary text-xs px-2 py-1 rounded-full">${prod.availability || 'במלאי'}</span>
+                                <span class="bg-primary/10 text-primary text-xs px-2 py-1 rounded-full">${prod.availability || 'במ מלאי'}</span>
                                 ${prod.category ? `<span class="bg-blue-100 text-blue-700 text-xs px-2 py-1 rounded-full">${prod.category}</span>` : ''}
                             </div>
                         </div>
                         <p class="text-gray-600 text-sm mb-3">${prod.description}</p>
-                        <div class="flex justify-between items-center mt-auto"> ${prod.videoUrl ? `
+                        <div class="flex justify-between items-center mt-auto">
+                            ${prod.videoUrl ? `
                                 <button onclick='event.stopPropagation(); openModal("${encodeURIComponent(prod.title)}", "${encodeURIComponent(prod.description)}", "${encodeURIComponent(prod.image)}", "${encodeURIComponent(prod["price "] || prod.price || "—")}", "${encodeURIComponent(JSON.stringify(prod))}");'
                                     class="bg-secondary text-primary px-3 py-2 rounded-button text-xs hover:bg-secondary/80 transition shine-button ml-2">
                                     צפה בסרטון
@@ -809,58 +870,101 @@
             `).join('');
         }
 
-        // populateCategories is not needed for this specific page
-        // function populateCategories(products) { ... }
-
-        // addCategoryFilterListeners is not needed for this specific page
-        // function addCategoryFilterListeners() { ... }
-
         /**
-         * Populates the brand filter list in the sidebar.
-         * Assumes `product.brand` field exists in the fetched data.
-         * @param {Array} products - The full list of products (already filtered by category).
+         * Populates the category filter list in the sidebar.
+         * Assumes `product.category` field exists in the fetched data.
+         * @param {Array} products - The full list of products.
          */
-        function populateBrands(products) {
-            const brandsContainer = document.getElementById('sidebar-brands');
-            const dynamicBrands = new Set();
+        function populateCategories(products) {
+            const categoriesContainer = document.getElementById('sidebar-categories');
+            const dynamicCategories = new Set();
             
+            // Collect unique categories, excluding 'all' which is hardcoded in initial HTML
             products.forEach(p => {
-                if (p.brand) {
-                    dynamicBrands.add(p.brand);
+                if (p.category && p.category !== 'all') { // Ensure 'category' column exists
+                    dynamicCategories.add(p.category);
                 }
             });
 
-            // Define a set of default/expected brands (e.g., from previous hardcoded list)
-            const defaultBrands = new Set([
-                "נשר",
-                "טמבור",
-                "מקיטה",
-                "בוש",
-                "פלסאון",
-                "4K", 
-                "פיאנו", 
-                "כללי"
+            // Define a set of default/expected categories, including "חומרי בניין" explicitly
+            const defaultCategories = new Set([
+                "חומרי בניין", // Added this explicitly to ensure it always appears
+                "חשמל ותאורה",
+                "אינסטלציה",
+                "צבעים וציפויים",
+                "כלי עבודה",
+                "בטיחות בעבודה",
+                "בלות", 
+                "בלוקים", 
+                "מוצרי ברזל", 
+                "מוצרי פיתוח", 
+                "פינוי פסולת"
             ]);
 
-            // Combine default and dynamic brands
-            const allUniqueBrands = new Set([...defaultBrands, ...dynamicBrands]);
+            // Combine default and dynamic categories, ensuring no duplicates
+            const allUniqueCategories = new Set([...defaultCategories, ...dynamicCategories]);
 
-            // Clear existing brands before populating
-            brandsContainer.innerHTML = '';
+            // Clear existing categories (except 'הכל')
+            categoriesContainer.innerHTML = `
+                <li>
+                    <label class="custom-checkbox">
+                        <input type="checkbox" data-category="all" checked>
+                        <span class="checkmark ml-2"></span>
+                        <span class="text-gray-800">הכל</span>
+                    </label>
+                </li>
+            `; 
+            currentFilters.categories = ['all']; // Ensure current filter reflects 'all' by default
             
-            // Add dynamic/default brands
-            allUniqueBrands.forEach(brand => {
-                brandsContainer.innerHTML += `
+            // Add dynamic categories
+            allUniqueCategories.forEach(cat => {
+                categoriesContainer.innerHTML += `
                     <li>
                         <label class="custom-checkbox">
-                            <input type="checkbox" data-brand="${brand}">
+                            <input type="checkbox" data-category="${cat}">
                             <span class="checkmark ml-2"></span>
-                            <span class="text-gray-800">${brand}</span>
+                            <span class="text-gray-800">${cat}</span>
                         </label>
                     </li>
                 `;
             });
-            // Re-attach listeners for dynamically added brand checkboxes in addFilterListeners if needed (called after populate)
+
+            // Add event listeners for dynamic category checkboxes
+            addCategoryFilterListeners();
+        }
+
+        /**
+         * Attaches event listeners to category checkboxes.
+         */
+        function addCategoryFilterListeners() {
+            document.querySelectorAll('#sidebar-categories input[type="checkbox"]').forEach(checkbox => {
+                checkbox.addEventListener('change', function() {
+                    const category = this.dataset.category;
+                    if (category === 'all') {
+                        // If 'all' is selected, deselect all other categories
+                        document.querySelectorAll('#sidebar-categories input[type="checkbox"]').forEach(cb => {
+                            cb.checked = (cb === this);
+                        });
+                        currentFilters.categories = ['all'];
+                    } else {
+                        // If a specific category is selected, deselect 'all'
+                        const allCheckbox = document.querySelector('#sidebar-categories input[data-category="all"]');
+                        if (allCheckbox) allCheckbox.checked = false;
+
+                        if (this.checked) {
+                            currentFilters.categories.push(category);
+                        } else {
+                            currentFilters.categories = currentFilters.categories.filter(c => c !== category);
+                        }
+                        // If no specific category is selected, re-select 'all'
+                        if (currentFilters.categories.length === 0) {
+                            allCheckbox.checked = true;
+                            currentFilters.categories.push('all');
+                        }
+                    }
+                    applyFilters();
+                });
+            });
         }
 
         /**
@@ -880,7 +984,9 @@
                 });
             });
 
-            // Brand filters
+            // Brand filters - these are currently hardcoded, if they should be dynamic
+            // based on `product.brand` from the sheet, this needs a `populateBrands` function
+            // similar to `populateCategories`. For now, it uses the hardcoded ones in HTML.
             document.querySelectorAll('#sidebar-brands input[type="checkbox"]').forEach(checkbox => {
                 checkbox.addEventListener('change', function() {
                     const brand = this.dataset.brand;
@@ -898,7 +1004,12 @@
          * Applies all active filters to the product list and re-renders the grid.
          */
         function applyFilters() {
-            let tempFilteredProducts = [...allProducts]; // Start with products already filtered for "חומרי בניין"
+            let tempFilteredProducts = [...allProducts]; // Start with all products
+
+            // Filter by categories
+            if (!currentFilters.categories.includes('all') && currentFilters.categories.length > 0) {
+                tempFilteredProducts = tempFilteredProducts.filter(p => p.category && currentFilters.categories.includes(p.category));
+            }
 
             // Filter by price
             tempFilteredProducts = tempFilteredProducts.filter(p => {
@@ -935,12 +1046,17 @@
         function clearAllFilters() {
             // Reset filter object
             currentFilters = {
+                categories: ['all'],
                 price: 1000,
                 availability: ['במלאי'],
                 brands: []
             };
 
             // Reset UI elements
+            // Categories checkboxes
+            document.querySelectorAll('#sidebar-categories input[type="checkbox"]').forEach(cb => {
+                cb.checked = (cb.dataset.category === 'all');
+            });
             // Price range slider
             const priceRange = document.getElementById('price-range');
             const priceValue = document.getElementById('price-value');
@@ -957,10 +1073,11 @@
             // Sort select
             document.getElementById('sort-select').value = 'popularity';
 
+
             applyFilters(); // Apply cleared filters
         }
 
-        // Product Modal functions - Copied from catalog.html
+        // Product Modal functions
         /**
          * Opens the product modal with details of a specific product.
          * @param {string} title - Product title (URI encoded).
@@ -971,37 +1088,10 @@
          */
         function openModal(title, description, image, price, productJson) {
             currentProductForModal = JSON.parse(decodeURIComponent(productJson));
-            
-            const modalTitle = document.querySelector('#product-modal .modal-title');
-            const modalDescription = document.querySelector('#product-modal .modal-description');
-            const modalImage = document.querySelector('#product-modal .modal-image');
-            const modalPrice = document.querySelector('#product-modal .modal-price');
-            const videoContainer = document.querySelector('#product-modal .video-container');
-            const videoIframe = document.getElementById('product-video-iframe');
-
-            modalTitle.innerText = decodeURIComponent(title);
-            modalDescription.innerText = decodeURIComponent(description);
-            modalPrice.innerText = "₪" + decodeURIComponent(price);
-
-            if (currentProductForModal.videoUrl) {
-                const videoId = getYouTubeVideoId(currentProductForModal.videoUrl);
-                if (videoId) {
-                    videoIframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0`; // Autoplay and remove related videos
-                    videoContainer.classList.remove('hidden');
-                    modalImage.classList.add('hidden'); // Hide image if video exists
-                } else {
-                    videoContainer.classList.add('hidden');
-                    videoIframe.src = ''; // Clear src if invalid video URL
-                    modalImage.src = decodeURIComponent(image);
-                    modalImage.classList.remove('hidden');
-                }
-            } else {
-                videoContainer.classList.add('hidden');
-                videoIframe.src = ''; // Clear src
-                modalImage.src = decodeURIComponent(image);
-                modalImage.classList.remove('hidden');
-            }
-
+            document.querySelector('#product-modal .modal-title').innerText = decodeURIComponent(title);
+            document.querySelector('#product-modal .modal-description').innerText = decodeURIComponent(description);
+            document.querySelector('#product-modal .modal-image').src = decodeURIComponent(image);
+            document.querySelector('#product-modal .modal-price').innerText = "₪" + decodeURIComponent(price);
             document.getElementById('product-modal').classList.remove('hidden');
         }
 
@@ -1010,13 +1100,10 @@
          */
         function closeModal() {
             document.getElementById('product-modal').classList.add('hidden');
-            // Stop YouTube video playback when closing modal
-            const videoIframe = document.getElementById('product-video-iframe');
-            videoIframe.src = '';
             currentProductForModal = null;
         }
 
-        // Cart functions - Copied from catalog.html
+        // Cart functions
         /**
          * Adds a product to the cart or increments its quantity if already present.
          * @param {Object} product - The product object to add.
@@ -1128,29 +1215,29 @@
 
             if (!name || !phone) {
                 // Using alert for simplicity, consider a custom modal/message for better UX
-                alert("Please fill in full name and phone number.");
+                alert("אנא מלא שם מלא ומספר טלפון.");
                 return;
             }
 
-            let message = `📦 *New Order from H. Saban Building Materials*\n\n`;
-            message += `👤 *Customer Details:*\n`;
-            message += `Name: ${name}\n`;
-            message += `Phone: ${phone}\n`;
+            let message = `📦 *הזמנה חדשה מח.סבן חומרי בניין*\n\n`;
+            message += `👤 *פרטי לקוח:*\n`;
+            message += `שם: ${name}\n`;
+            message += `טלפון: ${phone}\n`;
             if (address) {
-                message += `Address: ${address}\n`;
+                message += `כתובת: ${address}\n`;
             }
-            message += `\n🧾 *Products:*\n`;
+            message += `\n🧾 *מוצרים:*\n`;
 
             if (cart.length === 0) {
-                message += `❗ No products selected\n`;
+                message += `❗ לא נבחרו מוצרים\n`;
             } else {
                 cart.forEach(item => {
-                    message += `✅ ${item.title} - ${item.quantity || 1} Pcs - ₪${item["price "] || item.price}\n`;
+                    message += `✅ ${item.title} - ${item.quantity || 1} יח' - ₪${item["price "] || item.price}\n`;
                 });
             }
 
             if (notes) {
-                message += `\n📝 *Order Notes:*\n${notes}\n`;
+                message += `\n📝 *הערות להזמנה:*\n${notes}\n`;
             }
 
             const encodedMessage = encodeURIComponent(message);
@@ -1161,7 +1248,57 @@
             updateCartUI();
             closeCartModal();
             // Using alert for simplicity, consider a custom modal/message for better UX
-            alert("Order sent successfully to WhatsApp!");
+            alert("ההזמנה נשלחה בהצלחה ל-WhatsApp!");
+        }
+
+        // Function to dynamically populate the hero categories section
+        function populateHeroCategories() {
+            const heroContainer = document.getElementById('dynamic-hero-categories');
+            
+            // Define your categories for the hero section here
+            // You can add as many as you like
+            const heroCategories = [
+                {
+                    name: "חומרי בניין",
+                    imageUrl: "https://img.d.co.il/Umbraco/1509/795x348.3402a7cf-cb70-4066-8ed8-bf55d2795e01.png",
+                    linkUrl: "building_materials.html" // Link to the specific category page
+                },
+                {
+                    name: "חשמל ותאורה",
+                    imageUrl: "https://readdy.ai/api/search-image?query=Electrical%2520socket%252C%2520power%2520outlet%252C%2520electrical%2520supplies%252C%2520detailed%2520product%2520photography%2520on%2520clean%2520white%2520background%252C%2520soft%2520blue%2520lighting&width=600&height=400&seq=20&orientation=landscape",
+                    linkUrl: "catalog.html?category=חשמל ותאורה" // Example: link to main catalog with pre-selected category
+                },
+                {
+                    name: "כלי עבודה",
+                    imageUrl: "https://readdy.ai/api/search-image?query=Professional%2520power%2520drill%252C%2520construction%2520tool%252C%2520detailed%2520product%2520photography%2520on%2520clean%252C%2520high%2520quality%2520tool%252C%2520soft%2520blue%2520lighting&width=600&height=400&seq=15&orientation=landscape",
+                    linkUrl: "catalog.html?category=כלי עבודה"
+                },
+                {
+                    name: "צבעים וציפויים",
+                    imageUrl: "https://readdy.ai/api/search-image?query=Paint%2520buckets%2520and%2520cans%252C%2520professional%2520painting%2520supplies%252C%2520various%2520colors%252C%2520clean%2520white%2520background%252C%2520detailed%2520product%2520photography%252C%2520soft%2520blue%2520lighting&width=600&height=400&seq=14&orientation=landscape",
+                    linkUrl: "catalog.html?category=צבעים וציפויים"
+                },
+                {
+                    name: "אינסטלציה",
+                    imageUrl: "https://readdy.ai/api/search-image?query=Plumbing%2520pipes%252C%2520fittings%252C%2520and%2520tools%2520on%2520a%2520clean%2520background%252C%2520detailed%2520product%2520photography&width=600&height=400&seq=10&orientation=landscape",
+                    linkUrl: "catalog.html?category=אינסטלציה"
+                },
+                {
+                    name: "בטיחות בעבודה",
+                    imageUrl: "https://readdy.ai/api/search-image?query=Construction%2520safety%2520equipment%252C%2520hard%2520hat%252C%2520safety%2520vest%252C%2520gloves%252C%2520detailed%2520on%2520white%2520background&width=600&height=400&seq=10&orientation=landscape",
+                    linkUrl: "catalog.html?category=בטיחות בעבודה"
+                }
+                // Add more categories as needed
+            ];
+
+            heroContainer.innerHTML = heroCategories.map(cat => `
+                <div class="hero-image-item glass-card">
+                    <img src="${cat.imageUrl}" onerror="this.onerror=null;this.src='https://placehold.co/300x200/cccccc/000000?text=תמונה+לא+זמינה';" alt="${cat.name}">
+                    <div class="hero-image-overlay">
+                        <a href="${cat.linkUrl}" class="bg-primary text-white px-4 py-2 rounded-button shine-button">לדף המוצר</a>
+                    </div>
+                </div>
+            `).join('');
         }
     </script>
 </body>
