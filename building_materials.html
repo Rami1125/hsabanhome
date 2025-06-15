@@ -821,11 +821,11 @@
                 });
 
             // Attach event listeners for apply and clear filters buttons
-            document.getElementById('apply-filters-btn').addEventListener('click', applyFilters);
+            document.getElementById('apply-filters-btn').addEventListener('click', );
             document.getElementById('clear-filters-btn').addEventListener('click', clearAllFilters);
 
             // Attach event listener for sort select
-            document.getElementById('sort-select').addEventListener('change', applyFilters);
+            document.getElementById('sort-select').addEventListener('change', );
         });
 
         /**
@@ -962,83 +962,55 @@
                             currentFilters.categories.push('all');
                         }
                     }
-                    applyFilters();
+                    ();
                 });
             });
         }
 
         /**
          * Attaches event listeners to availability and brand checkboxes.
-         */
-        function addFilterListeners() {
-            // Availability filters
-            document.querySelectorAll('#sidebar-availability input[type="checkbox"]').forEach(checkbox => {
-                checkbox.addEventListener('change', function() {
-                    const availability = this.dataset.availability;
-                    if (this.checked) {
-                        currentFilters.availability.push(availability);
-                    } else {
-                        currentFilters.availability = currentFilters.availability.filter(a => a !== availability);
-                    }
-                    applyFilters();
-                });
-            });
+         */    
+    function applyFilters() {
+    let tempFilteredProducts = [...allProducts]; // Start with all products
+    console.log("פילטרים נוכחיים:", currentFilters); // הוסף את השורה הזו
+    console.log("מוצרים לפני סינון קטגוריות:", tempFilteredProducts.length); // הוסף את השורה הזו
 
-            // Brand filters - these are currently hardcoded, if they should be dynamic
-            // based on `product.brand` from the sheet, this needs a `populateBrands` function
-            // similar to `populateCategories`. For now, it uses the hardcoded ones in HTML.
-            document.querySelectorAll('#sidebar-brands input[type="checkbox"]').forEach(checkbox => {
-                checkbox.addEventListener('change', function() {
-                    const brand = this.dataset.brand;
-                    if (this.checked) {
-                        currentFilters.brands.push(brand);
-                    } else {
-                        currentFilters.brands = currentFilters.brands.filter(b => b !== brand);
-                    }
-                    applyFilters();
-                });
-            });
-        }
+    // Filter by categories
+    if (!currentFilters.categories.includes('all') && currentFilters.categories.length > 0) {
+        tempFilteredProducts = tempFilteredProducts.filter(p => p.category && currentFilters.categories.includes(p.category));
+    }
+    console.log("מוצרים אחרי סינון קטגוריות:", tempFilteredProducts.length); // הוסף את השורה הזו
 
-        /**
-         * Applies all active filters to the product list and re-renders the grid.
-         */
-        function applyFilters() {
-            let tempFilteredProducts = [...allProducts]; // Start with all products
+    // Filter by price
+    tempFilteredProducts = tempFilteredProducts.filter(p => {
+        const price = parseFloat(p["price "] || p.price);
+        return !isNaN(price) && price <= currentFilters.price;
+    });
+    console.log("מוצרים אחרי סינון מחיר:", tempFilteredProducts.length); // הוסף את השורה הזו
 
-            // Filter by categories
-            if (!currentFilters.categories.includes('all') && currentFilters.categories.length > 0) {
-                tempFilteredProducts = tempFilteredProducts.filter(p => p.category && currentFilters.categories.includes(p.category));
-            }
+    // Filter by availability
+    if (currentFilters.availability.length > 0) {
+        tempFilteredProducts = tempFilteredProducts.filter(p => p.availability && currentFilters.availability.includes(p.availability));
+    }
+    console.log("מוצרים אחרי סינון זמינות:", tempFilteredProducts.length); // הוסף את השורה הזו
 
-            // Filter by price
-            tempFilteredProducts = tempFilteredProducts.filter(p => {
-                const price = parseFloat(p["price "] || p.price);
-                return !isNaN(price) && price <= currentFilters.price;
-            });
+    // Filter by brands
+    if (currentFilters.brands.length > 0) {
+        tempFilteredProducts = tempFilteredProducts.filter(p => p.brand && currentFilters.brands.includes(p.brand));
+    }
+    console.log("מוצרים אחרי סינון מותגים (סופי):", tempFilteredProducts.length); // הוסף את השורה הזו
 
-            // Filter by availability
-            if (currentFilters.availability.length > 0) {
-                tempFilteredProducts = tempFilteredProducts.filter(p => p.availability && currentFilters.availability.includes(p.availability));
-            }
+    // Apply sorting
+    const sortOrder = document.getElementById('sort-select').value;
+    if (sortOrder === 'price-asc') {
+        tempFilteredProducts.sort((a, b) => (parseFloat(a["price "] || a.price) || 0) - (parseFloat(b["price "] || b.price) || 0));
+    } else if (sortOrder === 'price-desc') {
+        tempFilteredProducts.sort((a, b) => (parseFloat(b["price "] || b.price) || 0) - (parseFloat(a["price "] || a.price) || 0));
+    }
 
-            // Filter by brands
-            if (currentFilters.brands.length > 0) {
-                tempFilteredProducts = tempFilteredProducts.filter(p => p.brand && currentFilters.brands.includes(p.brand));
-            }
-
-            // Apply sorting
-            const sortOrder = document.getElementById('sort-select').value;
-            if (sortOrder === 'price-asc') {
-                tempFilteredProducts.sort((a, b) => (parseFloat(a["price "] || a.price) || 0) - (parseFloat(b["price "] || b.price) || 0));
-            } else if (sortOrder === 'price-desc') {
-                tempFilteredProducts.sort((a, b) => (parseFloat(b["price "] || b.price) || 0) - (parseFloat(a["price "] || a.price) || 0));
-            }
-            // 'popularity' and 'newest' would require corresponding data fields and sorting logic
-
-            filteredProducts = tempFilteredProducts; // Update global filtered list
-            renderProducts(filteredProducts); // Render filtered products
-        }
+    filteredProducts = tempFilteredProducts; // Update global filtered list
+    renderProducts(filteredProducts); // Render filtered products
+}
 
         /**
          * Resets all filters to their default states and re-applies them.
@@ -1300,6 +1272,7 @@
                 </div>
             `).join('');
         }
+
     </script>
 </body>
 </html>
