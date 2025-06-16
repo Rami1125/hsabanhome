@@ -371,6 +371,168 @@
         .autocomplete-suggestions div:last-child {
             border-bottom: none;
         }
+
+        /* Styles for AI tool buttons within the product modal */
+        .product-modal-ai-button {
+            padding: 0.5rem 0.75rem; /* px-3 py-2 smaller padding */
+            font-size: 0.75rem; /* text-xs smaller text */
+            min-width: unset; /* Remove min-width inherited from main page buttons */
+        }
+        
+        /* Styles for AI Tools Dropdown */
+        .ai-tools-dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: white;
+            min-width: 250px; /* Adjust as needed */
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1;
+            border-radius: 8px;
+            overflow: hidden;
+            top: 100%; /* Position below the button */
+            right: 0; /* Align to the right */
+            margin-top: 0.5rem;
+            transform: translateY(-10px);
+            opacity: 0;
+            transition: all 0.3s ease-out;
+            pointer-events: none; /* Allow clicks through when hidden */
+        }
+
+        .ai-tools-dropdown-open .ai-tools-dropdown-content {
+            display: block;
+            transform: translateY(0);
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .ai-tools-dropdown-content a {
+            color: black;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            border-bottom: 1px solid #eee;
+            transition: background-color 0.2s ease;
+        }
+
+        .ai-tools-dropdown-content a:last-child {
+            border-bottom: none;
+        }
+
+        .ai-tools-dropdown-content a:hover {
+            background-color: #f0f8ff;
+            color: #2196F3;
+        }
+
+        .ai-tools-dropdown-content a i {
+            margin-left: 10px; /* Space for emoji */
+        }
+        .ai-tools-dropdown-content a .description {
+            font-size: 0.75rem;
+            color: #6b7280; /* gray-500 */
+            display: block;
+            margin-top: 2px;
+        }
+        .ai-tools-dropdown-content a:hover .description {
+            color: #2196F3; /* Change description color on hover */
+        }
+        
+        /* Print-specific styles */
+        @media print {
+            body * {
+                visibility: hidden;
+            }
+            #print-content, #print-content * {
+                visibility: visible !important;
+            }
+            #print-content {
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 100%;
+                padding: 20px;
+                box-sizing: border-box;
+                direction: rtl; /* Ensure RTL for printing */
+                text-align: right; /* Ensure right-align for printing */
+            }
+            /* Ensure images scale correctly in print */
+            #print-content img {
+                max-width: 100%;
+                height: auto;
+                display: block;
+                margin: 0 auto 1rem auto; /* Center image */
+                border-radius: 8px;
+            }
+            #print-content .logo {
+                max-height: 80px;
+                margin: 0 auto 20px auto;
+                display: block;
+            }
+            #print-content h1, #print-content h2, #print-content h3, #print-content h4 {
+                text-align: center;
+                color: #2196F3;
+                margin-bottom: 15px;
+            }
+            #print-content .content {
+                border: 1px solid #eee;
+                padding: 15px;
+                border-radius: 8px;
+                background-color: #f9f9f9;
+            }
+            #print-content ul {
+                list-style-type: disc;
+                padding-right: 20px;
+                margin-bottom: 10px;
+            }
+            #print-content li {
+                margin-bottom: 5px;
+            }
+            #print-content p {
+                margin-bottom: 10px;
+            }
+            #print-content .footer {
+                text-align: center;
+                margin-top: 30px;
+                font-size: 0.8em;
+                color: #666;
+            }
+            /* Hide print/share buttons in print view */
+            #print-content .print-buttons {
+                display: none !important;
+            }
+        }
+
+        /* NEW: Styles for the welcome popup */
+        #welcome-popup-modal {
+            background-color: rgba(0, 0, 0, 0.6);
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+            pointer-events: none; /* Allows clicks through when hidden */
+        }
+        #welcome-popup-modal.show {
+            opacity: 1;
+            pointer-events: auto;
+        }
+        #welcome-popup-modal .popup-content {
+            background-color: white;
+            transform: translateY(-20px);
+            opacity: 0;
+            transition: all 0.5s ease-in-out;
+        }
+        #welcome-popup-modal.show .popup-content {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        /* NEW: Animation for AI Tools Icon */
+        @keyframes pulse-blue {
+            0% { box-shadow: 0 0 0 0 rgba(33, 150, 243, 0.7); }
+            70% { box-shadow: 0 0 0 10px rgba(33, 150, 243, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(33, 150, 243, 0); }
+        }
+        .ai-tools-pulse {
+            animation: pulse-blue 1.5s infinite;
+        }
     </style>
 </head>
 <body class="bg-gradient-to-br from-blue-50 to-white font-sans p-6">
@@ -391,7 +553,37 @@
             </nav>
             
             <div class="flex items-center space-x-4 space-x-reverse">
-                <!-- Cart icon remains in header -->
+                <!-- AI Tools Dropdown Button -->
+                <div class="relative group" id="ai-tools-dropdown-container">
+                    <button class="w-10 h-10 flex items-center justify-center text-white bg-blue-600 rounded-full transition-all duration-300 ease-in-out" id="ai-tools-button">
+                        <i class="ri-sparkling-2-fill ri-xl"></i> <!-- Changed icon to a more "AI" like sparkle -->
+                    </button>
+                    <div class="ai-tools-dropdown-content shadow-lg glass-effect rounded-lg" id="ai-tools-dropdown-menu">
+                        <a href="#" onclick="openProjectPlannerModal(); return false;">
+                            <i class="ri-tools-fill ri-lg text-primary"></i>
+                            <div>
+                                <span class="font-bold">עוזר תכנון פרויקטים</span>
+                                <span class="description">קבל המלצות חומרים וכמויות לפרויקט הבנייה שלך.</span>
+                            </div>
+                        </a>
+                        <a href="#" onclick="openProductComparisonModal(); return false;">
+                            <i class="ri-compare-arrows-line ri-lg text-green-600"></i>
+                            <div>
+                                <span class="font-bold">השוואת מוצרים</span>
+                                <span class="description">השווה בין שני מוצרים מהקטלוג לקבלת מידע מפורט.</span>
+                            </div>
+                        </a>
+                        <a href="#" onclick="openOrderAssistantModal(); return false;">
+                            <i class="ri-shopping-basket-fill ri-lg text-purple-600"></i>
+                            <div>
+                                <span class="font-bold">עוזר הרכבת הזמנה</span>
+                                <span class="description">קבל המלצות AI להרכבת הזמנה כולל פרטים והערות.</span>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Cart icon -->
                 <a href="#" class="relative" onclick="openCartModal(event)">
                     <div class="w-10 h-10 flex items-center justify-center text-primary glass-effect rounded-full">
                         <i class="ri-shopping-cart-line ri-xl"></i>
@@ -487,20 +679,6 @@
                 <div id="products-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-6"></div>
             </main>
 
-            <!-- Project Planner Button - Existing LLM Feature -->
-            <div class="flex justify-center mt-10">
-                <button onclick="openProjectPlannerModal()" class="bg-blue-600 text-white px-8 py-4 rounded-button text-lg font-bold hover:bg-blue-700 transition shine-button flex items-center justify-center">
-                    <i class="ri-tools-fill ri-xl ml-2"></i> ✨ עוזר תכנון פרויקטים ✨
-                </button>
-            </div>
-
-            <!-- NEW AI Feature: Product Comparison Button -->
-            <div class="flex justify-center mt-4">
-                <button onclick="openProductComparisonModal()" class="bg-green-600 text-white px-8 py-4 rounded-button text-lg font-bold hover:bg-green-700 transition shine-button flex items-center justify-center">
-                    <i class="ri-compare-arrows-line ri-xl ml-2"></i> ✨ השוואת מוצרים עם AI ✨
-                </button>
-            </div>
-
             <!-- Pagination -->
             <div class="flex justify-center mt-10">
                 <nav class="glass-effect rounded-lg inline-flex">
@@ -535,30 +713,36 @@
                 <div class="mt-4 flex flex-wrap gap-2 justify-center">
                     <button onclick="addToCartFromModal()" class="bg-primary text-white px-6 py-3 rounded-button hover:bg-primary/90 transition shine-button">הוסף לעגלה</button>
                     <!-- Existing button for LLM feature -->
-                    <button onclick="getUsageIdeas()" class="bg-teal-600 text-white px-6 py-3 rounded-button hover:bg-teal-700 transition shine-button text-sm md:text-base">
+                    <button onclick="getUsageIdeas()" class="bg-teal-600 text-white px-4 py-2 rounded-button hover:bg-teal-700 transition shine-button text-sm product-modal-ai-button">
                         <i class="ri-lightbulb-fill ri-lg ml-2"></i> רעיונות לשימוש
                     </button>
                     <!-- Existing button for LLM feature -->
-                    <button onclick="getProductSummaryAndFeatures()" class="bg-purple-600 text-white px-6 py-3 rounded-button hover:bg-purple-700 transition shine-button text-sm md:text-base">
+                    <button onclick="getProductSummaryAndFeatures()" class="bg-purple-600 text-white px-4 py-2 rounded-button hover:bg-purple-700 transition shine-button text-sm product-modal-ai-button">
                         <i class="ri-article-line ri-lg ml-2"></i> סיכום ונקודות מפתח
                     </button>
                     <!-- Existing button for LLM feature -->
-                    <button onclick="getRelatedProducts()" class="bg-orange-600 text-white px-6 py-3 rounded-button hover:bg-orange-700 transition shine-button text-sm md:text-base">
+                    <button onclick="getRelatedProducts()" class="bg-orange-600 text-white px-4 py-2 rounded-button hover:bg-orange-700 transition shine-button text-sm product-modal-ai-button">
                         <i class="ri-links-fill ri-lg ml-2"></i> מוצרים קשורים
                     </button>
                     <!-- Existing button for LLM feature -->
-                    <button onclick="toggleProductQA()" class="bg-blue-600 text-white px-6 py-3 rounded-button hover:bg-blue-700 transition shine-button text-sm md:text-base">
+                    <button onclick="toggleProductQA()" class="bg-blue-600 text-white px-4 py-2 rounded-button hover:bg-blue-700 transition shine-button text-sm product-modal-ai-button">
                         <i class="ri-question-fill ri-lg ml-2"></i> שאל שאלה
                     </button>
                     <!-- NEW button for LLM feature -->
-                    <button onclick="toggleDescriptionGenerator()" class="bg-indigo-600 text-white px-6 py-3 rounded-button hover:bg-indigo-700 transition shine-button text-sm md:text-base">
+                    <button onclick="toggleDescriptionGenerator()" class="bg-indigo-600 text-white px-4 py-2 rounded-button hover:bg-indigo-700 transition shine-button text-sm product-modal-ai-button">
                         <i class="ri-text-wrap ri-lg ml-2"></i> תיאור משופר
                     </button>
                 </div>
 
                 <!-- Area to display LLM response for usage ideas -->
-                <div id="usage-ideas-response" class="mt-6 p-4 bg-gray-50 rounded-lg border border-gray-200 min-h-[50px] flex items-center justify-center text-gray-700 text-sm leading-relaxed hidden">
-                    <p>רעיונות לשימוש במוצר יופיעו כאן...</p>
+                <div id="usage-ideas-container" class="mt-6 hidden">
+                    <div id="usage-ideas-response" class="p-4 bg-gray-50 rounded-lg border border-gray-200 min-h-[50px] flex flex-col items-center justify-center text-gray-700 text-sm leading-relaxed">
+                        <p>רעיונות לשימוש במוצר יופיעו כאן...</p>
+                    </div>
+                    <div class="flex gap-2 mt-4 justify-center">
+                        <button onclick="printAIContent('רעיונות לשימוש במוצר', currentProductForModal.title, currentProductForModal.image, document.getElementById('usage-ideas-response').innerHTML)" class="bg-gray-200 text-gray-700 px-4 py-2 rounded-button hover:bg-gray-300 transition text-xs flex items-center"><i class="ri-printer-line ml-1"></i> הדפסה / שמירה</button>
+                        <button onclick="shareProductAIResponse('usage-ideas-response')" class="bg-green-500 text-white px-4 py-2 rounded-button hover:bg-green-600 transition text-xs flex items-center"><i class="ri-whatsapp-line ml-1"></i> שלח ל-WhatsApp</button>
+                    </div>
                 </div>
                 <div id="usage-ideas-loading" class="hidden flex justify-center items-center mt-4">
                     <div class="loader"></div>
@@ -569,8 +753,14 @@
                 </div>
 
                 <!-- New area to display LLM response for summary and key features -->
-                <div id="summary-features-response" class="mt-6 p-4 bg-gray-50 rounded-lg border border-gray-200 min-h-[50px] flex items-center justify-center text-gray-700 text-sm leading-relaxed hidden">
-                    <p>סיכום ותכונות מפתח יופיעו כאן...</p>
+                <div id="summary-features-container" class="mt-6 hidden">
+                    <div id="summary-features-response" class="p-4 bg-gray-50 rounded-lg border border-gray-200 min-h-[50px] flex flex-col items-center justify-center text-gray-700 text-sm leading-relaxed">
+                        <p>סיכום ותכונות מפתח יופיעו כאן...</p>
+                    </div>
+                    <div class="flex gap-2 mt-4 justify-center">
+                        <button onclick="printAIContent('סיכום ותכונות מפתח של המוצר', currentProductForModal.title, currentProductForModal.image, document.getElementById('summary-features-response').innerHTML)" class="bg-gray-200 text-gray-700 px-4 py-2 rounded-button hover:bg-gray-300 transition text-xs flex items-center"><i class="ri-printer-line ml-1"></i> הדפסה / שמירה</button>
+                        <button onclick="shareProductAIResponse('summary-features-response')" class="bg-green-500 text-white px-4 py-2 rounded-button hover:bg-green-600 transition text-xs flex items-center"><i class="ri-whatsapp-line ml-1"></i> שלח ל-WhatsApp</button>
+                    </div>
                 </div>
                 <div id="summary-features-loading" class="hidden flex justify-center items-center mt-4">
                     <div class="loader"></div>
@@ -581,8 +771,14 @@
                 </div>
 
                 <!-- New area to display LLM response for related products -->
-                <div id="related-products-response" class="mt-6 p-4 bg-gray-50 rounded-lg border border-gray-200 min-h-[50px] flex items-center justify-center text-gray-700 text-sm leading-relaxed hidden">
-                    <p>המלצות למוצרים קשורים יופיעו כאן...</p>
+                <div id="related-products-container" class="mt-6 hidden">
+                    <div id="related-products-response" class="p-4 bg-gray-50 rounded-lg border border-gray-200 min-h-[50px] flex flex-col items-center justify-center text-gray-700 text-sm leading-relaxed">
+                        <p>המלצות למוצרים קשורים יופיעו כאן...</p>
+                    </div>
+                    <div class="flex gap-2 mt-4 justify-center">
+                        <button onclick="printAIContent('מוצרים קשורים למוצר', currentProductForModal.title, currentProductForModal.image, document.getElementById('related-products-response').innerHTML)" class="bg-gray-200 text-gray-700 px-4 py-2 rounded-button hover:bg-gray-300 transition text-xs flex items-center"><i class="ri-printer-line ml-1"></i> הדפסה / שמירה</button>
+                        <button onclick="shareProductAIResponse('related-products-response')" class="bg-green-500 text-white px-4 py-2 rounded-button hover:bg-green-600 transition text-xs flex items-center"><i class="ri-whatsapp-line ml-1"></i> שלח ל-WhatsApp</button>
+                    </div>
                 </div>
                 <div id="related-products-loading" class="hidden flex justify-center items-center mt-4">
                     <div class="loader"></div>
@@ -601,8 +797,12 @@
                         <i class="ri-send-plane-fill ri-lg ml-2"></i> שאל
                     </button>
 
-                    <div id="product-qa-response" class="mt-4 p-4 bg-gray-50 rounded-lg border border-gray-200 min-h-[50px] flex items-center justify-center text-gray-700 text-sm leading-relaxed hidden">
+                    <div id="product-qa-response" class="mt-4 p-4 bg-gray-50 rounded-lg border border-gray-200 min-h-[50px] flex flex-col items-center justify-center text-gray-700 text-sm leading-relaxed hidden">
                         <p>התשובה לשאלתך תופיע כאן...</p>
+                    </div>
+                    <div class="flex gap-2 mt-4 justify-center">
+                        <button onclick="printAIContent('שאלות ותשובות על המוצר', currentProductForModal.title, currentProductForModal.image, document.getElementById('product-qa-response').innerHTML)" class="bg-gray-200 text-gray-700 px-4 py-2 rounded-button hover:bg-gray-300 transition text-xs flex items-center"><i class="ri-printer-line ml-1"></i> הדפסה / שמירה</button>
+                        <button onclick="shareProductAIResponse('product-qa-response')" class="bg-green-500 text-white px-4 py-2 rounded-button hover:bg-green-600 transition text-xs flex items-center"><i class="ri-whatsapp-line ml-1"></i> שלח ל-WhatsApp</button>
                     </div>
                     <div id="product-qa-loading" class="hidden flex justify-center items-center mt-4">
                         <div class="loader"></div>
@@ -622,8 +822,12 @@
                         <i class="ri-sparkle-fill ri-lg ml-2"></i> צור תיאור
                     </button>
 
-                    <div id="description-generator-response" class="mt-4 p-4 bg-gray-50 rounded-lg border border-gray-200 min-h-[50px] flex items-center justify-center text-gray-700 text-sm leading-relaxed hidden">
+                    <div id="description-generator-response" class="mt-4 p-4 bg-gray-50 rounded-lg border border-gray-200 min-h-[50px] flex flex-col items-center justify-center text-gray-700 text-sm leading-relaxed hidden">
                         <p>התיאור המשופר יופיע כאן...</p>
+                    </div>
+                    <div class="flex gap-2 mt-4 justify-center">
+                        <button onclick="printAIContent('תיאור מוצר משופר', currentProductForModal.title, currentProductForModal.image, document.getElementById('description-generator-response').innerHTML)" class="bg-gray-200 text-gray-700 px-4 py-2 rounded-button hover:bg-gray-300 transition text-xs flex items-center"><i class="ri-printer-line ml-1"></i> הדפסה / שמירה</button>
+                        <button onclick="shareProductAIResponse('description-generator-response')" class="bg-green-500 text-white px-4 py-2 rounded-button hover:bg-green-600 transition text-xs flex items-center"><i class="ri-whatsapp-line ml-1"></i> שלח ל-WhatsApp</button>
                     </div>
                     <div id="description-generator-loading" class="hidden flex justify-center items-center mt-4">
                         <div class="loader"></div>
@@ -667,28 +871,36 @@
             <button onclick="closeProjectPlannerModal()" class="absolute top-2 left-2 text-gray-500 hover:text-red-500 text-xl z-10">&times;</button>
             <h2 class="text-2xl font-bold mb-4 text-gray-800 text-center">✨ עוזר תכנון פרויקטים ✨</h2>
             
-            <div class="mb-4">
-                <label for="project-description" class="block text-gray-700 text-sm font-bold mb-2">תאר את הפרויקט שלך:</label>
-                <textarea id="project-description" rows="5" placeholder="לדוגמה: בניית קיר גבס באורך 4 מטר וגובה 2.5 מטר בחדר שינה." 
-                          class="w-full px-4 py-2 rounded-button border glass-effect focus:outline-none focus:ring-2 focus:ring-primary"></textarea>
-            </div>
-            
-            <div class="flex justify-center mb-4">
-                <button onclick="getProjectMaterials()" class="bg-primary text-white px-6 py-3 rounded-button hover:bg-primary/90 transition shine-button flex items-center">
-                    <i class="ri-ai-generate ri-lg ml-2"></i> קבל המלצות חומרים
-                </button>
-            </div>
+            <div class="modal-content-scrollable">
+                <div class="mb-4">
+                    <label for="project-description" class="block text-gray-700 text-sm font-bold mb-2">תאר את הפרויקט שלך:</label>
+                    <textarea id="project-description" rows="5" placeholder="לדוגמה: בניית קיר גבס באורך 4 מטר וגובה 2.5 מטר בחדר שינה." 
+                              class="w-full px-4 py-2 rounded-button border glass-effect focus:outline-none focus:ring-2 focus:ring-primary"></textarea>
+                </div>
+                
+                <div class="flex justify-center mb-4">
+                    <button onclick="getProjectMaterials()" class="bg-primary text-white px-6 py-3 rounded-button hover:bg-primary/90 transition shine-button flex items-center">
+                        <i class="ri-ai-generate ri-lg ml-2"></i> קבל המלצות חומרים
+                    </button>
+                </div>
 
-            <div id="project-materials-response" class="mt-4 p-4 bg-gray-50 rounded-lg border border-gray-200 min-h-[100px] flex items-center justify-center text-gray-700 text-sm leading-relaxed">
-                <p>המלצות החומרים יופיעו כאן...</p>
-            </div>
+                <div id="project-materials-container" class="mt-4 hidden">
+                    <div id="project-materials-response" class="p-4 bg-gray-50 rounded-lg border border-gray-200 min-h-[100px] flex flex-col items-center justify-center text-gray-700 text-sm leading-relaxed">
+                        <p>המלצות החומרים יופיעו כאן...</p>
+                    </div>
+                    <div class="flex gap-2 mt-4 justify-center">
+                        <button onclick="printAIContent('המלצות חומרים לפרויקט', 'פרויקט: ' + document.getElementById('project-description').value, null, document.getElementById('project-materials-response').innerHTML)" class="bg-gray-200 text-gray-700 px-4 py-2 rounded-button hover:bg-gray-300 transition text-xs flex items-center"><i class="ri-printer-line ml-1"></i> הדפסה / שמירה</button>
+                        <button onclick="shareProjectPlannerWhatsApp()" class="bg-green-500 text-white px-4 py-2 rounded-button hover:bg-green-600 transition text-xs flex items-center"><i class="ri-whatsapp-line ml-1"></i> שלח ל-WhatsApp</button>
+                    </div>
+                </div>
 
-            <div id="project-planner-loading" class="hidden flex justify-center items-center mt-4">
-                <div class="loader"></div>
-                <span class="mr-2 text-primary">טוען המלצות...</span>
-            </div>
-            <div id="project-planner-error" class="hidden text-red-600 text-center mt-4">
-                אירעה שגיאה בטעינת המלצות. אנא נסה שוב.
+                <div id="project-planner-loading" class="hidden flex justify-center items-center mt-4">
+                    <div class="loader"></div>
+                    <span class="mr-2 text-primary">טוען המלצות...</span>
+                </div>
+                <div id="project-planner-error" class="hidden text-red-600 text-center mt-4">
+                    אירעה שגיאה בטעינת המלצות. אנא נסה שוב.
+                </div>
             </div>
         </div>
     </div>
@@ -699,38 +911,105 @@
             <button onclick="closeProductComparisonModal()" class="absolute top-2 left-2 text-gray-500 hover:text-red-500 text-xl z-10">&times;</button>
             <h2 class="text-2xl font-bold mb-4 text-gray-800 text-center">✨ השוואת מוצרים ✨</h2>
             
-            <div class="mb-4">
-                <label for="product1-name" class="block text-gray-700 text-sm font-bold mb-2">שם מוצר 1:</label>
-                <div class="relative">
-                    <input type="text" id="product1-name" placeholder="הקלד שם מוצר מהקטלוג" 
-                           class="w-full px-4 py-2 rounded-button border glass-effect focus:outline-none focus:ring-2 focus:ring-green-600 mb-1">
-                    <div id="product1-suggestions" class="autocomplete-suggestions hidden rounded-b-lg"></div>
+            <div class="modal-content-scrollable">
+                <div class="mb-4">
+                    <label for="product1-name" class="block text-gray-700 text-sm font-bold mb-2">שם מוצר 1:</label>
+                    <div class="relative">
+                        <input type="text" id="product1-name" placeholder="הקלד שם מוצר מהקטלוג" 
+                               class="w-full px-4 py-2 rounded-button border glass-effect focus:outline-none focus:ring-2 focus:ring-green-600 mb-1">
+                        <div id="product1-suggestions" class="autocomplete-suggestions hidden rounded-b-lg"></div>
+                    </div>
+                    
+                    <label for="product2-name" class="block text-gray-700 text-sm font-bold mb-2 mt-4">שם מוצר 2:</label>
+                    <div class="relative">
+                        <input type="text" id="product2-name" placeholder="הקלד שם מוצר נוסף מהקטלוג" 
+                               class="w-full px-4 py-2 rounded-button border glass-effect focus:outline-none focus:ring-2 focus:ring-green-600 mb-1">
+                        <div id="product2-suggestions" class="autocomplete-suggestions hidden rounded-b-lg"></div>
+                    </div>
                 </div>
                 
-                <label for="product2-name" class="block text-gray-700 text-sm font-bold mb-2 mt-4">שם מוצר 2:</label>
-                <div class="relative">
-                    <input type="text" id="product2-name" placeholder="הקלד שם מוצר נוסף מהקטלוג" 
-                           class="w-full px-4 py-2 rounded-button border glass-effect focus:outline-none focus:ring-2 focus:ring-green-600 mb-1">
-                    <div id="product2-suggestions" class="autocomplete-suggestions hidden rounded-b-lg"></div>
+                <div class="flex justify-center mb-4">
+                    <button onclick="compareSelectedProducts()" class="bg-green-600 text-white px-6 py-3 rounded-button hover:bg-green-700 transition shine-button flex items-center">
+                        <i class="ri-git-compare-line ri-lg ml-2"></i> השווה מוצרים
+                    </button>
+                </div>
+
+                <div id="product-comparison-container" class="mt-4 hidden">
+                    <div id="product-comparison-response" class="p-4 bg-gray-50 rounded-lg border border-gray-200 min-h-[100px] flex flex-col items-center justify-center text-gray-700 text-sm leading-relaxed">
+                        <p>השוואת המוצרים תופיע כאן...</p>
+                    </div>
+                    <div class="flex gap-2 mt-4 justify-center">
+                        <button onclick="printAIContent('השוואת מוצרים', document.getElementById('product1-name').value + ' ו-' + document.getElementById('product2-name').value, null, document.getElementById('product-comparison-response').innerHTML)" class="bg-gray-200 text-gray-700 px-4 py-2 rounded-button hover:bg-gray-300 transition text-xs flex items-center"><i class="ri-printer-line ml-1"></i> הדפסה / שמירה</button>
+                        <button onclick="shareComparisonWhatsApp()" class="bg-green-500 text-white px-4 py-2 rounded-button hover:bg-green-600 transition text-xs flex items-center"><i class="ri-whatsapp-line ml-1"></i> שלח ל-WhatsApp</button>
+                    </div>
+                </div>
+
+                <div id="product-comparison-loading" class="hidden flex justify-center items-center mt-4">
+                    <div class="loader"></div>
+                    <span class="mr-2 text-green-600">מבצע השוואה...</span>
+                </div>
+                <div id="product-comparison-error" class="hidden text-red-600 text-center mt-4">
+                    אירעה שגיאה בהשוואת המוצרים. אנא ודא שהשמות נכונים ונסה שוב.
                 </div>
             </div>
+        </div>
+    </div>
+
+    <!-- NEW AI Assistant for Order Assembly Modal -->
+    <div id="order-assistant-modal" class="fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center z-50 hidden p-4">
+        <div class="bg-white rounded-lg shadow-lg p-6 max-w-lg w-full relative overflow-hidden md:max-h-[90vh]">
+            <button onclick="closeOrderAssistantModal()" class="absolute top-2 left-2 text-gray-500 hover:text-red-500 text-xl z-10">&times;</button>
+            <h2 class="text-2xl font-bold mb-4 text-gray-800 text-center">✨ עוזר הרכבת הזמנה ✨</h2>
             
-            <div class="flex justify-center mb-4">
-                <button onclick="compareSelectedProducts()" class="bg-green-600 text-white px-6 py-3 rounded-button hover:bg-green-700 transition shine-button flex items-center">
-                    <i class="ri-git-compare-line ri-lg ml-2"></i> השווה מוצרים
-                </button>
-            </div>
+            <div class="modal-content-scrollable">
+                <div class="mb-4">
+                    <label for="order-project-description" class="block text-gray-700 text-sm font-bold mb-2">תאר את הפרויקט/הזמנה שברצונך להרכיב:</label>
+                    <textarea id="order-project-description" rows="4" placeholder="לדוגמה: אני צריך חומרים לבניית גדר בטון באורך 10 מטר, או: אני משפץ מטבח וצריך עזרה בבחירת חומרים." 
+                            class="w-full px-4 py-2 rounded-button border glass-effect focus:outline-none focus:ring-2 focus:ring-purple-600"></textarea>
+                </div>
 
-            <div id="product-comparison-response" class="mt-4 p-4 bg-gray-50 rounded-lg border border-gray-200 min-h-[100px] flex items-center justify-center text-gray-700 text-sm leading-relaxed hidden">
-                <p>השוואת המוצרים תופיע כאן...</p>
-            </div>
+                <h3 class="text-lg font-bold text-gray-800 mb-2">פרטי לקוח ואספקה</h3>
+                <input type="text" id="order-customer-name" placeholder="שם מלא" class="w-full px-4 py-2 mb-3 rounded-button border glass-effect" required>
+                <input type="tel" id="order-customer-phone" placeholder="מספר טלפון" class="w-full px-4 py-2 mb-3 rounded-button border glass-effect" required>
+                <input type="text" id="order-customer-address" placeholder="כתובת אספקה" class="w-full px-4 py-2 mb-3 rounded-button border glass-effect">
+                
+                <div class="mb-3">
+                    <label for="crane-type" class="block text-gray-700 text-sm font-bold mb-2">סוג מנוף נדרש (אם ידוע):</label>
+                    <select id="crane-type" class="w-full px-4 py-2 rounded-button border glass-effect focus:outline-none focus:ring-2 focus:ring-purple-600">
+                        <option value="">בחר סוג מנוף</option>
+                        <option value="none">ללא מנוף</option>
+                        <option value="small">מנוף קטן (עד 10 מטר)</option>
+                        <option value="medium">מנוף בינוני (10-20 מטר)</option>
+                        <option value="large">מנוף גדול (מעל 20 מטר)</option>
+                        <option value="other">אחר (ציין בהערות)</option>
+                    </select>
+                </div>
+                <textarea id="order-assistant-notes" placeholder="הערות נוספות להזמנה/לפרויקט" rows="3" class="w-full px-4 py-2 rounded-button border glass-effect mb-3"></textarea>
+                
+                <div class="flex justify-center mb-4">
+                    <button onclick="generateOrderSuggestions()" class="bg-purple-600 text-white px-6 py-3 rounded-button hover:bg-purple-700 transition shine-button flex items-center">
+                        <i class="ri-lightbulb-fill ri-lg ml-2"></i> קבל המלצות להזמנה
+                    </button>
+                </div>
 
-            <div id="product-comparison-loading" class="hidden flex justify-center items-center mt-4">
-                <div class="loader"></div>
-                <span class="mr-2 text-green-600">מבצע השוואה...</span>
-            </div>
-            <div id="product-comparison-error" class="hidden text-red-600 text-center mt-4">
-                אירעה שגיאה בהשוואת המוצרים. אנא ודא שהשמות נכונים ונסה שוב.
+                <div id="order-suggestions-container" class="mt-4 hidden">
+                    <div id="order-suggestions-response" class="p-4 bg-gray-50 rounded-lg border border-gray-200 min-h-[100px] flex flex-col items-center justify-center text-gray-700 text-sm leading-relaxed">
+                        <p>המלצות ההזמנה יופיעו כאן...</p>
+                    </div>
+                    <div class="flex flex-wrap gap-2 mt-4 justify-center">
+                        <button onclick="addSuggestedItemsToCart()" class="bg-primary text-white px-4 py-2 rounded-button hover:bg-primary/90 transition text-xs flex items-center"><i class="ri-shopping-cart-line ml-1"></i> הוסף לעגלה</button>
+                        <button onclick="printAIContent('המלצות להרכבת הזמנה', 'הזמנה מותאמת אישית', null, document.getElementById('order-suggestions-response').innerHTML + '<br><br><b>פרטי לקוח:</b><br>' + document.getElementById('order-customer-name').value + '<br>' + document.getElementById('order-customer-phone').value + '<br>' + document.getElementById('order-customer-address').value + '<br>סוג מנוף: ' + document.getElementById('crane-type').value + '<br>הערות: ' + document.getElementById('order-assistant-notes').value)" class="bg-gray-200 text-gray-700 px-4 py-2 rounded-button hover:bg-gray-300 transition text-xs flex items-center"><i class="ri-printer-line ml-1"></i> הדפסה / שמירה</button>
+                        <button onclick="shareOrderAssistantWhatsApp()" class="bg-green-500 text-white px-4 py-2 rounded-button hover:bg-green-600 transition text-xs flex items-center"><i class="ri-whatsapp-line ml-1"></i> שלח ל-WhatsApp</button>
+                    </div>
+                </div>
+
+                <div id="order-assistant-loading" class="hidden flex justify-center items-center mt-4">
+                    <div class="loader"></div>
+                    <span class="mr-2 text-purple-600">יוצר המלצות להזמנה...</span>
+                </div>
+                <div id="order-assistant-error" class="hidden text-red-600 text-center mt-4">
+                    אירעה שגיאה ביצירת המלצות. אנא נסה שוב.
+                </div>
             </div>
         </div>
     </div>
@@ -862,6 +1141,20 @@
         <i class="ri-arrow-up-line ri-lg"></i>
     </button>
 
+    <!-- NEW: Welcome Popup Modal -->
+    <div id="welcome-popup-modal" class="fixed inset-0 flex items-center justify-center z-[100] hidden">
+        <div class="popup-content bg-white rounded-lg shadow-2xl p-8 max-w-md w-full relative text-center">
+            <button onclick="closeWelcomePopup()" class="absolute top-3 left-3 text-gray-400 hover:text-gray-600 text-2xl">&times;</button>
+            <h2 class="text-2xl font-bold text-primary mb-4">✨ ברוכים הבאים לח.סבן חומרי בניין! ✨</h2>
+            <p class="text-gray-700 leading-relaxed mb-6">
+                אנו שמחים להציג בפניך את <strong class="text-blue-600">הכלים המתקדמים של AI</strong> שלנו,
+                שנועדו לסייע לך לבחור את המוצר המושלם ולתכנן את הפרויקט שלך בצורה חכמה ויעילה.
+                גלה אותם כעת!
+            </p>
+            <button onclick="closeWelcomePopup()" class="bg-primary text-white px-6 py-3 rounded-button hover:bg-primary/90 transition shine-button">הבנתי!</button>
+        </div>
+    </div>
+
     <!-- Scripts -->
     <script id="main-scripts">
         // Global variables for cart and product data
@@ -919,6 +1212,23 @@
                 });
             });
 
+            // AI Tools Dropdown Toggle
+            const aiToolsButton = document.getElementById('ai-tools-button');
+            const aiToolsDropdown = document.getElementById('ai-tools-dropdown-menu');
+            const aiToolsDropdownContainer = document.getElementById('ai-tools-dropdown-container');
+
+            aiToolsButton.addEventListener('click', function(event) {
+                event.stopPropagation(); // Prevent document click from closing immediately
+                aiToolsDropdownContainer.classList.toggle('ai-tools-dropdown-open');
+            });
+
+            // Close AI tools dropdown when clicking outside
+            document.addEventListener('click', function(event) {
+                if (!aiToolsDropdownContainer.contains(event.target)) {
+                    aiToolsDropdownContainer.classList.remove('ai-tools-dropdown-open');
+                }
+            });
+
             // Fetch products from Google Sheet
             fetch('https://script.google.com/macros/s/AKfycbyzdkvb4wOMILaPIq-oalk6IRA7UKxCfcsRYW0VPjF5LHO3qYLewgicT8Ua6GCdQnTn/exec')
                 .then(res => res.json())
@@ -936,16 +1246,63 @@
                 })
                 .catch(err => {
                     console.error("שגיאה בטעינת מוצרים:", err);
-                    document.getElementById('products-grid').innerHTML = "<p class='text-red-600'>שגיאה בטעינת מוצרים. נסה שוב מאוחר יותר.</p>";
+                    document.getElementById('products-grid').innerHTML = "<p class='text-red-600'>שגיאה בטעינת מוצרים. אנא נסה שוב מאוחר יותר.</p>";
                 });
-
-            // No longer need apply and clear filters buttons from sidebar
-            // document.getElementById('apply-filters-btn').addEventListener('click', applyFilters);
-            // document.getElementById('clear-filters-btn').addEventListener('click', clearAllFilters);
 
             // Attach event listener for sort select
             document.getElementById('sort-select').addEventListener('change', applyFilters);
+
+            // Show welcome popup on page load
+            showWelcomePopup();
         });
+
+        /**
+         * Shows the welcome popup modal and animates the AI tools icon.
+         */
+        function showWelcomePopup() {
+            const popup = document.getElementById('welcome-popup-modal');
+            const popupContent = popup.querySelector('.popup-content');
+            const aiToolsButton = document.getElementById('ai-tools-button');
+
+            popup.classList.remove('hidden');
+            // Use setTimeout to allow CSS transition to apply
+            setTimeout(() => {
+                popup.classList.add('show');
+                popupContent.classList.add('show');
+                // Start pulse animation on AI tools button
+                aiToolsButton.classList.add('ai-tools-pulse');
+            }, 50); // Small delay
+
+            // Automatically close after 7 seconds (7000 ms)
+            setTimeout(() => {
+                closeWelcomePopup();
+            }, 7000);
+
+            // Stop pulse animation after 7 seconds
+            setTimeout(() => {
+                aiToolsButton.classList.remove('ai-tools-pulse');
+            }, 7000);
+        }
+
+        /**
+         * Closes the welcome popup modal with animation.
+         */
+        function closeWelcomePopup() {
+            const popup = document.getElementById('welcome-popup-modal');
+            const popupContent = popup.querySelector('.popup-content');
+            const aiToolsButton = document.getElementById('ai-tools-button');
+
+            popup.classList.remove('show');
+            popupContent.classList.remove('show');
+            // Remove pulse animation
+            aiToolsButton.classList.remove('ai-tools-pulse');
+
+            // Hide after transition completes
+            setTimeout(() => {
+                popup.classList.add('hidden');
+            }, 500); // Match CSS transition duration
+        }
+
 
         /**
          * Renders products to the products grid.
@@ -1096,34 +1453,27 @@
             currentProductForModal = null;
         }
 
-        // Helper to hide all LLM response sections
+        // Helper to hide all LLM response sections and reset their content
         function hideAllLLMSections() {
-            document.getElementById('usage-ideas-response').innerHTML = '<p>רעיונות לשימוש במוצר יופיעו כאן...</p>';
-            document.getElementById('usage-ideas-response').classList.add('hidden');
+            document.getElementById('usage-ideas-container').classList.add('hidden');
             document.getElementById('usage-ideas-loading').classList.add('hidden');
             document.getElementById('usage-ideas-error').classList.add('hidden');
 
-            document.getElementById('summary-features-response').innerHTML = '<p>סיכום ותכונות מפתח יופיעו כאן...</p>';
-            document.getElementById('summary-features-response').classList.add('hidden');
+            document.getElementById('summary-features-container').classList.add('hidden');
             document.getElementById('summary-features-loading').classList.add('hidden');
             document.getElementById('summary-features-error').classList.add('hidden');
 
-            document.getElementById('related-products-response').innerHTML = '<p>המלצות למוצרים קשורים יופיעו כאן...</p>';
-            document.getElementById('related-products-response').classList.add('hidden');
+            document.getElementById('related-products-container').classList.add('hidden');
             document.getElementById('related-products-loading').classList.add('hidden');
             document.getElementById('related-products-error').classList.add('hidden');
 
             document.getElementById('product-qa-section').classList.add('hidden');
             document.getElementById('product-qa-input').value = '';
-            document.getElementById('product-qa-response').innerHTML = '<p>התשובה לשאלתך תופיע כאן...</p>';
-            document.getElementById('product-qa-response').classList.add('hidden');
             document.getElementById('product-qa-loading').classList.add('hidden');
             document.getElementById('product-qa-error').classList.add('hidden');
 
             document.getElementById('description-generator-section').classList.add('hidden');
             document.getElementById('description-generator-input').value = '';
-            document.getElementById('description-generator-response').innerHTML = '<p>התיאור המשופר יופיע כאן...</p>';
-            document.getElementById('description-generator-response').classList.add('hidden');
             document.getElementById('description-generator-loading').classList.add('hidden');
             document.getElementById('description-generator-error').classList.add('hidden');
         }
@@ -1239,7 +1589,7 @@
             const notes = document.getElementById('order-notes').value;
 
             if (!name || !phone) {
-                alert("אנא מלא שם מלא ומספר טלפון.");
+                alert("אנא מלא שם מלא ומספר טלפון."); // Changed to alert for simplicity, consider custom modal for better UX
                 return;
             }
 
@@ -1271,7 +1621,7 @@
             cart.length = 0; // Clear the cart array
             updateCartUI();
             closeCartModal();
-            alert("ההזמנה נשלחה בהצלחה ל-WhatsApp!");
+            alert("ההזמנה נשלחה בהצלחה ל-WhatsApp!"); // Changed to alert for simplicity
         }
 
         // Function to dynamically populate the hero categories section
@@ -1329,9 +1679,12 @@
             document.getElementById('project-planner-modal').classList.remove('hidden');
             // Clear previous results and error messages
             document.getElementById('project-description').value = ''; // Clear description input
-            document.getElementById('project-materials-response').innerHTML = '<p>המלצות החומרים יופיעו כאן...</p>';
+            document.getElementById('project-materials-response').innerHTML = '<p>המלצות החומרים יופיעו כאן...</p>'; // Reset content
+            document.getElementById('project-materials-container').classList.add('hidden'); // Hide the container until content is ready
             document.getElementById('project-planner-loading').classList.add('hidden');
             document.getElementById('project-planner-error').classList.add('hidden');
+            // Close AI tools dropdown if open
+            document.getElementById('ai-tools-dropdown-container').classList.remove('ai-tools-dropdown-open');
         }
 
         function closeProjectPlannerModal() {
@@ -1341,17 +1694,19 @@
         async function getProjectMaterials() {
             const projectDescription = document.getElementById('project-description').value.trim();
             const responseDisplay = document.getElementById('project-materials-response');
+            const responseContainer = document.getElementById('project-materials-container');
             const loadingSpinner = document.getElementById('project-planner-loading');
             const errorDisplay = document.getElementById('project-planner-error');
 
             if (!projectDescription) {
                 responseDisplay.innerHTML = '<p class="text-red-500">אנא תאר את הפרויקט כדי לקבל המלצות.</p>';
+                responseContainer.classList.remove('hidden');
                 return;
             }
 
             // Show loading spinner, clear previous results/errors
             loadingSpinner.classList.remove('hidden');
-            responseDisplay.innerHTML = '';
+            responseContainer.classList.add('hidden'); // Hide container during loading
             errorDisplay.classList.add('hidden');
 
             try {
@@ -1368,7 +1723,7 @@
                 chatHistory.push({ role: "user", parts: [{ text: prompt }] });
 
                 const payload = { contents: chatHistory };
-                const apiKey = ""; // Canvas will automatically provide the API key
+                const apiKey = "AIzaSyCNn7GZMsQPCdRSfgz_o08M1YV63CkA3Ow"; // Canvas will automatically provide the API key
                 const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
 
                 const response = await fetch(apiUrl, {
@@ -1391,28 +1746,45 @@
                         return `<p>${line.trim()}</p>`;
                     }).join('');
                     responseDisplay.innerHTML = `<ul class="list-disc pr-5 space-y-1">${formattedText}</ul>`;
+                    responseContainer.classList.remove('hidden'); // Show container
                 } else {
                     responseDisplay.innerHTML = '<p class="text-red-500">לא הצלחתי להפיק המלצות. אנא נסה לנסח מחדש את הפרויקט.</p>';
+                    responseContainer.classList.remove('hidden'); // Show container with error
                     errorDisplay.classList.remove('hidden');
                 }
             } catch (error) {
                 console.error("שגיאה בקריאה ל-Gemini API:", error);
                 responseDisplay.innerHTML = '<p class="text-red-500">אירעה שגיאה בטעינת המלצות. אנא נסה שוב מאוחר יותר.</p>';
+                responseContainer.classList.remove('hidden'); // Show container with error
                 errorDisplay.classList.remove('hidden');
             } finally {
                 loadingSpinner.classList.add('hidden'); // Hide loading spinner regardless of success/failure
             }
         }
 
+        // WhatsApp share for Project Planner
+        function shareProjectPlannerWhatsApp() {
+            const projectDescription = document.getElementById('project-description').value.trim();
+            const responseContent = document.getElementById('project-materials-response').innerText; // Get plain text content
+
+            let message = `*סיכום המלצות חומרים לפרויקט מח.סבן:*\n\n`;
+            message += `*תיאור הפרויקט:*\n${projectDescription}\n\n`;
+            message += responseContent; // Includes the material list and other text
+
+            const encodedMessage = encodeURIComponent(message);
+            window.open(`https://wa.me/972508860896?text=${encodedMessage}`, '_blank');
+        }
+
         // LLM Feature: Get Usage Ideas for a specific product
         async function getUsageIdeas() {
             const usageIdeasResponse = document.getElementById('usage-ideas-response');
+            const usageIdeasContainer = document.getElementById('usage-ideas-container');
             const usageIdeasLoading = document.getElementById('usage-ideas-loading');
             const usageIdeasError = document.getElementById('usage-ideas-error');
 
             if (!currentProductForModal) {
                 usageIdeasResponse.innerHTML = '<p class="text-red-500">לא נבחר מוצר. אנא בחר מוצר לקבלת רעיונות.</p>';
-                usageIdeasResponse.classList.remove('hidden');
+                usageIdeasContainer.classList.remove('hidden');
                 return;
             }
 
@@ -1428,7 +1800,7 @@
                 chatHistory.push({ role: "user", parts: [{ text: prompt }] });
 
                 const payload = { contents: chatHistory };
-                const apiKey = ""; // Canvas will automatically provide the API key
+                const apiKey = "AIzaSyCNn7GZMsQPCdRSfgz_o08M1YV63CkA3Ow"; // Canvas will automatically provide the API key
                 const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
 
                 const response = await fetch(apiUrl, {
@@ -1451,16 +1823,16 @@
                         return `<p>${line.trim()}</p>`;
                     }).join('');
                     usageIdeasResponse.innerHTML = `<ul class="list-disc pr-5 space-y-1">${formattedText}</ul>`;
-                    usageIdeasResponse.classList.remove('hidden'); // Show response area
+                    usageIdeasContainer.classList.remove('hidden'); // Show response area
                 } else {
                     usageIdeasResponse.innerHTML = '<p class="text-red-500">לא הצלחתי להפיק רעיונות לשימוש. אנא נסה שוב או עם תיאור אחר.</p>';
-                    usageIdeasResponse.classList.remove('hidden'); // Show response area
+                    usageIdeasContainer.classList.remove('hidden'); // Show response area
                     usageIdeasError.classList.remove('hidden');
                 }
             } catch (error) {
                 console.error("שגיאה בקריאה ל-Gemini API עבור רעיונות שימוש:", error);
                 usageIdeasResponse.innerHTML = '<p class="text-red-500">אירעה שגיאה בטעינת רעיונות. אנא נסה שוב מאוחר יותר.</p>';
-                usageIdeasResponse.classList.remove('hidden'); // Show response area
+                usageIdeasContainer.classList.remove('hidden'); // Show response area
                 usageIdeasError.classList.remove('hidden');
             } finally {
                 usageIdeasLoading.classList.add('hidden'); // Hide loading spinner
@@ -1470,12 +1842,13 @@
         // LLM Feature: Get Summary and Key Features for a specific product
         async function getProductSummaryAndFeatures() {
             const summaryFeaturesResponse = document.getElementById('summary-features-response');
+            const summaryFeaturesContainer = document.getElementById('summary-features-container');
             const summaryFeaturesLoading = document.getElementById('summary-features-loading');
             const summaryFeaturesError = document.getElementById('summary-features-error');
 
             if (!currentProductForModal) {
                 summaryFeaturesResponse.innerHTML = '<p class="text-red-500">לא נבחר מוצר. אנא בחר מוצר לקבלת סיכום ותכונות מפתח.</p>';
-                summaryFeaturesResponse.classList.remove('hidden');
+                summaryFeaturesContainer.classList.remove('hidden');
                 return;
             }
 
@@ -1491,7 +1864,7 @@
                 chatHistory.push({ role: "user", parts: [{ text: prompt }] });
 
                 const payload = { contents: chatHistory };
-                const apiKey = ""; // Canvas will automatically provide the API key
+                const apiKey = "AIzaSyCNn7GZMsQPCdRSfgz_o08M1YV63CkA3Ow"; // Canvas will automatically provide the API key
                 const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
 
                 const response = await fetch(apiUrl, {
@@ -1514,16 +1887,16 @@
                         return `<p>${line.trim()}</p>`;
                     }).join('');
                     summaryFeaturesResponse.innerHTML = `<ul class="list-disc pr-5 space-y-1">${formattedText}</ul>`;
-                    summaryFeaturesResponse.classList.remove('hidden'); // Show response area
+                    summaryFeaturesContainer.classList.remove('hidden'); // Show response area
                 } else {
                     summaryFeaturesResponse.innerHTML = '<p class="text-red-500">לא הצלחתי להפיק סיכום ותכונות מפתח. אנא נסה שוב או עם תיאור אחר.</p>';
-                    summaryFeaturesResponse.classList.remove('hidden'); // Show response area
+                    summaryFeaturesContainer.classList.remove('hidden'); // Show response area
                     summaryFeaturesError.classList.remove('hidden');
                 }
             } catch (error) {
                 console.error("שגיאה בקריאה ל-Gemini API עבור סיכום ותכונות:", error);
                 summaryFeaturesResponse.innerHTML = '<p class="text-red-500">אירעה שגיאה בטעינת סיכום ותכונות. אנא נסה שוב מאוחר יותר.</p>';
-                summaryFeaturesResponse.classList.remove('hidden'); // Show response area
+                summaryFeaturesContainer.classList.remove('hidden'); // Show response area
                 summaryFeaturesError.classList.remove('hidden');
             } finally {
                 summaryFeaturesLoading.classList.add('hidden'); // Hide loading spinner
@@ -1533,12 +1906,13 @@
         // LLM Feature: Get Related Products for a specific product
         async function getRelatedProducts() {
             const relatedProductsResponse = document.getElementById('related-products-response');
+            const relatedProductsContainer = document.getElementById('related-products-container');
             const relatedProductsLoading = document.getElementById('related-products-loading');
             const relatedProductsError = document.getElementById('related-products-error');
 
             if (!currentProductForModal) {
                 relatedProductsResponse.innerHTML = '<p class="text-red-500">לא נבחר מוצר. אנא בחר מוצר לקבלת המלצות קשורות.</p>';
-                relatedProductsResponse.classList.remove('hidden');
+                relatedProductsContainer.classList.remove('hidden');
                 return;
             }
 
@@ -1555,7 +1929,7 @@
                 chatHistory.push({ role: "user", parts: [{ text: prompt }] });
 
                 const payload = { contents: chatHistory };
-                const apiKey = ""; // Canvas will automatically provide the API key
+                const apiKey = "AIzaSyCNn7GZMsQPCdRSfgz_o08M1YV63CkA3Ow"; // Canvas will automatically provide the API key
                 const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
 
                 const response = await fetch(apiUrl, {
@@ -1578,17 +1952,17 @@
                         return `<p>${line.trim()}</p>`;
                     }).join('');
                     relatedProductsResponse.innerHTML = `<ul class="list-disc pr-5 space-y-1">${formattedText}</ul>`;
-                    relatedProductsResponse.classList.remove('hidden'); // Show response area
+                    relatedProductsContainer.classList.remove('hidden'); // Show response area
                 } else {
                     relatedProductsResponse.innerHTML = '<p class="text-red-500">לא הצלחתי להפיק המלצות למוצרים קשורים. אנא נסה שוב או עם תיאור אחר.</p>';
-                    relatedProductsResponse.classList.remove('hidden'); // Show response area
+                    relatedProductsContainer.classList.remove('hidden'); // Show response area
                     relatedProductsError.classList.remove('hidden');
                 }
             } catch (error) {
                 console.error("שגיאה בקריאה ל-Gemini API עבור המלצות למוצרים קשורים:", error);
                 relatedProductsResponse.innerHTML = '<p class="text-red-500">אירעה שגיאה בטעינת המלצות למוצרים קשורים. אנא נסה שוב מאוחר יותר.</p>';
-                relatedProductsResponse.classList.remove('hidden'); // Show response area
-                relatedProductsError.classList.remove('hidden');
+                relatedProductsContainer.classList.remove('hidden'); // Show response area
+                    relatedProductsError.classList.remove('hidden');
             } finally {
                 relatedProductsLoading.classList.add('hidden'); // Hide loading spinner
             }
@@ -1602,8 +1976,8 @@
             // Reset state when shown
             if (!qaSection.classList.contains('hidden')) {
                 document.getElementById('product-qa-input').value = ''; // Clear input on show
-                document.getElementById('product-qa-response').innerHTML = '<p>התשובה לשאלתך תופיע כאן...</p>';
-                document.getElementById('product-qa-response').classList.add('hidden');
+                document.getElementById('product-qa-response').innerHTML = '<p>התשובה לשאלתך תופיע כאן...</p>'; // Reset content
+                document.getElementById('product-qa-response').classList.remove('flex-col');
             }
         }
 
@@ -1643,7 +2017,7 @@
                 chatHistory.push({ role: "user", parts: [{ text: prompt }] });
 
                 const payload = { contents: chatHistory };
-                const apiKey = ""; // Canvas will automatically provide the API key
+                const apiKey = "AIzaSyCNn7GZMsQPCdRSfgz_o08M1YV63CkA3Ow"; // Canvas will automatically provide the API key
                 const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
 
                 const response = await fetch(apiUrl, {
@@ -1684,8 +2058,8 @@
             // Reset state when shown
             if (!descGenSection.classList.contains('hidden')) {
                 document.getElementById('description-generator-input').value = ''; // Clear input on show
-                document.getElementById('description-generator-response').innerHTML = '<p>התיאור המשופר יופיע כאן...</p>';
-                document.getElementById('description-generator-response').classList.add('hidden');
+                document.getElementById('description-generator-response').innerHTML = '<p>התיאור המשופר יופיע כאן...</p>'; // Reset content
+                document.getElementById('description-generator-response').classList.remove('flex-col');
             }
         }
 
@@ -1721,7 +2095,7 @@
                 chatHistory.push({ role: "user", parts: [{ text: prompt }] });
 
                 const payload = { contents: chatHistory };
-                const apiKey = ""; // Canvas will automatically provide the API key
+                const apiKey = "AIzaSyCNn7GZMsQPCdRSfgz_o08M1YV63CkA3Ow"; // Canvas will automatically provide the API key
                 const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
 
                 const response = await fetch(apiUrl, {
@@ -1758,13 +2132,15 @@
             document.getElementById('product-comparison-modal').classList.remove('hidden');
             document.getElementById('product1-name').value = '';
             document.getElementById('product2-name').value = '';
-            document.getElementById('product-comparison-response').innerHTML = '<p>השוואת המוצרים תופיע כאן...</p>';
-            document.getElementById('product-comparison-response').classList.add('hidden');
+            document.getElementById('product-comparison-response').innerHTML = '<p>השוואת המוצרים תופיע כאן...</p>'; // Reset content
+            document.getElementById('product-comparison-container').classList.add('hidden'); // Hide container
             document.getElementById('product-comparison-loading').classList.add('hidden');
             document.getElementById('product-comparison-error').classList.add('hidden');
             // Hide autocomplete suggestions when opening the modal
             document.getElementById('product1-suggestions').classList.add('hidden');
             document.getElementById('product2-suggestions').classList.add('hidden');
+            // Close AI tools dropdown if open
+            document.getElementById('ai-tools-dropdown-container').classList.remove('ai-tools-dropdown-open');
         }
 
         function closeProductComparisonModal() {
@@ -1865,12 +2241,13 @@
             const product1Name = document.getElementById('product1-name').value.trim();
             const product2Name = document.getElementById('product2-name').value.trim();
             const comparisonResponse = document.getElementById('product-comparison-response');
-            const comparisonLoading = document.getElementById('product-comparison-loading');
-            const comparisonError = document.getElementById('product-comparison-error');
+            const comparisonContainer = document.getElementById('product-comparison-container');
+            const loadingSpinner = document.getElementById('product-comparison-loading');
+            const errorDisplay = document.getElementById('product-comparison-error');
 
             if (!product1Name || !product2Name) {
                 comparisonResponse.innerHTML = '<p class="text-red-500">אנא הזן שמות לשני המוצרים כדי להשוות.</p>';
-                comparisonResponse.classList.remove('hidden');
+                comparisonContainer.classList.remove('hidden');
                 return;
             }
 
@@ -1879,19 +2256,18 @@
 
             if (!product1) {
                 comparisonResponse.innerHTML = `<p class="text-red-500">מוצר "${product1Name}" לא נמצא בקטלוג. אנא ודא שהשם מדויק.</p>`;
-                comparisonResponse.classList.remove('hidden');
+                comparisonContainer.classList.remove('hidden');
                 return;
             }
             if (!product2) {
                 comparisonResponse.innerHTML = `<p class="text-red-500">מוצר "${product2Name}" לא נמצא בקטלוג. אנא ודא שהשם מדויק.</p>`;
-                comparisonResponse.classList.remove('hidden');
+                comparisonContainer.classList.remove('hidden');
                 return;
             }
 
-            comparisonLoading.classList.remove('hidden');
-            comparisonResponse.innerHTML = '';
-            comparisonResponse.classList.add('hidden');
-            comparisonError.classList.add('hidden');
+            loadingSpinner.classList.remove('hidden');
+            comparisonContainer.classList.add('hidden'); // Hide container during loading
+            errorDisplay.classList.add('hidden');
 
             try {
                 let chatHistory = [];
@@ -1909,7 +2285,7 @@
                 chatHistory.push({ role: "user", parts: [{ text: prompt }] });
 
                 const payload = { contents: chatHistory };
-                const apiKey = ""; // Canvas will automatically provide the API key
+                const apiKey = "AIzaSyCNn7GZMsQPCdRSfgz_o08M1YV63CkA3Ow"; // Canvas will automatically provide the API key
                 const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
 
                 const response = await fetch(apiUrl, {
@@ -1931,20 +2307,260 @@
                         return `<p>${line.trim()}</p>`;
                     }).join('');
                     comparisonResponse.innerHTML = `<div class="space-y-2">${formattedText}</div>`;
-                    comparisonResponse.classList.remove('hidden');
+                    comparisonContainer.classList.remove('hidden'); // Show container
                 } else {
                     comparisonResponse.innerHTML = '<p class="text-red-500">לא הצלחתי להפיק השוואה. אנא נסה שוב או שנה את שמות המוצרים.</p>';
-                    comparisonResponse.classList.remove('hidden');
+                    comparisonContainer.classList.remove('hidden'); // Show container with error
                     comparisonError.classList.remove('hidden');
                 }
             } catch (error) {
                 console.error("שגיאה בקריאה ל-Gemini API עבור השוואת מוצרים:", error);
                 comparisonResponse.innerHTML = '<p class="text-red-500">אירעה שגיאה בהשוואת המוצרים. אנא נסה שוב מאוחר יותר.</p>';
-                comparisonResponse.classList.remove('hidden');
+                comparisonContainer.classList.remove('hidden'); // Show container with error
                 comparisonError.classList.remove('hidden');
             } finally {
-                comparisonLoading.classList.add('hidden');
+                loadingSpinner.classList.add('hidden');
             }
+        }
+
+        // WhatsApp share for Product Comparison
+        function shareComparisonWhatsApp() {
+            const product1Name = document.getElementById('product1-name').value.trim();
+            const product2Name = document.getElementById('product2-name').value.trim();
+            const responseContent = document.getElementById('product-comparison-response').innerText; // Get plain text content
+
+            let message = `*השוואת מוצרים מח.סבן:*\n\n`;
+            message += `*מוצר 1:* ${product1Name}\n`;
+            message += `*מוצר 2:* ${product2Name}\n\n`;
+            message += responseContent; // Includes comparison details
+
+            const encodedMessage = encodeURIComponent(message);
+            window.open(`https://wa.me/972508860896?text=${encodedMessage}`, '_blank');
+        }
+
+        // NEW LLM Feature: Order Assistant Modal functions
+        function openOrderAssistantModal() {
+            document.getElementById('order-assistant-modal').classList.remove('hidden');
+            // Clear previous inputs and responses
+            document.getElementById('order-project-description').value = '';
+            document.getElementById('order-customer-name').value = '';
+            document.getElementById('order-customer-phone').value = '';
+            document.getElementById('order-customer-address').value = '';
+            document.getElementById('crane-type').value = '';
+            document.getElementById('order-assistant-notes').value = '';
+            document.getElementById('order-suggestions-response').innerHTML = '<p>המלצות ההזמנה יופיעו כאן...</p>'; // Reset content
+            document.getElementById('order-suggestions-container').classList.add('hidden'); // Hide container
+            document.getElementById('order-assistant-loading').classList.add('hidden');
+            document.getElementById('order-assistant-error').classList.add('hidden');
+            // Close AI tools dropdown if open
+            document.getElementById('ai-tools-dropdown-container').classList.remove('ai-tools-dropdown-open');
+        }
+
+        function closeOrderAssistantModal() {
+            document.getElementById('order-assistant-modal').classList.add('hidden');
+        }
+
+        let suggestedOrderProducts = []; // Global to store products recommended by AI for adding to cart
+
+        async function generateOrderSuggestions() {
+            const projectDescription = document.getElementById('order-project-description').value.trim();
+            const customerName = document.getElementById('order-customer-name').value.trim();
+            const customerPhone = document.getElementById('order-customer-phone').value.trim();
+            const customerAddress = document.getElementById('order-customer-address').value.trim();
+            const craneType = document.getElementById('crane-type').value;
+            const orderNotes = document.getElementById('order-assistant-notes').value.trim();
+
+            const responseDisplay = document.getElementById('order-suggestions-response');
+            const responseContainer = document.getElementById('order-suggestions-container');
+            const loadingSpinner = document.getElementById('order-assistant-loading');
+            const errorDisplay = document.getElementById('order-assistant-error');
+
+            if (!projectDescription) {
+                responseDisplay.innerHTML = '<p class="text-red-500">אנא תאר את הפרויקט/הזמנה כדי לקבל המלצות.</p>';
+                responseContainer.classList.remove('hidden');
+                return;
+            }
+            if (!customerName || !customerPhone) {
+                responseDisplay.innerHTML = '<p class="text-red-500">אנא מלא שם מלא ומספר טלפון.</p>';
+                responseContainer.classList.remove('hidden');
+                return;
+            }
+
+            loadingSpinner.classList.remove('hidden');
+            responseContainer.classList.add('hidden'); // Hide container during loading
+            errorDisplay.classList.add('hidden');
+
+            try {
+                let chatHistory = [];
+                const prompt = `אני רוצה להרכיב הזמנה של חומרי בניין עבור הפרויקט הבא.
+                אנא המלץ על מוצרים, כמויות משוערות, והערות חשובות לביצוע ההזמנה.
+                התשובה צריכה להיות בעברית, בפורמט קריא, עם כותרות ורשימות מנוקדות, לדוגמה:
+                
+                *פרטי ההזמנה המוצעים:*
+                - מלט (50 ק"ג): 10 שקים (לחיבור בלוקים)
+                - בלוקי איטונג (20 ס"מ): 150 יחידות (לקירות פנים)
+                - חול ים (שטוף): 2 טון (לתערובת מלט)
+                
+                *הערות חשובות:*
+                - לוודא גישה נוחה למשאית באתר.
+                - יש לתאם שעת אספקה מדויקת.
+                
+                פרטי הפרויקט/הזמנה: ${projectDescription}
+                פרטי לקוח: שם - ${customerName}, טלפון - ${customerPhone}, כתובת - ${customerAddress}, סוג מנוף - ${craneType}, הערות נוספות - ${orderNotes || 'אין'}.
+                `;
+                
+                chatHistory.push({ role: "user", parts: [{ text: prompt }] });
+
+                const payload = { contents: chatHistory };
+                const apiKey = "AIzaSyCNn7GZMsQPCdRSfgz_o08M1YV63CkA3Ow"; // Canvas will automatically provide the API key
+                const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
+
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                const result = await response.json();
+                
+                if (result.candidates && result.candidates.length > 0 &&
+                    result.candidates[0].content && result.candidates[0].content.parts &&
+                    result.candidates[0].content.parts.length > 0) {
+                    const text = result.candidates[0].content.parts[0].text;
+                    // Parse suggested products for 'add to cart' functionality
+                    suggestedOrderProducts = parseSuggestedProducts(text);
+
+                    // Format the text for display (e.g., replace markdown list with HTML list)
+                    const formattedText = text.split('\n').map(line => {
+                        if (line.startsWith('* ')) return `<p class="font-semibold text-gray-800 mt-2">${line.substring(2).trim()}</p>`; // for bold headers
+                        if (line.startsWith('- ')) return `<li>${line.substring(2).trim()}</li>`;
+                        return `<p>${line.trim()}</p>`;
+                    }).join('');
+                    responseDisplay.innerHTML = `<div class="space-y-1">${formattedText}</div>`;
+                    responseContainer.classList.remove('hidden'); // Show container
+                } else {
+                    responseDisplay.innerHTML = '<p class="text-red-500">לא הצלחתי להפיק המלצות להזמנה. אנא נסה לנסח מחדש את תיאור הפרויקט.</p>';
+                    responseContainer.classList.remove('hidden'); // Show container with error
+                    errorDisplay.classList.remove('hidden');
+                }
+            } catch (error) {
+                console.error("שגיאה בקריאה ל-Gemini API עבור עוזר הזמנות:", error);
+                responseDisplay.innerHTML = '<p class="text-red-500">אירעה שגיאה ביצירת המלצות. אנא נסה שוב מאוחר יותר.</p>';
+                responseContainer.classList.remove('hidden'); // Show container with error
+                errorDisplay.classList.remove('hidden');
+            } finally {
+                loadingSpinner.classList.add('hidden');
+            }
+        }
+
+        // Helper function to parse suggested products from AI response
+        function parseSuggestedProducts(aiResponseText) {
+            const products = [];
+            const lines = aiResponseText.split('\n');
+            const productRegex = /-\s*(.+?)\s*:\s*([\d.]+)\s*([א-ת\s'"ק"גטוןיח'\/?]+)/; // Regex to capture product name, quantity, and unit
+
+            lines.forEach(line => {
+                const match = line.match(productRegex);
+                if (match) {
+                    const title = match[1].trim();
+                    const quantity = parseFloat(match[2]);
+                    // Try to find the product in allProducts to get full details including price
+                    const productInCatalog = allProducts.find(p => p.title && p.title.toLowerCase().includes(title.toLowerCase()));
+                    if (productInCatalog) {
+                        products.push({
+                            title: productInCatalog.title,
+                            price: productInCatalog.price || productInCatalog["price "], // Use the correct price field
+                            quantity: quantity
+                        });
+                    } else {
+                        // If not found in catalog, add with default/placeholder price
+                        products.push({ title: title, price: "לברר מחיר", quantity: quantity });
+                    }
+                }
+            });
+            return products;
+        }
+
+        function addSuggestedItemsToCart() {
+            if (suggestedOrderProducts.length === 0) {
+                alert("אין מוצרים מוצעים להוספה לעגלה.");
+                return;
+            }
+            suggestedOrderProducts.forEach(item => {
+                addToCart(item); // Re-use existing addToCart function
+            });
+            alert("המוצרים המוצעים נוספו לעגלה!");
+            closeOrderAssistantModal(); // Close the modal after adding to cart
+            openCartModal(new Event('click')); // Optionally open the cart modal to show new items
+        }
+
+        function shareOrderAssistantWhatsApp() {
+            const responseContent = document.getElementById('order-suggestions-response').innerText;
+            const customerName = document.getElementById('order-customer-name').value.trim();
+            const customerPhone = document.getElementById('order-customer-phone').value.trim();
+            const customerAddress = document.getElementById('order-customer-address').value.trim();
+            const craneType = document.getElementById('crane-type').value;
+            const orderNotes = document.getElementById('order-assistant-notes').value.trim();
+
+            let message = `*סיכום המלצות להזמנה מח.סבן:*\n\n`;
+            message += responseContent;
+            message += `\n\n*פרטי לקוח:*\nשם: ${customerName}\nטלפון: ${customerPhone}\nכתובת: ${customerAddress || 'לא צוין'}\nסוג מנוף: ${craneType || 'לא צוין'}\nהערות: ${orderNotes || 'אין'}`;
+            
+            const encodedMessage = encodeURIComponent(message);
+            window.open(`https://wa.me/972508860896?text=${encodedMessage}`, '_blank');
+        }
+
+        // Generic function to print AI content
+        const SABAN_LOGO_URL = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSUVp7CP06twn9tobIG19ihDfKLm9MmowW73Q&s";
+
+        /**
+         * Generates a print-friendly view of AI content.
+         * @param {string} titlePrefix - A title prefix for the printout (e.g., "רעיונות לשימוש").
+         * @param {string} entityName - The name of the product or project.
+         * @param {string|null} imageUrl - URL of the product image, or null if not applicable.
+         * @param {string} aiContentHtml - The HTML content from the AI response div.
+         */
+        function printAIContent(titlePrefix, entityName, imageUrl, aiContentHtml) {
+            const printWindow = window.open('', '', 'height=600,width=800');
+            printWindow.document.write('<html><head><title>הדפסה - ח.סבן</title>');
+            printWindow.document.write('<style>');
+            printWindow.document.write(`
+                body { font-family: 'Assistant', sans-serif; direction: rtl; text-align: right; margin: 20px; }
+                h1 { color: #2196F3; text-align: center; margin-bottom: 20px; }
+                .logo { display: block; margin: 0 auto 20px auto; max-height: 80px; }
+                .content { border: 1px solid #eee; padding: 15px; border-radius: 8px; background-color: #f9f9f9; }
+                ul { list-style-type: disc; padding-right: 20px; }
+                li { margin-bottom: 5px; }
+                p { margin-bottom: 10px; }
+                .product-image { max-width: 200px; height: auto; display: block; margin: 0 auto 15px auto; border-radius: 8px; }
+                h4 { font-weight: bold; margin-top: 15px; margin-bottom: 5px; color: #333; }
+                .footer { text-align: center; margin-top: 30px; font-size: 0.8em; color: #666; }
+            `);
+            printWindow.document.write('</head><body>');
+            printWindow.document.write(`<img src="${SABAN_LOGO_URL}" alt="לוגו ח.סבן" class="logo">`);
+            printWindow.document.write(`<h1>${titlePrefix} עבור ${entityName}</h1>`);
+            if (imageUrl && imageUrl !== 'null') { // Check for null string as well
+                printWindow.document.write(`<img src="${imageUrl}" alt="${entityName}" class="product-image">`);
+            }
+            printWindow.document.write('<div class="content">');
+            printWindow.document.write(aiContentHtml);
+            printWindow.document.write('</div>');
+            printWindow.document.write('<div class="footer">© 2025 ח.סבן חומרי בניין 1994 בע"מ. כל הזכויות שמורות.</div>');
+            printWindow.document.close();
+            printWindow.print();
+        }
+
+        // Generic function to share product AI response via WhatsApp
+        function shareProductAIResponse(responseElementId) {
+            const productTitle = currentProductForModal ? currentProductForModal.title : 'מוצר לא ידוע';
+            const aiResponseElement = document.getElementById(responseElementId);
+            const aiResponseText = aiResponseElement.innerText; // Get plain text
+            
+            // Customize the message content for WhatsApp if needed
+            const message = `*שם המוצר:* ${productTitle}\n\n*תשובת AI:*\n${aiResponseText}\n\nלפרטים נוספים ורכישה: [קישור לאתר או לקטלוג]`; // Customize link if needed
+
+            const encodedMessage = encodeURIComponent(message);
+            window.open(`https://wa.me/972508860896?text=${encodedMessage}`, '_blank');
         }
     </script>
 </body>
