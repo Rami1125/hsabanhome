@@ -378,13 +378,12 @@
         
         <!-- Mobile Menu -->
         <div id="mobile-menu" class="md:hidden glass-effect py-4 px-4 hidden">
-            <nav class="hidden md:flex space-x-6 space-x-reverse">
-                <a href="https://rami1125.github.io/hsabanhome/index3.html" class="text-gray-800 hover:text-primary highlight-hover py-2">ראשי</a>
-                <a href="#vision" class="text-gray-800 hover:text-primary highlight-hover py-2">החזון</a>
-                <a href="https://rami1125.github.io/hsabanhome" class="text-primary font-semibold highlight-hover py-2 border-b-2 border-primary">מוצרים</a>
-                <a href="#calculator" class="text-gray-800 hover:text-primary highlight-hover py-2">מחלקת חישובים</a>
-                <a href="#branches" class="text-gray-800 hover:text-primary highlight-hover py-2">סניפים</a>
-                <a href="#testimonials" class="text-gray-800 hover:text-primary highlight-hover py-2">המלצות</a>
+            <nav class="flex flex-col space-y-3">
+                <a href="https://readdy.ai/home/20fb88f3-f689-4ee4-95ee-53c5efe8bc7d/f195f37e-9e34-4662-a971-05a152507a0f" data-readdy="true" class="text-gray-800 hover:text-primary py-2 border-b border-gray-100">ראשי</a>
+                <a href="#" class="text-primary font-semibold py-2 border-b border-gray-100">מוצרים</a>
+                <a href="#" class="text-gray-800 hover:text-primary py-2 border-b border-gray-100">מחלקת חישובים</a>
+                <a href="#" class="text-gray-800 hover:text-primary py-2 border-b border-gray-100">סניפים</a>
+                <a href="#" class="text-gray-800 hover:text-primary py-2">צור קשר</a>
             </nav>
         </div>
     </header>
@@ -608,11 +607,15 @@
             <h2 class="text-xl font-bold mb-2 modal-title"></h2>
             <p class="text-gray-600 text-sm mb-2 modal-description"></p>
             <span class="text-primary font-bold text-lg modal-price"></span>
-            <div class="mt-4 flex items-center justify-center">
+            <div class="mt-4 flex flex-wrap gap-2 justify-center">
                 <button onclick="addToCartFromModal()" class="bg-primary text-white px-6 py-3 rounded-button hover:bg-primary/90 transition shine-button">הוסף לעגלה</button>
-                <!-- New button for LLM feature -->
-                <button onclick="getUsageIdeas()" class="bg-teal-600 text-white px-6 py-3 rounded-button hover:bg-teal-700 transition shine-button mr-2">
+                <!-- Existing button for LLM feature -->
+                <button onclick="getUsageIdeas()" class="bg-teal-600 text-white px-6 py-3 rounded-button hover:bg-teal-700 transition shine-button">
                     <i class="ri-lightbulb-fill ri-lg ml-2"></i> ✨ קבל רעיונות לשימוש ✨
+                </button>
+                <!-- New button for LLM feature -->
+                <button onclick="getProductSummaryAndFeatures()" class="bg-purple-600 text-white px-6 py-3 rounded-button hover:bg-purple-700 transition shine-button">
+                    <i class="ri-article-line ri-lg ml-2"></i> ✨ סיכום ונקודות מפתח ✨
                 </button>
             </div>
             <!-- Area to display LLM response for usage ideas -->
@@ -625,6 +628,18 @@
             </div>
             <div id="usage-ideas-error" class="hidden text-red-600 text-center mt-4">
                 אירעה שגיאה בטעינת רעיונות. אנא נסה שוב.
+            </div>
+
+            <!-- New area to display LLM response for summary and key features -->
+            <div id="summary-features-response" class="mt-6 p-4 bg-gray-50 rounded-lg border border-gray-200 min-h-[50px] flex items-center justify-center text-gray-700 text-sm leading-relaxed hidden">
+                <p>סיכום ותכונות מפתח יופיעו כאן...</p>
+            </div>
+            <div id="summary-features-loading" class="hidden flex justify-center items-center mt-4">
+                <div class="loader"></div>
+                <span class="mr-2 text-purple-600">טוען סיכום...</span>
+            </div>
+            <div id="summary-features-error" class="hidden text-red-600 text-center mt-4">
+                אירעה שגיאה בטעינת סיכום ותכונות. אנא נסה שוב.
             </div>
         </div>
     </div>
@@ -1211,6 +1226,15 @@
             usageIdeasResponse.classList.add('hidden'); // Hide it initially
             usageIdeasLoading.classList.add('hidden');
             usageIdeasError.classList.add('hidden');
+
+            // Reset and hide summary/features display when modal opens
+            const summaryFeaturesResponse = document.getElementById('summary-features-response');
+            const summaryFeaturesLoading = document.getElementById('summary-features-loading');
+            const summaryFeaturesError = document.getElementById('summary-features-error');
+            summaryFeaturesResponse.innerHTML = '<p>סיכום ותכונות מפתח יופיעו כאן...</p>'; // Reset placeholder
+            summaryFeaturesResponse.classList.add('hidden'); // Hide it initially
+            summaryFeaturesLoading.classList.add('hidden');
+            summaryFeaturesError.classList.add('hidden');
         }
 
         /**
@@ -1503,13 +1527,18 @@
         async function getUsageIdeas() {
             const usageIdeasResponse = document.getElementById('usage-ideas-response');
             const usageIdeasLoading = document.getElementById('usage-ideas-loading');
-            const usageIdeasError = document.getElementById('usage-ideas-error'); // Corrected variable name
+            const usageIdeasError = document.getElementById('usage-ideas-error');
 
             if (!currentProductForModal) {
                 usageIdeasResponse.innerHTML = '<p class="text-red-500">לא נבחר מוצר. אנא בחר מוצר לקבלת רעיונות.</p>';
                 usageIdeasResponse.classList.remove('hidden');
                 return;
             }
+
+            // Hide other LLM features' responses and show loading for this one
+            document.getElementById('summary-features-response').classList.add('hidden');
+            document.getElementById('summary-features-loading').classList.add('hidden');
+            document.getElementById('summary-features-error').classList.add('hidden');
 
             // Show loading spinner, clear previous results/errors
             usageIdeasLoading.classList.remove('hidden');
@@ -1553,15 +1582,86 @@
                 } else {
                     usageIdeasResponse.innerHTML = '<p class="text-red-500">לא הצלחתי להפיק רעיונות לשימוש. אנא נסה שוב או עם תיאור אחר.</p>';
                     usageIdeasResponse.classList.remove('hidden'); // Show response area
-                    usageIdeasError.classList.remove('hidden'); // Corrected variable name
+                    usageIdeasError.classList.remove('hidden');
                 }
             } catch (error) {
                 console.error("שגיאה בקריאה ל-Gemini API עבור רעיונות שימוש:", error);
                 usageIdeasResponse.innerHTML = '<p class="text-red-500">אירעה שגיאה בטעינת רעיונות. אנא נסה שוב מאוחר יותר.</p>';
                 usageIdeasResponse.classList.remove('hidden'); // Show response area
-                usageIdeasError.classList.remove('hidden'); // Corrected variable name
+                usageIdeasError.classList.remove('hidden');
             } finally {
                 usageIdeasLoading.classList.add('hidden'); // Hide loading spinner
+            }
+        }
+
+        // New LLM Feature: Get Summary and Key Features for a specific product
+        async function getProductSummaryAndFeatures() {
+            const summaryFeaturesResponse = document.getElementById('summary-features-response');
+            const summaryFeaturesLoading = document.getElementById('summary-features-loading');
+            const summaryFeaturesError = document.getElementById('summary-features-error');
+
+            if (!currentProductForModal) {
+                summaryFeaturesResponse.innerHTML = '<p class="text-red-500">לא נבחר מוצר. אנא בחר מוצר לקבלת סיכום ותכונות מפתח.</p>';
+                summaryFeaturesResponse.classList.remove('hidden');
+                return;
+            }
+
+            // Hide other LLM features' responses and show loading for this one
+            document.getElementById('usage-ideas-response').classList.add('hidden');
+            document.getElementById('usage-ideas-loading').classList.add('hidden');
+            document.getElementById('usage-ideas-error').classList.add('hidden');
+
+            // Show loading spinner, clear previous results/errors
+            summaryFeaturesLoading.classList.remove('hidden');
+            summaryFeaturesResponse.innerHTML = ''; // Clear previous content
+            summaryFeaturesResponse.classList.add('hidden'); // Ensure it's hidden during loading
+            summaryFeaturesError.classList.add('hidden');
+
+            try {
+                let chatHistory = [];
+                const prompt = `סכם את תיאור המוצר הבא וחלץ את נקודות המפתח והתכונות העיקריות שלו. התשובה צריכה להיות בעברית. הצג סיכום קצר ולאחר מכן רשימה מנוקדת של תכונות.
+                
+                תיאור המוצר: ${currentProductForModal.description}`;
+                
+                chatHistory.push({ role: "user", parts: [{ text: prompt }] });
+
+                const payload = { contents: chatHistory };
+                const apiKey = ""; // Canvas will automatically provide the API key
+                const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
+
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                const result = await response.json();
+                
+                if (result.candidates && result.candidates.length > 0 &&
+                    result.candidates[0].content && result.candidates[0].content.parts &&
+                    result.candidates[0].content.parts.length > 0) {
+                    const text = result.candidates[0].content.parts[0].text;
+                    // Format the text for display (e.g., replace markdown list with HTML list)
+                    const formattedText = text.split('\n').map(line => {
+                        if (line.startsWith('- ')) {
+                            return `<li>${line.substring(2).trim()}</li>`;
+                        }
+                        return `<p>${line.trim()}</p>`;
+                    }).join('');
+                    summaryFeaturesResponse.innerHTML = `<ul class="list-disc pr-5 space-y-1">${formattedText}</ul>`;
+                    summaryFeaturesResponse.classList.remove('hidden'); // Show response area
+                } else {
+                    summaryFeaturesResponse.innerHTML = '<p class="text-red-500">לא הצלחתי להפיק סיכום ותכונות מפתח. אנא נסה שוב או עם תיאור אחר.</p>';
+                    summaryFeaturesResponse.classList.remove('hidden'); // Show response area
+                    summaryFeaturesError.classList.remove('hidden');
+                }
+            } catch (error) {
+                console.error("שגיאה בקריאה ל-Gemini API עבור סיכום ותכונות:", error);
+                summaryFeaturesResponse.innerHTML = '<p class="text-red-500">אירעה שגיאה בטעינת סיכום ותכונות. אנא נסה שוב מאוחר יותר.</p>';
+                summaryFeaturesResponse.classList.remove('hidden'); // Show response area
+                summaryFeaturesError.classList.remove('hidden');
+            } finally {
+                summaryFeaturesLoading.classList.add('hidden'); // Hide loading spinner
             }
         }
     </script>
