@@ -1345,7 +1345,7 @@
                 <div onclick="openModal('${encodeURIComponent(prod.title)}', '${encodeURIComponent(prod.description)}', '${encodeURIComponent(prod.image)}', '${encodeURIComponent(prod["price "] || prod.price || "—")}', '${encodeURIComponent(JSON.stringify(prod))}')"
                     class="glass-card product-card cursor-pointer rounded-lg overflow-hidden shadow-md transition hover:shadow-xl bg-white">
                     <div class="image-transition h-56 relative">
-                        <img src="${prod.image}" onerror="this.onerror=null;this.src='https://placehold.co/300x200/cccccc/000000?text=תמונה+לא+זמינה';" alt="${prod.title}" class="w-full h-full object-cover object-top">
+                        <img src="${prod.image}" onerror="this.onerror=null;this.src='https://readdy.ai/api/search-image?query=Electrical%2520socket%252C%2520power%2520outlet%252C%2520electrical%2520supplies%252C%2520detailed%2520product%2520photography%2520on%2520clean%2520white%2520background%252C%2520soft%2520blue%2520lighting&width=600&height=400&seq=20&orientation=landscape';" alt="${prod.title}" class="w-full h-full object-cover object-top">
                         <div class="absolute inset-0 bg-black/10 opacity-0 hover:opacity-100 transition duration-300"></div>
                     </div>
                     <div class="p-4">
@@ -1697,7 +1697,7 @@
 
             heroContainer.innerHTML = heroCategories.map(cat => `
                 <div class="hero-image-item glass-card">
-                    <img src="${cat.imageUrl}" onerror="this.onerror=null;this.src='https://placehold.co/300x200/cccccc/000000?text=תמונה+לא+זמינה';" alt="${cat.name}">
+                    <img src="${cat.imageUrl}" onerror="this.onerror=null;this.src='https://readdy.ai/api/search-image?query=Professional%2520power%2520drill%252C%2520construction%2520tool%252C%2520detailed%2520product%2520photography%2520on%2520clean%2520white%2520background%252C%2520high%2520quality%2520tool%252C%2520soft%2520blue%2520lighting&width=600&height=400&seq=15&orientation=landscape';" alt="${cat.name}">
                     <div class="hero-image-overlay">
                         <a href="${cat.linkUrl}" class="bg-primary text-white px-4 py-2 rounded-button shine-button">לדף המוצר</a>
                     </div>
