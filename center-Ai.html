@@ -1,0 +1,1568 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>קטלוג מוצרים - ח.סבן חומרי בניין 1994 בע"מ</title>
+    <script src="https://cdn.tailwindcss.com/3.4.16"></script>
+    <script>
+        // Tailwind CSS configuration
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: { primary: '#2196F3', secondary: '#BBDEFB' },
+                    borderRadius: { 'none': '0px', 'sm': '4px', DEFAULT: '8px', 'md': '12px', 'lg': '16px', 'xl': '20px', '2xl': '24px', '3xl': '32px', 'full': '9999px', 'button': '8px' }
+                }
+            }
+        }
+    </script>
+    <!-- Font and icon links -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@200;300;400;500;600;700;800&family=Rubik:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css">
+    <style>
+        /* General CSS and existing effects */
+        :where([class^="ri-"])::before { content: "\f3c2"; }
+        
+        body {
+            font-family: 'Assistant', sans-serif;
+            overflow-x: hidden;
+            background: linear-gradient(135deg, #f0f8ff 0%, #ffffff 100%);
+        }
+        
+        .secondary-font {
+            font-family: 'Rubik', sans-serif;
+        }
+        
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            box-shadow: 0 8px 32px rgba(31, 38, 135, 0.15);
+        }
+        
+        .glass-card {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            transition: all 0.3s ease;
+        }
+        
+        .glass-card:hover {
+            background: rgba(255, 255, 255, 0.9);
+            box-shadow: 0 10px 30px rgba(31, 38, 135, 0.2);
+            transform: translateY(-5px);
+        }
+        
+        .shine-button {
+            position: relative;
+            overflow: hidden;
+            z-index: 1; /* Ensure effect is above text */
+        }
+        
+        .shine-button::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent);
+            transform: rotate(45deg);
+            animation: shine 3s infinite;
+        }
+        
+        @keyframes shine {
+            0% { transform: translateX(-100%) rotate(45deg); }
+            100% { transform: translateX(100%) rotate(45deg); }
+        }
+        
+        .product-card {
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        
+        .product-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+        }
+        
+        .highlight-hover {
+            position: relative;
+        }
+        
+        .highlight-hover::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #2196F3;
+            transition: width 0.3s ease;
+        }
+        
+        .highlight-hover:hover::after {
+            width: 100%;
+        }
+        
+        .image-transition {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .image-transition img {
+            transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .image-transition:hover img {
+            transform: scale(1.1);
+        }
+        
+        .image-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to bottom, transparent, rgba(0,0,0,0.5));
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .image-transition:hover .image-overlay {
+            opacity: 1;
+        }
+        
+        input[type=number]::-webkit-inner-spin-button, 
+        input[type=number]::-webkit-outer-spin-button { 
+            -webkit-appearance: none; 
+            margin: 0; 
+        }
+        
+        .custom-checkbox {
+            display: flex;
+            align-items: center;
+            position: relative;
+            cursor: pointer;
+        }
+        
+        .custom-checkbox input {
+            position: absolute;
+            opacity: 0;
+            cursor: pointer;
+            height: 0;
+            width: 0;
+        }
+        
+        .checkmark {
+            height: 20px;
+            width: 20px;
+            background-color: #f5f5f5;
+            border: 2px solid #2196F3;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .custom-checkbox input:checked ~ .checkmark {
+            background-color: #2196F3;
+        }
+        
+        .checkmark:after {
+            content: "";
+            display: none;
+            width: 5px;
+            height: 10px;
+            border: solid white;
+            border-width: 0 2px 2px 0;
+            transform: rotate(45deg);
+        }
+        
+        .custom-checkbox input:checked ~ .checkmark:after {
+            display: block;
+        }
+        
+        .custom-range {
+            -webkit-appearance: none;
+            width: 100%;
+            height: 8px;
+            border-radius: 5px;
+            background: #E3F2FD;
+            outline: none;
+            border: 1px solid #BBDEFB;
+        }
+        
+        .custom-range::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #2196F3;
+            cursor: pointer;
+        }
+        
+        .custom-range::-moz-range-thumb {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #2196F3;
+            cursor: pointer;
+        }
+        
+        .custom-switch {
+            position: relative;
+            display: inline-block;
+            width: 50px;
+            height: 24px;
+        }
+        
+        .custom-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 34px;
+        }
+        
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 16px;
+            width: 16px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+        
+        input:checked + .slider {
+            background-color: #2196F3;
+        }
+        
+        input:checked + .slider:before {
+            transform: translateX(26px);
+        }
+        
+        .filter-active {
+            background-color: #E3F2FD;
+            color: #1565C0;
+            border-color: #2196F3;
+        }
+        
+        .pagination-active {
+            background-color: #2196F3;
+            color: white;
+        }
+        
+        .sort-active {
+            background-color: #E3F2FD;
+            color: #1565C0;
+            border-color: #2196F3;
+        }
+        /* New CSS for hero images */
+        .hero-image-grid {
+            display: grid;
+            grid-template-columns: repeat(1, 1fr); /* 1 column by default */
+            gap: 1rem;
+        }
+
+        @media (min-width: 640px) { /* sm breakpoint */
+            .hero-image-grid {
+                grid-template-columns: repeat(2, 1fr); /* 2 columns on small screens and up */
+            }
+        }
+        @media (min-width: 1024px) { /* lg breakpoint */
+            .hero-image-grid {
+                grid-template-columns: repeat(4, 1fr); /* 4 columns on large screens and up */
+            }
+        }
+
+        .hero-image-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        .hero-image-item img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        .hero-image-item:hover img {
+            transform: scale(1.05);
+        }
+        .hero-image-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to top, rgba(0,0,0,0.6), transparent);
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            padding-bottom: 1rem;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .hero-image-item:hover .hero-image-overlay {
+            opacity: 1;
+        }
+
+        /* Styles for loading spinner */
+        .loader {
+            border: 4px solid #f3f3f3; /* Light grey */
+            border-top: 4px solid #2196F3; /* Blue */
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            animation: spin 2s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-blue-50 to-white font-sans p-6">
+    <!-- Header -->
+    <header class="glass-effect sticky top-0 z-50 shadow-md">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <div class="flex items-center">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSUVp7CP06twn9tobIG19ihDfKLm9MmowW73Q&s" alt="לוגו ח.סבן" class="h-12">
+                <h1 class="text-2xl font-bold text-primary mr-3">ח.סבן חומרי בניין</h1>
+            </div>
+            
+            <nav class="hidden md:flex space-x-6 space-x-reverse">
+                <a href="https://readdy.ai/home/20fb88f3-f689-4ee4-95ee-53c5efe8bc7d/f195f37e-9e34-4662-a971-05a152507a0f" data-readdy="true" class="text-gray-800 hover:text-primary highlight-hover py-2">ראשי</a>
+                <a href="#" class="text-primary font-semibold highlight-hover py-2 border-b-2 border-primary">מוצרים</a>
+                <a href="#" class="text-gray-800 hover:text-primary highlight-hover py-2">מחלקת חישובים</a>
+                <a href="#" class="text-gray-800 hover:text-primary highlight-hover py-2">סניפים</a>
+                <a href="#" class="text-gray-800 hover:text-primary highlight-hover py-2">צור קשר</a>
+            </nav>
+            
+            <div class="flex items-center space-x-4 space-x-reverse">
+                <div class="relative">
+                    <div class="glass-effect rounded-full flex items-center pr-3 pl-10 py-2">
+                        <input type="text" id="search-input" placeholder="חיפוש מוצרים..." class="bg-transparent border-none outline-none text-sm w-36 md:w-48">
+                        <div class="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 flex items-center justify-center text-primary">
+                            <i class="ri-search-line"></i>
+                        </div>
+                    </div>
+                </div>
+                <a href="#" class="relative" onclick="openCartModal(event)">
+                    <div class="w-10 h-10 flex items-center justify-center text-primary glass-effect rounded-full">
+                        <i class="ri-shopping-cart-line ri-xl"></i>
+                    </div>
+                    <span id="cart-count" class="absolute -top-1 -right-1 bg-primary text-white text-xs w-5 h-5 flex items-center justify-center rounded-full">0</span>
+                </a>
+                <div class="w-10 h-10 flex items-center justify-center text-primary md:hidden cursor-pointer glass-effect rounded-full" id="mobile-menu-button">
+                    <i class="ri-menu-line ri-xl"></i>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="md:hidden glass-effect py-4 px-4 hidden">
+            <nav class="flex flex-col space-y-3">
+                <a href="https://readdy.ai/home/20fb88f3-f689-4ee4-95ee-53c5efe8bc7d/f195f37e-9e34-4662-a971-05a152507a0f" data-readdy="true" class="text-gray-800 hover:text-primary py-2 border-b border-gray-100">ראשי</a>
+                <a href="#" class="text-primary font-semibold py-2 border-b border-gray-100">מוצרים</a>
+                <a href="#" class="text-gray-800 hover:text-primary py-2 border-b border-gray-100">מחלקת חישובים</a>
+                <a href="#" class="text-gray-800 hover:text-primary py-2 border-b border-gray-100">סניפים</a>
+                <a href="#" class="text-gray-800 hover:text-primary py-2">צור קשר</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Breadcrumbs -->
+    <div class="container mx-auto px-4 py-3">
+        <div class="flex items-center text-sm text-gray-600">
+            <a href="https://readdy.ai/home/20fb88f3-f689-4ee4-95ee-53c5efe8bc7d/f195f37e-9e34-4662-a971-05a152507a0f" data-readdy="true" class="hover:text-primary">ראשי</a>
+            <div class="w-4 h-4 flex items-center justify-center mx-1">
+                <i class="ri-arrow-left-s-line"></i>
+            </div>
+            <span class="text-primary font-medium">קטלוג מוצרים</span>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="container mx-auto px-4 py-6">
+        <div class="flex flex-col md:flex-row gap-6">
+            <!-- Sidebar Filters -->
+            <div class="md:w-1/4 lg:w-1/5">
+                <div class="glass-effect rounded-lg p-5 sticky top-24 sidebar-filters"> <!-- Added sidebar-filters class -->
+                    <div class="mb-6">
+                        <h3 class="text-lg font-bold text-gray-800 mb-3">קטגוריות</h3>
+                        <ul id="sidebar-categories" class="space-y-2">
+                            <!-- Categories will be dynamically loaded here by JavaScript -->
+                            <li>
+                                <label class="custom-checkbox">
+                                    <input type="checkbox" data-category="all" checked>
+                                    <span class="checkmark ml-2"></span>
+                                    <span class="text-gray-800">הכל</span>
+                                </label>
+                            </li>
+                            <!-- Existing categories will be replaced by dynamic ones -->
+                        </ul>
+                    </div>
+                    
+                    <div class="mb-6">
+                        <h3 class="text-lg font-bold text-gray-800 mb-3">מחיר</h3>
+                        <div class="space-y-3">
+                            <div class="flex justify-between text-sm text-gray-600">
+                                <span>₪0</span>
+                                <span>₪1000</span>
+                            </div>
+                            <input type="range" min="0" max="1000" value="1000" class="custom-range" id="price-range">
+                            <div class="flex justify-between">
+                                <div class="glass-effect rounded-md px-3 py-1 text-sm">
+                                    <span>עד </span>
+                                    <span id="price-value">₪1000</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-6">
+                        <h3 class="text-lg font-bold text-gray-800 mb-3">זמינות</h3>
+                        <ul id="sidebar-availability" class="space-y-2">
+                            <li>
+                                <label class="custom-checkbox">
+                                    <input type="checkbox" data-availability="במלאי" checked>
+                                    <span class="checkmark ml-2"></span>
+                                    <span class="text-gray-800">במלאי</span>
+                                </label>
+                            </li>
+                            <li>
+                                <label class="custom-checkbox">
+                                    <input type="checkbox" data-availability="בהזמנה מראש">
+                                    <span class="checkmark ml-2"></span>
+                                    <span class="text-gray-800">בהזמנה מראש</span>
+                                </label>
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <div class="mb-6">
+                        <h3 class="text-lg font-bold text-gray-800 mb-3">מותגים</h3>
+                        <ul id="sidebar-brands" class="space-y-2">
+                            <!-- Brands will be dynamically loaded or managed here -->
+                           <li>
+                                <label class="custom-checkbox">
+                                    <input type="checkbox" data-brand="גבס">
+                                    <span class="checkmark ml-2"></span>
+                                    <span class="text-gray-800">גבס</span>
+                                </label>
+                            </li>
+                            <li>
+                                <label class="custom-checkbox">
+                                    <input type="checkbox" data-brand="פרופילים לגבס">
+                                    <span class="checkmark ml-2"></span>
+                                    <span class="text-gray-800">פרופילים לגבס</span>
+                                </label>
+                            </li>
+                             <li>
+                                <label class="custom-checkbox">
+                                    <input type="checkbox" data-brand="מסלולים לגבס">
+                                    <span class="checkmark ml-2"></span>
+                                    <span class="text-gray-800">מסלולים לגבס</span>
+                                </label>
+                            </li>
+                            <li>
+                                <label class="custom-checkbox">
+                                    <input type="checkbox" data-brand="טמבור">
+                                    <span class="checkmark ml-2"></span>
+                                    <span class="text-gray-800">טמבור</span>
+                                </label>
+                            </li>
+                            <li>
+                                <label class="custom-checkbox">
+                                    <input type="checkbox" data-brand="דבקים">
+                                    <span class="checkmark ml-2"></span>
+                                    <span class="text-gray-800">דבקים</span>
+                                </label>
+                            </li>
+                            <li>
+                                <label class="custom-checkbox">
+                                    <input type="checkbox" data-brand="בוש">
+                                    <span class="checkmark ml-2"></span>
+                                    <span class="text-gray-800">בוש</span>
+                                </label>
+                            </li>
+                            <li>
+                                <label class="custom-checkbox">
+                                    <input type="checkbox" data-brand="פלסאון">
+                                    <span class="checkmark ml-2"></span>
+                                    <span class="text-gray-800">פלסאון</span>
+                                </label>
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <div>
+                        <button id="apply-filters-btn" class="w-full bg-primary text-white py-2 rounded-button hover:bg-primary/90 transition whitespace-nowrap shine-button">החל סינון</button>
+                        <button id="clear-filters-btn" class="w-full mt-2 border border-primary text-primary py-2 rounded-button hover:bg-primary/10 transition whitespace-nowrap">נקה הכל</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Products Grid -->
+            <div class="md:w-3/4 lg:w-4/5">
+                <!-- Category Title and Sort -->
+                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-3 sm:mb-0">כל המוצרים</h2>
+                    
+                    <div class="flex flex-wrap gap-2">
+                        <div class="glass-effect rounded-lg px-3 py-2 text-sm flex items-center">
+                            <span class="text-gray-700 ml-2">מיון:</span>
+                            <div class="relative">
+                                <select id="sort-select" class="bg-transparent border-none outline-none text-primary appearance-none pr-2 pl-6">
+                                    <option value="popularity">פופולריות</option>
+                                    <option value="price-asc">מחיר: מהנמוך לגבוה</option>
+                                    <option value="price-desc">מחיר: מהגבוה לנמוך</option>
+                                    <option value="newest">חדש ביותר</option>
+                                </select>
+                                <div class="absolute left-1 top-1/2 transform -translate-y-1/2 w-4 h-4 flex items-center justify-center text-primary">
+                                    <i class="ri-arrow-down-s-line"></i>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="glass-effect rounded-lg px-3 py-2 text-sm flex items-center">
+                            <span class="text-gray-700 ml-2">הצג:</span>
+                            <div class="flex items-center">
+                                <button class="w-8 h-8 flex items-center justify-center text-primary">
+                                    <i class="ri-grid-line"></i>
+                                </button>
+                                <button class="w-8 h-8 flex items-center justify-center text-gray-400">
+                                    <i class="ri-list-check"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Hero Image Section - Now dynamic -->
+                <div class="mb-8">
+                    <div class="hero-image-grid" id="dynamic-hero-categories">
+                        <!-- Dynamic content will be inserted here -->
+                    </div>
+                </div>
+                
+                <!-- Category Pills (could also be dynamic if needed, currently hardcoded for demonstration) -->
+                <div class="flex flex-wrap gap-2 mb-6" id="category-pills">
+                    <button class="glass-effect rounded-full px-4 py-2 text-sm filter-active whitespace-nowrap" data-category-pill="all">הכל</button>
+                    <!-- Other category pills can be added here or generated dynamically -->
+                </div>
+                <main>
+                    <div id="products-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-6"></div>
+                </main>
+
+                <!-- Project Planner Button - Existing LLM Feature -->
+                <div class="flex justify-center mt-10">
+                    <button onclick="openProjectPlannerModal()" class="bg-blue-600 text-white px-8 py-4 rounded-button text-lg font-bold hover:bg-blue-700 transition shine-button flex items-center justify-center">
+                        <i class="ri-tools-fill ri-xl ml-2"></i> ✨ עוזר תכנון פרויקטים ✨
+                    </button>
+                </div>
+
+                <!-- Pagination -->
+                <div class="flex justify-center mt-10">
+                    <nav class="glass-effect rounded-lg inline-flex">
+                        <a href="#" class="w-10 h-10 flex items-center justify-center text-gray-500 hover:text-primary border-l border-blue-100">
+                            <i class="ri-arrow-right-s-line"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 flex items-center justify-center pagination-active">1</a>
+                        <a href="#" class="w-10 h-10 flex items-center justify-center text-gray-700 hover:text-primary hover:bg-primary/10">2</a>
+                        <a href="#" class="w-10 h-10 flex items-center justify-center text-gray-700 hover:text-primary hover:bg-primary/10">3</a>
+                        <a href="#" class="w-10 h-10 flex items-center justify-center text-gray-700 hover:text-primary hover:bg-primary/10">4</a>
+                        <a href="#" class="w-10 h-10 flex items-center justify-center text-gray-700 hover:text-primary hover:bg-primary/10">5</a>
+                        <a href="#" class="w-10 h-10 flex items-center justify-center text-gray-500 hover:text-primary border-r border-blue-100">
+                            <i class="ri-arrow-left-s-line"></i>
+                        </a>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Product Modal (Updated with new LLM feature button and display) -->
+    <div id="product-modal" class="fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center z-50 hidden">
+        <div class="bg-white rounded-lg shadow-lg p-6 max-w-md w-full relative">
+            <button onclick="closeModal()" class="absolute top-2 left-2 text-gray-500 hover:text-red-500 text-xl">&times;</button>
+            <img src="" alt="מוצר" class="w-full h-48 object-cover rounded mb-4 modal-image"/>
+            <h2 class="text-xl font-bold mb-2 modal-title"></h2>
+            <p class="text-gray-600 text-sm mb-2 modal-description"></p>
+            <span class="text-primary font-bold text-lg modal-price"></span>
+            <div class="mt-4 flex items-center justify-center">
+                <button onclick="addToCartFromModal()" class="bg-primary text-white px-6 py-3 rounded-button hover:bg-primary/90 transition shine-button">הוסף לעגלה</button>
+                <!-- New button for LLM feature -->
+                <button onclick="getUsageIdeas()" class="bg-teal-600 text-white px-6 py-3 rounded-button hover:bg-teal-700 transition shine-button mr-2">
+                    <i class="ri-lightbulb-fill ri-lg ml-2"></i> ✨ קבל רעיונות לשימוש ✨
+                </button>
+            </div>
+            <!-- Area to display LLM response for usage ideas -->
+            <div id="usage-ideas-response" class="mt-6 p-4 bg-gray-50 rounded-lg border border-gray-200 min-h-[50px] flex items-center justify-center text-gray-700 text-sm leading-relaxed hidden">
+                <p>רעיונות לשימוש במוצר יופיעו כאן...</p>
+            </div>
+            <div id="usage-ideas-loading" class="hidden flex justify-center items-center mt-4">
+                <div class="loader"></div>
+                <span class="mr-2 text-teal-600">טוען רעיונות...</span>
+            </div>
+            <div id="usage-ideas-error" class="hidden text-red-600 text-center mt-4">
+                אירעה שגיאה בטעינת רעיונות. אנא נסה שוב.
+            </div>
+        </div>
+    </div>
+
+    <!-- Cart Modal -->
+    <div id="cart-modal" class="fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center z-50 hidden">
+        <div class="glass-effect rounded-lg shadow-lg p-6 max-w-lg w-full relative">
+            <button onclick="closeCartModal()" class="absolute top-2 left-2 text-gray-500 hover:text-red-500 text-xl">&times;</button>
+            <h2 class="text-2xl font-bold mb-4 text-gray-800">עגלת הקניות שלך</h2>
+            
+            <div id="cart-items" class="mb-6 max-h-60 overflow-y-auto">
+                <!-- Cart items will be loaded here by JavaScript -->
+                <p id="empty-cart-message" class="text-gray-600 text-center hidden">העגלה ריקה. התחל להוסיף מוצרים!</p>
+            </div>
+
+            <div class="mb-4">
+                <h3 class="text-lg font-bold text-gray-800 mb-2">פרטי לקוח ואספקה</h3>
+                <input type="text" id="customer-name" placeholder="שם מלא" class="w-full px-4 py-2 mb-3 rounded-button border glass-effect" required>
+                <input type="tel" id="customer-phone" placeholder="מספר טלפון" class="w-full px-4 py-2 mb-3 rounded-button border glass-effect" required>
+                <input type="text" id="customer-address" placeholder="כתובת אספקה" class="w-full px-4 py-2 mb-3 rounded-button border glass-effect">
+                <textarea id="order-notes" placeholder="הערות נוספות להזמנה (לדוגמה: מוצר נוסף, דרישות מיוחדות)" rows="3" class="w-full px-4 py-2 rounded-button border glass-effect"></textarea>
+            </div>
+            
+            <button onclick="sendOrder()" class="w-full bg-primary text-white py-3 rounded-button hover:bg-primary/90 transition shine-button">שלח הזמנה ל-WhatsApp</button>
+        </div>
+    </div>
+
+    <!-- Project Planner Modal - New HTML for the LLM feature -->
+    <div id="project-planner-modal" class="fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center z-50 hidden">
+        <div class="bg-white rounded-lg shadow-lg p-6 max-w-lg w-full relative">
+            <button onclick="closeProjectPlannerModal()" class="absolute top-2 left-2 text-gray-500 hover:text-red-500 text-xl">&times;</button>
+            <h2 class="text-2xl font-bold mb-4 text-gray-800 text-center">✨ עוזר תכנון פרויקטים ✨</h2>
+            
+            <div class="mb-4">
+                <label for="project-description" class="block text-gray-700 text-sm font-bold mb-2">תאר את הפרויקט שלך:</label>
+                <textarea id="project-description" rows="5" placeholder="לדוגמה: בניית קיר גבס באורך 4 מטר וגובה 2.5 מטר בחדר שינה." 
+                          class="w-full px-4 py-2 rounded-button border glass-effect focus:outline-none focus:ring-2 focus:ring-primary"></textarea>
+            </div>
+            
+            <div class="flex justify-center mb-4">
+                <button onclick="getProjectMaterials()" class="bg-primary text-white px-6 py-3 rounded-button hover:bg-primary/90 transition shine-button flex items-center">
+                    <i class="ri-ai-generate ri-lg ml-2"></i> קבל המלצות חומרים
+                </button>
+            </div>
+
+            <div id="project-materials-response" class="mt-4 p-4 bg-gray-50 rounded-lg border border-gray-200 min-h-[100px] flex items-center justify-center text-gray-700 text-sm leading-relaxed">
+                <p>המלצות החומרים יופיעו כאן...</p>
+            </div>
+
+            <div id="project-planner-loading" class="hidden flex justify-center items-center mt-4">
+                <div class="loader"></div>
+                <span class="mr-2 text-primary">טוען המלצות...</span>
+            </div>
+            <div id="project-planner-error" class="hidden text-red-600 text-center mt-4">
+                אירעה שגיאה בטעינת המלצות. אנא נסה שוב.
+            </div>
+        </div>
+    </div>
+
+    <!-- Newsletter -->
+    <section class="py-12 glass-effect mt-10">
+        <div class="container mx-auto px-4">
+            <div class="max-w-3xl mx-auto text-center">
+                <h2 class="text-2xl md:text-3xl font-bold mb-4 text-gray-800">הישארו מעודכנים</h2>
+                <p class="text-gray-600 mb-6">הירשמו לניוזלטר שלנו וקבלו עדכונים על מבצעים, מוצרים חדשים וטיפים מקצועיים.</p>
+                <div class="flex flex-col sm:flex-row gap-3 justify-center">
+                    <input type="email" placeholder="הזינו את כתובת המייל שלכם" class="px-4 py-3 rounded-button border-none glass-effect w-full sm:w-96">
+                    <button class="bg-primary text-white px-6 py-3 rounded-button hover:bg-primary/90 transition whitespace-nowrap shine-button">הרשמה</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-[#1565C0] text-white py-12 mt-10">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <!-- Column 1 - About -->
+                <div>
+                    <h3 class="text-xl font-bold mb-4">אודות ח.סבן</h3>
+                    <p class="text-white/90 mb-4">ח.סבן חומרי בניין 1994 בע"מ הינה חברה משפחתית המספקת חומרי בניין איכותיים מאז 1994. אנו מתמחים במגוון רחב של מוצרים לענף הבנייה.</p>
+                    <div class="flex space-x-4 space-x-reverse">
+                        <a href="#" class="text-white/90 hover:text-white">
+                            <div class="w-8 h-8 flex items-center justify-center">
+                                <i class="ri-facebook-fill"></i>
+                            </div>
+                        </a>
+                        <a href="#" class="text-white/90 hover:text-white">
+                            <div class="w-8 h-8 flex items-center justify-center">
+                                <i class="ri-instagram-line"></i>
+                            </div>
+                        </a>
+                        <a href="#" class="text-white/90 hover:text-white">
+                            <div class="w-8 h-8 flex items-center justify-center">
+                                <i class="ri-whatsapp-line"></i>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Column 2 - Quick Links -->
+                <div>
+                    <h3 class="text-xl font-bold mb-4">קישורים מהירים</h3>
+                    <ul class="space-y-2">
+                        <li><a href="https://readdy.ai/home/20fb88f3-f689-4ee4-95ee-53c5efe8bc7d/f195f37e-9e34-4662-a971-05a152507a0f" data-readdy="true" class="text-white/90 hover:text-white">דף הבית</a></li>
+                        <li><a href="#" class="text-white/90 hover:text-white">החזון שלנו</a></li>
+                        <li><a href="#" class="text-white/90 hover:text-white">מוצרים</a></li>
+                        <li><a href="#" class="text-white/90 hover:text-white">מחלקת חישובים</a></li>
+                        <li><a href="#" class="text-white/90 hover:text-white">סניפים</a></li>
+                        <li><a href="#" class="text-white/90 hover:text-white">המלצות</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Column 3 - Categories (Hardcoded for footer, dynamic in sidebar) -->
+                <div>
+                    <h3 class="text-xl font-bold mb-4">קטגוריות מוצרים</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-white/90 hover:text-white">חומרי בניין</a></li>
+                        <li><a href="#" class="text-white/90 hover:text-white">חשמל ותאורה</a></li>
+                        <li><a href="#" class="text-white/90 hover:text-white">אינסטלציה</a></li>
+                        <li><a href="#" class="text-white/90 hover:text-white">צבעים וציפויים</a></li>
+                        <li><a href="#" class="text-white/90 hover:text-white">כלי עבודה</a></li>
+                        <li><a href="#" class="text-white/90 hover:text-white">בטיחות בעבודה</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Column 4 - Contact -->
+                <div>
+                    <h3 class="text-xl font-bold mb-4">צור קשר</h3>
+                    <ul class="space-y-3">
+                        <li class="flex items-start">
+                            <div class="w-5 h-5 flex items-center justify-center text-white/90 mt-1">
+                                <i class="ri-map-pin-line"></i>
+                            </div>
+                            <span class="mr-2 text-white/90">רחוב התלמיד 6, הוד השרון</span>
+                        </li>
+                        <li class="flex items-start">
+                            <div class="w-5 h-5 flex items-center justify-center text-white/90 mt-1">
+                                <i class="ri-phone-line"></i>
+                            </div>
+                            <span class="mr-2 text-white/90">09-7408854</span>
+                        </li>
+                        <li class="flex items-start">
+                            <div class="w-5 h-5 flex items-center justify-center text-white/90 mt-1">
+                                <i class="ri-mail-line"></i>
+                            </div>
+                            <span class="mr-2 text-white/90">info@hsaban.co.il</span>
+                        </li>
+                        <li class="flex items-start">
+                            <div class="w-5 h-5 flex items-center justify-center text-white/90 mt-1">
+                                <i class="ri-time-line"></i>
+                            </div>
+                            <div class="mr-2 text-white/90">
+                                <p>ימים א'-ה': 07:00-17:00</p>
+                                <p>יום ו': 07:00-13:00</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-white/20 mt-8 pt-8 flex flex-col md:flex-row justify-between items-center">
+                <p class="text-white/70 text-sm mb-4 md:mb-0">© 2025 ח.סבן חומרי בניין 1994 בע"מ. כל הזכויות שמורות.</p>
+                <div class="flex items-center space-x-4 space-x-reverse">
+                    <div class="w-8 h-8 flex items-center justify-center text-white/70">
+                        <i class="ri-visa-line ri-lg"></i>
+                    </div>
+                    <div class="w-8 h-8 flex items-center justify-center text-white/70">
+                        <i class="ri-mastercard-line ri-lg"></i>
+                    </div>
+                    <div class="w-8 h-8 flex items-center justify-center text-white/70">
+                        <i class="ri-paypal-line ri-lg"></i>
+                    </div>
+                    <div class="w-8 h-8 flex items-center justify-center text-white/70">
+                        <i class="ri-bank-card-line ri-lg"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to top button -->
+    <button id="back-to-top" class="fixed bottom-6 left-6 w-12 h-12 glass-effect rounded-full flex items-center justify-center text-primary shadow-lg opacity-0 invisible transition-all duration-300">
+        <i class="ri-arrow-up-line ri-lg"></i>
+    </button>
+
+    <!-- Scripts -->
+    <script id="main-scripts">
+        // Global variables for cart and product data
+        const cart = [];
+        let currentProductForModal = null; // Stores product details when modal is opened
+        let allProducts = []; // Stores all fetched products for filtering
+        let filteredProducts = []; // Stores products after applying filters
+
+        // Object to hold current filter selections
+        let currentFilters = {
+            categories: ['all'], // Default to 'all' categories
+            price: 1000, // Default max price
+            availability: ['במלאי'], // Default to 'במלאי', assuming the sheet uses this string
+            brands: [], // Default to no specific brand filter
+            searchTerm: '' // Added searchTerm for search input
+        };
+
+        // Helper function to extract YouTube video ID from various URLs
+        function getYouTubeVideoId(url) {
+            const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+            const match = url.match(regExp);
+            return (match && match[2].length === 11) ? match[2] : null;
+        }
+
+        // Event listener for DOM content loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            // Mobile menu toggle logic
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            
+            mobileMenuButton.addEventListener('click', function() {
+                mobileMenu.classList.toggle('hidden');
+            });
+            
+            const mobileMenuLinks = mobileMenu.querySelectorAll('a');
+            mobileMenuLinks.forEach(link => {
+                link.addEventListener('click', function() {
+                    mobileMenu.classList.add('hidden');
+                });
+            });
+
+            // Price range slider logic
+            const priceRange = document.getElementById('price-range');
+            const priceValue = document.getElementById('price-value');
+            
+            priceRange.addEventListener('input', function() {
+                priceValue.textContent = '₪' + this.value;
+                currentFilters.price = parseInt(this.value); // Update filter value
+                applyFilters(); // Apply filters immediately on price change
+            });
+
+            // Back to top button logic
+            const backToTopButton = document.getElementById('back-to-top');
+            
+            window.addEventListener('scroll', function() {
+                if (window.pageYOffset > 300) {
+                    backToTopButton.classList.remove('opacity-0', 'invisible');
+                    backToTopButton.classList.add('opacity-100', 'visible');
+                } else {
+                    backToTopButton.classList.remove('opacity-100', 'visible');
+                    backToTopButton.classList.add('opacity-0', 'invisible');
+                }
+            });
+            
+            backToTopButton.addEventListener('click', function() {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+
+            // Search input event listener
+            const searchInput = document.getElementById('search-input');
+            if (searchInput) {
+                searchInput.addEventListener('input', function() {
+                    currentFilters.searchTerm = this.value.toLowerCase(); // Update search term
+                    applyFilters(); // Apply filters when typing in search bar
+                });
+            }
+
+            // Fetch products from Google Sheet
+            fetch('https://script.google.com/macros/s/AKfycbyzdkvb4wOMILaPIq-oalk6IRA7UKxCfcsRYW0VPjF5LHO3qYLewgicT8Ua6GCdQnTn/exec')
+                .then(res => res.json())
+                .then(products => {
+                    allProducts = products; // Store all products
+                    console.log("כל המוצרים שנטענו:", allProducts); // Log all fetched products
+                    filteredProducts = [...allProducts]; // Initialize filtered products
+                    renderProducts(filteredProducts); // Render all products initially
+                    populateCategories(allProducts); // Populate categories from fetched data
+                    addFilterListeners(); // Attach listeners for availability and brands
+                    populateHeroCategories(); // Populate the Hero Image Section
+                })
+                .catch(err => {
+                    console.error("שגיאה בטעינת מוצרים:", err);
+                    document.getElementById('products-grid').innerHTML = "<p class='text-red-600'>שגיאה בטעינת מוצרים. נסה שוב מאוחר יותר.</p>";
+                });
+
+            // Attach event listeners for apply and clear filters buttons
+            document.getElementById('apply-filters-btn').addEventListener('click', applyFilters);
+            document.getElementById('clear-filters-btn').addEventListener('click', clearAllFilters);
+
+            // Attach event listener for sort select
+            document.getElementById('sort-select').addEventListener('change', applyFilters);
+        });
+
+        /**
+         * Renders products to the products grid.
+         * @param {Array} productsToRender - The array of products to display.
+         */
+        function renderProducts(productsToRender) {
+            const grid = document.getElementById('products-grid');
+            if (productsToRender.length === 0) {
+                grid.innerHTML = "<p class='text-gray-600 text-center col-span-full'>לא נמצאו מוצרים התואמים לסינון.</p>";
+                return;
+            }
+            grid.innerHTML = productsToRender.map(prod => `
+                <div onclick="openModal('${encodeURIComponent(prod.title)}', '${encodeURIComponent(prod.description)}', '${encodeURIComponent(prod.image)}', '${encodeURIComponent(prod["price "] || prod.price || "—")}', '${encodeURIComponent(JSON.stringify(prod))}')"
+                    class="glass-card product-card cursor-pointer rounded-lg overflow-hidden shadow-md transition hover:shadow-xl bg-white">
+                    <div class="image-transition h-56 relative">
+                        <img src="${prod.image}" onerror="this.onerror=null;this.src='https://placehold.co/300x200/cccccc/000000?text=תמונה+לא+זמינה';" alt="${prod.title}" class="w-full h-full object-cover object-top">
+                        <div class="absolute inset-0 bg-black/10 opacity-0 hover:opacity-100 transition duration-300"></div>
+                    </div>
+                    <div class="p-4">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="text-lg font-bold text-gray-800">${prod.title}</h3>
+                            <div class="flex items-center space-x-1 space-x-reverse">
+                                <span class="bg-primary/10 text-primary text-xs px-2 py-1 rounded-full">${prod.availability || 'במ מלאי'}</span>
+                                ${prod.category ? `<span class="bg-blue-100 text-blue-700 text-xs px-2 py-1 rounded-full">${prod.category}</span>` : ''}
+                            </div>
+                        </div>
+                        <p class="text-gray-600 text-sm mb-3">${prod.description}</p>
+                        <div class="flex justify-between items-center mt-auto">
+                            ${prod.videoUrl ? `
+                                <button onclick='event.stopPropagation(); window.open("${prod.videoUrl}", "_blank");'
+                                    class="bg-secondary text-primary px-3 py-2 rounded-button text-xs hover:bg-secondary/80 transition shine-button ml-2">
+                                    צפה בסרטון
+                                </button>
+                            ` : ''}
+                            <button onclick='event.stopPropagation(); addToCart(${JSON.stringify(prod)})' class="bg-primary text-white px-4 py-2 rounded-button text-sm hover:bg-primary/90 transition shine-button">
+                                הוסף לעגלה
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        /**
+         * Populates the category filter list in the sidebar.
+         * Assumes `product.category` field exists in the fetched data.
+         * @param {Array} products - The full list of products.
+         */
+        function populateCategories(products) {
+            const categoriesContainer = document.getElementById('sidebar-categories');
+            const dynamicCategories = new Set();
+            
+            // Collect unique categories, excluding 'all' which is hardcoded in initial HTML
+            products.forEach(p => {
+                if (p.category && p.category !== 'all') { // Ensure 'category' column exists
+                    dynamicCategories.add(p.category);
+                }
+            });
+
+            // Define a set of default/expected categories, including "חומרי בניין" explicitly
+            const defaultCategories = new Set([
+                "חומרי בניין", // Added this explicitly to ensure it always appears
+                "חשמל ותאורה",
+                "אינסטלציה",
+                "צבעים וציפויים",
+                "כלי עבודה",
+                "בטיחות בעבודה",
+                "בלות", 
+                "בלוקים", 
+                "מוצרי ברזל", 
+                "מוצרי פיתוח", 
+                "פינוי פסולת"
+            ]);
+
+            // Combine default and dynamic categories, ensuring no duplicates
+            const allUniqueCategories = new Set([...defaultCategories, ...dynamicCategories]);
+
+            // Clear existing categories (except 'הכל')
+            categoriesContainer.innerHTML = `
+                <li>
+                    <label class="custom-checkbox">
+                        <input type="checkbox" data-category="all" checked>
+                        <span class="checkmark ml-2"></span>
+                        <span class="text-gray-800">הכל</span>
+                    </label>
+                </li>
+            `; 
+            currentFilters.categories = ['all']; // Ensure current filter reflects 'all' by default
+            
+            // Add dynamic categories
+            allUniqueCategories.forEach(cat => {
+                categoriesContainer.innerHTML += `
+                    <li>
+                        <label class="custom-checkbox">
+                            <input type="checkbox" data-category="${cat}">
+                            <span class="checkmark ml-2"></span>
+                            <span class="text-gray-800">${cat}</span>
+                        </label>
+                    </li>
+                `;
+            });
+
+            // Add event listeners for dynamic category checkboxes
+            addCategoryFilterListeners();
+        }
+
+        /**
+         * Attaches event listeners to category checkboxes.
+         */
+        function addCategoryFilterListeners() {
+            document.querySelectorAll('#sidebar-categories input[type="checkbox"]').forEach(checkbox => {
+                checkbox.addEventListener('change', function() {
+                    const category = this.dataset.category;
+                    if (category === 'all') {
+                        // If 'all' is selected, deselect all other categories
+                        document.querySelectorAll('#sidebar-categories input[type="checkbox"]').forEach(cb => {
+                            cb.checked = (cb === this);
+                        });
+                        currentFilters.categories = ['all'];
+                    } else {
+                        // If a specific category is selected, deselect 'all'
+                        const allCheckbox = document.querySelector('#sidebar-categories input[data-category="all"]');
+                        if (allCheckbox) allCheckbox.checked = false;
+
+                        if (this.checked) {
+                            currentFilters.categories.push(category);
+                        } else {
+                            currentFilters.categories = currentFilters.categories.filter(c => c !== category);
+                        }
+                        // If no specific category is selected, re-select 'all'
+                        if (currentFilters.categories.length === 0) {
+                            allCheckbox.checked = true;
+                            currentFilters.categories.push('all');
+                        }
+                    }
+                    applyFilters();
+                });
+            });
+        }
+
+        /**
+         * Attaches event listeners to availability and brand checkboxes.
+         */
+        function addFilterListeners() {
+            // Availability filters
+            document.querySelectorAll('#sidebar-availability input[type="checkbox"]').forEach(checkbox => {
+                checkbox.addEventListener('change', function() {
+                    const availability = this.dataset.availability;
+                    if (this.checked) {
+                        currentFilters.availability.push(availability);
+                    } else {
+                        currentFilters.availability = currentFilters.availability.filter(a => a !== availability);
+                    }
+                    applyFilters();
+                });
+            });
+
+            // Brand filters - these are currently hardcoded, if they should be dynamic
+            // based on `product.brand` from the sheet, this needs a `populateBrands` function
+            // similar to `populateCategories`. For now, it uses the hardcoded ones in HTML.
+            document.querySelectorAll('#sidebar-brands input[type="checkbox"]').forEach(checkbox => {
+                checkbox.addEventListener('change', function() {
+                    const brand = this.dataset.brand;
+                    if (this.checked) {
+                        currentFilters.brands.push(brand);
+                    } else {
+                        currentFilters.brands = currentFilters.brands.filter(b => b !== brand);
+                    }
+                    applyFilters();
+                });
+            });
+        }
+
+        /**
+         * Applies all active filters to the product list and re-renders the grid.
+         */
+        function applyFilters() {
+            let tempFilteredProducts = [...allProducts]; // Start with all products
+            console.log("פילטרים נוכחיים:", currentFilters); // Log current filters
+            console.log("מוצרים לפני סינון קטגוריות:", tempFilteredProducts.length); // Log product count
+
+            // Filter by search term
+            if (currentFilters.searchTerm) {
+                const searchTerm = currentFilters.searchTerm;
+                tempFilteredProducts = tempFilteredProducts.filter(p => {
+                    // Check if title or description contains the search term (case-insensitive)
+                    return (p.title && p.title.toLowerCase().includes(searchTerm)) ||
+                           (p.description && p.description.toLowerCase().includes(searchTerm));
+                });
+            }
+            console.log("מוצרים אחרי סינון חיפוש:", tempFilteredProducts.length); // Log product count after search
+
+            // Filter by categories
+            if (!currentFilters.categories.includes('all') && currentFilters.categories.length > 0) {
+                tempFilteredProducts = tempFilteredProducts.filter(p => p.category && currentFilters.categories.includes(p.category));
+            }
+            console.log("מוצרים אחרי סינון קטגוריות:", tempFilteredProducts.length); // Log product count
+
+            // Filter by price
+            tempFilteredProducts = tempFilteredProducts.filter(p => {
+                const price = parseFloat(p["price "] || p.price);
+                return !isNaN(price) && price <= currentFilters.price;
+            });
+            console.log("מוצרים אחרי סינון מחיר:", tempFilteredProducts.length); // Log product count
+
+            // Filter by availability
+            if (currentFilters.availability.length > 0) {
+                tempFilteredProducts = tempFilteredProducts.filter(p => p.availability && currentFilters.availability.includes(p.availability));
+            }
+            console.log("מוצרים אחרי סינון זמינות:", tempFilteredProducts.length); // Log product count
+
+            // Filter by brands
+            if (currentFilters.brands.length > 0) {
+                tempFilteredProducts = tempFilteredProducts.filter(p => p.brand && currentFilters.brands.includes(p.brand));
+            }
+            console.log("מוצרים אחרי סינון מותגים (סופי):", tempFilteredProducts.length); // Log product count
+
+            // Apply sorting
+            const sortOrder = document.getElementById('sort-select').value;
+            if (sortOrder === 'price-asc') {
+                tempFilteredProducts.sort((a, b) => (parseFloat(a["price "] || a.price) || 0) - (parseFloat(b["price "] || b.price) || 0));
+            } else if (sortOrder === 'price-desc') {
+                tempFilteredProducts.sort((a, b) => (parseFloat(b["price "] || b.price) || 0) - (parseFloat(a["price "] || a.price) || 0));
+            }
+
+            filteredProducts = tempFilteredProducts; // Update global filtered list
+            renderProducts(filteredProducts); // Render filtered products
+        }
+
+        /**
+         * Resets all filters to their default states and re-applies them.
+         */
+        function clearAllFilters() {
+            // Reset filter object
+            currentFilters = {
+                categories: ['all'],
+                price: 1000,
+                availability: ['במלאי'],
+                brands: [],
+                searchTerm: '' // Reset search term
+            };
+
+            // Reset UI elements
+            // Categories checkboxes
+            document.querySelectorAll('#sidebar-categories input[type="checkbox"]').forEach(cb => {
+                cb.checked = (cb.dataset.category === 'all');
+            });
+            // Price range slider
+            const priceRange = document.getElementById('price-range');
+            const priceValue = document.getElementById('price-value');
+            priceRange.value = 1000;
+            priceValue.textContent = '₪1000';
+            // Availability checkboxes
+            document.querySelectorAll('#sidebar-availability input[type="checkbox"]').forEach(cb => {
+                cb.checked = (cb.dataset.availability === 'במלאי');
+            });
+            // Brands checkboxes
+            document.querySelectorAll('#sidebar-brands input[type="checkbox"]').forEach(cb => {
+                cb.checked = false;
+            });
+            // Sort select
+            document.getElementById('sort-select').value = 'popularity';
+            // Search input
+            const searchInput = document.getElementById('search-input');
+            if (searchInput) {
+                searchInput.value = ''; // Clear search input
+            }
+
+            applyFilters(); // Apply cleared filters
+        }
+
+        // Product Modal functions
+        /**
+         * Opens the product modal with details of a specific product.
+         * @param {string} title - Product title (URI encoded).
+         * @param {string} description - Product description (URI encoded).
+         * @param {string} image - Product image URL (URI encoded).
+         * @param {string} price - Product price (URI encoded).
+         * @param {string} productJson - JSON string of the full product object (URI encoded).
+         */
+        function openModal(title, description, image, price, productJson) {
+            currentProductForModal = JSON.parse(decodeURIComponent(productJson));
+            document.querySelector('#product-modal .modal-title').innerText = decodeURIComponent(title);
+            document.querySelector('#product-modal .modal-description').innerText = decodeURIComponent(description);
+            document.querySelector('#product-modal .modal-image').src = decodeURIComponent(image);
+            document.querySelector('#product-modal .modal-price').innerText = "₪" + decodeURIComponent(price);
+            document.getElementById('product-modal').classList.remove('hidden');
+
+            // Reset and hide usage ideas display when modal opens
+            const usageIdeasResponse = document.getElementById('usage-ideas-response');
+            const usageIdeasLoading = document.getElementById('usage-ideas-loading');
+            const usageIdeasError = document.getElementById('usage-ideas-error');
+            usageIdeasResponse.innerHTML = '<p>רעיונות לשימוש במוצר יופיעו כאן...</p>'; // Reset placeholder
+            usageIdeasResponse.classList.add('hidden'); // Hide it initially
+            usageIdeasLoading.classList.add('hidden');
+            usageIdeasError.classList.add('hidden');
+        }
+
+        /**
+         * Closes the product modal.
+         */
+        function closeModal() {
+            document.getElementById('product-modal').classList.add('hidden');
+            currentProductForModal = null;
+        }
+
+        // Cart functions
+        /**
+         * Adds a product to the cart or increments its quantity if already present.
+         * @param {Object} product - The product object to add.
+         */
+        function addToCart(product) {
+            const existingProduct = cart.find(item => item.title === product.title);
+            if (existingProduct) {
+                existingProduct.quantity = (existingProduct.quantity || 1) + 1;
+            } else {
+                cart.push({ ...product, quantity: 1 });
+            }
+            updateCartUI(); // Update cart display and count
+        }
+
+        /**
+         * Adds the product currently displayed in the modal to the cart.
+         */
+        function addToCartFromModal() {
+            if (currentProductForModal) {
+                addToCart(currentProductForModal);
+                closeModal();
+            }
+        }
+
+        /**
+         * Updates the cart icon count and re-renders cart items in the cart modal.
+         */
+        function updateCartUI() {
+            const cartCount = document.getElementById('cart-count');
+            cartCount.textContent = cart.reduce((sum, item) => sum + (item.quantity || 1), 0);
+            renderCartItems(); // Re-render cart items in modal
+        }
+
+        /**
+         * Renders the list of items in the cart modal.
+         */
+        function renderCartItems() {
+            const cartItemsContainer = document.getElementById('cart-items');
+            if (cart.length === 0) {
+                cartItemsContainer.innerHTML = `<p id="empty-cart-message" class="text-gray-600 text-center">העגלה ריקה. התחל להוסיף מוצרים!</p>`;
+            } else {
+                cartItemsContainer.innerHTML = cart.map((item, index) => `
+                    <div class="flex justify-between items-center bg-gray-50 p-3 rounded-md mb-2 glass-effect">
+                        <div class="flex-1">
+                            <h4 class="font-semibold text-gray-800">${item.title}</h4>
+                            <p class="text-sm text-gray-600">₪${item["price "] || item.price}</p>
+                        </div>
+                        <div class="flex items-center">
+                            <button onclick="updateQuantity(${index}, -1)" class="bg-blue-100 text-primary px-2 py-1 rounded-sm mr-2">-</button>
+                            <span class="font-bold">${item.quantity || 1}</span>
+                            <button onclick="updateQuantity(${index}, 1)" class="bg-blue-100 text-primary px-2 py-1 rounded-sm ml-2">+</button>
+                            <button onclick="removeFromCart(${index})" class="text-red-500 ml-4"><i class="ri-delete-bin-line"></i></button>
+                        </div>
+                    </div>
+                `).join('');
+            }
+        }
+
+        /**
+         * Updates the quantity of a product in the cart.
+         * If quantity becomes 0 or less, the item is removed.
+         * @param {number} index - The index of the product in the cart array.
+         * @param {number} change - The amount to change the quantity by (+1 or -1).
+         */
+        function updateQuantity(index, change) {
+            if (cart[index]) {
+                cart[index].quantity = (cart[index].quantity || 1) + change;
+                if (cart[index].quantity <= 0) {
+                    cart.splice(index, 1); // Remove if quantity is zero or less
+                }
+                updateCartUI();
+            }
+        }
+
+        /**
+         * Removes a product from the cart.
+         * @param {number} index - The index of the product in the cart array.
+         */
+        function removeFromCart(index) {
+            cart.splice(index, 1);
+            updateCartUI();
+        }
+
+        /**
+         * Opens the cart modal.
+         * @param {Event} event - The click event.
+         */
+        function openCartModal(event) {
+            event.preventDefault(); // Prevent default link behavior
+            renderCartItems();
+            document.getElementById('cart-modal').classList.remove('hidden');
+        }
+
+        /**
+         * Closes the cart modal.
+         */
+        function closeCartModal() {
+            document.getElementById('cart-modal').classList.add('hidden');
+        }
+
+        /**
+         * Constructs and sends the order message via WhatsApp.
+         */
+        function sendOrder() {
+            const name = document.getElementById('customer-name').value;
+            const phone = document.getElementById('customer-phone').value;
+            const address = document.getElementById('customer-address').value;
+            const notes = document.getElementById('order-notes').value;
+
+            if (!name || !phone) {
+                // Using alert for simplicity, consider a custom modal/message for better UX
+                alert("אנא מלא שם מלא ומספר טלפון.");
+                return;
+            }
+
+            let message = `📦 *הזמנה חדשה מח.סבן חומרי בניין*\n\n`;
+            message += `👤 *פרטי לקוח:*\n`;
+            message += `שם: ${name}\n`;
+            message += `טלפון: ${phone}\n`;
+            if (address) {
+                message += `כתובת: ${address}\n`;
+            }
+            message += `\n🧾 *מוצרים:*\n`;
+
+            if (cart.length === 0) {
+                message += `❗ לא נבחרו מוצרים\n`;
+            } else {
+                cart.forEach(item => {
+                    message += `✅ ${item.title} - ${item.quantity || 1} יח' - ₪${item["price "] || item.price}\n`;
+                });
+            }
+
+            if (notes) {
+                message += `\n📝 *הערות להזמנה:*\n${notes}\n`;
+            }
+
+            const encodedMessage = encodeURIComponent(message);
+            window.open(`https://wa.me/972508860896?text=${encodedMessage}`, '_blank');
+            
+            // Optionally, clear the cart and close modal after sending
+            cart.length = 0; // Clear the cart array
+            updateCartUI();
+            closeCartModal();
+            // Using alert for simplicity, consider a custom modal/message for better UX
+            alert("ההזמנה נשלחה בהצלחה ל-WhatsApp!");
+        }
+
+        // Function to dynamically populate the hero categories section
+        function populateHeroCategories() {
+            const heroContainer = document.getElementById('dynamic-hero-categories');
+            
+            // Define your categories for the hero section here
+            // You can add as many as you like
+            const heroCategories = [
+                {
+                    name: "חומרי בניין",
+                    imageUrl: "https://img.d.co.il/Umbraco/1509/795x348.3402a7cf-cb70-4066-8ed8-bf55d2795e01.png",
+                    linkUrl: "building_materials.html" // Link to the specific category page
+                },
+                {
+                    name: "חשמל ותאורה",
+                    imageUrl: "https://readdy.ai/api/search-image?query=Electrical%2520socket%252C%2520power%2520outlet%252C%2520electrical%2520supplies%252C%2520detailed%2520product%2520photography%2520on%2520clean%252C%2520white%2520background%252C%2520soft%2520blue%2520lighting&width=600&height=400&seq=20&orientation=landscape",
+                    linkUrl: "catalog.html?category=חשמל ותאורה" // Example: link to main catalog with pre-selected category
+                },
+                {
+                    name: "כלי עבודה",
+                    imageUrl: "https://readdy.ai/api/search-image?query=Professional%2520power%2520drill%252C%2520construction%2520tool%252C%2520detailed%2520product%2520photography%2520on%2520clean%252C%2520high%2520quality%2520tool%252C%2520soft%2520blue%2520lighting&width=600&height=400&seq=15&orientation=landscape",
+                    linkUrl: "catalog.html?category=כלי עבודה"
+                },
+                {
+                    name: "צבעים וציפויים",
+                    imageUrl: "https://readdy.ai/api/search-image?query=Paint%2520buckets%2520and%2520cans%252C%2520professional%2520painting%2520supplies%252C%2520various%2520colors%252C%2520clean%2520white%2520background%252C%2520detailed%2520product%2520photography%252C%2520soft%2520blue%2520lighting&width=600&height=400&seq=14&orientation=landscape",
+                    linkUrl: "catalog.html?category=צבעים וציפויים"
+                },
+                {
+                    name: "אינסטלציה",
+                    imageUrl: "https://readdy.ai/api/search-image?query=Plumbing%2520pipes%252C%2520fittings%252C%2520and%2520tools%2520on%2520a%2520clean%2520background%252C%2520detailed%2520product%2520photography&width=600&height=400&seq=10&orientation=landscape",
+                    linkUrl: "catalog.html?category=אינסטלציה"
+                },
+                {
+                    name: "בטיחות בעבודה",
+                    imageUrl: "https://readdy.ai/api/search-image?query=Construction%2520safety%2520equipment%252C%2520hard%2520hat%252C%2520safety%2520vest%252C%2520gloves%252C%2520detailed%2520on%2520white%2520background&width=600&height=400&seq=10&orientation=landscape",
+                    linkUrl: "catalog.html?category=בטיחות בעבודה"
+                }
+                // Add more categories as needed
+            ];
+
+            heroContainer.innerHTML = heroCategories.map(cat => `
+                <div class="hero-image-item glass-card">
+                    <img src="${cat.imageUrl}" onerror="this.onerror=null;this.src='https://placehold.co/300x200/cccccc/000000?text=תמונה+לא+זמינה';" alt="${cat.name}">
+                    <div class="hero-image-overlay">
+                        <a href="${cat.linkUrl}" class="bg-primary text-white px-4 py-2 rounded-button shine-button">לדף המוצר</a>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Project Planner Modal functions
+        function openProjectPlannerModal() {
+            document.getElementById('project-planner-modal').classList.remove('hidden');
+            // Clear previous results and error messages
+            document.getElementById('project-description').value = ''; // Clear description input
+            document.getElementById('project-materials-response').innerHTML = '<p>המלצות החומרים יופיעו כאן...</p>';
+            document.getElementById('project-planner-loading').classList.add('hidden');
+            document.getElementById('project-planner-error').classList.add('hidden');
+        }
+
+        function closeProjectPlannerModal() {
+            document.getElementById('project-planner-modal').classList.add('hidden');
+        }
+
+        async function getProjectMaterials() {
+            const projectDescription = document.getElementById('project-description').value.trim();
+            const responseDisplay = document.getElementById('project-materials-response');
+            const loadingSpinner = document.getElementById('project-planner-loading');
+            const errorDisplay = document.getElementById('project-planner-error');
+
+            if (!projectDescription) {
+                responseDisplay.innerHTML = '<p class="text-red-500">אנא תאר את הפרויקט כדי לקבל המלצות.</p>';
+                return;
+            }
+
+            // Show loading spinner, clear previous results/errors
+            loadingSpinner.classList.remove('hidden');
+            responseDisplay.innerHTML = '';
+            errorDisplay.classList.add('hidden');
+
+            try {
+                let chatHistory = [];
+                const prompt = `אני מתכנן פרויקט בנייה. אנא המלץ על חומרים ורשימת כמות משוערת בהתבסס על התיאור הבא. התשובה צריכה להיות בעברית ובפורמט של רשימה עם כמויות משוערות, לדוגמה:
+                - בטון: 2 מ"ק
+                - מוטות ברזל: 10 יחידות
+                - בלוקים: 50 יחידות
+                - מלט: 5 שקים
+                - חול: 1 טון
+                
+                תיאור הפרויקט: ${projectDescription}`;
+                
+                chatHistory.push({ role: "user", parts: [{ text: prompt }] });
+
+                const payload = { contents: chatHistory };
+                const apiKey = ""; // Canvas will automatically provide the API key
+                const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
+
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                const result = await response.json();
+                
+                if (result.candidates && result.candidates.length > 0 &&
+                    result.candidates[0].content && result.candidates[0].content.parts &&
+                    result.candidates[0].content.parts.length > 0) {
+                    const text = result.candidates[0].content.parts[0].text;
+                    // Format the text for display (e.g., replace markdown list with HTML list)
+                    const formattedText = text.split('\n').map(line => {
+                        if (line.startsWith('- ')) {
+                            return `<li>${line.substring(2).trim()}</li>`;
+                        }
+                        return `<p>${line.trim()}</p>`;
+                    }).join('');
+                    responseDisplay.innerHTML = `<ul class="list-disc pr-5 space-y-1">${formattedText}</ul>`;
+                } else {
+                    responseDisplay.innerHTML = '<p class="text-red-500">לא הצלחתי להפיק המלצות. אנא נסה לנסח מחדש את הפרויקט.</p>';
+                    errorDisplay.classList.remove('hidden');
+                }
+            } catch (error) {
+                console.error("שגיאה בקריאה ל-Gemini API:", error);
+                responseDisplay.innerHTML = '<p class="text-red-500">אירעה שגיאה בטעינת המלצות. אנא נסה שוב מאוחר יותר.</p>';
+                errorDisplay.classList.remove('hidden');
+            } finally {
+                loadingSpinner.classList.add('hidden'); // Hide loading spinner regardless of success/failure
+            }
+        }
+
+        // New LLM Feature: Get Usage Ideas for a specific product
+        async function getUsageIdeas() {
+            const usageIdeasResponse = document.getElementById('usage-ideas-response');
+            const usageIdeasLoading = document.getElementById('usage-ideas-loading');
+            const usageIdeasError = document.getElementById('usage-ideas-error');
+
+            if (!currentProductForModal) {
+                usageIdeasResponse.innerHTML = '<p class="text-red-500">לא נבחר מוצר. אנא בחר מוצר לקבלת רעיונות.</p>';
+                usageIdeasResponse.classList.remove('hidden');
+                return;
+            }
+
+            // Show loading spinner, clear previous results/errors
+            usageIdeasLoading.classList.remove('hidden');
+            usageIdeasResponse.innerHTML = ''; // Clear previous content
+            usageIdeasResponse.classList.add('hidden'); // Ensure it's hidden during loading
+            usageIdeasError.classList.add('hidden');
+
+            try {
+                let chatHistory = [];
+                const prompt = `תן לי רעיונות יצירתיים ופרקטיים לשימוש במוצר הבא בפרויקטי בנייה ותחזוקה, כולל יישומים פחות נפוצים. תאר את הרעיונות בפירוט, כאילו אתה מדריך מקצועי. התשובה צריכה להיות בעברית ובפורמט של רשימה עם נקודות.
+                המוצר: ${currentProductForModal.title}
+                תיאור: ${currentProductForModal.description}`;
+                
+                chatHistory.push({ role: "user", parts: [{ text: prompt }] });
+
+                const payload = { contents: chatHistory };
+                const apiKey = ""; // Canvas will automatically provide the API key
+                const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
+
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                const result = await response.json();
+                
+                if (result.candidates && result.candidates.length > 0 &&
+                    result.candidates[0].content && result.candidates[0].content.parts &&
+                    result.candidates[0].content.parts.length > 0) {
+                    const text = result.candidates[0].content.parts[0].text;
+                    // Format the text for display (e.g., replace markdown list with HTML list)
+                    const formattedText = text.split('\n').map(line => {
+                        if (line.startsWith('- ')) {
+                            return `<li>${line.substring(2).trim()}</li>`;
+                        }
+                        return `<p>${line.trim()}</p>`;
+                    }).join('');
+                    usageIdeasResponse.innerHTML = `<ul class="list-disc pr-5 space-y-1">${formattedText}</ul>`;
+                    usageIdeasResponse.classList.remove('hidden'); // Show response area
+                } else {
+                    usageIdeasResponse.innerHTML = '<p class="text-red-500">לא הצלחתי להפיק רעיונות לשימוש. אנא נסה שוב או עם תיאור אחר.</p>';
+                    usageIdeasResponse.classList.remove('hidden'); // Show response area
+                    errorDisplay.classList.remove('hidden');
+                }
+            } catch (error) {
+                console.error("שגיאה בקריאה ל-Gemini API עבור רעיונות שימוש:", error);
+                usageIdeasResponse.innerHTML = '<p class="text-red-500">אירעה שגיאה בטעינת רעיונות. אנא נסה שוב מאוחר יותר.</p>';
+                usageIdeasResponse.classList.remove('hidden'); // Show response area
+                errorDisplay.classList.remove('hidden');
+            } finally {
+                usageIdeasLoading.classList.add('hidden'); // Hide loading spinner
+            }
+        }
+    </script>
+</body>
+</html>
