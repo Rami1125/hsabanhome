@@ -336,6 +336,13 @@
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
         }
+
+        /* Styles for scrollable modal content */
+        .modal-content-scrollable {
+            max-height: 70vh; /* Limits the height to 70% of the viewport height */
+            overflow-y: auto; /* Adds scrollbar if content overflows vertically */
+            padding-right: 10px; /* Add some padding for the scrollbar */
+        }
     </style>
 </head>
 <body class="bg-gradient-to-br from-blue-50 to-white font-sans p-6">
@@ -603,44 +610,92 @@
     <div id="product-modal" class="fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center z-50 hidden">
         <div class="bg-white rounded-lg shadow-lg p-6 max-w-md w-full relative">
             <button onclick="closeModal()" class="absolute top-2 left-2 text-gray-500 hover:text-red-500 text-xl">&times;</button>
-            <img src="" alt="מוצר" class="w-full h-48 object-cover rounded mb-4 modal-image"/>
-            <h2 class="text-xl font-bold mb-2 modal-title"></h2>
-            <p class="text-gray-600 text-sm mb-2 modal-description"></p>
-            <span class="text-primary font-bold text-lg modal-price"></span>
-            <div class="mt-4 flex flex-wrap gap-2 justify-center">
-                <button onclick="addToCartFromModal()" class="bg-primary text-white px-6 py-3 rounded-button hover:bg-primary/90 transition shine-button">הוסף לעגלה</button>
-                <!-- Existing button for LLM feature -->
-                <button onclick="getUsageIdeas()" class="bg-teal-600 text-white px-6 py-3 rounded-button hover:bg-teal-700 transition shine-button">
-                    <i class="ri-lightbulb-fill ri-lg ml-2"></i> ✨ קבל רעיונות לשימוש ✨
-                </button>
-                <!-- New button for LLM feature -->
-                <button onclick="getProductSummaryAndFeatures()" class="bg-purple-600 text-white px-6 py-3 rounded-button hover:bg-purple-700 transition shine-button">
-                    <i class="ri-article-line ri-lg ml-2"></i> ✨ סיכום ונקודות מפתח ✨
-                </button>
-            </div>
-            <!-- Area to display LLM response for usage ideas -->
-            <div id="usage-ideas-response" class="mt-6 p-4 bg-gray-50 rounded-lg border border-gray-200 min-h-[50px] flex items-center justify-center text-gray-700 text-sm leading-relaxed hidden">
-                <p>רעיונות לשימוש במוצר יופיעו כאן...</p>
-            </div>
-            <div id="usage-ideas-loading" class="hidden flex justify-center items-center mt-4">
-                <div class="loader"></div>
-                <span class="mr-2 text-teal-600">טוען רעיונות...</span>
-            </div>
-            <div id="usage-ideas-error" class="hidden text-red-600 text-center mt-4">
-                אירעה שגיאה בטעינת רעיונות. אנא נסה שוב.
-            </div>
+            
+            <!-- Scrollable content area within the modal -->
+            <div class="modal-content-scrollable">
+                <img src="" alt="מוצר" class="w-full h-48 object-cover rounded mb-4 modal-image"/>
+                <h2 class="text-xl font-bold mb-2 modal-title"></h2>
+                <p class="text-gray-600 text-sm mb-2 modal-description"></p>
+                <span class="text-primary font-bold text-lg modal-price"></span>
+                
+                <div class="mt-4 flex flex-wrap gap-2 justify-center">
+                    <button onclick="addToCartFromModal()" class="bg-primary text-white px-6 py-3 rounded-button hover:bg-primary/90 transition shine-button">הוסף לעגלה</button>
+                    <!-- Existing button for LLM feature -->
+                    <button onclick="getUsageIdeas()" class="bg-teal-600 text-white px-6 py-3 rounded-button hover:bg-teal-700 transition shine-button">
+                        <i class="ri-lightbulb-fill ri-lg ml-2"></i> ✨ קבל רעיונות לשימוש ✨
+                    </button>
+                    <!-- Existing button for LLM feature -->
+                    <button onclick="getProductSummaryAndFeatures()" class="bg-purple-600 text-white px-6 py-3 rounded-button hover:bg-purple-700 transition shine-button">
+                        <i class="ri-article-line ri-lg ml-2"></i> ✨ סיכום ונקודות מפתח ✨
+                    </button>
+                    <!-- Existing button for LLM feature -->
+                    <button onclick="getRelatedProducts()" class="bg-orange-600 text-white px-6 py-3 rounded-button hover:bg-orange-700 transition shine-button">
+                        <i class="ri-links-fill ri-lg ml-2"></i> ✨ המלצות למוצרים קשורים ✨
+                    </button>
+                    <!-- New button for LLM feature -->
+                    <button onclick="toggleProductQA()" class="bg-blue-600 text-white px-6 py-3 rounded-button hover:bg-blue-700 transition shine-button">
+                        <i class="ri-question-fill ri-lg ml-2"></i> ✨ שאל שאלה על המוצר ✨
+                    </button>
+                </div>
 
-            <!-- New area to display LLM response for summary and key features -->
-            <div id="summary-features-response" class="mt-6 p-4 bg-gray-50 rounded-lg border border-gray-200 min-h-[50px] flex items-center justify-center text-gray-700 text-sm leading-relaxed hidden">
-                <p>סיכום ותכונות מפתח יופיעו כאן...</p>
-            </div>
-            <div id="summary-features-loading" class="hidden flex justify-center items-center mt-4">
-                <div class="loader"></div>
-                <span class="mr-2 text-purple-600">טוען סיכום...</span>
-            </div>
-            <div id="summary-features-error" class="hidden text-red-600 text-center mt-4">
-                אירעה שגיאה בטעינת סיכום ותכונות. אנא נסה שוב.
-            </div>
+                <!-- Area to display LLM response for usage ideas -->
+                <div id="usage-ideas-response" class="mt-6 p-4 bg-gray-50 rounded-lg border border-gray-200 min-h-[50px] flex items-center justify-center text-gray-700 text-sm leading-relaxed hidden">
+                    <p>רעיונות לשימוש במוצר יופיעו כאן...</p>
+                </div>
+                <div id="usage-ideas-loading" class="hidden flex justify-center items-center mt-4">
+                    <div class="loader"></div>
+                    <span class="mr-2 text-teal-600">טוען רעיונות...</span>
+                </div>
+                <div id="usage-ideas-error" class="hidden text-red-600 text-center mt-4">
+                    אירעה שגיאה בטעינת רעיונות. אנא נסה שוב.
+                </div>
+
+                <!-- New area to display LLM response for summary and key features -->
+                <div id="summary-features-response" class="mt-6 p-4 bg-gray-50 rounded-lg border border-gray-200 min-h-[50px] flex items-center justify-center text-gray-700 text-sm leading-relaxed hidden">
+                    <p>סיכום ותכונות מפתח יופיעו כאן...</p>
+                </div>
+                <div id="summary-features-loading" class="hidden flex justify-center items-center mt-4">
+                    <div class="loader"></div>
+                    <span class="mr-2 text-purple-600">טוען סיכום...</span>
+                </div>
+                <div id="summary-features-error" class="hidden text-red-600 text-center mt-4">
+                    אירעה שגיאה בטעינת סיכום ותכונות. אנא נסה שוב.
+                </div>
+
+                <!-- New area to display LLM response for related products -->
+                <div id="related-products-response" class="mt-6 p-4 bg-gray-50 rounded-lg border border-gray-200 min-h-[50px] flex items-center justify-center text-gray-700 text-sm leading-relaxed hidden">
+                    <p>המלצות למוצרים קשורים יופיעו כאן...</p>
+                </div>
+                <div id="related-products-loading" class="hidden flex justify-center items-center mt-4">
+                    <div class="loader"></div>
+                    <span class="mr-2 text-orange-600">טוען המלצות...</span>
+                </div>
+                <div id="related-products-error" class="hidden text-red-600 text-center mt-4">
+                    אירעה שגיאה בטעינת המלצות למוצרים קשורים. אנא נסה שוב.
+                </div>
+
+                <!-- New area for Product Q&A -->
+                <div id="product-qa-section" class="mt-6 hidden">
+                    <h3 class="text-lg font-bold text-gray-800 mb-3 text-center">שאל שאלה על המוצר</h3>
+                    <textarea id="product-qa-input" rows="3" placeholder="הקלד את שאלתך כאן (לדוגמה: האם המוצר מתאים לשימוש חיצוני?)" 
+                            class="w-full px-4 py-2 rounded-button border glass-effect focus:outline-none focus:ring-2 focus:ring-blue-600 mb-3"></textarea>
+                    <button onclick="askProductQuestion()" class="w-full bg-blue-600 text-white px-6 py-3 rounded-button hover:bg-blue-700 transition shine-button">
+                        <i class="ri-send-plane-fill ri-lg ml-2"></i> שאל
+                    </button>
+
+                    <div id="product-qa-response" class="mt-4 p-4 bg-gray-50 rounded-lg border border-gray-200 min-h-[50px] flex items-center justify-center text-gray-700 text-sm leading-relaxed hidden">
+                        <p>התשובה לשאלתך תופיע כאן...</p>
+                    </div>
+                    <div id="product-qa-loading" class="hidden flex justify-center items-center mt-4">
+                        <div class="loader"></div>
+                        <span class="mr-2 text-blue-600">טוען תשובה...</span>
+                    </div>
+                    <div id="product-qa-error" class="hidden text-red-600 text-center mt-4">
+                        אירעה שגיאה בטעינת התשובה. אנא נסה שוב.
+                    </div>
+                </div>
+
+            </div> <!-- End of modal-content-scrollable -->
         </div>
     </div>
 
@@ -1218,23 +1273,29 @@
             document.querySelector('#product-modal .modal-price').innerText = "₪" + decodeURIComponent(price);
             document.getElementById('product-modal').classList.remove('hidden');
 
-            // Reset and hide usage ideas display when modal opens
-            const usageIdeasResponse = document.getElementById('usage-ideas-response');
-            const usageIdeasLoading = document.getElementById('usage-ideas-loading');
-            const usageIdeasError = document.getElementById('usage-ideas-error');
-            usageIdeasResponse.innerHTML = '<p>רעיונות לשימוש במוצר יופיעו כאן...</p>'; // Reset placeholder
-            usageIdeasResponse.classList.add('hidden'); // Hide it initially
-            usageIdeasLoading.classList.add('hidden');
-            usageIdeasError.classList.add('hidden');
+            // Reset and hide all LLM feature displays when modal opens
+            document.getElementById('usage-ideas-response').innerHTML = '<p>רעיונות לשימוש במוצר יופיעו כאן...</p>';
+            document.getElementById('usage-ideas-response').classList.add('hidden');
+            document.getElementById('usage-ideas-loading').classList.add('hidden');
+            document.getElementById('usage-ideas-error').classList.add('hidden');
 
-            // Reset and hide summary/features display when modal opens
-            const summaryFeaturesResponse = document.getElementById('summary-features-response');
-            const summaryFeaturesLoading = document.getElementById('summary-features-loading');
-            const summaryFeaturesError = document.getElementById('summary-features-error');
-            summaryFeaturesResponse.innerHTML = '<p>סיכום ותכונות מפתח יופיעו כאן...</p>'; // Reset placeholder
-            summaryFeaturesResponse.classList.add('hidden'); // Hide it initially
-            summaryFeaturesLoading.classList.add('hidden');
-            summaryFeaturesError.classList.add('hidden');
+            document.getElementById('summary-features-response').innerHTML = '<p>סיכום ותכונות מפתח יופיעו כאן...</p>';
+            document.getElementById('summary-features-response').classList.add('hidden');
+            document.getElementById('summary-features-loading').classList.add('hidden');
+            document.getElementById('summary-features-error').classList.add('hidden');
+
+            document.getElementById('related-products-response').innerHTML = '<p>המלצות למוצרים קשורים יופיעו כאן...</p>';
+            document.getElementById('related-products-response').classList.add('hidden');
+            document.getElementById('related-products-loading').classList.add('hidden');
+            document.getElementById('related-products-error').classList.add('hidden');
+
+            // Reset and hide Q&A section
+            document.getElementById('product-qa-section').classList.add('hidden');
+            document.getElementById('product-qa-input').value = '';
+            document.getElementById('product-qa-response').innerHTML = '<p>התשובה לשאלתך תופיע כאן...</p>';
+            document.getElementById('product-qa-response').classList.add('hidden');
+            document.getElementById('product-qa-loading').classList.add('hidden');
+            document.getElementById('product-qa-error').classList.add('hidden');
         }
 
         /**
@@ -1523,7 +1584,7 @@
             }
         }
 
-        // New LLM Feature: Get Usage Ideas for a specific product
+        // LLM Feature: Get Usage Ideas for a specific product
         async function getUsageIdeas() {
             const usageIdeasResponse = document.getElementById('usage-ideas-response');
             const usageIdeasLoading = document.getElementById('usage-ideas-loading');
@@ -1539,6 +1600,11 @@
             document.getElementById('summary-features-response').classList.add('hidden');
             document.getElementById('summary-features-loading').classList.add('hidden');
             document.getElementById('summary-features-error').classList.add('hidden');
+            document.getElementById('related-products-response').classList.add('hidden');
+            document.getElementById('related-products-loading').classList.add('hidden');
+            document.getElementById('related-products-error').classList.add('hidden');
+            document.getElementById('product-qa-section').classList.add('hidden'); // Hide Q&A section
+
 
             // Show loading spinner, clear previous results/errors
             usageIdeasLoading.classList.remove('hidden');
@@ -1594,7 +1660,7 @@
             }
         }
 
-        // New LLM Feature: Get Summary and Key Features for a specific product
+        // LLM Feature: Get Summary and Key Features for a specific product
         async function getProductSummaryAndFeatures() {
             const summaryFeaturesResponse = document.getElementById('summary-features-response');
             const summaryFeaturesLoading = document.getElementById('summary-features-loading');
@@ -1610,6 +1676,11 @@
             document.getElementById('usage-ideas-response').classList.add('hidden');
             document.getElementById('usage-ideas-loading').classList.add('hidden');
             document.getElementById('usage-ideas-error').classList.add('hidden');
+            document.getElementById('related-products-response').classList.add('hidden');
+            document.getElementById('related-products-loading').classList.add('hidden');
+            document.getElementById('related-products-error').classList.add('hidden');
+            document.getElementById('product-qa-section').classList.add('hidden'); // Hide Q&A section
+
 
             // Show loading spinner, clear previous results/errors
             summaryFeaturesLoading.classList.remove('hidden');
@@ -1626,7 +1697,7 @@
                 chatHistory.push({ role: "user", parts: [{ text: prompt }] });
 
                 const payload = { contents: chatHistory };
-                const apiKey = ""; // Canvas will automatically provide the API key
+                const apiKey = "AIzaSyCNn7GZMsQPCdRSfgz_o08M1YV63CkA3Ow"; // Canvas will automatically provide the API key
                 const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
 
                 const response = await fetch(apiUrl, {
@@ -1664,6 +1735,185 @@
                 summaryFeaturesLoading.classList.add('hidden'); // Hide loading spinner
             }
         }
+
+        // LLM Feature: Get Related Products for a specific product
+        async function getRelatedProducts() {
+            const relatedProductsResponse = document.getElementById('related-products-response');
+            const relatedProductsLoading = document.getElementById('related-products-loading');
+            const relatedProductsError = document.getElementById('related-products-error');
+
+            if (!currentProductForModal) {
+                relatedProductsResponse.innerHTML = '<p class="text-red-500">לא נבחר מוצר. אנא בחר מוצר לקבלת המלצות קשורות.</p>';
+                relatedProductsResponse.classList.remove('hidden');
+                return;
+            }
+
+            // Hide other LLM features' responses and show loading for this one
+            document.getElementById('usage-ideas-response').classList.add('hidden');
+            document.getElementById('usage-ideas-loading').classList.add('hidden');
+            document.getElementById('usage-ideas-error').classList.add('hidden');
+            document.getElementById('summary-features-response').classList.add('hidden');
+            document.getElementById('summary-features-loading').classList.add('hidden');
+            document.getElementById('summary-features-error').classList.add('hidden');
+            document.getElementById('product-qa-section').classList.add('hidden'); // Hide Q&A section
+
+
+            // Show loading spinner, clear previous results/errors
+            relatedProductsLoading.classList.remove('hidden');
+            relatedProductsResponse.innerHTML = ''; // Clear previous content
+            relatedProductsResponse.classList.add('hidden'); // Ensure it's hidden during loading
+            relatedProductsError.classList.add('hidden');
+
+            try {
+                let chatHistory = [];
+                const prompt = `המלץ על 3-5 מוצרים קשורים או חלופיים למוצר הבא, בהתבסס על תיאורו. פרט בקצרה למה כל מוצר קשור או חלופי. הצג את התשובה בפורמט של רשימה מנוקדת בעברית.
+                
+                המוצר: ${currentProductForModal.title}
+                תיאור: ${currentProductForModal.description}`;
+                
+                chatHistory.push({ role: "user", parts: [{ text: prompt }] });
+
+                const payload = { contents: chatHistory };
+                const apiKey = "AIzaSyCNn7GZMsQPCdRSfgz_o08M1YV63CkA3Ow"; // Canvas will automatically provide the API key
+                const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
+
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                const result = await response.json();
+                
+                if (result.candidates && result.candidates.length > 0 &&
+                    result.candidates[0].content && result.candidates[0].content.parts &&
+                    result.candidates[0].content.parts.length > 0) {
+                    const text = result.candidates[0].content.parts[0].text;
+                    // Format the text for display (e.g., replace markdown list with HTML list)
+                    const formattedText = text.split('\n').map(line => {
+                        if (line.startsWith('- ')) {
+                            return `<li>${line.substring(2).trim()}</li>`;
+                        }
+                        return `<p>${line.trim()}</p>`;
+                    }).join('');
+                    relatedProductsResponse.innerHTML = `<ul class="list-disc pr-5 space-y-1">${formattedText}</ul>`;
+                    relatedProductsResponse.classList.remove('hidden'); // Show response area
+                } else {
+                    relatedProductsResponse.innerHTML = '<p class="text-red-500">לא הצלחתי להפיק המלצות למוצרים קשורים. אנא נסה שוב או עם תיאור אחר.</p>';
+                    relatedProductsResponse.classList.remove('hidden'); // Show response area
+                    relatedProductsError.classList.remove('hidden');
+                }
+            } catch (error) {
+                console.error("שגיאה בקריאה ל-Gemini API עבור המלצות למוצרים קשורים:", error);
+                relatedProductsResponse.innerHTML = '<p class="text-red-500">אירעה שגיאה בטעינת המלצות למוצרים קשורים. אנא נסה שוב מאוחר יותר.</p>';
+                relatedProductsResponse.classList.remove('hidden'); // Show response area
+                relatedProductsError.classList.remove('hidden');
+            } finally {
+                relatedProductsLoading.classList.add('hidden'); // Hide loading spinner
+            }
+        }
+
+        // New LLM Feature: Toggle Product Q&A Section
+        function toggleProductQA() {
+            const qaSection = document.getElementById('product-qa-section');
+            const qaInput = document.getElementById('product-qa-input');
+            const qaResponse = document.getElementById('product-qa-response');
+            const qaLoading = document.getElementById('product-qa-loading');
+            const qaError = document.getElementById('product-qa-error');
+
+            // Hide all other AI sections
+            document.getElementById('usage-ideas-response').classList.add('hidden');
+            document.getElementById('usage-ideas-loading').classList.add('hidden');
+            document.getElementById('usage-ideas-error').classList.add('hidden');
+            document.getElementById('summary-features-response').classList.add('hidden');
+            document.getElementById('summary-features-loading').classList.add('hidden');
+            document.getElementById('summary-features-error').classList.add('hidden');
+            document.getElementById('related-products-response').classList.add('hidden');
+            document.getElementById('related-products-loading').classList.add('hidden');
+            document.getElementById('related-products-error').classList.add('hidden');
+
+            // Toggle the Q&A section visibility
+            qaSection.classList.toggle('hidden');
+            // Reset state when shown
+            if (!qaSection.classList.contains('hidden')) {
+                qaInput.value = ''; // Clear input on show
+                qaResponse.innerHTML = '<p>התשובה לשאלתך תופיע כאן...</p>';
+                qaResponse.classList.add('hidden');
+                qaLoading.classList.add('hidden');
+                qaError.classList.add('hidden');
+            }
+        }
+
+        // New LLM Feature: Ask a question about the current product
+        async function askProductQuestion() {
+            const qaInput = document.getElementById('product-qa-input');
+            const qaResponse = document.getElementById('product-qa-response');
+            const qaLoading = document.getElementById('product-qa-loading');
+            const qaError = document.getElementById('product-qa-error');
+            const userQuestion = qaInput.value.trim();
+
+            if (!userQuestion) {
+                qaResponse.innerHTML = '<p class="text-red-500">אנא הקלד שאלה.</p>';
+                qaResponse.classList.remove('hidden');
+                return;
+            }
+            if (!currentProductForModal) {
+                qaResponse.innerHTML = '<p class="text-red-500">לא נבחר מוצר. אנא בחר מוצר כדי לשאול שאלה.</p>';
+                qaResponse.classList.remove('hidden');
+                return;
+            }
+
+            // Show loading spinner, clear previous results/errors
+            qaLoading.classList.remove('hidden');
+            qaResponse.innerHTML = ''; // Clear previous content
+            qaResponse.classList.add('hidden'); // Ensure it's hidden during loading
+            qaError.classList.add('hidden');
+
+            try {
+                let chatHistory = [];
+                const prompt = `בהתבסס על המידע הבא על המוצר, ענה על השאלה הבאה בעברית בצורה תמציתית ומקצועית:
+                
+                שם המוצר: ${currentProductForModal.title}
+                תיאור המוצר: ${currentProductForModal.description}
+                
+                השאלה: ${userQuestion}`;
+                
+                chatHistory.push({ role: "user", parts: [{ text: prompt }] });
+
+                const payload = { contents: chatHistory };
+                const apiKey = "AIzaSyCNn7GZMsQPCdRSfgz_o08M1YV63CkA3Ow"; // Canvas will automatically provide the API key
+                const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
+
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                const result = await response.json();
+                
+                if (result.candidates && result.candidates.length > 0 &&
+                    result.candidates[0].content && result.candidates[0].content.parts &&
+                    result.candidates[0].content.parts.length > 0) {
+                    const text = result.candidates[0].content.parts[0].text;
+                    // Format the text for display (simple paragraph for answers)
+                    qaResponse.innerHTML = `<p>${text.trim()}</p>`;
+                    qaResponse.classList.remove('hidden'); // Show response area
+                } else {
+                    qaResponse.innerHTML = '<p class="text-red-500">לא הצלחתי לקבל תשובה לשאלתך. אנא נסה לנסח מחדש.</p>';
+                    qaResponse.classList.remove('hidden'); // Show response area
+                    qaError.classList.remove('hidden');
+                }
+            } catch (error) {
+                console.error("שגיאה בקריאה ל-Gemini API עבור שאלות ותשובות:", error);
+                qaResponse.innerHTML = '<p class="text-red-500">אירעה שגיאה בטעינת התשובה. אנא נסה שוב מאוחר יותר.</p>';
+                qaResponse.classList.remove('hidden'); // Show response area
+                qaError.classList.remove('hidden');
+            } finally {
+                qaLoading.classList.add('hidden'); // Hide loading spinner
+            }
+        }
+
     </script>
 </body>
 </html>
