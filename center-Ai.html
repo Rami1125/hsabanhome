@@ -732,6 +732,10 @@
                     <button onclick="toggleDescriptionGenerator()" class="bg-indigo-600 text-white px-4 py-2 rounded-button hover:bg-indigo-700 transition shine-button text-sm product-modal-ai-button">
                         <i class="ri-text-wrap ri-lg ml-2"></i> תיאור משופר
                     </button>
+                    <!-- NEW button for LLM feature: Installation Guide -->
+                    <button onclick="getInstallationGuide()" class="bg-blue-800 text-white px-4 py-2 rounded-button hover:bg-blue-900 transition shine-button text-sm product-modal-ai-button">
+                        <i class="ri-tools-fill ri-lg ml-2"></i> מדריך התקנה
+                    </button>
                 </div>
 
                 <!-- Area to display LLM response for usage ideas -->
@@ -837,6 +841,25 @@
                         אירעה שגיאה ביצירת התיאור. אנא נסה שוב.
                     </div>
                 </div>
+
+                <!-- NEW area for Installation Guide -->
+                <div id="installation-guide-container" class="mt-6 hidden">
+                    <div id="installation-guide-response" class="p-4 bg-gray-50 rounded-lg border border-gray-200 min-h-[50px] flex flex-col items-center justify-center text-gray-700 text-sm leading-relaxed">
+                        <p>מדריך ההתקנה יופיע כאן...</p>
+                    </div>
+                    <div class="flex gap-2 mt-4 justify-center">
+                        <button onclick="printAIContent('מדריך התקנה למוצר', currentProductForModal.title, currentProductForModal.image, encodeURIComponent(document.getElementById('installation-guide-response').innerHTML))" class="bg-gray-200 text-gray-700 px-4 py-2 rounded-button hover:bg-gray-300 transition text-xs flex items-center"><i class="ri-printer-line ml-1"></i> הדפסה / שמירה</button>
+                        <button onclick="shareProductAIResponse('installation-guide-response')" class="bg-green-500 text-white px-4 py-2 rounded-button hover:bg-green-600 transition text-xs flex items-center"><i class="ri-whatsapp-line ml-1"></i> שלח ל-WhatsApp</button>
+                    </div>
+                </div>
+                <div id="installation-guide-loading" class="hidden flex justify-center items-center mt-4">
+                    <div class="loader"></div>
+                    <span class="mr-2 text-blue-800">טוען מדריך התקנה...</span>
+                </div>
+                <div id="installation-guide-error" class="hidden text-red-600 text-center mt-4">
+                    אירעה שגיאה בטעינת מדריך ההתקנה. אנא נסה שוב.
+                </div>
+
 
             </div> <!-- End of modal-content-scrollable -->
         </div>
@@ -1480,6 +1503,10 @@
             document.getElementById('description-generator-input').value = '';
             document.getElementById('description-generator-loading').classList.add('hidden');
             document.getElementById('description-generator-error').classList.add('hidden');
+
+            document.getElementById('installation-guide-container').classList.add('hidden'); // NEW
+            document.getElementById('installation-guide-loading').classList.add('hidden'); // NEW
+            document.getElementById('installation-guide-error').classList.add('hidden'); // NEW
         }
 
         // Cart functions
@@ -1727,7 +1754,7 @@
                 chatHistory.push({ role: "user", parts: [{ text: prompt }] });
 
                 const payload = { contents: chatHistory };
-                const apiKey = "AIzaSyCNn7GZMsQPCdRSfgz_o08M1YV63CkA3Ow"; // Changed API key
+                const apiKey = ""; 
                 const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
 
                 const response = await fetch(apiUrl, {
@@ -1804,7 +1831,7 @@
                 chatHistory.push({ role: "user", parts: [{ text: prompt }] });
 
                 const payload = { contents: chatHistory };
-                const apiKey = "AIzaSyCNn7GZMsQPCdRSfgz_o08M1YV63CkA3Ow"; // Changed API key
+                const apiKey = ""; 
                 const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
 
                 const response = await fetch(apiUrl, {
@@ -1868,7 +1895,7 @@
                 chatHistory.push({ role: "user", parts: [{ text: prompt }] });
 
                 const payload = { contents: chatHistory };
-                const apiKey = "AIzaSyCNn7GZMsQPCdRSfgz_o08M1YV63CkA3Ow"; // Changed API key
+                const apiKey = ""; 
                 const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
 
                 const response = await fetch(apiUrl, {
@@ -1933,7 +1960,7 @@
                 chatHistory.push({ role: "user", parts: [{ text: prompt }] });
 
                 const payload = { contents: chatHistory };
-                const apiKey = "AIzaSyCNn7GZMsQPCdRSfgz_o08M1YV63CkA3Ow"; // Changed API key
+                const apiKey = ""; 
                 const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
 
                 const response = await fetch(apiUrl, {
@@ -2021,7 +2048,7 @@
                 chatHistory.push({ role: "user", parts: [{ text: prompt }] });
 
                 const payload = { contents: chatHistory };
-                const apiKey = "AIzaSyCNn7GZMsQPCdRSfgz_o08M1YV63CkA3Ow"; // Changed API key
+                const apiKey = ""; 
                 const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
 
                 const response = await fetch(apiUrl, {
@@ -2099,7 +2126,7 @@
                 chatHistory.push({ role: "user", parts: [{ text: prompt }] });
 
                 const payload = { contents: chatHistory };
-                const apiKey = "AIzaSyCNn7GZMsQPCdRSfgz_o08M1YV63CkA3Ow"; // Changed API key
+                const apiKey = ""; 
                 const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
 
                 const response = await fetch(apiUrl, {
@@ -2289,7 +2316,7 @@
                 chatHistory.push({ role: "user", parts: [{ text: prompt }] });
 
                 const payload = { contents: chatHistory };
-                const apiKey = "AIzaSyCNn7GZMsQPCdRSfgz_o08M1YV63CkA3Ow"; // Changed API key
+                const apiKey = ""; 
                 const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
 
                 const response = await fetch(apiUrl, {
@@ -2420,7 +2447,7 @@
                 chatHistory.push({ role: "user", parts: [{ text: prompt }] });
 
                 const payload = { contents: chatHistory };
-                const apiKey = "AIzaSyCNn7GZMsQPCdRSfgz_o08M1YV63CkA3Ow"; // Changed API key
+                const apiKey = ""; 
                 const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
 
                 const response = await fetch(apiUrl, {
@@ -2440,7 +2467,7 @@
 
                     // Format the text for display (e.g., replace markdown list with HTML list)
                     const formattedText = text.split('\n').map(line => {
-                        if (line.startsWith('* ')) return `<p class="font-semibold text-gray-800 mt-2">${line.substring(2).trim()}</p>`; // for bold headers
+                        if (line.startsWith('* ')) return `<p class="font-semibold text-gray-800 mt-2">${line.substring(2).trim()}</pاهرة`; // for bold headers
                         if (line.startsWith('- ')) {
                             // Extract title and quantity for display
                             const match = line.match(/-\s*(.+?)\s*:\s*([\d.]+)\s*([א-ת\s'"ק"גטוןיח'\/?]+)/);
@@ -2580,6 +2607,71 @@
 
             const encodedMessage = encodeURIComponent(message);
             window.open(`https://wa.me/972508860896?text=${encodedMessage}`, '_blank');
+        }
+
+        // NEW LLM Feature: Get Installation Guide for a specific product
+        async function getInstallationGuide() {
+            const installationGuideResponse = document.getElementById('installation-guide-response');
+            const installationGuideContainer = document.getElementById('installation-guide-container');
+            const installationGuideLoading = document.getElementById('installation-guide-loading');
+            const installationGuideError = document.getElementById('installation-guide-error');
+
+            if (!currentProductForModal) {
+                installationGuideResponse.innerHTML = '<p class="text-red-500">לא נבחר מוצר. אנא בחר מוצר לקבלת מדריך התקנה.</p>';
+                installationGuideContainer.classList.remove('hidden');
+                return;
+            }
+
+            hideAllLLMSections(); // Hide all other LLM features' responses
+            installationGuideLoading.classList.remove('hidden'); // Show loading spinner
+            
+            try {
+                let chatHistory = [];
+                const prompt = `צור מדריך התקנה מפורט, צעד אחר צעד, עבור המוצר הבא. המדריך צריך להיות בעברית, ברור, תמציתי ומקצועי.
+                המוצר: ${currentProductForModal.title}
+                תיאור: ${currentProductForModal.description}`;
+                
+                chatHistory.push({ role: "user", parts: [{ text: prompt }] });
+
+                const payload = { contents: chatHistory };
+                const apiKey = ""; 
+                const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
+
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                const result = await response.json();
+                
+                if (result.candidates && result.candidates.length > 0 &&
+                    result.candidates[0].content && result.candidates[0].content.parts &&
+                    result.candidates[0].content.parts.length > 0) {
+                    const text = result.candidates[0].content.parts[0].text;
+                    // Format the text for display (e.g., replace numbered list with HTML ordered list)
+                    const formattedText = text.split('\n').map(line => {
+                        const stepMatch = line.match(/^(\d+\.?\s*)(.*)/); // Matches "1. Step" or "1 Step"
+                        if (stepMatch) {
+                            return `<li>${stepMatch[2].trim()}</li>`;
+                        }
+                        return `<p>${line.trim()}</p>`;
+                    }).join('');
+                    installationGuideResponse.innerHTML = `<ol class="list-decimal pr-5 space-y-1">${formattedText}</ol>`;
+                    installationGuideContainer.classList.remove('hidden'); // Show response area
+                } else {
+                    installationGuideResponse.innerHTML = '<p class="text-red-500">לא הצלחתי להפיק מדריך התקנה. אנא נסה שוב או עם תיאור אחר.</p>';
+                    installationGuideContainer.classList.remove('hidden'); // Show response area
+                    installationGuideError.classList.remove('hidden');
+                }
+            } catch (error) {
+                console.error("שגיאה בקריאה ל-Gemini API עבור מדריך התקנה:", error);
+                installationGuideResponse.innerHTML = '<p class="text-red-500">אירעה שגיאה בטעינת מדריך ההתקנה. אנא נסה שוב מאוחר יותר.</p>';
+                installationGuideContainer.classList.remove('hidden'); // Show response area
+                installationGuideError.classList.remove('hidden');
+            } finally {
+                installationGuideLoading.classList.add('hidden'); // Hide loading spinner
+            }
         }
     </script>
 </body>
