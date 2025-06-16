@@ -1502,7 +1502,7 @@
         async function getUsageIdeas() {
             const usageIdeasResponse = document.getElementById('usage-ideas-response');
             const usageIdeasLoading = document.getElementById('usage-ideas-loading');
-            const usageIdeasError = document.getElementById('usage-ideas-error');
+            const usageIdeasError = document.getElementById('usage-ideas-error'); // Corrected variable name
 
             if (!currentProductForModal) {
                 usageIdeasResponse.innerHTML = '<p class="text-red-500">לא נבחר מוצר. אנא בחר מוצר לקבלת רעיונות.</p>';
@@ -1552,13 +1552,13 @@
                 } else {
                     usageIdeasResponse.innerHTML = '<p class="text-red-500">לא הצלחתי להפיק רעיונות לשימוש. אנא נסה שוב או עם תיאור אחר.</p>';
                     usageIdeasResponse.classList.remove('hidden'); // Show response area
-                    errorDisplay.classList.remove('hidden');
+                    usageIdeasError.classList.remove('hidden'); // Corrected variable name
                 }
             } catch (error) {
                 console.error("שגיאה בקריאה ל-Gemini API עבור רעיונות שימוש:", error);
                 usageIdeasResponse.innerHTML = '<p class="text-red-500">אירעה שגיאה בטעינת רעיונות. אנא נסה שוב מאוחר יותר.</p>';
                 usageIdeasResponse.classList.remove('hidden'); // Show response area
-                errorDisplay.classList.remove('hidden');
+                usageIdeasError.classList.remove('hidden'); // Corrected variable name
             } finally {
                 usageIdeasLoading.classList.add('hidden'); // Hide loading spinner
             }
