@@ -1,0 +1,1267 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>קטלוג מוצרים - ח.סבן חומרי בניין 1994 בע"מ</title>
+
+    <script src="https://cdn.tailwindcss.com?plugins=forms"></script>
+    <script>
+        // Tailwind CSS configuration - IMPORTANT: This config needs to be here for the CDN version
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#2196F3', // כחול ראשי
+                        secondary: '#BBDEFB', // כחול משני
+                        accent: '#FFC107', // צהוב-כתום למשל לכפתורי AI או הדגשות
+                        dark: '#333333', // צבע כהה לטקסט/רקע
+                        light: '#F8F8F8', // צבע בהיר לרקעים
+                        'muted-foreground': 'hsl(215 20.2% 65.1%)', // צבע טקסט עדין (מ-Shadcn)
+                        background: 'hsl(0 0% 100%)', // צבע רקע (מ-Shadcn)
+                        'primary-foreground': 'hsl(0 0% 100%)', // צבע טקסט על Primary (מ-Shadcn)
+                        border: 'hsl(214.3 31.8% 91.4%)', // צבע גבול (מ-Shadcn)
+                        ring: 'hsl(222.2 47.4% 11.2%)', // צבע טבעת לפוקוס (מ-Shadcn)
+                    },
+                    borderRadius: {
+                        'none': '0px',
+                        'sm': '4px',
+                        DEFAULT: '8px',
+                        'md': '12px',
+                        'lg': '16px',
+                        'xl': '20px',
+                        '2xl': '24px',
+                        '3xl': '32px',
+                        'full': '9999px',
+                        'button': '8px' // ברירת מחדל ללחצנים
+                    },
+                    keyframes: {
+                        "fade-in": { from: { opacity: "0" }, to: { opacity: "1" } },
+                        "fade-out": { from: { opacity: "1" }, to: { opacity: "0" } },
+                        "zoom-in": { from: { transform: "scale(0.95)" }, to: { transform: "scale(1)" } },
+                        "zoom-out": { from: { transform: "scale(1)" }, to: { transform: "scale(0.95)" } },
+                        "slide-in-from-top": { from: { transform: "translateY(-100%)" }, to: { transform: "translateY(0)" } },
+                        "slide-out-to-top": { from: { transform: "translateY(0)" }, to: { transform: "translateY(-100%)" } },
+                    },
+                    animation: {
+                        "fade-in": "fade-in 0.3s ease-out forwards",
+                        "fade-out": "fade-out 0.3s ease-out forwards",
+                        "zoom-in": "zoom-in 0.3s ease-out forwards",
+                        "zoom-out": "zoom-out 0.3s ease-out forwards",
+                        "slide-in-from-top": "slide-in-from-top 0.3s ease-out forwards",
+                        "slide-out-to-top": "slide-out-to-top 0.3s ease-out forwards",
+                    },
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Custom fonts */
+        @import url('https://fonts.googleapis.com/css2?family=Assistant:wght@200;300;400;500;600;700;800&family=Rubik:wght@300;400;500;600;700&display=swap');
+        /* Remixicon icons */
+        @import url('https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css');
+
+        body {
+            font-family: 'Assistant', sans-serif;
+            direction: rtl; /* Ensure RTL for Hebrew */
+            text-align: right; /* Default text alignment for RTL */
+        }
+
+        /* Adjust text alignment for specific components if needed */
+        .text-left { text-align: left; }
+        .text-right { text-align: right; }
+        .text-center { text-align: center; }
+
+        /* Dialog specific animations - using data attributes as per Shadcn pattern */
+        .dialog[data-state="open"] {
+            animation: fade-in 0.3s ease-out forwards, zoom-in 0.3s ease-out forwards;
+        }
+        .dialog[data-state="closed"] {
+            animation: fade-out 0.3s ease-out forwards, zoom-out 0.3s ease-out forwards;
+        }
+        /* For modal overlay */
+        .dialog-overlay[data-state="open"] { animation: fade-in 0.3s ease-out forwards; }
+        .dialog-overlay[data-state="closed"] { animation: fade-out 0.3s ease-out forwards; }
+
+        /* Pulse Animation for AI Tools Button */
+        @keyframes pulse-blue {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(33, 150, 243, 0.7); }
+            70% { box-shadow: 0 0 0 10px rgba(33, 150, 243, 0); }
+        }
+        .animate-pulse-blue {
+            animation: pulse-blue 2s infinite;
+        }
+    </style>
+</head>
+<body class="font-assistant text-dark bg-light relative">
+
+    <header class="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md shadow-sm p-4 flex items-center justify-between">
+        <div class="flex items-center gap-4">
+            <img src="https://via.placeholder.com/80x40?text=Logo" alt="לוגו ח.סבן" class="h-10 w-auto">
+            <h1 class="text-2xl font-rubik font-bold text-primary hidden md:block">ח.סבן חומרי בניין</h1>
+        </div>
+        <nav class="hidden md:flex gap-6 text-lg font-medium">
+            <a href="#" class="text-dark hover:text-primary transition-colors">ראשי</a>
+            <a href="#" class="text-dark hover:text-primary transition-colors">אודות</a>
+            <a href="#" class="text-dark hover:text-primary transition-colors">שירותים</a>
+            <a href="#" class="text-dark hover:text-primary transition-colors">יצירת קשר</a>
+        </nav>
+        <div class="flex items-center gap-4">
+            <button id="aiToolsBtn" class="flex items-center gap-2 px-4 py-2 bg-accent text-white rounded-button hover:bg-accent/90 transition-colors relative">
+                <i class="ri-robot-line text-xl"></i>
+                <span>כלי AI</span>
+                <span class="absolute -top-1 -right-1 h-3 w-3 bg-blue-500 rounded-full animate-pulse-blue"></span>
+            </button>
+            <div class="relative">
+                <button id="cartBtn" class="p-2 rounded-full hover:bg-gray-100 transition-colors">
+                    <i class="ri-shopping-cart-line text-2xl text-primary"></i>
+                    <span id="cartItemCount" class="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">0</span>
+                </button>
+            </div>
+            <button id="mobileMenuBtn" class="md:hidden p-2 rounded-full hover:bg-gray-100 transition-colors">
+                <i class="ri-menu-line text-2xl text-primary"></i>
+            </button>
+        </div>
+    </header>
+
+    <main class="container mx-auto mt-28 px-4">
+        <nav class="mb-6 text-gray-600">
+            <ol class="list-none p-0 inline-flex">
+                <li class="flex items-center">
+                    <a href="#" class="hover:text-primary">ראשי</a>
+                    <i class="ri-arrow-left-s-line mx-2"></i>
+                </li>
+                <li class="flex items-center">
+                    <span>קטלוג מוצרים</span>
+                </li>
+            </ol>
+        </nav>
+
+        <section class="mb-8 p-6 bg-white rounded-lg shadow-md flex flex-col md:flex-row items-center justify-between gap-4">
+            <h2 class="text-3xl font-rubik font-bold text-dark w-full md:w-auto">כל המוצרים</h2>
+            <div class="flex-grow flex flex-col md:flex-row items-center gap-4 w-full">
+                <div class="relative flex-grow w-full md:w-auto">
+                    <input type="text" id="mainSearchInput" placeholder="חפש מוצרים..." class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent">
+                    <i class="ri-search-line absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"></i>
+                    <div id="searchResults" class="absolute z-10 w-full bg-white border border-gray-200 rounded-md shadow-lg mt-1 hidden">
+                        </div>
+                </div>
+                <div class="relative w-full md:w-auto">
+                    <select id="sortSelect" class="block appearance-none w-full bg-white border border-gray-300 text-gray-700 py-2 px-4 pr-8 rounded-md leading-tight focus:outline-none focus:bg-white focus:border-primary">
+                        <option value="popular">פופולריות</option>
+                        <option value="price-asc">מחיר: מהנמוך לגבוה</option>
+                        <option value="price-desc">מחיר: מהגבוה לנמוך</option>
+                        <option value="newest">חדש ביותר</option>
+                    </select>
+                    <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                        <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 6.757 7.586 5.343 9z"/></svg>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="mb-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div class="relative group overflow-hidden rounded-lg shadow-lg">
+                <img src="https://via.placeholder.com/600x400?text=Category+1" alt="צבעים וגבס" class="w-full h-48 object-cover transform group-hover:scale-105 transition-transform duration-300">
+                <div class="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center transition-opacity duration-300 group-hover:bg-opacity-60">
+                    <h3 class="text-white text-2xl font-bold">צבעים וגבס</h3>
+                </div>
+                <a href="#" class="absolute inset-0 z-10"></a>
+            </div>
+            <div class="relative group overflow-hidden rounded-lg shadow-lg">
+                <img src="https://via.placeholder.com/600x400?text=Category+2" alt="אינסטלציה" class="w-full h-48 object-cover transform group-hover:scale-105 transition-transform duration-300">
+                <div class="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center transition-opacity duration-300 group-hover:bg-opacity-60">
+                    <h3 class="text-white text-2xl font-bold">אינסטלציה</h3>
+                </div>
+                <a href="#" class="absolute inset-0 z-10"></a>
+            </div>
+            <div class="relative group overflow-hidden rounded-lg shadow-lg">
+                <img src="https://via.placeholder.com/600x400?text=Category+3" alt="חשמל ותאורה" class="w-full h-48 object-cover transform group-hover:scale-105 transition-transform duration-300">
+                <div class="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center transition-opacity duration-300 group-hover:bg-opacity-60">
+                    <h3 class="text-white text-2xl font-bold">חשמל ותאורה</h3>
+                </div>
+                <a href="#" class="absolute inset-0 z-10"></a>
+            </div>
+            <div class="relative group overflow-hidden rounded-lg shadow-lg">
+                <img src="https://via.placeholder.com/600x400?text=Category+4" alt="כלי עבודה" class="w-full h-48 object-cover transform group-hover:scale-105 transition-transform duration-300">
+                <div class="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center transition-opacity duration-300 group-hover:bg-opacity-60">
+                    <h3 class="text-white text-2xl font-bold">כלי עבודה</h3>
+                </div>
+                <a href="#" class="absolute inset-0 z-10"></a>
+            </div>
+        </section>
+
+        <section class="mb-12">
+            <div id="productsGrid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                </div>
+            <div id="noProductsFound" class="hidden text-center text-gray-500 mt-8">
+                <p>לא נמצאו מוצרים התואמים לחיפוש/סינון שלך.</p>
+            </div>
+            <div id="productsLoading" class="text-center text-primary mt-8">
+                <i class="ri-loader-4-line text-4xl animate-spin"></i>
+                <p>טוען מוצרים...</p>
+            </div>
+        </section>
+
+        <section id="paginationControls" class="flex justify-center items-center gap-4 mt-8 mb-12 hidden">
+            </section>
+
+        <section class="mb-12 p-8 bg-gradient-to-r from-primary to-secondary rounded-lg shadow-xl text-center text-white">
+            <h2 class="text-3xl font-bold mb-4">הצטרפו לניוזלטר שלנו!</h2>
+            <p class="text-lg mb-6">קבלו עדכונים על מוצרים חדשים, מבצעים מיוחדים וטיפים מקצועיים ישירות למייל.</p>
+            <form id="newsletterForm" class="max-w-md mx-auto flex flex-col sm:flex-row gap-4">
+                <input type="email" placeholder="הכנס את המייל שלך" required class="flex-grow p-3 rounded-md text-dark focus:outline-none focus:ring-2 focus:ring-accent">
+                <button type="submit" class="bg-accent text-dark px-6 py-3 rounded-button font-semibold hover:bg-accent/80 transition-colors">הירשם</button>
+            </form>
+            <p id="newsletterMessage" class="mt-4 text-sm"></p>
+        </section>
+    </main>
+
+    <footer class="bg-dark text-white py-12 px-4">
+        <div class="container mx-auto grid grid-cols-1 md:grid-cols-4 gap-8">
+            <div>
+                <h3 class="text-xl font-bold mb-4 text-primary">ח.סבן חומרי בניין</h3>
+                <p class="text-gray-400">
+                    אנו מספקים מגוון רחב של חומרי בניין איכותיים, כלים ופתרונות מקצועיים לקבלנים, אדריכלים ולקוחות פרטיים.
+                </p>
+                <div class="flex gap-4 mt-4 text-2xl">
+                    <a href="#" class="hover:text-primary transition-colors"><i class="ri-facebook-fill"></i></a>
+                    <a href="#" class="hover:text-primary transition-colors"><i class="ri-instagram-fill"></i></a>
+                    <a href="#" class="hover:text-primary transition-colors"><i class="ri-whatsapp-fill"></i></a>
+                </div>
+            </div>
+            <div>
+                <h3 class="text-xl font-bold mb-4 text-primary">קישורים מהירים</h3>
+                <ul class="space-y-2">
+                    <li><a href="#" class="text-gray-400 hover:text-primary transition-colors">אודותינו</a></li>
+                    <li><a href="#" class="text-gray-400 hover:text-primary transition-colors">שירותים</a></li>
+                    <li><a href="#" class="text-gray-400 hover:text-primary transition-colors">מדיניות פרטיות</a></li>
+                    <li><a href="#" class="text-gray-400 hover:text-primary transition-colors">תנאי שימוש</a></li>
+                </ul>
+            </div>
+            <div>
+                <h3 class="text-xl font-bold mb-4 text-primary">קטגוריות מוצרים</h3>
+                <ul class="space-y-2">
+                    <li><a href="#" class="text-gray-400 hover:text-primary transition-colors">בטון ומלט</a></li>
+                    <li><a href="#" class="text-gray-400 hover:text-primary transition-colors">צבעים וטיח</a></li>
+                    <li><a href="#" class="text-gray-400 hover:text-primary transition-colors">אינסטלציה</a></li>
+                    <li><a href="#" class="text-gray-400 hover:text-primary transition-colors">כלי עבודה</a></li>
+                </ul>
+            </div>
+            <div>
+                <h3 class="text-xl font-bold mb-4 text-primary">יצירת קשר</h3>
+                <p class="text-gray-400">
+                    <i class="ri-map-pin-line mr-2"></i>רחוב הבנאים 123, תל אביב
+                </p>
+                <p class="text-gray-400 mt-2">
+                    <i class="ri-phone-line mr-2"></i>05X-XXXXXXX
+                </p>
+                <p class="text-gray-400 mt-2">
+                    <i class="ri-mail-line mr-2"></i>info@hsaban.co.il
+                </p>
+            </div>
+        </div>
+        <div class="text-center text-gray-500 mt-10 border-t border-gray-700 pt-8">
+            © 2025 ח.סבן חומרי בניין 1994 בע"מ. כל הזכויות שמורות.
+        </div>
+    </footer>
+
+    <button id="backToTopBtn" class="fixed bottom-8 right-8 bg-primary text-white p-3 rounded-full shadow-lg hover:bg-primary/90 transition-all opacity-0 invisible">
+        <i class="ri-arrow-up-line text-2xl"></i>
+    </button>
+
+    <script>
+        // --- Configuration Constants ---
+        const GOOGLE_SHEETS_API_URL = 'YOUR_GOOGLE_SHEETS_API_URL_HERE'; // *** החלף ב-URL האמיתי של ה-API מגיליון הגוגל שלך ***
+        const GEMINI_API_KEY = 'YOUR_GEMINI_API_KEY_HERE'; // *** החלף במפתח ה-API האמיתי שלך מ-Google AI Studio ***
+        // אזהרה: חשיפת API KEY ב-Frontend אינה מאובטחת! לפרודקשן, השתמש ב-Backend.
+        const WHATSAPP_NUMBER = '9725XXXXXXX'; // *** החלף במספר הוואטסאפ המלא שלך ***
+        const CART_STORAGE_KEY = 'hsaban_cart';
+
+        // --- Global State Variables ---
+        let allProducts = [];
+        let cart = JSON.parse(localStorage.getItem(CART_STORAGE_KEY)) || [];
+        let productModalInstance = null; // To manage the single product modal dialog
+
+        // --- DOM Elements ---
+        const productsGrid = document.getElementById('productsGrid');
+        const productsLoading = document.getElementById('productsLoading');
+        const noProductsFound = document.getElementById('noProductsFound');
+        const mainSearchInput = document.getElementById('mainSearchInput');
+        const searchResults = document.getElementById('searchResults');
+        const sortSelect = document.getElementById('sortSelect');
+        const cartItemCountSpan = document.getElementById('cartItemCount');
+        const cartBtn = document.getElementById('cartBtn');
+        const backToTopBtn = document.getElementById('backToTopBtn');
+        const newsletterForm = document.getElementById('newsletterForm');
+        const newsletterMessage = document.getElementById('newsletterMessage');
+        const aiToolsBtn = document.getElementById('aiToolsBtn');
+
+        // --- Utility Functions ---
+        function saveToLocalStorage(key, value) {
+            try {
+                localStorage.setItem(key, JSON.stringify(value));
+            } catch (e) {
+                console.error(`Error saving item ${key} to localStorage`, e);
+            }
+        }
+
+        // --- API Calls ---
+        async function fetchProducts() {
+            try {
+                const response = await fetch(GOOGLE_SHEETS_API_URL);
+                const text = await response.text();
+                // Google Sheets API returns JSONP-like format, needs parsing
+                const jsonText = text.substring(text.indexOf('{'), text.lastIndexOf('}') + 1);
+                const data = JSON.parse(jsonText);
+
+                const rows = data.table.rows;
+                const products = rows.map(row => ({
+                    id: row.c[0]?.v || crypto.randomUUID(), // Fallback to UUID if ID is missing
+                    name: row.c[1]?.v || 'שם מוצר לא ידוע',
+                    description: row.c[2]?.v || 'אין תיאור זמין.',
+                    price: row.c[3]?.v || 0,
+                    imageUrl: row.c[4]?.v || 'https://via.placeholder.com/400x300?text=מוצר',
+                    category: row.c[5]?.v || 'כללי',
+                    popularity: row.c[6]?.v || 0,
+                    addedDate: row.c[7]?.v ? new Date(row.c[7].v) : new Date(),
+                }));
+                return products;
+            } catch (error) {
+                console.error('Error fetching products from Google Sheets:', error);
+                return [];
+            }
+        }
+
+        async function callGeminiApi(prompt, model = 'gemini-1.0-flash') {
+            try {
+                const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${GEMINI_API_KEY}`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ contents: [{ parts: [{ text: prompt }] }] }),
+                });
+
+                if (!response.ok) {
+                    const errorData = await response.json();
+                    console.error('Gemini API Error:', errorData);
+                    throw new Error(`Gemini API request failed: ${errorData.error.message || response.statusText}`);
+                }
+
+                const data = await response.json();
+                return data.candidates[0]?.content?.parts[0]?.text || 'לא הצלחתי לייצר תגובה.';
+            } catch (error) {
+                console.error('Error calling Gemini API:', error);
+                return 'אירעה שגיאה בקריאה לשירות ה-AI. אנא נסה שוב מאוחר יותר.';
+            }
+        }
+
+        // --- Product Service Functions ---
+        function getFilteredAndSortedProducts(searchTerm, sortBy) {
+            let filtered = allProducts;
+
+            if (searchTerm) {
+                const lowerCaseSearchTerm = searchTerm.toLowerCase();
+                filtered = filtered.filter(product =>
+                    product.name.toLowerCase().includes(lowerCaseSearchTerm) ||
+                    product.description.toLowerCase().includes(lowerCaseSearchTerm) ||
+                    product.category.toLowerCase().includes(lowerCaseSearchTerm)
+                );
+            }
+
+            let sorted = [...filtered];
+            switch (sortBy) {
+                case 'price-asc': sorted.sort((a, b) => a.price - b.price); break;
+                case 'price-desc': sorted.sort((a, b) => b.price - a.price); break;
+                case 'newest': sorted.sort((a, b) => b.addedDate.getTime() - a.addedDate.getTime()); break;
+                case 'popular': default: sorted.sort((a, b) => b.popularity - a.popularity); break;
+            }
+            return sorted;
+        }
+
+        function getProductById(id) {
+            return allProducts.find(p => p.id === id);
+        }
+
+        function getProductNames() {
+            return allProducts.map(p => p.name);
+        }
+
+        // --- Cart Service Functions ---
+        function saveCart() {
+            saveToLocalStorage(CART_STORAGE_KEY, cart);
+            updateCartCount(); // Update UI immediately after saving
+        }
+
+        function getCart() {
+            return [...cart];
+        }
+
+        function addToCart(product) {
+            const existingItem = cart.find(item => item.id === product.id);
+            if (existingItem) {
+                existingItem.quantity += 1;
+            } else {
+                cart.push({ ...product, quantity: 1 });
+            }
+            saveCart();
+        }
+
+        function removeFromCart(productId) {
+            cart = cart.filter(item => item.id !== productId);
+            saveCart();
+        }
+
+        function updateCartItemQuantity(productId, quantity) {
+            const item = cart.find(item => item.id === productId);
+            if (item) {
+                item.quantity = Math.max(1, quantity);
+                saveCart();
+            }
+        }
+
+        function clearCart() {
+            cart = [];
+            saveCart();
+        }
+
+        function getCartTotal() {
+            return cart.reduce((total, item) => total + (item.price * item.quantity), 0);
+        }
+
+        function getCartItemCount() {
+            return cart.reduce((count, item) => count + item.quantity, 0);
+        }
+
+        // --- UI Components (Simplified Shadcn-like for single file) ---
+
+        // Dialog Component (Modal)
+        class Dialog {
+            constructor(id, title, options = {}) {
+                this.id = id;
+                this.title = title;
+                this.content = options.content || '';
+                this.onClose = options.onClose || (() => {});
+                this.element = null;
+                this.overlay = null; // New: for the background overlay
+            }
+
+            render() {
+                // Overlay element
+                this.overlay = document.createElement('div');
+                this.overlay.className = `fixed inset-0 z-40 bg-black/80 dialog-overlay
+                                         data-[state=closed]:animate-out data-[state=closed]:fade-out-0
+                                         data-[state=open]:animate-in data-[state=open]:fade-in-0`;
+                document.body.appendChild(this.overlay);
+
+                // Dialog content element
+                this.element = document.createElement('div');
+                this.element.id = this.id;
+                this.element.className = `fixed inset-0 z-50 flex items-center justify-center p-4 dialog
+                                        data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95 data-[state=closed]:slide-out-to-top
+                                        data-[state=open]:animate-in data-[state=open]:fade-in-0 data-[state=open]:zoom-in-95 data-[state=open]:slide-in-from-top`;
+
+                const dialogInner = document.createElement('div');
+                dialogInner.className = `relative z-50 grid w-full max-w-xl gap-4 border bg-background p-6 shadow-lg sm:rounded-lg`;
+
+                dialogInner.innerHTML = `
+                    <div class="flex flex-col space-y-1.5 text-center sm:text-right">
+                        <h2 class="text-2xl font-semibold leading-none tracking-tight">${this.title}</h2>
+                        <p class="text-sm text-muted-foreground"></p>
+                    </div>
+                    <div class="absolute top-4 left-4 opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none">
+                        <button class="close-dialog-btn p-2 rounded-full hover:bg-gray-200">
+                            <i class="ri-close-line text-2xl"></i>
+                            <span class="sr-only">סגור</span>
+                        </button>
+                    </div>
+                    <div class="dialog-content text-right">
+                        </div>
+                `;
+                this.element.appendChild(dialogInner);
+
+
+                const contentContainer = dialogInner.querySelector('.dialog-content');
+                if (this.content instanceof HTMLElement) {
+                    contentContainer.appendChild(this.content);
+                } else {
+                    contentContainer.innerHTML = this.content;
+                }
+
+                document.body.appendChild(this.element);
+                document.body.style.overflow = 'hidden'; // Prevent scrolling when modal is open
+
+                // Add event listeners
+                dialogInner.querySelector('.close-dialog-btn').addEventListener('click', this.close.bind(this));
+                this.element.addEventListener('click', (e) => {
+                    // Close if clicking on the actual backdrop (this.element itself, not its children)
+                    if (e.target === this.element) {
+                        this.close();
+                    }
+                });
+                this.overlay.addEventListener('click', this.close.bind(this));
+
+
+                // Trigger open animation
+                setTimeout(() => {
+                    this.element.setAttribute('data-state', 'open');
+                    this.overlay.setAttribute('data-state', 'open');
+                }, 10);
+
+                return this.element;
+            }
+
+            updateContent(newContent) {
+                if (this.element) {
+                    const contentContainer = this.element.querySelector('.dialog-content');
+                    contentContainer.innerHTML = '';
+                    if (newContent instanceof HTMLElement) {
+                        contentContainer.appendChild(newContent);
+                    } else {
+                        contentContainer.innerHTML = newContent;
+                    }
+                }
+            }
+
+            close() {
+                if (this.element && this.overlay) {
+                    this.element.setAttribute('data-state', 'closed');
+                    this.overlay.setAttribute('data-state', 'closed');
+
+                    // Remove elements after animations complete
+                    const animationDuration = 300; // Match CSS animation duration
+                    setTimeout(() => {
+                        if (this.element) { this.element.remove(); }
+                        if (this.overlay) { this.overlay.remove(); }
+                        document.body.style.overflow = ''; // Restore scrolling
+                        this.onClose();
+                    }, animationDuration);
+                }
+            }
+        }
+
+        // Button Factory Function (Shadcn-like)
+        function createButton(text, options = {}) {
+            const {
+                onClick = () => {},
+                className = '',
+                variant = 'default', // 'default', 'outline', 'ghost', 'link', 'destructive', 'secondary', 'accent'
+                size = 'default',    // 'default', 'sm', 'lg', 'icon'
+                iconClass = null,
+                isSubmit = false
+            } = options;
+
+            const button = document.createElement('button');
+            button.type = isSubmit ? 'submit' : 'button';
+
+            let baseClasses = `
+                inline-flex items-center justify-center whitespace-nowrap rounded-button text-sm font-medium
+                ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2
+                focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50
+            `;
+
+            // Apply variant styles
+            switch (variant) {
+                case 'default':
+                    baseClasses += ' bg-primary text-primary-foreground hover:bg-primary/90';
+                    break;
+                case 'secondary':
+                    baseClasses += ' bg-secondary text-primary hover:bg-secondary/80';
+                    break;
+                case 'destructive':
+                    baseClasses += ' bg-red-500 text-white hover:bg-red-600';
+                    break;
+                case 'outline':
+                    baseClasses += ' border border-input bg-background hover:bg-accent hover:text-accent-foreground';
+                    break;
+                case 'ghost':
+                    baseClasses += ' hover:bg-accent hover:text-accent-foreground';
+                    break;
+                case 'link':
+                    baseClasses += ' text-primary underline-offset-4 hover:underline';
+                    break;
+                case 'accent': // Custom variant for AI tools, for example
+                    baseClasses += ' bg-accent text-white hover:bg-accent/90';
+                    break;
+            }
+
+            // Apply size styles
+            switch (size) {
+                case 'default': baseClasses += ' h-10 px-4 py-2'; break;
+                case 'sm':      baseClasses += ' h-9 rounded-md px-3'; break;
+                case 'lg':      baseClasses += ' h-11 rounded-md px-8'; break;
+                case 'icon':    baseClasses += ' h-10 w-10'; break;
+            }
+
+            button.className = `${baseClasses} ${className}`;
+
+            // Handle icon and text
+            if (iconClass) {
+                const icon = document.createElement('i');
+                icon.className = `${iconClass} ${text ? 'ml-2' : ''}`;
+                button.appendChild(icon);
+            }
+            if (text) {
+                button.appendChild(document.createTextNode(text));
+            }
+
+            button.addEventListener('click', onClick);
+            return button;
+        }
+
+        // Product Card Component
+        function createProductCard(product, onAddToCartClick, onProductClick) {
+            const card = document.createElement('div');
+            card.className = `bg-white rounded-lg shadow-md overflow-hidden transition-all duration-300 hover:shadow-xl hover:-translate-y-1`;
+            card.innerHTML = `
+                <img src="${product.imageUrl}" alt="${product.name}" class="w-full h-48 object-cover cursor-pointer">
+                <div class="p-4 text-right">
+                    <h3 class="text-xl font-semibold text-dark mb-2 cursor-pointer">${product.name}</h3>
+                    <p class="text-primary text-lg font-bold mb-3">${product.price} ₪</p>
+                    <div class="flex items-center justify-between gap-2">
+                        </div>
+                </div>
+            `;
+
+            const image = card.querySelector('img');
+            const title = card.querySelector('h3');
+            image.addEventListener('click', () => onProductClick(product));
+            title.addEventListener('click', () => onProductClick(product));
+
+            const addToCartButton = createButton('הוסף לסל', {
+                variant: 'primary',
+                size: 'sm',
+                iconClass: 'ri-add-line',
+                className: 'flex-grow',
+                onClick: (e) => {
+                    e.stopPropagation();
+                    onAddToCartClick(product);
+                }
+            });
+
+            card.querySelector('.flex').appendChild(addToCartButton);
+            return card;
+        }
+
+        // --- Render Functions ---
+        function renderProducts() {
+            const searchTerm = mainSearchInput.value;
+            const sortBy = sortSelect.value;
+            const filteredAndSortedProducts = getFilteredAndSortedProducts(searchTerm, sortBy);
+
+            productsGrid.innerHTML = '';
+
+            if (filteredAndSortedProducts.length === 0) {
+                noProductsFound.classList.remove('hidden');
+            } else {
+                noProductsFound.classList.add('hidden');
+                filteredAndSortedProducts.forEach(product => {
+                    const card = createProductCard(product, handleAddToCart, handleProductClick);
+                    productsGrid.appendChild(card);
+                });
+            }
+        }
+
+        function updateCartCount() {
+            cartItemCountSpan.textContent = getCartItemCount();
+        }
+
+        // --- AI Tools Logic (Integrated directly) ---
+
+        // Project Planner AI Tool
+        async function openProjectPlannerModal() {
+            const contentDiv = document.createElement('div');
+            contentDiv.className = 'space-y-4';
+            contentDiv.innerHTML = `
+                <p class="mb-4">תאר את פרויקט הבנייה שלך (לדוגמה: "בניית קיר גבס 3X4 מטר", "ריצוף חדר אמבטיה 2X3 מטר").</p>
+                <textarea id="projectDescriptionInput" class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary mb-4" rows="5" placeholder="תיאור הפרויקט..."></textarea>
+                <div id="projectPlanResponse" class="mt-4 p-4 bg-gray-50 rounded-md border border-gray-200 min-h-[100px] max-h-96 overflow-y-auto text-sm">
+                    <p class="text-gray-500">התוכנית תוצג כאן לאחר הלחיצה.</p>
+                </div>
+                <div id="projectPlanLoading" class="text-center text-primary mt-2 hidden">
+                    <i class="ri-loader-4-line text-3xl animate-spin"></i>
+                    <p>מחשב תוכנית...</p>
+                </div>
+                <p id="projectPlanError" class="text-red-500 mt-2 hidden">אירעה שגיאה. אנא נסה שוב.</p>
+            `;
+
+            const getPlanBtn = createButton('קבל תוכנית', {
+                variant: 'primary',
+                className: 'w-full mt-4',
+                onClick: () => generateProjectPlan(contentDiv)
+            });
+            contentDiv.appendChild(getPlanBtn);
+
+            const projectPlannerDialog = new Dialog('project-planner-modal', 'מתכנן פרויקטים חכם', { content: contentDiv });
+            projectPlannerDialog.render();
+        }
+
+        async function generateProjectPlan(contentDiv) {
+            const projectDescriptionInput = contentDiv.querySelector('#projectDescriptionInput');
+            const projectPlanResponse = contentDiv.querySelector('#projectPlanResponse');
+            const projectPlanLoading = contentDiv.querySelector('#projectPlanLoading');
+            const projectPlanError = contentDiv.querySelector('#projectPlanError');
+
+            const description = projectDescriptionInput.value.trim();
+
+            if (!description) {
+                projectPlanResponse.innerHTML = '<p class="text-red-500">אנא הזן תיאור לפרויקט.</p>';
+                return;
+            }
+
+            projectPlanLoading.classList.remove('hidden');
+            projectPlanError.classList.add('hidden');
+            projectPlanResponse.innerHTML = '';
+
+            const prompt = `
+                בהתבסס על תיאור הפרויקט הבא, צור רשימת חומרים משוערת וכמויות נדרשות, כולל הערות חשובות:
+                פרויקט: "${description}"
+
+                תשובה בפורמט מסודר (רשימה ממוספרת):
+                1. [שם חומר] - [כמות משוערת] - [הערות, טיפים, אזהרות]
+                2. ...
+
+                הערה חשובה: הכמויות הן הערכה בלבד ואין להתבסס עליהן ללא ייעוץ מקצועי.
+            `;
+
+            try {
+                const responseText = await callGeminiApi(prompt);
+                const formattedText = responseText.split('\n').map(line => {
+                    const stepMatch = line.match(/^(\d+\.?\s*)(.*)/);
+                    if (stepMatch) {
+                        return `<li>${stepMatch[2].trim()}</li>`;
+                    }
+                    return `<p>${line.trim()}</p>`;
+                }).join('');
+
+                projectPlanResponse.innerHTML = `<ol class="list-decimal pr-5 space-y-1">${formattedText}</ol>`;
+            } catch (error) {
+                console.error("Error generating project plan:", error);
+                projectPlanError.classList.remove('hidden');
+                projectPlanResponse.innerHTML = '';
+            } finally {
+                projectPlanLoading.classList.add('hidden');
+            }
+        }
+
+        // --- Event Handlers ---
+
+        // Initial Data Load
+        document.addEventListener('DOMContentLoaded', async () => {
+            productsLoading.classList.remove('hidden');
+            allProducts = await fetchProducts();
+            renderProducts();
+            productsLoading.classList.add('hidden');
+            document.getElementById('paginationControls').classList.remove('hidden'); // Show pagination after loading
+            updateCartCount(); // Initial cart count
+        });
+
+        // Search Input (with basic autocomplete)
+        mainSearchInput.addEventListener('input', () => {
+            const searchTerm = mainSearchInput.value.toLowerCase();
+            searchResults.innerHTML = '';
+            if (searchTerm.length > 0) {
+                const matchingProducts = getProductNames().filter(name => name.toLowerCase().includes(searchTerm));
+                if (matchingProducts.length > 0) {
+                    matchingProducts.slice(0, 5).forEach(name => {
+                        const item = document.createElement('div');
+                        item.className = 'p-2 hover:bg-gray-100 cursor-pointer text-right';
+                        item.textContent = name;
+                        item.addEventListener('click', () => {
+                            mainSearchInput.value = name;
+                            searchResults.classList.add('hidden');
+                            renderProducts();
+                        });
+                        searchResults.appendChild(item);
+                    });
+                    searchResults.classList.remove('hidden');
+                } else {
+                    searchResults.classList.add('hidden');
+                }
+            } else {
+                searchResults.classList.add('hidden');
+            }
+            renderProducts();
+        });
+
+        // Hide search results when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!mainSearchInput.contains(e.target) && !searchResults.contains(e.target)) {
+                searchResults.classList.add('hidden');
+            }
+        });
+
+        sortSelect.addEventListener('change', renderProducts);
+
+        function handleAddToCart(product) {
+            addToCart(product);
+            // Optionally, show a toast notification here instead of alert
+            // alert(`${product.name} נוסף לעגלה!`);
+        }
+
+        // Open Product Modal
+        function handleProductClick(product) {
+            if (productModalInstance) {
+                productModalInstance.close();
+            }
+
+            const modalContent = document.createElement('div');
+            modalContent.className = 'space-y-4 text-right';
+            modalContent.innerHTML = `
+                <div class="flex flex-col md:flex-row gap-6">
+                    <img src="${product.imageUrl}" alt="${product.name}" class="w-full md:w-1/2 h-64 object-contain rounded-md shadow-sm">
+                    <div class="flex-grow">
+                        <h3 class="text-3xl font-bold text-primary mb-2">${product.name}</h3>
+                        <p class="text-gray-700 text-lg mb-4">${product.description}</p>
+                        <p class="text-xl font-bold text-dark mb-4">מחיר: ${product.price} ₪</p>
+                        <div class="flex gap-2 justify-end">
+                            </div>
+                    </div>
+                </div>
+                <hr class="my-4">
+                <h4 class="text-xl font-semibold mb-2">כלי AI למוצר זה:</h4>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="p-4 border rounded-md bg-gray-50">
+                        <h5 class="font-semibold mb-2">רעיונות לשימוש</h5>
+                        <p id="usageIdeasResponse" class="text-sm min-h-[50px]"></p>
+                        <button id="getUsageIdeasBtn" class="bg-blue-500 text-white text-sm px-3 py-1 rounded-button mt-2 hover:bg-blue-600">קבל רעיונות</button>
+                        <div id="usageIdeasLoading" class="hidden text-center mt-2 text-primary"><i class="ri-loader-4-line animate-spin"></i></div>
+                    </div>
+                    <div class="p-4 border rounded-md bg-gray-50">
+                        <h5 class="font-semibold mb-2">מדריך התקנה</h5>
+                        <p id="installationGuideResponse" class="text-sm min-h-[50px]"></p>
+                        <button id="getInstallationGuideBtn" class="bg-blue-500 text-white text-sm px-3 py-1 rounded-button mt-2 hover:bg-blue-600">קבל מדריך</button>
+                        <div id="installationGuideLoading" class="hidden text-center mt-2 text-primary"><i class="ri-loader-4-line animate-spin"></i></div>
+                    </div>
+                    <div class="p-4 border rounded-md bg-gray-50">
+                        <h5 class="font-semibold mb-2">השוואת מוצרים</h5>
+                        <div class="flex flex-col gap-2 mb-2">
+                             <input type="text" id="compareProductInput1" placeholder="השווה למוצר 1..." class="w-full p-2 border rounded-md text-sm">
+                             <input type="text" id="compareProductInput2" placeholder="השווה למוצר 2..." class="w-full p-2 border rounded-md text-sm">
+                        </div>
+                        <button id="compareProductsBtn" class="bg-green-500 text-white text-sm px-3 py-1 rounded-button mt-2 hover:bg-green-600">השווה</button>
+                        <div id="productComparisonResponse" class="text-sm mt-2 min-h-[50px]"></div>
+                        <div id="productComparisonLoading" class="hidden text-center mt-2 text-primary"><i class="ri-loader-4-line animate-spin"></i></div>
+                        <p id="productComparisonError" class="text-red-500 mt-2 hidden">אירעה שגיאה. אנא נסה שוב.</p>
+                    </div>
+                </div>
+            `;
+
+            const modalAddToCartBtn = createButton('הוסף לסל', {
+                variant: 'primary',
+                size: 'lg',
+                iconClass: 'ri-shopping-cart-line',
+                onClick: () => {
+                    addToCart(product);
+                    productModalInstance.close();
+                }
+            });
+            modalContent.querySelector('.flex.gap-2').appendChild(modalAddToCartBtn);
+
+            productModalInstance = new Dialog('product-modal', `פרטי מוצר: ${product.name}`, {
+                content: modalContent,
+                onClose: () => { productModalInstance = null; }
+            });
+            productModalInstance.render();
+
+            // AI Tool Logic: Usage Ideas
+            const getUsageIdeasBtn = modalContent.querySelector('#getUsageIdeasBtn');
+            const usageIdeasResponse = modalContent.querySelector('#usageIdeasResponse');
+            const usageIdeasLoading = modalContent.querySelector('#usageIdeasLoading');
+
+            getUsageIdeasBtn.addEventListener('click', async () => {
+                usageIdeasLoading.classList.remove('hidden');
+                usageIdeasResponse.innerHTML = '';
+                const prompt = `תן 3-5 רעיונות יצירתיים ושימושיים לשימוש במוצר הבא: ${product.name} - ${product.description}. תן את התשובה כרשימה ממוספרת קצרה.`;
+                try {
+                    const response = await callGeminiApi(prompt);
+                    usageIdeasResponse.innerHTML = response.split('\n').map(line => `<li>${line.trim()}</li>`).join('');
+                } catch (error) {
+                    usageIdeasResponse.innerHTML = '<p class="text-red-500">שגיאה בטעינת רעיונות.</p>';
+                } finally {
+                    usageIdeasLoading.classList.add('hidden');
+                }
+            });
+
+            // AI Tool Logic: Installation Guide
+            const getInstallationGuideBtn = modalContent.querySelector('#getInstallationGuideBtn');
+            const installationGuideResponse = modalContent.querySelector('#installationGuideResponse');
+            const installationGuideLoading = modalContent.querySelector('#installationGuideLoading');
+
+            getInstallationGuideBtn.addEventListener('click', async () => {
+                installationGuideLoading.classList.remove('hidden');
+                installationGuideResponse.innerHTML = '';
+                const prompt = `ספק מדריך התקנה מפורט צעד אחר צעד עבור המוצר הבא: ${product.name} - ${product.description}. השתמש בפורמט של רשימה ממוספרת.`;
+                try {
+                    const response = await callGeminiApi(prompt);
+                    const formattedText = response.split('\n').map(line => {
+                        const stepMatch = line.match(/^(\d+\.?\s*)(.*)/);
+                        if (stepMatch) { return `<li>${stepMatch[2].trim()}</li>`; }
+                        return `<p>${line.trim()}</p>`;
+                    }).join('');
+                    installationGuideResponse.innerHTML = `<ol class="list-decimal pr-5 space-y-1">${formattedText}</ol>`;
+                } catch (error) {
+                    installationGuideResponse.innerHTML = '<p class="text-red-500">שגיאה בטעינת מדריך התקנה.</p>';
+                } finally {
+                    installationGuideLoading.classList.add('hidden');
+                }
+            });
+
+            // AI Tool Logic: Product Comparison
+            const compareProductsBtn = modalContent.querySelector('#compareProductsBtn');
+            const compareProductInput1 = modalContent.querySelector('#compareProductInput1');
+            const compareProductInput2 = modalContent.querySelector('#compareProductInput2');
+            const productComparisonResponse = modalContent.querySelector('#productComparisonResponse');
+            const productComparisonLoading = modalContent.querySelector('#productComparisonLoading');
+            const productComparisonError = modalContent.querySelector('#productComparisonError');
+
+            compareProductsBtn.addEventListener('click', async () => {
+                const productName1 = product.name; // Current product
+                const productName2 = compareProductInput1.value.trim();
+                const productName3 = compareProductInput2.value.trim();
+
+                if (!productName2 && !productName3) {
+                    productComparisonResponse.innerHTML = '<p class="text-red-500">אנא הזן לפחות שם מוצר אחד להשוואה.</p>';
+                    return;
+                }
+
+                productComparisonLoading.classList.remove('hidden');
+                productComparisonError.classList.add('hidden');
+                productComparisonResponse.innerHTML = '';
+
+                const productDescriptions = [];
+                const productsToCompare = [
+                    product,
+                    allProducts.find(p => p.name.toLowerCase() === productName2.toLowerCase()),
+                    allProducts.find(p => p.name.toLowerCase() === productName3.toLowerCase())
+                ].filter(Boolean); // Remove null/undefined
+
+                if (productsToCompare.length < 2) {
+                     productComparisonResponse.innerHTML = '<p class="text-red-500">נא לוודא ששני המוצרים להשוואה נמצאים בקטלוג.</p>';
+                     productComparisonLoading.classList.add('hidden');
+                     return;
+                }
+
+                productsToCompare.forEach(p => {
+                    productDescriptions.push(`${p.name}: ${p.description}. מחיר: ${p.price} ש"ח.`);
+                });
+
+                const prompt = `השווה את המוצרים הבאים והדגש יתרונות, חסרונות והבדלים מרכזיים. הצג את התוצאה כטבלה או כהשוואה נקודתית מסודרת:\n\n${productDescriptions.join('\n')}`;
+
+                try {
+                    const responseText = await callGeminiApi(prompt);
+                    productComparisonResponse.innerHTML = responseText; // Gemini often returns formatted text already
+                } catch (error) {
+                    console.error("Error generating product comparison:", error);
+                    productComparisonError.classList.remove('hidden');
+                } finally {
+                    productComparisonLoading.classList.add('hidden');
+                }
+            });
+        }
+
+
+        // Cart Button Click
+        cartBtn.addEventListener('click', () => {
+            const currentCart = getCart();
+            let cartContentHtml = '<h3 class="text-xl font-bold mb-4">העגלה שלך</h3>';
+
+            if (currentCart.length === 0) {
+                cartContentHtml += '<p>העגלה ריקה.</p>';
+            } else {
+                cartContentHtml += `
+                    <ul class="space-y-4 max-h-96 overflow-y-auto">
+                        ${currentCart.map(item => `
+                            <li class="flex items-center gap-4 border-b pb-4">
+                                <img src="${item.imageUrl}" alt="${item.name}" class="w-16 h-16 object-cover rounded-md">
+                                <div class="flex-grow">
+                                    <p class="font-semibold">${item.name}</p>
+                                    <p class="text-sm text-gray-600">${item.price} ₪ x ${item.quantity}</p>
+                                </div>
+                                <div class="flex items-center gap-2">
+                                    <button data-id="${item.id}" data-action="decrease" class="cart-qty-btn bg-gray-200 p-1 rounded-full"><i class="ri-subtract-line text-lg"></i></button>
+                                    <span class="font-bold">${item.quantity}</span>
+                                    <button data-id="${item.id}" data-action="increase" class="cart-qty-btn bg-gray-200 p-1 rounded-full"><i class="ri-add-line text-lg"></i></button>
+                                    <button data-id="${item.id}" data-action="remove" class="bg-red-500 text-white p-1 rounded-full"><i class="ri-delete-bin-line text-lg"></i></button>
+                                </div>
+                            </li>
+                        `).join('')}
+                    </ul>
+                    <div class="text-right font-bold text-xl mt-4">
+                        סה"כ: ${getCartTotal()} ₪
+                    </div>
+                    <button id="checkoutWhatsappBtn" class="w-full bg-green-500 text-white px-4 py-2 rounded-button mt-4 hover:bg-green-600 flex items-center justify-center gap-2">
+                        <i class="ri-whatsapp-line text-2xl"></i>
+                        <span>שלח הזמנה בוואטסאפ</span>
+                    </button>
+                    <button id="clearCartBtn" class="w-full bg-gray-300 text-dark px-4 py-2 rounded-button mt-2 hover:bg-gray-400">נקה עגלה</button>
+                `;
+            }
+
+            const cartDialog = new Dialog('cart-modal', 'עגלת הקניות שלך', { content: cartContentHtml });
+            cartDialog.render();
+
+            // Attach event listeners for cart actions inside the modal
+            if (currentCart.length > 0) {
+                // Re-attach listeners every time the cart modal content is updated
+                const attachCartListeners = () => {
+                    cartDialog.element.querySelectorAll('.cart-qty-btn').forEach(button => {
+                        button.onclick = (e) => { // Use onclick directly as content is dynamic
+                            const productId = e.currentTarget.dataset.id;
+                            const action = e.currentTarget.dataset.action;
+                            const item = getCart().find(i => i.id === productId);
+
+                            if (item) {
+                                if (action === 'increase') { updateCartItemQuantity(productId, item.quantity + 1); }
+                                else if (action === 'decrease') { updateCartItemQuantity(productId, item.quantity - 1); }
+                                cartDialog.updateContent(generateCartContentHtml(getCart())); // Re-render cart content
+                                attachCartListeners(); // Re-attach listeners after content update
+                            }
+                        };
+                    });
+
+                    cartDialog.element.querySelectorAll('[data-action="remove"]').forEach(button => {
+                        button.onclick = (e) => {
+                            const productId = e.currentTarget.dataset.id;
+                            removeFromCart(productId);
+                            cartDialog.updateContent(generateCartContentHtml(getCart())); // Re-render cart content
+                            attachCartListeners(); // Re-attach listeners after content update
+                        };
+                    });
+
+                    const checkoutWhatsappBtn = cartDialog.element.querySelector('#checkoutWhatsappBtn');
+                    if (checkoutWhatsappBtn) {
+                        checkoutWhatsappBtn.onclick = () => {
+                            const whatsappMessage = generateWhatsappOrderMessage(getCart());
+                            window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(whatsappMessage)}`, '_blank');
+                        };
+                    }
+
+                    const clearCartBtn = cartDialog.element.querySelector('#clearCartBtn');
+                    if (clearCartBtn) {
+                        clearCartBtn.onclick = () => {
+                            clearCart();
+                            cartDialog.updateContent('<p>העגלה ריקה.</p>');
+                        };
+                    }
+                };
+                attachCartListeners(); // Initial attachment
+            }
+        });
+
+        // Helper to generate cart HTML (for re-rendering after changes)
+        function generateCartContentHtml(cartItems) {
+            if (cartItems.length === 0) {
+                return '<h3 class="text-xl font-bold mb-4">העגלה שלך</h3><p>העגלה ריקה.</p>';
+            }
+            return `
+                <h3 class="text-xl font-bold mb-4">העגלה שלך</h3>
+                <ul class="space-y-4 max-h-96 overflow-y-auto">
+                    ${cartItems.map(item => `
+                        <li class="flex items-center gap-4 border-b pb-4">
+                            <img src="${item.imageUrl}" alt="${item.name}" class="w-16 h-16 object-cover rounded-md">
+                            <div class="flex-grow">
+                                <p class="font-semibold">${item.name}</p>
+                                <p class="text-sm text-gray-600">${item.price} ₪ x ${item.quantity}</p>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <button data-id="${item.id}" data-action="decrease" class="cart-qty-btn bg-gray-200 p-1 rounded-full"><i class="ri-subtract-line text-lg"></i></button>
+                                <span class="font-bold">${item.quantity}</span>
+                                <button data-id="${item.id}" data-action="increase" class="cart-qty-btn bg-gray-200 p-1 rounded-full"><i class="ri-add-line text-lg"></i></button>
+                                <button data-id="${item.id}" data-action="remove" class="bg-red-500 text-white p-1 rounded-full"><i class="ri-delete-bin-line text-lg"></i></button>
+                            </div>
+                        </li>
+                    `).join('')}
+                </ul>
+                <div class="text-right font-bold text-xl mt-4">
+                    סה"כ: ${getCartTotal()} ₪
+                </div>
+                <button id="checkoutWhatsappBtn" class="w-full bg-green-500 text-white px-4 py-2 rounded-button mt-4 hover:bg-green-600 flex items-center justify-center gap-2">
+                    <i class="ri-whatsapp-line text-2xl"></i>
+                    <span>שלח הזמנה בוואטסאפ</span>
+                </button>
+                <button id="clearCartBtn" class="w-full bg-gray-300 text-dark px-4 py-2 rounded-button mt-2 hover:bg-gray-400">נקה עגלה</button>
+            `;
+        }
+
+        function generateWhatsappOrderMessage(cartItems) {
+            let message = `היי ח.סבן, ברצוני לבצע הזמנה:\n\n`;
+            cartItems.forEach(item => {
+                message += `${item.name} - כמות: ${item.quantity} - מחיר ליחידה: ${item.price} ש"ח\n`;
+            });
+            message += `\nסה"כ לתשלום: ${getCartTotal()} ש"ח\n`;
+            message += `\nאנא צרו קשר לתיאום תשלום ואיסוף/משלוח.\nתודה!`;
+            return message;
+        }
+
+
+        // Back to Top Button Logic
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 200) {
+                backToTopBtn.classList.remove('opacity-0', 'invisible');
+                backToTopBtn.classList.add('opacity-100', 'visible');
+            } else {
+                backToTopBtn.classList.add('opacity-0', 'invisible');
+                backToTopBtn.classList.remove('opacity-100', 'visible');
+            }
+        });
+
+        backToTopBtn.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+
+        // Newsletter Form
+        newsletterForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const emailInput = e.target.querySelector('input[type="email"]');
+            const email = emailInput.value;
+            console.log(`Newsletter signup for: ${email}`);
+            newsletterMessage.textContent = `תודה שנרשמת לניוזלטר, ${email}!`;
+            emailInput.value = '';
+            setTimeout(() => { newsletterMessage.textContent = ''; }, 5000);
+        });
+
+        // AI Tools Button (Main AI Dialog)
+        aiToolsBtn.addEventListener('click', () => {
+            const aiToolsContent = document.createElement('div');
+            aiToolsContent.className = 'grid grid-cols-1 md:grid-cols-2 gap-4 text-center';
+            aiToolsContent.innerHTML = `
+                <button id="openProjectPlanner" class="p-6 bg-primary text-white rounded-lg shadow-md hover:bg-primary/90 transition-colors flex flex-col items-center justify-center gap-2">
+                    <i class="ri-file-text-line text-4xl"></i>
+                    <span class="text-lg font-semibold">מתכנן פרויקטים</span>
+                    <p class="text-sm opacity-90">קבלו רשימות חומרים לפרויקטים שונים</p>
+                </button>
+                <button id="openMaterialIdentifier" class="p-6 bg-accent text-white rounded-lg shadow-md hover:bg-accent/90 transition-colors flex flex-col items-center justify-center gap-2">
+                    <i class="ri-image-line text-4xl"></i>
+                    <span class="text-lg font-semibold">זיהוי חומרים בתמונה</span>
+                    <p class="text-sm opacity-90">העלו תמונה וקבלו המלצות למוצרים</p>
+                    <span class="absolute top-2 right-2 px-2 py-1 bg-red-500 text-white text-xs rounded-full">חדש!</span>
+                </button>
+                `;
+
+            const aiToolsDialog = new Dialog('ai-tools-main-modal', 'כלי AI מתקדמים', { content: aiToolsContent });
+            aiToolsDialog.render();
+
+            // Event listeners for AI Tools buttons within this modal
+            aiToolsContent.querySelector('#openProjectPlanner').addEventListener('click', () => {
+                aiToolsDialog.close(); // Close current dialog
+                openProjectPlannerModal(); // Open project planner
+            });
+
+            aiToolsContent.querySelector('#openMaterialIdentifier').addEventListener('click', () => {
+                aiToolsDialog.close();
+                openMaterialIdentifierModal(); // Open new AI tool (placeholder for now)
+            });
+        });
+
+        // Placeholder for Material Identifier AI Tool
+        async function openMaterialIdentifierModal() {
+            const contentDiv = document.createElement('div');
+            contentDiv.className = 'space-y-4';
+            contentDiv.innerHTML = `
+                <p class="mb-4">העלה תמונה של חומר גלם, רצפה, קיר או כל אובייקט אחר ואנו ננסה לזהות אותו ולהמליץ על מוצרים.</p>
+                <input type="file" id="materialImageUpload" accept="image/*" class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary mb-4">
+                <img id="uploadedImageView" class="max-w-full h-48 object-contain mx-auto my-4 hidden border rounded-md" alt="תמונה שהועלתה">
+                <div id="materialRecognitionResponse" class="mt-4 p-4 bg-gray-50 rounded-md border border-gray-200 min-h-[100px] max-h-96 overflow-y-auto text-sm">
+                    <p class="text-gray-500">תוצאות הזיהוי יוצגו כאן.</p>
+                </div>
+                <div id="materialRecognitionLoading" class="text-center text-primary mt-2 hidden">
+                    <i class="ri-loader-4-line text-3xl animate-spin"></i>
+                    <p>מנתח תמונה...</p>
+                </div>
+                <p id="materialRecognitionError" class="text-red-500 mt-2 hidden">אירעה שגיאה. אנא נסה שוב.</p>
+            `;
+            const recognizeBtn = createButton('זהה חומרים', {
+                variant: 'accent',
+                className: 'w-full mt-4',
+                onClick: () => recognizeMaterial(contentDiv)
+            });
+            contentDiv.appendChild(recognizeBtn);
+
+            const materialIdentifierDialog = new Dialog('material-identifier-modal', 'זיהוי חומרים בתמונה', { content: contentDiv });
+            materialIdentifierDialog.render();
+
+            const imageUploadInput = contentDiv.querySelector('#materialImageUpload');
+            const uploadedImageView = contentDiv.querySelector('#uploadedImageView');
+
+            imageUploadInput.addEventListener('change', (event) => {
+                const file = event.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = (e) => {
+                        uploadedImageView.src = e.target.result;
+                        uploadedImageView.classList.remove('hidden');
+                    };
+                    reader.readAsDataURL(file);
+                } else {
+                    uploadedImageView.classList.add('hidden');
+                    uploadedImageView.src = '';
+                }
+            });
+        }
+
+        async function recognizeMaterial(contentDiv) {
+            const imageUploadInput = contentDiv.querySelector('#materialImageUpload');
+            const materialRecognitionResponse = contentDiv.querySelector('#materialRecognitionResponse');
+            const materialRecognitionLoading = contentDiv.querySelector('#materialRecognitionLoading');
+            const materialRecognitionError = contentDiv.querySelector('#materialRecognitionError');
+
+            const file = imageUploadInput.files[0];
+            if (!file) {
+                materialRecognitionResponse.innerHTML = '<p class="text-red-500">אנא העלה תמונה.</p>';
+                return;
+            }
+
+            materialRecognitionLoading.classList.remove('hidden');
+            materialRecognitionError.classList.add('hidden');
+            materialRecognitionResponse.innerHTML = '';
+
+            try {
+                // Read file as base64 for Gemini Vision API (if using it client-side)
+                const base64Image = await new Promise((resolve, reject) => {
+                    const reader = new FileReader();
+                    reader.onload = () => resolve(reader.result.split(',')[1]); // Get base64 string
+                    reader.onerror = error => reject(error);
+                    reader.readAsDataURL(file);
+                });
+
+                // Gemini Vision API call (using gemini-pro-vision or gemini-1.0-pro-vision)
+                const prompt = "תאר את החומרים או המוצרים העיקריים בתמונה. אם ניתן, המלץ על סוגי מוצרים רלוונטיים שניתן למצוא בחנות חומרי בניין (לדוגמה, סוג ריצוף, צבע, כלי עבודה).";
+                const visionResponse = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-pro-vision:generateContent?key=${GEMINI_API_KEY}`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        contents: [{
+                            parts: [
+                                { text: prompt },
+                                { inline_data: { mime_type: file.type, data: base64Image } }
+                            ]
+                        }]
+                    }),
+                });
+
+                if (!visionResponse.ok) {
+                    const errorData = await visionResponse.json();
+                    console.error('Gemini Vision API Error:', errorData);
+                    throw new Error(`Gemini Vision API request failed: ${errorData.error.message || visionResponse.statusText}`);
+                }
+
+                const data = await visionResponse.json();
+                const responseText = data.candidates[0]?.content?.parts[0]?.text || 'לא הצלחתי לזהות חומרים בתמונה זו.';
+                materialRecognitionResponse.innerHTML = responseText;
+
+                // Optionally, add a step to search catalog based on identified materials
+                // For example: `renderProducts(responseText.split(' ').slice(0, 3).join(' '));`
+            } catch (error) {
+                console.error("Error recognizing material:", error);
+                materialRecognitionError.classList.remove('hidden');
+                materialRecognitionResponse.innerHTML = '<p class="text-red-500">אירעה שגיאה בזיהוי התמונה. ודא שהתמונה ברורה.</p>';
+            } finally {
+                materialRecognitionLoading.classList.add('hidden');
+            }
+        }
+    </script>
+</body>
+</html>
