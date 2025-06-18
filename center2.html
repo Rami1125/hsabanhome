@@ -30,6 +30,15 @@
             font-family: 'Assistant', sans-serif;
             overflow-x: hidden;
             background: linear-gradient(135deg, #f0f8ff 0%, #ffffff 100%);
+            /* NEW: Subtle animated background */
+            animation: gradient-animation 15s ease infinite;
+            background-size: 200% 200%;
+        }
+
+        @keyframes gradient-animation {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
         
         .secondary-font {
@@ -75,6 +84,28 @@
         }
         
         @keyframes shine {
+            0% { transform: translateX(-100%) rotate(45deg); }
+            100% { transform: translateX(100%) rotate(45deg); }
+        }
+
+        /* NEW: Shine effect for general elements */
+        .shine-effect-border {
+            position: relative;
+            overflow: hidden;
+            border-radius: 9999px; /* For rounded-full */
+        }
+        .shine-effect-border::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent);
+            transform: rotate(45deg);
+            animation: shine-slow 5s infinite; /* Slower shine for a subtle effect */
+        }
+        @keyframes shine-slow {
             0% { transform: translateX(-100%) rotate(45deg); }
             100% { transform: translateX(100%) rotate(45deg); }
         }
@@ -533,6 +564,71 @@
         .ai-tools-pulse {
             animation: pulse-blue 1.5s infinite;
         }
+
+        /* NEW: Category button styles for transitions */
+        .category-button {
+            transition: transform 0.3s ease-out, box-shadow 0.3s ease-out;
+        }
+        .category-button:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+        }
+
+        /* NEW: List view specific styles */
+        .products-list-view {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem; /* Adjust as needed for spacing between list items */
+        }
+        .products-list-view .product-card {
+            width: 100%; /* Full width for list items */
+            flex-direction: row; /* Arrange image and content horizontally */
+            text-align: right; /* RTL alignment */
+        }
+        .products-list-view .product-card .image-transition {
+            width: 150px; /* Fixed width for image in list view */
+            height: auto;
+            flex-shrink: 0; /* Prevent image from shrinking */
+            margin-left: 1rem; /* Space between image and text in RTL */
+        }
+        .products-list-view .product-card .p-4 {
+            flex-grow: 1; /* Allow content to take remaining space */
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .products-list-view .product-card .flex-justify-between.items-start {
+            align-items: center; /* Align items nicely in a row for list view */
+        }
+        .products-list-view .product-card .flex.justify-between.items-center.mt-auto {
+            flex-direction: row-reverse; /* Buttons to the right */
+            justify-content: flex-start;
+            gap: 0.5rem; /* Space between buttons */
+        }
+        .products-list-view .product-card .flex.justify-between.items-center.mt-auto button {
+            margin-left: 0; /* Reset default margin */
+            margin-right: 0.5rem; /* Add margin to the right for RTL buttons */
+        }
+        /* Mobile adjustments for list view */
+        @media (max-width: 639px) { /* Adjust for smaller screens in list view */
+            .products-list-view .product-card {
+                flex-direction: column; /* Stack image and text on small screens */
+                text-align: center;
+            }
+            .products-list-view .product-card .image-transition {
+                width: 100%;
+                margin-bottom: 1rem;
+                margin-left: 0;
+            }
+            .products-list-view .product-card .flex.justify-between.items-center.mt-auto {
+                flex-direction: column; /* Stack buttons vertically */
+                align-items: center;
+            }
+            .products-list-view .product-card .flex.justify-between.items-center.mt-auto button {
+                width: 100%; /* Full width buttons */
+                margin-right: 0;
+            }
+        }
     </style>
 </head>
 <body class="bg-gradient-to-br from-blue-50 to-white font-sans p-6">
@@ -543,13 +639,13 @@
                 <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSUVp7CP06twn9tobIG19ihDfKLm9MmowW73Q&s" alt="לוגו ח.סבן" class="h-12">
                 <h1 class="text-2xl font-bold text-primary mr-3">ח.סבן חומרי בניין</h1>
             </div>
-            
             <nav class="hidden md:flex space-x-6 space-x-reverse">
-                <a href="https://readdy.ai/home/20fb88f3-f689-4ee4-95ee-53c5efe8bc7d/f195f37e-9e34-4662-a971-05a152507a0f" data-readdy="true" class="text-gray-800 hover:text-primary highlight-hover py-2">ראשי</a>
-                <a href="#" class="text-primary font-semibold highlight-hover py-2 border-b-2 border-primary">מוצרים</a>
-                <a href="#" class="text-gray-800 hover:text-primary highlight-hover py-2">מחלקת חישובים</a>
-                <a href="#" class="text-gray-800 hover:text-primary highlight-hover py-2">סניפים</a>
-                <a href="#" class="text-gray-800 hover:text-primary highlight-hover py-2">צור קשר</a>
+                <a href="https://rami1125.github.io/hsabanhome/index3.html" class="text-gray-800 hover:text-primary highlight-hover py-2">ראשי</a>
+                <a href="https://rami1125.github.io/hsabanhome/index3.html#vision" class="text-gray-800 hover:text-primary highlight-hover py-2">החזון</a>
+                <a href="https://rami1125.github.io/hsabanhome" class="text-primary font-semibold highlight-hover py-2 border-b-2 border-primary">מוצרים</a>
+                <a href="https://rami1125.github.io/hsabanhome/index3.html#calculator" class="text-gray-800 hover:text-primary highlight-hover py-2">מחלקת חישובים</a>
+                <a href="https://rami1125.github.io/hsabanhome/index3.html#branches" class="text-gray-800 hover:text-primary highlight-hover py-2">סניפים</a>
+                <a href="https://rami1125.github.io/hsabanhome/index3.html#testimonials" class="text-gray-800 hover:text-primary highlight-hover py-2">המלצות</a>
             </nav>
             
             <div class="flex items-center space-x-4 space-x-reverse">
@@ -598,13 +694,13 @@
         
         <!-- Mobile Menu -->
         <div id="mobile-menu" class="md:hidden glass-effect py-4 px-4 hidden">
-            <nav class="hidden md:flex space-x-6 space-x-reverse">
-                <a href="https://rami1125.github.io/hsabanhome/index3.html" class="text-gray-800 hover:text-primary highlight-hover py-2">ראשי</a>
-                <a href="#vision" class="text-gray-800 hover:text-primary highlight-hover py-2">החזון</a>
-                <a href="https://rami1125.github.io/hsabanhome" class="text-primary font-semibold highlight-hover py-2 border-b-2 border-primary">מוצרים</a>
-                <a href="#calculator" class="text-gray-800 hover:text-primary highlight-hover py-2">מחלקת חישובים</a>
-                <a href="#branches" class="text-gray-800 hover:text-primary highlight-hover py-2">סניפים</a>
-                <a href="#testimonials" class="text-gray-800 hover:text-primary highlight-hover py-2">המלצות</a>
+               <nav class="flex flex-col space-y-3">
+                <a href="index.html" class="text-gray-800 hover:text-primary py-2 border-b border-gray-100">ראשי</a>
+                <a href="#vision" class="text-gray-800 hover:text-primary py-2 border-b border-gray-100">החזון</a>
+                <a href="https://rami1125.github.io/hsabanhome/" class="text-primary font-semibold py-2 border-b border-gray-100">מוצרים</a>
+                <a href="#calculator" class="text-gray-800 hover:text-primary py-2 border-b border-gray-100">מחלקת חישובים</a>
+                <a href="#branches" class="text-gray-800 hover:text-primary py-2 border-b border-gray-100">סניפים</a>
+                <a href="#testimonials" class="text-gray-800 hover:text-primary py-2">המלצות</a>
             </nav>
         </div>
     </header>
@@ -616,16 +712,20 @@
             <div class="w-4 h-4 flex items-center justify-center mx-1">
                 <i class="ri-arrow-left-s-line"></i>
             </div>
-            <span class="text-primary font-medium">קטלוג מוצרים</span>
+            <a href="#" onclick="clearCategoryFilter(); return false;" class="hover:text-primary" id="products-link">קטלוג מוצרים</a>
+            <div class="w-4 h-4 flex items-center justify-center mx-1 hidden" id="category-separator">
+                <i class="ri-arrow-left-s-line"></i>
+            </div>
+            <span class="text-primary font-medium" id="current-category-breadcrumb"></span>
         </div>
     </div>
 
     <!-- Main Content Area -->
     <div class="container mx-auto px-4 py-6">
         <div class="w-full">
-            <!-- Category Title and Sort (now full width) -->
+            <!-- Category Title and Sort -->
             <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6">
-                <h2 class="text-2xl font-bold text-gray-800 mb-3 sm:mb-0">כל המוצרים</h2>
+                <h2 class="text-2xl font-bold text-gray-800 mb-3 sm:mb-0" id="main-product-title">כל המוצרים</h2>
                 
                 <div class="flex flex-wrap gap-2">
                     <div class="glass-effect rounded-lg px-3 py-2 text-sm flex items-center">
@@ -646,10 +746,11 @@
                     <div class="glass-effect rounded-lg px-3 py-2 text-sm flex items-center">
                         <span class="text-gray-700 ml-2">הצג:</span>
                         <div class="flex items-center">
-                            <button class="w-8 h-8 flex items-center justify-center text-primary">
+                            <!-- NEW: Display mode buttons -->
+                            <button id="grid-view-button" onclick="setDisplayMode('grid')" class="w-8 h-8 flex items-center justify-center text-primary">
                                 <i class="ri-grid-line"></i>
                             </button>
-                            <button class="w-8 h-8 flex items-center justify-center text-gray-400">
+                            <button id="list-view-button" onclick="setDisplayMode('list')" class="w-8 h-8 flex items-center justify-center text-gray-400">
                                 <i class="ri-list-check"></i>
                             </button>
                         </div>
@@ -659,7 +760,7 @@
 
             <!-- NEW: Prominent Search Bar for the main catalog -->
             <div class="mb-8 relative">
-                <div class="glass-effect rounded-full flex items-center px-4 py-3 shadow-md focus-within:ring-2 focus-within:ring-primary transition-all duration-300">
+                <div class="glass-effect rounded-full flex items-center px-4 py-3 shadow-md focus-within:ring-2 focus-within:ring-primary transition-all duration-300 shine-effect-border" id="main-search-container">
                     <input type="text" id="main-search-input" placeholder="חיפוש מהיר של מוצרים בקטלוג..." 
                            class="bg-transparent border-none outline-none text-base w-full pr-4" dir="rtl">
                     <div class="w-6 h-6 flex items-center justify-center text-primary">
@@ -670,14 +771,16 @@
             </div>
 
             <!-- Hero Image Section - Now dynamic -->
-            <div class="mb-8">
+            <div class="mb-8" id="category-hero-section">
+                <h3 class="text-xl font-bold text-gray-800 mb-4 text-center">מחלקות מובילות</h3>
                 <div class="hero-image-grid" id="dynamic-hero-categories">
-                    <!-- Dynamic content will be inserted here -->
+                    <!-- Dynamic category cards will be inserted here -->
                 </div>
             </div>
             
             <main>
-                <div id="products-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-6"></div>
+                <!-- Products Grid/List Container - Classes are set by JavaScript -->
+                <div id="products-container" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-6"></div>
             </main>
 
             <!-- Pagination -->
@@ -733,6 +836,10 @@
                     <button onclick="toggleDescriptionGenerator()" class="bg-indigo-600 text-white px-4 py-2 rounded-button hover:bg-indigo-700 transition shine-button text-sm product-modal-ai-button">
                         <i class="ri-text-wrap ri-lg ml-2"></i> תיאור משופר
                     </button>
+                    <!-- NEW button for LLM feature: Installation Guide -->
+                    <button onclick="getInstallationGuide()" class="bg-blue-800 text-white px-4 py-2 rounded-button hover:bg-blue-900 transition shine-button text-sm product-modal-ai-button">
+                        <i class="ri-tools-fill ri-lg ml-2"></i> מדריך התקנה
+                    </button>
                 </div>
 
                 <!-- Area to display LLM response for usage ideas -->
@@ -741,7 +848,7 @@
                         <p>רעיונות לשימוש במוצר יופיעו כאן...</p>
                     </div>
                     <div class="flex gap-2 mt-4 justify-center">
-                        <button onclick="printAIContent('רעיונות לשימוש במוצר', currentProductForModal.title, currentProductForModal.image, document.getElementById('usage-ideas-response').innerHTML)" class="bg-gray-200 text-gray-700 px-4 py-2 rounded-button hover:bg-gray-300 transition text-xs flex items-center"><i class="ri-printer-line ml-1"></i> הדפסה / שמירה</button>
+                        <button onclick="printAIContent('רעיונות לשימוש במוצר', currentProductForModal.title, currentProductForModal.image, encodeURIComponent(document.getElementById('usage-ideas-response').innerHTML))" class="bg-gray-200 text-gray-700 px-4 py-2 rounded-button hover:bg-gray-300 transition text-xs flex items-center"><i class="ri-printer-line ml-1"></i> הדפסה / שמירה</button>
                         <button onclick="shareProductAIResponse('usage-ideas-response')" class="bg-green-500 text-white px-4 py-2 rounded-button hover:bg-green-600 transition text-xs flex items-center"><i class="ri-whatsapp-line ml-1"></i> שלח ל-WhatsApp</button>
                     </div>
                 </div>
@@ -759,7 +866,7 @@
                         <p>סיכום ותכונות מפתח יופיעו כאן...</p>
                     </div>
                     <div class="flex gap-2 mt-4 justify-center">
-                        <button onclick="printAIContent('סיכום ותכונות מפתח של המוצר', currentProductForModal.title, currentProductForModal.image, document.getElementById('summary-features-response').innerHTML)" class="bg-gray-200 text-gray-700 px-4 py-2 rounded-button hover:bg-gray-300 transition text-xs flex items-center"><i class="ri-printer-line ml-1"></i> הדפסה / שמירה</button>
+                        <button onclick="printAIContent('סיכום ותכונות מפתח של המוצר', currentProductForModal.title, currentProductForModal.image, encodeURIComponent(document.getElementById('summary-features-response').innerHTML))" class="bg-gray-200 text-gray-700 px-4 py-2 rounded-button hover:bg-gray-300 transition text-xs flex items-center"><i class="ri-printer-line ml-1"></i> הדפסה / שמירה</button>
                         <button onclick="shareProductAIResponse('summary-features-response')" class="bg-green-500 text-white px-4 py-2 rounded-button hover:bg-green-600 transition text-xs flex items-center"><i class="ri-whatsapp-line ml-1"></i> שלח ל-WhatsApp</button>
                     </div>
                 </div>
@@ -777,7 +884,7 @@
                         <p>המלצות למוצרים קשורים יופיעו כאן...</p>
                     </div>
                     <div class="flex gap-2 mt-4 justify-center">
-                        <button onclick="printAIContent('מוצרים קשורים למוצר', currentProductForModal.title, currentProductForModal.image, document.getElementById('related-products-response').innerHTML)" class="bg-gray-200 text-gray-700 px-4 py-2 rounded-button hover:bg-gray-300 transition text-xs flex items-center"><i class="ri-printer-line ml-1"></i> הדפסה / שמירה</button>
+                        <button onclick="printAIContent('מוצרים קשורים למוצר', currentProductForModal.title, currentProductForModal.image, encodeURIComponent(document.getElementById('related-products-response').innerHTML))" class="bg-gray-200 text-gray-700 px-4 py-2 rounded-button hover:bg-gray-300 transition text-xs flex items-center"><i class="ri-printer-line ml-1"></i> הדפסה / שמירה</button>
                         <button onclick="shareProductAIResponse('related-products-response')" class="bg-green-500 text-white px-4 py-2 rounded-button hover:bg-green-600 transition text-xs flex items-center"><i class="ri-whatsapp-line ml-1"></i> שלח ל-WhatsApp</button>
                     </div>
                 </div>
@@ -802,7 +909,7 @@
                         <p>התשובה לשאלתך תופיע כאן...</p>
                     </div>
                     <div class="flex gap-2 mt-4 justify-center">
-                        <button onclick="printAIContent('שאלות ותשובות על המוצר', currentProductForModal.title, currentProductForModal.image, document.getElementById('product-qa-response').innerHTML)" class="bg-gray-200 text-gray-700 px-4 py-2 rounded-button hover:bg-gray-300 transition text-xs flex items-center"><i class="ri-printer-line ml-1"></i> הדפסה / שמירה</button>
+                        <button onclick="printAIContent('שאלות ותשובות על המוצר', currentProductForModal.title, currentProductForModal.image, encodeURIComponent(document.getElementById('product-qa-response').innerHTML))" class="bg-gray-200 text-gray-700 px-4 py-2 rounded-button hover:bg-gray-300 transition text-xs flex items-center"><i class="ri-printer-line ml-1"></i> הדפסה / שמירה</button>
                         <button onclick="shareProductAIResponse('product-qa-response')" class="bg-green-500 text-white px-4 py-2 rounded-button hover:bg-green-600 transition text-xs flex items-center"><i class="ri-whatsapp-line ml-1"></i> שלח ל-WhatsApp</button>
                     </div>
                     <div id="product-qa-loading" class="hidden flex justify-center items-center mt-4">
@@ -827,7 +934,7 @@
                         <p>התיאור המשופר יופיע כאן...</p>
                     </div>
                     <div class="flex gap-2 mt-4 justify-center">
-                        <button onclick="printAIContent('תיאור מוצר משופר', currentProductForModal.title, currentProductForModal.image, document.getElementById('description-generator-response').innerHTML)" class="bg-gray-200 text-gray-700 px-4 py-2 rounded-button hover:bg-gray-300 transition text-xs flex items-center"><i class="ri-printer-line ml-1"></i> הדפסה / שמירה</button>
+                        <button onclick="printAIContent('תיאור מוצר משופר', currentProductForModal.title, currentProductForModal.image, encodeURIComponent(document.getElementById('description-generator-response').innerHTML))" class="bg-gray-200 text-gray-700 px-4 py-2 rounded-button hover:bg-gray-300 transition text-xs flex items-center"><i class="ri-printer-line ml-1"></i> הדפסה / שמירה</button>
                         <button onclick="shareProductAIResponse('description-generator-response')" class="bg-green-500 text-white px-4 py-2 rounded-button hover:bg-green-600 transition text-xs flex items-center"><i class="ri-whatsapp-line ml-1"></i> שלח ל-WhatsApp</button>
                     </div>
                     <div id="description-generator-loading" class="hidden flex justify-center items-center mt-4">
@@ -838,6 +945,25 @@
                         אירעה שגיאה ביצירת התיאור. אנא נסה שוב.
                     </div>
                 </div>
+
+                <!-- NEW area for Installation Guide -->
+                <div id="installation-guide-container" class="mt-6 hidden">
+                    <div id="installation-guide-response" class="p-4 bg-gray-50 rounded-lg border border-gray-200 min-h-[50px] flex flex-col items-center justify-center text-gray-700 text-sm leading-relaxed">
+                        <p>מדריך ההתקנה יופיע כאן...</p>
+                    </div>
+                    <div class="flex gap-2 mt-4 justify-center">
+                        <button onclick="printAIContent('מדריך התקנה למוצר', currentProductForModal.title, currentProductForModal.image, encodeURIComponent(document.getElementById('installation-guide-response').innerHTML))" class="bg-gray-200 text-gray-700 px-4 py-2 rounded-button hover:bg-gray-300 transition text-xs flex items-center"><i class="ri-printer-line ml-1"></i> הדפסה / שמירה</button>
+                        <button onclick="shareProductAIResponse('installation-guide-response')" class="bg-green-500 text-white px-4 py-2 rounded-button hover:bg-green-600 transition text-xs flex items-center"><i class="ri-whatsapp-line ml-1"></i> שלח ל-WhatsApp</button>
+                    </div>
+                </div>
+                <div id="installation-guide-loading" class="hidden flex justify-center items-center mt-4">
+                    <div class="loader"></div>
+                    <span class="mr-2 text-blue-800">טוען מדריך התקנה...</span>
+                </div>
+                <div id="installation-guide-error" class="hidden text-red-600 text-center mt-4">
+                    אירעה שגיאה בטעינת מדריך ההתקנה. אנא נסה שוב.
+                </div>
+
 
             </div> <!-- End of modal-content-scrollable -->
         </div>
@@ -890,7 +1016,7 @@
                         <p>המלצות החומרים יופיעו כאן...</p>
                     </div>
                     <div class="flex gap-2 mt-4 justify-center">
-                        <button onclick="printAIContent('המלצות חומרים לפרויקט', 'פרויקט: ' + document.getElementById('project-description').value, null, document.getElementById('project-materials-response').innerHTML)" class="bg-gray-200 text-gray-700 px-4 py-2 rounded-button hover:bg-gray-300 transition text-xs flex items-center"><i class="ri-printer-line ml-1"></i> הדפסה / שמירה</button>
+                        <button onclick="printAIContent('המלצות חומרים לפרויקט', 'פרויקט: ' + document.getElementById('project-description').value, null, encodeURIComponent(document.getElementById('project-materials-response').innerHTML))" class="bg-gray-200 text-gray-700 px-4 py-2 rounded-button hover:bg-gray-300 transition text-xs flex items-center"><i class="ri-printer-line ml-1"></i> הדפסה / שמירה</button>
                         <button onclick="shareProjectPlannerWhatsApp()" class="bg-green-500 text-white px-4 py-2 rounded-button hover:bg-green-600 transition text-xs flex items-center"><i class="ri-whatsapp-line ml-1"></i> שלח ל-WhatsApp</button>
                     </div>
                 </div>
@@ -940,7 +1066,7 @@
                         <p>השוואת המוצרים תופיע כאן...</p>
                     </div>
                     <div class="flex gap-2 mt-4 justify-center">
-                        <button onclick="printAIContent('השוואת מוצרים', document.getElementById('product1-name').value + ' ו-' + document.getElementById('product2-name').value, null, document.getElementById('product-comparison-response').innerHTML)" class="bg-gray-200 text-gray-700 px-4 py-2 rounded-button hover:bg-gray-300 transition text-xs flex items-center"><i class="ri-printer-line ml-1"></i> הדפסה / שמירה</button>
+                        <button onclick="printAIContent('השוואת מוצרים', document.getElementById('product1-name').value + ' ו-' + document.getElementById('product2-name').value, null, encodeURIComponent(document.getElementById('product-comparison-response').innerHTML))" class="bg-gray-200 text-gray-700 px-4 py-2 rounded-button hover:bg-gray-300 transition text-xs flex items-center"><i class="ri-printer-line ml-1"></i> הדפסה / שמירה</button>
                         <button onclick="shareComparisonWhatsApp()" class="bg-green-500 text-white px-4 py-2 rounded-button hover:bg-green-600 transition text-xs flex items-center"><i class="ri-whatsapp-line ml-1"></i> שלח ל-WhatsApp</button>
                     </div>
                 </div>
@@ -997,9 +1123,13 @@
                     <div id="order-suggestions-response" class="p-4 bg-gray-50 rounded-lg border border-gray-200 min-h-[100px] flex flex-col items-center justify-center text-gray-700 text-sm leading-relaxed">
                         <p>המלצות ההזמנה יופיעו כאן...</p>
                     </div>
+                    <!-- Warning Message for Order Assistant -->
+                    <div id="order-assistant-warning" class="text-red-600 text-xs text-center mt-4 hidden">
+                        * כמויות מבוססות על חישוב לא מדויק ואין להשתמש בכלי לבסיס מקצועי ותמיד מומלץ להיתייעץ עם איש מקצוע מורשה.
+                    </div>
                     <div class="flex flex-wrap gap-2 mt-4 justify-center">
                         <button onclick="addSuggestedItemsToCart()" class="bg-primary text-white px-4 py-2 rounded-button hover:bg-primary/90 transition text-xs flex items-center"><i class="ri-shopping-cart-line ml-1"></i> הוסף לעגלה</button>
-                        <button onclick="printAIContent('המלצות להרכבת הזמנה', 'הזמנה מותאמת אישית', null, document.getElementById('order-suggestions-response').innerHTML + '<br><br><b>פרטי לקוח:</b><br>' + document.getElementById('order-customer-name').value + '<br>' + document.getElementById('order-customer-phone').value + '<br>' + document.getElementById('order-customer-address').value + '<br>סוג מנוף: ' + document.getElementById('crane-type').value + '<br>הערות: ' + document.getElementById('order-assistant-notes').value)" class="bg-gray-200 text-gray-700 px-4 py-2 rounded-button hover:bg-gray-300 transition text-xs flex items-center"><i class="ri-printer-line ml-1"></i> הדפסה / שמירה</button>
+                        <button onclick="printAIContent('המלצות להרכבת הזמנה', 'הזמנה מותאמת אישית', null, encodeURIComponent(document.getElementById('order-suggestions-response').innerHTML + '<br><br><p style=\'font-size:0.8em; color:red;\'>' + document.getElementById('order-assistant-warning').innerHTML + '</p><br><b>פרטי לקוח:</b><br>' + document.getElementById('order-customer-name').value + '<br>' + document.getElementById('order-customer-phone').value + '<br>' + document.getElementById('order-customer-address').value + '<br>סוג מנוף: ' + document.getElementById('crane-type').value + '<br>הערות: ' + document.getElementById('order-assistant-notes').value))" class="bg-gray-200 text-gray-700 px-4 py-2 rounded-button hover:bg-gray-300 transition text-xs flex items-center"><i class="ri-printer-line ml-1"></i> הדפסה / שמירה</button>
                         <button onclick="shareOrderAssistantWhatsApp()" class="bg-green-500 text-white px-4 py-2 rounded-button hover:bg-green-600 transition text-xs flex items-center"><i class="ri-whatsapp-line ml-1"></i> שלח ל-WhatsApp</button>
                     </div>
                 </div>
@@ -1061,24 +1191,19 @@
                     <h3 class="text-xl font-bold mb-4">קישורים מהירים</h3>
                     <ul class="space-y-2">
                         <li><a href="https://readdy.ai/home/20fb88f3-f689-4ee4-95ee-53c5efe8bc7d/f195f37e-9e34-4662-a971-05a152507a0f" data-readdy="true" class="text-white/90 hover:text-white">דף הבית</a></li>
-                        <li><a href="#" class="text-white/90 hover:text-white">החזון שלנו</a></li>
-                        <li><a href="#" class="text-white/90 hover:text-white">מוצרים</a></li>
-                        <li><a href="#" class="text-white/90 hover:text-white">מחלקת חישובים</a></li>
-                        <li><a href="#" class="text-white/90 hover:text-white">סניפים</a></li>
-                        <li><a href="#" class="text-white/90 hover:text-white">המלצות</a></li>
+                        <li><a href="javascript:void(0);" class="text-white/90 hover:text-white">החזון שלנו</a></li>
+                        <li><a href="javascript:void(0);" class="text-white/90 hover:text-white">מוצרים</a></li>
+                        <li><a href="javascript:void(0);" class="text-white/90 hover:text-white">מחלקת חישובים</a></li>
+                        <li><a href="javascript:void(0);" class="text-white/90 hover:text-white">סניפים</a></li>
+                        <li><a href="javascript:void(0);" class="text-white/90 hover:text-white">המלצות</a></li>
                     </ul>
                 </div>
                 
                 <!-- Column 3 - Categories (Hardcoded for footer, dynamic in sidebar) -->
                 <div>
                     <h3 class="text-xl font-bold mb-4">קטגוריות מוצרים</h3>
-                    <ul class="space-y-2">
-                        <li><a href="#" class="text-white/90 hover:text-white">חומרי בניין</a></li>
-                        <li><a href="#" class="text-white/90 hover:text-white">חשמל ותאורה</a></li>
-                        <li><a href="#" class="text-white/90 hover:text-white">אינסטלציה</a></li>
-                        <li><a href="#" class="text-white/90 hover:text-white">צבעים וציפויים</a></li>
-                        <li><a href="#" class="text-white/90 hover:text-white">כלי עבודה</a></li>
-                        <li><a href="#" class="text-white/90 hover:text-white">בטיחות בעבודה</a></li>
+                    <ul class="space-y-2" id="footer-categories">
+                        <!-- Dynamic categories will be populated here -->
                     </ul>
                 </div>
                 
@@ -1163,6 +1288,8 @@
         let currentProductForModal = null; // Stores product details when modal is opened
         let allProducts = []; // Stores all fetched products for filtering
         let filteredProducts = []; // Stores products after applying filters
+        let currentCategory = null; // Stores the currently selected category
+        let displayMode = 'grid'; // NEW: Default display mode
 
         // Object to hold current filter selections
         let currentFilters = {
@@ -1235,23 +1362,38 @@
                 .then(res => res.json())
                 .then(products => {
                     allProducts = products; // Store all products
-                    console.log("כל המוצרים שנטענו:", allProducts); // Log all fetched products
-                    filteredProducts = [...allProducts]; // Initialize filtered products
-                    renderProducts(filteredProducts); // Render all products initially
-                    populateHeroCategories(); // Populate the Hero Image Section
+                    console.log("All fetched products:", allProducts); // Log all fetched products
+                    
+                    // NEW: Check for category parameter in URL on load
+                    const urlParams = new URLSearchParams(window.location.search);
+                    const categoryParam = urlParams.get('category');
+
+                    if (categoryParam) {
+                        filterAndDisplayCategory(decodeURIComponent(categoryParam));
+                    } else {
+                        filteredProducts = [...allProducts]; // Initialize filtered products with all products
+                        renderProducts(filteredProducts); // Render all products initially
+                        populateHeroCategories(); // Populate the Hero Image Section
+                        updateBreadcrumbs('כל המוצרים', false); // Update breadcrumbs for all products view
+                    }
 
                     // Initialize autocomplete for product comparison inputs (in modal)
                     setupProductComparisonAutocomplete();
                     // Initialize autocomplete for the main search input
                     setupMainSearchAutocomplete();
+                    // Populate footer categories
+                    populateFooterCategories();
                 })
                 .catch(err => {
-                    console.error("שגיאה בטעינת מוצרים:", err);
-                    document.getElementById('products-grid').innerHTML = "<p class='text-red-600'>שגיאה בטעינת מוצרים. אנא נסה שוב מאוחר יותר.</p>";
+                    console.error("Error loading products:", err);
+                    document.getElementById('products-container').innerHTML = "<p class='text-red-600'>שגיאה בטעינת מוצרים. אנא נסה שוב מאוחר יותר.</p>";
                 });
 
             // Attach event listener for sort select
             document.getElementById('sort-select').addEventListener('change', applyFilters);
+
+            // Set initial display mode for buttons
+            updateDisplayModeButtons();
 
             // Show welcome popup on page load
             showWelcomePopup();
@@ -1304,37 +1446,79 @@
             }, 500); // Match CSS transition duration
         }
 
+        /**
+         * Sets the display mode for products (grid or list).
+         * @param {string} mode - 'grid' or 'list'.
+         */
+        function setDisplayMode(mode) {
+            displayMode = mode;
+            applyFilters(); // Re-render products with new display mode
+            updateDisplayModeButtons(); // Update button active state
+        }
 
         /**
-         * Renders products to the products grid.
+         * Updates the visual state of the display mode buttons.
+         */
+        function updateDisplayModeButtons() {
+            const gridButton = document.getElementById('grid-view-button');
+            const listButton = document.getElementById('list-view-button');
+
+            if (displayMode === 'grid') {
+                gridButton.classList.add('text-primary');
+                gridButton.classList.remove('text-gray-400');
+                listButton.classList.add('text-gray-400');
+                listButton.classList.remove('text-primary');
+            } else {
+                listButton.classList.add('text-primary');
+                listButton.classList.remove('text-gray-400');
+                gridButton.classList.add('text-gray-400');
+                gridButton.classList.remove('text-primary');
+            }
+        }
+
+
+        /**
+         * Renders products to the products grid/list.
          * @param {Array} productsToRender - The array of products to display.
          */
         function renderProducts(productsToRender) {
-            const grid = document.getElementById('products-grid');
+            const container = document.getElementById('products-container');
+            
+            // Clear existing classes and add base layout classes
+            container.className = ''; // Reset all classes
+            container.classList.add('gap-6'); // Always apply gap
+
+            if (displayMode === 'grid') {
+                container.classList.add('grid', 'grid-cols-1', 'sm:grid-cols-2', 'md:grid-cols-3', 'xl:grid-cols-4');
+            } else { // list mode
+                container.classList.add('products-list-view'); // Custom class for list view
+            }
+
             if (productsToRender.length === 0) {
-                grid.innerHTML = "<p class='text-gray-600 text-center col-span-full'>לא נמצאו מוצרים התואמים לסינון.</p>";
+                container.innerHTML = "<p class='text-gray-600 text-center col-span-full'>לא נמצאו מוצרים התואמים לסינון.</p>";
                 return;
             }
-            grid.innerHTML = productsToRender.map(prod => `
+
+            container.innerHTML = productsToRender.map(prod => `
                 <div onclick="openModal('${encodeURIComponent(prod.title)}', '${encodeURIComponent(prod.description)}', '${encodeURIComponent(prod.image)}', '${encodeURIComponent(prod["price "] || prod.price || "—")}', '${encodeURIComponent(JSON.stringify(prod))}')"
-                    class="glass-card product-card cursor-pointer rounded-lg overflow-hidden shadow-md transition hover:shadow-xl bg-white">
-                    <div class="image-transition h-56 relative">
-                        <img src="${prod.image}" onerror="this.onerror=null;this.src='https://placehold.co/300x200/cccccc/000000?text=תמונה+לא+זמינה';" alt="${prod.title}" class="w-full h-full object-cover object-top">
+                    class="glass-card product-card cursor-pointer rounded-lg overflow-hidden shadow-md transition hover:shadow-xl bg-white ${displayMode === 'list' ? 'flex flex-row items-center p-4' : ''}">
+                    <div class="image-transition ${displayMode === 'list' ? 'w-1/4 h-32 flex-shrink-0' : 'h-56'} relative">
+                        <img src="${prod.image}" onerror="this.onerror=null;this.src='https://placehold.co/600x400/CCCCCC/FFFFFF?text=No+Image'; /* Placeholder image */" alt="${prod.title}" class="w-full h-full object-cover object-top rounded-md ${displayMode === 'list' ? 'ml-4' : ''}">
                         <div class="absolute inset-0 bg-black/10 opacity-0 hover:opacity-100 transition duration-300"></div>
                     </div>
-                    <div class="p-4">
-                        <div class="flex justify-between items-start mb-2">
+                    <div class="p-4 flex-1">
+                        <div class="flex justify-between items-start mb-2 ${displayMode === 'list' ? 'flex-row-reverse items-center' : ''}">
                             <h3 class="text-lg font-bold text-gray-800">${prod.title}</h3>
-                            <div class="flex items-center space-x-1 space-x-reverse">
+                            <div class="flex items-center space-x-1 space-x-reverse ${displayMode === 'list' ? 'ml-4' : ''}">
                                 <span class="bg-primary/10 text-primary text-xs px-2 py-1 rounded-full">${prod.availability || 'במלאי'}</span>
                                 ${prod.category ? `<span class="bg-blue-100 text-blue-700 text-xs px-2 py-1 rounded-full">${prod.category}</span>` : ''}
                             </div>
                         </div>
                         <p class="text-gray-600 text-sm mb-3">${prod.description}</p>
-                        <div class="flex justify-between items-center mt-auto">
+                        <div class="flex justify-between items-center mt-auto ${displayMode === 'list' ? 'flex-row-reverse justify-start gap-2' : ''}">
                             ${prod.videoUrl ? `
                                 <button onclick='event.stopPropagation(); window.open("${prod.videoUrl}", "_blank");'
-                                    class="bg-secondary text-primary px-3 py-2 rounded-button text-xs hover:bg-secondary/80 transition shine-button ml-2">
+                                    class="bg-secondary text-primary px-3 py-2 rounded-button text-xs hover:bg-secondary/80 transition shine-button ${displayMode === 'list' ? 'ml-2' : 'ml-2'}">
                                     צפה בסרטון
                                 </button>
                             ` : ''}
@@ -1348,30 +1532,13 @@
         }
 
         /**
-         * The populateCategories, addCategoryFilterListeners, addFilterListeners are no longer needed
-         * as the sidebar filter has been removed. Retaining placeholder for future if needed.
-         */
-        function populateCategories(products) {
-            // This function is effectively deprecated with the removal of the sidebar categories.
-            // Keeping it as a placeholder.
-            const categoriesContainer = document.getElementById('sidebar-categories');
-            if (categoriesContainer) {
-                categoriesContainer.innerHTML = `<li><p class="text-gray-600">אין קטגוריות זמינות כרגע.</p></li>`;
-            }
-        }
-        function addCategoryFilterListeners() {
-            // This function is effectively deprecated.
-        }
-        function addFilterListeners() {
-            // This function is effectively deprecated.
-        }
-
-        /**
          * Applies all active filters to the product list and re-renders the grid.
-         * Now primarily filters by searchTerm and applies sorting.
+         * Now primarily filters by searchTerm and applies sorting, also considers currentCategory.
          */
         function applyFilters() {
-            let tempFilteredProducts = [...allProducts]; // Start with all products
+            let tempFilteredProducts = currentCategory ? 
+                                       allProducts.filter(p => p.category === currentCategory) : 
+                                       [...allProducts]; // Start with all products or current category products
 
             // Filter by search term from the main search input
             if (currentFilters.searchTerm) {
@@ -1388,11 +1555,16 @@
                 tempFilteredProducts.sort((a, b) => (parseFloat(a["price "] || a.price) || 0) - (parseFloat(b["price "] || b.price) || 0));
             } else if (sortOrder === 'price-desc') {
                 tempFilteredProducts.sort((a, b) => (parseFloat(b["price "] || b.price) || 0) - (parseFloat(a["price "] || a.price) || 0));
+            } else if (sortOrder === 'popularity') {
+                // Assuming 'popularity' is a numeric field in your product data, or a placeholder
+                tempFilteredProducts.sort((a, b) => (b.popularity || 0) - (a.popularity || 0));
+            } else if (sortOrder === 'newest') {
+                // For 'newest', if no specific date/timestamp field, we can sort by index or a unique ID.
+                // For demonstration, sorting by an assumed 'id' field, or simply reversing order of initial fetch
+                // (which often implies newest if data is appended chronologically).
+                // Let's assume a 'productId' exists for stable sorting.
+                tempFilteredProducts.sort((a, b) => (b.productId || 0) - (a.productId || 0)); 
             }
-            // Add sorting by popularity or newest if applicable, based on your data structure
-            // else if (sortOrder === 'popularity') {
-            //     tempFilteredProducts.sort((a, b) => (b.popularity || 0) - (a.popularity || 0));
-            // }
 
             filteredProducts = tempFilteredProducts; // Update global filtered list
             renderProducts(filteredProducts); // Render filtered products
@@ -1406,23 +1578,62 @@
             currentFilters = {
                 searchTerm: ''
             };
+            currentCategory = null; // Clear active category
 
             // Reset UI elements
-            // Sort select
-            document.getElementById('sort-select').value = 'popularity';
-            
-            // Main search input
-            const mainSearchInput = document.getElementById('main-search-input');
-            if (mainSearchInput) {
-                mainSearchInput.value = ''; // Clear search input
-            }
-            // Hide any autocomplete suggestions
-            const mainSearchSuggestions = document.getElementById('main-search-suggestions');
-            if (mainSearchSuggestions) {
-                mainSearchSuggestions.classList.add('hidden');
-            }
+            document.getElementById('sort-select').value = 'popularity'; // Sort select
+            document.getElementById('main-search-input').value = ''; // Main search input
+            document.getElementById('main-search-suggestions').classList.add('hidden'); // Hide any autocomplete suggestions
+            document.getElementById('category-hero-section').classList.remove('hidden'); // Show category section
+            updateBreadcrumbs('כל המוצרים', false); // Reset breadcrumbs
 
-            applyFilters(); // Apply cleared filters
+            applyFilters(); // Apply cleared filters (will now show all products)
+            document.getElementById('main-product-title').innerText = "כל המוצרים"; // Reset main title
+        }
+
+        /**
+         * Filters products by a specific category and updates the UI.
+         * @param {string} categoryName - The name of the category to filter by.
+         */
+        function filterAndDisplayCategory(categoryName) {
+            currentCategory = categoryName;
+            currentFilters.searchTerm = ''; // Clear search term when filtering by category
+            document.getElementById('main-search-input').value = ''; // Clear search input UI
+            document.getElementById('main-product-title').innerText = categoryName; // Update main title
+            document.getElementById('category-hero-section').classList.add('hidden'); // Hide category section when viewing products
+            updateBreadcrumbs(categoryName, true); // Update breadcrumbs
+            applyFilters(); // Apply filters, now including the category
+        }
+
+        /**
+         * Clears the current category filter and returns to displaying all products.
+         */
+        function clearCategoryFilter() {
+            clearAllFilters(); // This will clear category and search filters
+            document.getElementById('category-hero-section').classList.remove('hidden'); // Show categories again
+        }
+
+        /**
+         * Updates the breadcrumbs based on the current view.
+         * @param {string} currentDisplayName - The display name for the current section (e.g., "כל המוצרים" or a category name).
+         * @param {boolean} isCategoryActive - True if a specific category is active, false otherwise.
+         */
+        function updateBreadcrumbs(currentDisplayName, isCategoryActive) {
+            const productsLink = document.getElementById('products-link');
+            const categorySeparator = document.getElementById('category-separator');
+            const currentCategoryBreadcrumb = document.getElementById('current-category-breadcrumb');
+
+            if (isCategoryActive) {
+                productsLink.setAttribute('href', '#'); // Make the "מוצרים" link clear filters
+                productsLink.onclick = clearCategoryFilter;
+                categorySeparator.classList.remove('hidden');
+                currentCategoryBreadcrumb.textContent = currentDisplayName;
+            } else {
+                productsLink.setAttribute('href', 'https://rami1125.github.io/hsabanhome/'); // Original link to the main page
+                productsLink.onclick = null; // Remove the onclick listener
+                categorySeparator.classList.add('hidden');
+                currentCategoryBreadcrumb.textContent = '';
+            }
         }
 
         // Product Modal functions
@@ -1470,13 +1681,19 @@
 
             document.getElementById('product-qa-section').classList.add('hidden');
             document.getElementById('product-qa-input').value = '';
+            document.getElementById('product-qa-response').innerHTML = '<p>התשובה לשאלתך תופיע כאן...</p>'; // Reset content
             document.getElementById('product-qa-loading').classList.add('hidden');
             document.getElementById('product-qa-error').classList.add('hidden');
 
             document.getElementById('description-generator-section').classList.add('hidden');
             document.getElementById('description-generator-input').value = '';
+            document.getElementById('description-generator-response').innerHTML = '<p>התיאור המשופר יופיע כאן...</p>'; // Reset content
             document.getElementById('description-generator-loading').classList.add('hidden');
             document.getElementById('description-generator-error').classList.add('hidden');
+
+            document.getElementById('installation-guide-container').classList.add('hidden'); // NEW
+            document.getElementById('installation-guide-loading').classList.add('hidden'); // NEW
+            document.getElementById('installation-guide-error').classList.add('hidden'); // NEW
         }
 
         // Cart functions
@@ -1590,7 +1807,8 @@
             const notes = document.getElementById('order-notes').value;
 
             if (!name || !phone) {
-                alert("אנא מלא שם מלא ומספר טלפון."); // Changed to alert for simplicity, consider custom modal for better UX
+                // Using a simple alert for brevity, consider a custom modal for better UX
+                alert("אנא מלא שם מלא ומספר טלפון."); 
                 return;
             }
 
@@ -1622,58 +1840,51 @@
             cart.length = 0; // Clear the cart array
             updateCartUI();
             closeCartModal();
-            alert("ההזמנה נשלחה בהצלחה ל-WhatsApp!"); // Changed to alert for simplicity
+            // Using a simple alert for brevity, consider a custom modal for better UX
+            alert("ההזמנה נשלחה בהצלחה ל-WhatsApp!"); 
         }
 
         // Function to dynamically populate the hero categories section
         function populateHeroCategories() {
             const heroContainer = document.getElementById('dynamic-hero-categories');
             
-            // Define your categories for the hero section here
-            // You can add as many as you like
-            const heroCategories = [
-                {
-                    name: "חומרי בניין",
-                    imageUrl: "https://img.d.co.il/Umbraco/1509/795x348.3402a7cf-cb70-4066-8ed8-bf55d2795e01.png",
-                    linkUrl: "building_materials.html" // Link to the specific category page
-                },
-                {
-                    name: "חשמל ותאורה",
-                    imageUrl: "https://readdy.ai/api/search-image?query=Electrical%2520socket%252C%2520power%2520outlet%252C%2520electrical%2520supplies%252C%2520detailed%2520product%2520photography%2520on%2520clean%252C%2520white%2520background%252C%2520soft%2520blue%2520lighting&width=600&height=400&seq=20&orientation=landscape",
-                    linkUrl: "catalog.html?category=חשמל ותאורה" // Example: link to main catalog with pre-selected category
-                },
-                {
-                    name: "כלי עבודה",
-                    imageUrl: "https://readdy.ai/api/search-image?query=Professional%2520power%2520drill%252C%2520construction%2520tool%252C%2520detailed%2520product%2520photography%2520on%2520clean%252C%2520high%2520quality%2520tool%252C%2520soft%2520blue%2520lighting&width=600&height=400&seq=15&orientation=landscape",
-                    linkUrl: "catalog.html?category=כלי עבודה"
-                },
-                {
-                    name: "צבעים וציפויים",
-                    imageUrl: "https://readdy.ai/api/search-image?query=Paint%2520buckets%2520and%2520cans%252C%2520professional%2520painting%2520supplies%252C%2520various%2520colors%252C%2520clean%2520white%2520background%252C%2520detailed%2520product%2520photography%252C%2520soft%2520blue%2520lighting&width=600&height=400&seq=14&orientation=landscape",
-                    linkUrl: "catalog.html?category=צבעים וציפויים"
-                },
-                {
-                    name: "אינסטלציה",
-                    imageUrl: "https://readdy.ai/api/search-image?query=Plumbing%2520pipes%252C%2520fittings%252C%2520and%2520tools%2520on%2520a%2520clean%2520background%252C%2520detailed%2520product%2520photography&width=600&height=400&seq=10&orientation=landscape",
-                    linkUrl: "catalog.html?category=אינסטלציה"
-                },
-                {
-                    name: "בטיחות בעבודה",
-                    imageUrl: "https://readdy.ai/api/search-image?query=Construction%2520safety%2520equipment%252C%2520hard%2520hat%252C%2520safety%2520vest%252C%2520gloves%252C%2520detailed%2520on%2520white%2520background&width=600&height=400&seq=10&orientation=landscape",
-                    linkUrl: "catalog.html?category=בטיחות בעבודה"
-                }
-                // Add more categories as needed
-            ];
+            // Extract unique categories from allProducts
+            const categories = [...new Set(allProducts.map(p => p.category).filter(Boolean))];
+            
+            // Define sample image URLs for categories. In a real app, these would come from data.
+            const categoryImages = {
+                "חומרי בניין": "https://img.d.co.il/Umbraco/1509/795x348.3402a7cf-cb70-4066-8ed8-bf55d2795e01.png",
+                "חשמל ותאורה": "https://placehold.co/600x400/4CAF50/FFFFFF?text=Electrical+%26+Lighting",
+                "כלי עבודה": "https://placehold.co/600x400/FFC107/000000?text=Tools",
+                "צבעים וציפויים": "https://placehold.co/600x400/9C27B0/FFFFFF?text=Paints+%26+Coatings",
+                "אינסטלציה": "https://placehold.co/600x400/00BCD4/FFFFFF?text=Plumbing",
+                "בטיחות בעבודה": "https://placehold.co/600x400/F44336/FFFFFF?text=Safety+Equipment",
+                // Add more default images for categories if needed
+            };
 
-            heroContainer.innerHTML = heroCategories.map(cat => `
-                <div class="hero-image-item glass-card">
-                    <img src="${cat.imageUrl}" onerror="this.onerror=null;this.src='https://placehold.co/300x200/cccccc/000000?text=תמונה+לא+זמינה';" alt="${cat.name}">
+            // Filter out empty or undefined categories before mapping
+            heroContainer.innerHTML = categories.filter(cat => cat).map(cat => `
+                <div class="hero-image-item glass-card cursor-pointer category-button" onclick="filterAndDisplayCategory('${cat}')">
+                    <img src="${categoryImages[cat] || `https://placehold.co/600x400/CCCCCC/FFFFFF?text=${cat}`}" onerror="this.onerror=null;this.src='https://placehold.co/600x400/CCCCCC/FFFFFF?text=No+Image';" alt="${cat}">
                     <div class="hero-image-overlay">
-                        <a href="${cat.linkUrl}" class="bg-primary text-white px-4 py-2 rounded-button shine-button">לדף המוצר</a>
+                        <span class="text-white text-lg font-bold">${cat}</span>
                     </div>
                 </div>
             `).join('');
         }
+
+        /**
+         * Populates the categories list in the footer.
+         */
+        function populateFooterCategories() {
+            const footerCategoriesContainer = document.getElementById('footer-categories');
+            const categories = [...new Set(allProducts.map(p => p.category).filter(Boolean))];
+
+            footerCategoriesContainer.innerHTML = categories.map(cat => `
+                <li><a href="#" onclick="filterAndDisplayCategory('${cat}'); return false;" class="text-white/90 hover:text-white">${cat}</a></li>
+            `).join('');
+        }
+
 
         // Project Planner Modal functions
         function openProjectPlannerModal() {
@@ -1724,7 +1935,7 @@
                 chatHistory.push({ role: "user", parts: [{ text: prompt }] });
 
                 const payload = { contents: chatHistory };
-                const apiKey = "AIzaSyCNn7GZMsQPCdRSfgz_o08M1YV63CkA3Ow"; // Canvas will automatically provide the API key
+                const apiKey = ""; 
                 const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
 
                 const response = await fetch(apiUrl, {
@@ -1754,7 +1965,7 @@
                     errorDisplay.classList.remove('hidden');
                 }
             } catch (error) {
-                console.error("שגיאה בקריאה ל-Gemini API:", error);
+                console.error("Error calling Gemini API:", error);
                 responseDisplay.innerHTML = '<p class="text-red-500">אירעה שגיאה בטעינת המלצות. אנא נסה שוב מאוחר יותר.</p>';
                 responseContainer.classList.remove('hidden'); // Show container with error
                 errorDisplay.classList.remove('hidden');
@@ -1801,7 +2012,7 @@
                 chatHistory.push({ role: "user", parts: [{ text: prompt }] });
 
                 const payload = { contents: chatHistory };
-                const apiKey = "AIzaSyCNn7GZMsQPCdRSfgz_o08M1YV63CkA3Ow"; // Canvas will automatically provide the API key
+                const apiKey = ""; 
                 const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
 
                 const response = await fetch(apiUrl, {
@@ -1831,7 +2042,7 @@
                     usageIdeasError.classList.remove('hidden');
                 }
             } catch (error) {
-                console.error("שגיאה בקריאה ל-Gemini API עבור רעיונות שימוש:", error);
+                console.error("Error calling Gemini API for usage ideas:", error);
                 usageIdeasResponse.innerHTML = '<p class="text-red-500">אירעה שגיאה בטעינת רעיונות. אנא נסה שוב מאוחר יותר.</p>';
                 usageIdeasContainer.classList.remove('hidden'); // Show response area
                 usageIdeasError.classList.remove('hidden');
@@ -1865,7 +2076,7 @@
                 chatHistory.push({ role: "user", parts: [{ text: prompt }] });
 
                 const payload = { contents: chatHistory };
-                const apiKey = "AIzaSyCNn7GZMsQPCdRSfgz_o08M1YV63CkA3Ow"; // Canvas will automatically provide the API key
+                const apiKey = ""; 
                 const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
 
                 const response = await fetch(apiUrl, {
@@ -1895,7 +2106,7 @@
                     summaryFeaturesError.classList.remove('hidden');
                 }
             } catch (error) {
-                console.error("שגיאה בקריאה ל-Gemini API עבור סיכום ותכונות:", error);
+                console.error("Error calling Gemini API for summary and features:", error);
                 summaryFeaturesResponse.innerHTML = '<p class="text-red-500">אירעה שגיאה בטעינת סיכום ותכונות. אנא נסה שוב מאוחר יותר.</p>';
                 summaryFeaturesContainer.classList.remove('hidden'); // Show response area
                 summaryFeaturesError.classList.remove('hidden');
@@ -1930,7 +2141,7 @@
                 chatHistory.push({ role: "user", parts: [{ text: prompt }] });
 
                 const payload = { contents: chatHistory };
-                const apiKey = "AIzaSyCNn7GZMsQPCdRSfgz_o08M1YV63CkA3Ow"; // Canvas will automatically provide the API key
+                const apiKey = ""; 
                 const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
 
                 const response = await fetch(apiUrl, {
@@ -1960,7 +2171,7 @@
                     relatedProductsError.classList.remove('hidden');
                 }
             } catch (error) {
-                console.error("שגיאה בקריאה ל-Gemini API עבור המלצות למוצרים קשורים:", error);
+                console.error("Error calling Gemini API for related products:", error);
                 relatedProductsResponse.innerHTML = '<p class="text-red-500">אירעה שגיאה בטעינת המלצות למוצרים קשורים. אנא נסה שוב מאוחר יותר.</p>';
                 relatedProductsContainer.classList.remove('hidden'); // Show response area
                     relatedProductsError.classList.remove('hidden');
@@ -2018,7 +2229,7 @@
                 chatHistory.push({ role: "user", parts: [{ text: prompt }] });
 
                 const payload = { contents: chatHistory };
-                const apiKey = "AIzaSyCNn7GZMsQPCdRSfgz_o08M1YV63CkA3Ow"; // Canvas will automatically provide the API key
+                const apiKey = ""; 
                 const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
 
                 const response = await fetch(apiUrl, {
@@ -2042,7 +2253,7 @@
                     qaError.classList.remove('hidden');
                 }
             } catch (error) {
-                console.error("שגיאה בקריאה ל-Gemini API עבור שאלות ותשובות:", error);
+                console.error("Error calling Gemini API for Q&A:", error);
                 qaResponse.innerHTML = '<p class="text-red-500">אירעה שגיאה בטעינת התשובה. אנא נסה שוב מאוחר יותר.</p>';
                 qaResponse.classList.remove('hidden'); // Show response area
                 qaError.classList.remove('hidden');
@@ -2096,7 +2307,7 @@
                 chatHistory.push({ role: "user", parts: [{ text: prompt }] });
 
                 const payload = { contents: chatHistory };
-                const apiKey = "AIzaSyCNn7GZMsQPCdRSfgz_o08M1YV63CkA3Ow"; // Canvas will automatically provide the API key
+                const apiKey = ""; 
                 const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
 
                 const response = await fetch(apiUrl, {
@@ -2119,7 +2330,7 @@
                     descGenError.classList.remove('hidden');
                 }
             } catch (error) {
-                console.error("שגיאה בקריאה ל-Gemini API עבור יצירת תיאור:", error);
+                console.error("Error calling Gemini API for description generation:", error);
                 descGenResponse.innerHTML = '<p class="text-red-500">אירעה שגיאה ביצירת התיאור. אנא נסה שוב מאוחר יותר.</p>';
                 descGenResponse.classList.remove('hidden'); // Show response area
                 descGenError.classList.remove('hidden');
@@ -2215,7 +2426,11 @@
                 return;
             }
 
-            const matchingProducts = allProducts.filter(p => 
+            const productsToSearch = currentCategory ? 
+                                     allProducts.filter(p => p.category === currentCategory) : 
+                                     allProducts;
+
+            const matchingProducts = productsToSearch.filter(p => 
                 p.title && p.title.toLowerCase().includes(searchTerm)
             ).slice(0, 10); // Limit to 10 suggestions
 
@@ -2286,7 +2501,7 @@
                 chatHistory.push({ role: "user", parts: [{ text: prompt }] });
 
                 const payload = { contents: chatHistory };
-                const apiKey = "AIzaSyCNn7GZMsQPCdRSfgz_o08M1YV63CkA3Ow"; // Canvas will automatically provide the API key
+                const apiKey = ""; 
                 const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
 
                 const response = await fetch(apiUrl, {
@@ -2315,7 +2530,7 @@
                     comparisonError.classList.remove('hidden');
                 }
             } catch (error) {
-                console.error("שגיאה בקריאה ל-Gemini API עבור השוואת מוצרים:", error);
+                console.error("Error calling Gemini API for product comparison:", error);
                 comparisonResponse.innerHTML = '<p class="text-red-500">אירעה שגיאה בהשוואת המוצרים. אנא נסה שוב מאוחר יותר.</p>';
                 comparisonContainer.classList.remove('hidden'); // Show container with error
                 comparisonError.classList.remove('hidden');
@@ -2353,6 +2568,7 @@
             document.getElementById('order-suggestions-container').classList.add('hidden'); // Hide container
             document.getElementById('order-assistant-loading').classList.add('hidden');
             document.getElementById('order-assistant-error').classList.add('hidden');
+            document.getElementById('order-assistant-warning').classList.add('hidden'); // Hide warning on open
             // Close AI tools dropdown if open
             document.getElementById('ai-tools-dropdown-container').classList.remove('ai-tools-dropdown-open');
         }
@@ -2375,6 +2591,8 @@
             const responseContainer = document.getElementById('order-suggestions-container');
             const loadingSpinner = document.getElementById('order-assistant-loading');
             const errorDisplay = document.getElementById('order-assistant-error');
+            const warningMessageElement = document.getElementById('order-assistant-warning');
+
 
             if (!projectDescription) {
                 responseDisplay.innerHTML = '<p class="text-red-500">אנא תאר את הפרויקט/הזמנה כדי לקבל המלצות.</p>';
@@ -2390,6 +2608,7 @@
             loadingSpinner.classList.remove('hidden');
             responseContainer.classList.add('hidden'); // Hide container during loading
             errorDisplay.classList.add('hidden');
+            warningMessageElement.classList.add('hidden'); // Hide warning during loading
 
             try {
                 let chatHistory = [];
@@ -2413,7 +2632,7 @@
                 chatHistory.push({ role: "user", parts: [{ text: prompt }] });
 
                 const payload = { contents: chatHistory };
-                const apiKey = "AIzaSyCNn7GZMsQPCdRSfgz_o08M1YV63CkA3Ow"; // Canvas will automatically provide the API key
+                const apiKey = ""; 
                 const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
 
                 const response = await fetch(apiUrl, {
@@ -2434,18 +2653,26 @@
                     // Format the text for display (e.g., replace markdown list with HTML list)
                     const formattedText = text.split('\n').map(line => {
                         if (line.startsWith('* ')) return `<p class="font-semibold text-gray-800 mt-2">${line.substring(2).trim()}</p>`; // for bold headers
-                        if (line.startsWith('- ')) return `<li>${line.substring(2).trim()}</li>`;
+                        if (line.startsWith('- ')) {
+                            // Extract title and quantity for display
+                            const match = line.match(/-\s*(.+?)\s*:\s*([\d.]+)\s*([א-ת\s'"ק"גטוןיח'\/?]+)/);
+                            if (match) {
+                                return `<li>${match[1].trim()}: ${match[2].trim()} ${match[3].trim()}</li>`;
+                            }
+                            return `<li>${line.substring(2).trim()}</li>`;
+                        }
                         return `<p>${line.trim()}</p>`;
                     }).join('');
                     responseDisplay.innerHTML = `<div class="space-y-1">${formattedText}</div>`;
                     responseContainer.classList.remove('hidden'); // Show container
+                    warningMessageElement.classList.remove('hidden'); // Show warning after response
                 } else {
                     responseDisplay.innerHTML = '<p class="text-red-500">לא הצלחתי להפיק המלצות להזמנה. אנא נסה לנסח מחדש את תיאור הפרויקט.</p>';
                     responseContainer.classList.remove('hidden'); // Show container with error
                     errorDisplay.classList.remove('hidden');
                 }
             } catch (error) {
-                console.error("שגיאה בקריאה ל-Gemini API עבור עוזר הזמנות:", error);
+                console.error("Error calling Gemini API for order assistant:", error);
                 responseDisplay.innerHTML = '<p class="text-red-500">אירעה שגיאה ביצירת המלצות. אנא נסה שוב מאוחר יותר.</p>';
                 responseContainer.classList.remove('hidden'); // Show container with error
                 errorDisplay.classList.remove('hidden');
@@ -2502,10 +2729,12 @@
             const customerAddress = document.getElementById('order-customer-address').value.trim();
             const craneType = document.getElementById('crane-type').value;
             const orderNotes = document.getElementById('order-assistant-notes').value.trim();
+            const warningText = document.getElementById('order-assistant-warning').innerText;
 
             let message = `*סיכום המלצות להזמנה מח.סבן:*\n\n`;
             message += responseContent;
-            message += `\n\n*פרטי לקוח:*\nשם: ${customerName}\nטלפון: ${customerPhone}\nכתובת: ${customerAddress || 'לא צוין'}\nסוג מנוף: ${craneType || 'לא צוין'}\nהערות: ${orderNotes || 'אין'}`;
+            message += `\n\n*${warningText}*\n\n`; // Include warning in WhatsApp message
+            message += `*פרטי לקוח:*\nשם: ${customerName}\nטלפון: ${customerPhone}\nכתובת: ${customerAddress || 'לא צוין'}\nסוג מנוף: ${craneType || 'לא צוין'}\nהערות: ${orderNotes || 'אין'}`;
             
             const encodedMessage = encodeURIComponent(message);
             window.open(`https://wa.me/972508860896?text=${encodedMessage}`, '_blank');
@@ -2519,9 +2748,10 @@
          * @param {string} titlePrefix - A title prefix for the printout (e.g., "רעיונות לשימוש").
          * @param {string} entityName - The name of the product or project.
          * @param {string|null} imageUrl - URL of the product image, or null if not applicable.
-         * @param {string} aiContentHtml - The HTML content from the AI response div.
+         * @param {string} encodedAiContentHtml - The URI-encoded HTML content from the AI response div.
          */
-        function printAIContent(titlePrefix, entityName, imageUrl, aiContentHtml) {
+        function printAIContent(titlePrefix, entityName, imageUrl, encodedAiContentHtml) {
+            const aiContentHtml = decodeURIComponent(encodedAiContentHtml); // Decode here
             const printWindow = window.open('', '', 'height=600,width=800');
             printWindow.document.write('<html><head><title>הדפסה - ח.סבן</title>');
             printWindow.document.write('<style>');
@@ -2531,6 +2761,7 @@
                 .logo { display: block; margin: 0 auto 20px auto; max-height: 80px; }
                 .content { border: 1px solid #eee; padding: 15px; border-radius: 8px; background-color: #f9f9f9; }
                 ul { list-style-type: disc; padding-right: 20px; }
+                ol { list-style-type: decimal; padding-right: 20px; } /* Added for ordered lists like installation guide */
                 li { margin-bottom: 5px; }
                 p { margin-bottom: 10px; }
                 .product-image { max-width: 200px; height: auto; display: block; margin: 0 auto 15px auto; border-radius: 8px; }
@@ -2544,7 +2775,7 @@
                 printWindow.document.write(`<img src="${imageUrl}" alt="${entityName}" class="product-image">`);
             }
             printWindow.document.write('<div class="content">');
-            printWindow.document.write(aiContentHtml);
+            printWindow.document.write(aiContentHtml); // This now includes the warning for order assistant
             printWindow.document.write('</div>');
             printWindow.document.write('<div class="footer">© 2025 ח.סבן חומרי בניין 1994 בע"מ. כל הזכויות שמורות.</div>');
             printWindow.document.close();
@@ -2562,6 +2793,71 @@
 
             const encodedMessage = encodeURIComponent(message);
             window.open(`https://wa.me/972508860896?text=${encodedMessage}`, '_blank');
+        }
+
+        // NEW LLM Feature: Get Installation Guide for a specific product
+        async function getInstallationGuide() {
+            const installationGuideResponse = document.getElementById('installation-guide-response');
+            const installationGuideContainer = document.getElementById('installation-guide-container');
+            const installationGuideLoading = document.getElementById('installation-guide-loading');
+            const installationGuideError = document.getElementById('installation-guide-error');
+
+            if (!currentProductForModal) {
+                installationGuideResponse.innerHTML = '<p class="text-red-500">לא נבחר מוצר. אנא בחר מוצר לקבלת מדריך התקנה.</p>';
+                installationGuideContainer.classList.remove('hidden');
+                return;
+            }
+
+            hideAllLLMSections(); // Hide all other LLM features' responses
+            installationGuideLoading.classList.remove('hidden'); // Show loading spinner
+            
+            try {
+                let chatHistory = [];
+                const prompt = `צור מדריך התקנה מפורט, צעד אחר צעד, עבור המוצר הבא. המדריך צריך להיות בעברית, ברור, תמציתי ומקצועי.
+                המוצר: ${currentProductForModal.title}
+                תיאור: ${currentProductForModal.description}`;
+                
+                chatHistory.push({ role: "user", parts: [{ text: prompt }] });
+
+                const payload = { contents: chatHistory };
+                const apiKey = ""; 
+                const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
+
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                const result = await response.json();
+                
+                if (result.candidates && result.candidates.length > 0 &&
+                    result.candidates[0].content && result.candidates[0].content.parts &&
+                    result.candidates[0].content.parts.length > 0) {
+                    const text = result.candidates[0].content.parts[0].text;
+                    // Format the text for display (e.g., replace numbered list with HTML ordered list)
+                    const formattedText = text.split('\n').map(line => {
+                        const stepMatch = line.match(/^(\d+\.?\s*)(.*)/); // Matches "1. Step" or "1 Step"
+                        if (stepMatch) {
+                            return `<li>${stepMatch[2].trim()}</li>`;
+                        }
+                        return `<p>${line.trim()}</p>`;
+                    }).join('');
+                    installationGuideResponse.innerHTML = `<ol class="list-decimal pr-5 space-y-1">${formattedText}</ol>`;
+                    installationGuideContainer.classList.remove('hidden'); // Show response area
+                } else {
+                    installationGuideResponse.innerHTML = '<p class="text-red-500">לא הצלחתי להפיק מדריך התקנה. אנא נסה שוב או עם תיאור אחר.</p>';
+                    installationGuideContainer.classList.remove('hidden'); // Show response area
+                    installationGuideError.classList.remove('hidden');
+                }
+            } catch (error) {
+                console.error("Error calling Gemini API for installation guide:", error);
+                installationGuideResponse.innerHTML = '<p class="text-red-500">אירעה שגיאה בטעינת מדריך ההתקנה. אנא נסה שוב מאוחר יותר.</p>';
+                installationGuideContainer.classList.remove('hidden'); // Show response area
+                installationGuideError.classList.remove('hidden');
+            } finally {
+                installationGuideLoading.classList.add('hidden'); // Hide loading spinner
+            }
         }
     </script>
 </body>
