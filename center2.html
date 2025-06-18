@@ -840,6 +840,10 @@
                     <button onclick="getInstallationGuide()" class="bg-blue-800 text-white px-4 py-2 rounded-button hover:bg-blue-900 transition shine-button text-sm product-modal-ai-button">
                         <i class="ri-tools-fill ri-lg ml-2"></i> מדריך התקנה
                     </button>
+                    <!-- NEW: Troubleshooting Assistant button -->
+                    <button onclick="toggleTroubleshootingAssistant()" class="bg-red-600 text-white px-4 py-2 rounded-button hover:bg-red-700 transition shine-button text-sm product-modal-ai-button">
+                        <i class="ri-lifebuoy-line ri-lg ml-2"></i> עזרה בפתרון בעיות
+                    </button>
                 </div>
 
                 <!-- Area to display LLM response for usage ideas -->
@@ -962,6 +966,31 @@
                 </div>
                 <div id="installation-guide-error" class="hidden text-red-600 text-center mt-4">
                     אירעה שגיאה בטעינת מדריך ההתקנה. אנא נסה שוב.
+                </div>
+
+                <!-- NEW area for Troubleshooting Assistant -->
+                <div id="troubleshooting-assistant-container" class="mt-6 hidden">
+                    <h3 class="text-lg font-bold text-gray-800 mb-3 text-center">✨ עזרה בפתרון בעיות ✨</h3>
+                    <textarea id="troubleshooting-input" rows="4" placeholder="תאר את הבעיה שאתה נתקל בה עם המוצר (לדוגמה: 'הבטון לא מתייבש מהר מספיק', 'איך למנוע סדקים במלט?')" 
+                            class="w-full px-4 py-2 rounded-button border glass-effect focus:outline-none focus:ring-2 focus:ring-red-600 mb-3"></textarea>
+                    <button onclick="getTroubleshootingAdvice()" class="w-full bg-red-600 text-white px-6 py-3 rounded-button hover:bg-red-700 transition shine-button">
+                        <i class="ri-question-answer-fill ri-lg ml-2"></i> קבל פתרון
+                    </button>
+
+                    <div id="troubleshooting-response" class="mt-4 p-4 bg-gray-50 rounded-lg border border-gray-200 min-h-[50px] flex flex-col items-center justify-center text-gray-700 text-sm leading-relaxed hidden">
+                        <p>עצות לפתרון בעיות יופיעו כאן...</p>
+                    </div>
+                    <div class="flex gap-2 mt-4 justify-center">
+                        <button onclick="printAIContent('עזרה בפתרון בעיות למוצר', currentProductForModal.title, currentProductForModal.image, encodeURIComponent(document.getElementById('troubleshooting-response').innerHTML))" class="bg-gray-200 text-gray-700 px-4 py-2 rounded-button hover:bg-gray-300 transition text-xs flex items-center"><i class="ri-printer-line ml-1"></i> הדפסה / שמירה</button>
+                        <button onclick="shareProductAIResponse('troubleshooting-response')" class="bg-green-500 text-white px-4 py-2 rounded-button hover:bg-green-600 transition text-xs flex items-center"><i class="ri-whatsapp-line ml-1"></i> שלח ל-WhatsApp</button>
+                    </div>
+                    <div id="troubleshooting-loading" class="hidden flex justify-center items-center mt-4">
+                        <div class="loader"></div>
+                        <span class="mr-2 text-red-600">טוען עצות...</span>
+                    </div>
+                    <div id="troubleshooting-error" class="hidden text-red-600 text-center mt-4">
+                        אירעה שגיאה בטעינת העצות. אנא נסה שוב.
+                    </div>
                 </div>
 
 
@@ -1303,102 +1332,6 @@
             return (match && match[2].length === 11) ? match[2] : null;
         }
 
-        // Event listener for DOM content loaded
-        document.addEventListener('DOMContentLoaded', function() {
-            // Mobile menu toggle logic
-            const mobileMenuButton = document.getElementById('mobile-menu-button');
-            const mobileMenu = document.getElementById('mobile-menu');
-            
-            mobileMenuButton.addEventListener('click', function() {
-                mobileMenu.classList.toggle('hidden');
-            });
-            
-            const mobileMenuLinks = mobileMenu.querySelectorAll('a');
-            mobileMenuLinks.forEach(link => {
-                link.addEventListener('click', function() {
-                    mobileMenu.classList.add('hidden');
-                });
-            });
-            
-            // Back to top button logic
-            const backToTopButton = document.getElementById('back-to-top');
-            
-            window.addEventListener('scroll', function() {
-                if (window.pageYOffset > 300) {
-                    backToTopButton.classList.remove('opacity-0', 'invisible');
-                    backToTopButton.classList.add('opacity-100', 'visible');
-                } else {
-                    backToTopButton.classList.remove('opacity-100', 'visible');
-                    backToTopButton.classList.add('opacity-0', 'invisible');
-                }
-            });
-            
-            backToTopButton.addEventListener('click', function() {
-                window.scrollTo({
-                    top: 0,
-                    behavior: 'smooth'
-                });
-            });
-
-            // AI Tools Dropdown Toggle
-            const aiToolsButton = document.getElementById('ai-tools-button');
-            const aiToolsDropdown = document.getElementById('ai-tools-dropdown-menu');
-            const aiToolsDropdownContainer = document.getElementById('ai-tools-dropdown-container');
-
-            aiToolsButton.addEventListener('click', function(event) {
-                event.stopPropagation(); // Prevent document click from closing immediately
-                aiToolsDropdownContainer.classList.toggle('ai-tools-dropdown-open');
-            });
-
-            // Close AI tools dropdown when clicking outside
-            document.addEventListener('click', function(event) {
-                if (!aiToolsDropdownContainer.contains(event.target)) {
-                    aiToolsDropdownContainer.classList.remove('ai-tools-dropdown-open');
-                }
-            });
-
-            // Fetch products from Google Sheet
-            fetch('https://script.google.com/macros/s/AKfycbyzdkvb4wOMILaPIq-oalk6IRA7UKxCfcsRYW0VPjF5LHO3qYLewgicT8Ua6GCdQnTn/exec')
-                .then(res => res.json())
-                .then(products => {
-                    allProducts = products; // Store all products
-                    console.log("All fetched products:", allProducts); // Log all fetched products
-                    
-                    // NEW: Check for category parameter in URL on load
-                    const urlParams = new URLSearchParams(window.location.search);
-                    const categoryParam = urlParams.get('category');
-
-                    if (categoryParam) {
-                        filterAndDisplayCategory(decodeURIComponent(categoryParam));
-                    } else {
-                        filteredProducts = [...allProducts]; // Initialize filtered products with all products
-                        renderProducts(filteredProducts); // Render all products initially
-                        populateHeroCategories(); // Populate the Hero Image Section
-                        updateBreadcrumbs('כל המוצרים', false); // Update breadcrumbs for all products view
-                    }
-
-                    // Initialize autocomplete for product comparison inputs (in modal)
-                    setupProductComparisonAutocomplete();
-                    // Initialize autocomplete for the main search input
-                    setupMainSearchAutocomplete();
-                    // Populate footer categories
-                    populateFooterCategories();
-                })
-                .catch(err => {
-                    console.error("Error loading products:", err);
-                    document.getElementById('products-container').innerHTML = "<p class='text-red-600'>שגיאה בטעינת מוצרים. אנא נסה שוב מאוחר יותר.</p>";
-                });
-
-            // Attach event listener for sort select
-            document.getElementById('sort-select').addEventListener('change', applyFilters);
-
-            // Set initial display mode for buttons
-            updateDisplayModeButtons();
-
-            // Show welcome popup on page load
-            showWelcomePopup();
-        });
-
         /**
          * Shows the welcome popup modal and animates the AI tools icon.
          */
@@ -1468,7 +1401,7 @@
                 gridButton.classList.remove('text-gray-400');
                 listButton.classList.add('text-gray-400');
                 listButton.classList.remove('text-primary');
-            } else {
+            } else { // list mode
                 listButton.classList.add('text-primary');
                 listButton.classList.remove('text-gray-400');
                 gridButton.classList.add('text-gray-400');
@@ -1694,6 +1627,12 @@
             document.getElementById('installation-guide-container').classList.add('hidden'); // NEW
             document.getElementById('installation-guide-loading').classList.add('hidden'); // NEW
             document.getElementById('installation-guide-error').classList.add('hidden'); // NEW
+
+            document.getElementById('troubleshooting-assistant-container').classList.add('hidden'); // NEW
+            document.getElementById('troubleshooting-input').value = ''; // NEW
+            document.getElementById('troubleshooting-response').innerHTML = '<p>עצות לפתרון בעיות יופיעו כאן...</p>'; // NEW
+            document.getElementById('troubleshooting-loading').classList.add('hidden'); // NEW
+            document.getElementById('troubleshooting-error').classList.add('hidden'); // NEW
         }
 
         // Cart functions
@@ -2859,6 +2798,195 @@
                 installationGuideLoading.classList.add('hidden'); // Hide loading spinner
             }
         }
+
+        // NEW LLM Feature: Toggle Troubleshooting Assistant Section
+        function toggleTroubleshootingAssistant() {
+            const troubleshootingSection = document.getElementById('troubleshooting-assistant-container');
+            hideAllLLMSections(); // Hide all other AI sections
+            troubleshootingSection.classList.toggle('hidden'); // Toggle visibility
+            // Reset state when shown
+            if (!troubleshootingSection.classList.contains('hidden')) {
+                document.getElementById('troubleshooting-input').value = ''; // Clear input
+                document.getElementById('troubleshooting-response').innerHTML = '<p>עצות לפתרון בעיות יופיעו כאן...</p>'; // Reset content
+                document.getElementById('troubleshooting-response').classList.remove('flex-col'); // Remove if flex-col was added
+            }
+        }
+
+        // NEW LLM Feature: Get Troubleshooting Advice
+        async function getTroubleshootingAdvice() {
+            const troubleshootingInput = document.getElementById('troubleshooting-input');
+            const troubleshootingResponse = document.getElementById('troubleshooting-response');
+            const troubleshootingLoading = document.getElementById('troubleshooting-loading');
+            const troubleshootingError = document.getElementById('troubleshooting-error');
+            const userProblem = troubleshootingInput.value.trim();
+
+            if (!userProblem) {
+                troubleshootingResponse.innerHTML = '<p class="text-red-500">אנא תאר את הבעיה.</p>';
+                troubleshootingResponse.classList.remove('hidden');
+                return;
+            }
+            if (!currentProductForModal) {
+                troubleshootingResponse.innerHTML = '<p class="text-red-500">לא נבחר מוצר. אנא בחר מוצר כדי לקבל עזרה בפתרון בעיות.</p>';
+                troubleshootingResponse.classList.remove('hidden');
+                return;
+            }
+
+            troubleshootingLoading.classList.remove('hidden'); // Show loading spinner
+            troubleshootingResponse.innerHTML = ''; // Clear previous content
+            troubleshootingResponse.classList.add('hidden'); // Ensure it's hidden during loading
+            troubleshootingError.classList.add('hidden');
+
+            try {
+                let chatHistory = [];
+                const prompt = `בהתבסס על המידע הבא על המוצר, ספק עצות לפתרון הבעיה המתוארת. התשובה צריכה להיות בעברית, מפורטת, צעד אחר צעד, ומקצועית.
+                
+                שם המוצר: ${currentProductForModal.title}
+                תיאור המוצר: ${currentProductForModal.description}
+                
+                הבעיה: ${userProblem}`;
+                
+                chatHistory.push({ role: "user", parts: [{ text: prompt }] });
+
+                const payload = { contents: chatHistory };
+                const apiKey = ""; 
+                const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
+
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                const result = await response.json();
+                
+                if (result.candidates && result.candidates.length > 0 &&
+                    result.candidates[0].content && result.candidates[0].content.parts &&
+                    result.candidates[0].content.parts.length > 0) {
+                    const text = result.candidates[0].content.parts[0].text;
+                    // Format the text for display (e.g., replace markdown list with HTML ordered list for steps)
+                    const formattedText = text.split('\n').map(line => {
+                        const stepMatch = line.match(/^(\d+\.?\s*)(.*)/); // Matches "1. Step" or "1 Step"
+                        if (stepMatch) {
+                            return `<li>${stepMatch[2].trim()}</li>`;
+                        }
+                        if (line.startsWith('* ') || line.startsWith('- ')) {
+                            return `<li>${line.substring(2).trim()}</li>`;
+                        }
+                        return `<p>${line.trim()}</p>`;
+                    }).join('');
+                    troubleshootingResponse.innerHTML = `<ol class="list-decimal pr-5 space-y-1">${formattedText}</ol>`;
+                    troubleshootingResponse.classList.remove('hidden'); // Show response area
+                } else {
+                    troubleshootingResponse.innerHTML = '<p class="text-red-500">לא הצלחתי למצוא פתרון לבעיה. אנא נסה לנסח מחדש את הבעיה או צור קשר עם התמיכה.</p>';
+                    troubleshootingResponse.classList.remove('hidden'); // Show response area
+                    troubleshootingError.classList.remove('hidden');
+                }
+            } catch (error) {
+                console.error("Error calling Gemini API for troubleshooting:", error);
+                troubleshootingResponse.innerHTML = '<p class="text-red-500">אירעה שגיאה בטעינת העצות. אנא נסה שוב מאוחר יותר.</p>';
+                troubleshootingResponse.classList.remove('hidden'); // Show response area
+                troubleshootingError.classList.remove('hidden');
+            } finally {
+                troubleshootingLoading.classList.add('hidden'); // Hide loading spinner
+            }
+        }
+
+
+        // Event listener for DOM content loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            // Mobile menu toggle logic
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            
+            mobileMenuButton.addEventListener('click', function() {
+                mobileMenu.classList.toggle('hidden');
+            });
+            
+            const mobileMenuLinks = mobileMenu.querySelectorAll('a');
+            mobileMenuLinks.forEach(link => {
+                link.addEventListener('click', function() {
+                    mobileMenu.classList.add('hidden');
+                });
+            });
+            
+            // Back to top button logic
+            const backToTopButton = document.getElementById('back-to-top');
+            
+            window.addEventListener('scroll', function() {
+                if (window.pageYOffset > 300) {
+                    backToTopButton.classList.remove('opacity-0', 'invisible');
+                    backToTopButton.classList.add('opacity-100', 'visible');
+                } else {
+                    backToTopButton.classList.remove('opacity-100', 'visible');
+                    backToTopButton.classList.add('opacity-0', 'invisible');
+                }
+            });
+            
+            backToTopButton.addEventListener('click', function() {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+
+            // AI Tools Dropdown Toggle
+            const aiToolsButton = document.getElementById('ai-tools-button');
+            const aiToolsDropdown = document.getElementById('ai-tools-dropdown-menu');
+            const aiToolsDropdownContainer = document.getElementById('ai-tools-dropdown-container');
+
+            aiToolsButton.addEventListener('click', function(event) {
+                event.stopPropagation(); // Prevent document click from closing immediately
+                aiToolsDropdownContainer.classList.toggle('ai-tools-dropdown-open');
+            });
+
+            // Close AI tools dropdown when clicking outside
+            document.addEventListener('click', function(event) {
+                if (!aiToolsDropdownContainer.contains(event.target)) {
+                    aiToolsDropdownContainer.classList.remove('ai-tools-dropdown-open');
+                }
+            });
+
+            // Fetch products from Google Sheet
+            fetch('https://script.google.com/macros/s/AKfycbyzdkvb4wOMILaPIq-oalk6IRA7UKxCfcsRYW0VPjF5LHO3qYLewgicT8Ua6GCdQnTn/exec')
+                .then(res => res.json())
+                .then(products => {
+                    allProducts = products; // Store all products
+                    console.log("All fetched products:", allProducts); // Log all fetched products
+                    
+                    // NEW: Check for category parameter in URL on load
+                    const urlParams = new URLSearchParams(window.location.search);
+                    const categoryParam = urlParams.get('category');
+
+                    if (categoryParam) {
+                        filterAndDisplayCategory(decodeURIComponent(categoryParam));
+                    } else {
+                        filteredProducts = [...allProducts]; // Initialize filtered products with all products
+                        renderProducts(filteredProducts); // Render all products initially
+                        populateHeroCategories(); // Populate the Hero Image Section
+                        updateBreadcrumbs('כל המוצרים', false); // Update breadcrumbs for all products view
+                    }
+
+                    // Initialize autocomplete for product comparison inputs (in modal)
+                    setupProductComparisonAutocomplete();
+                    // Initialize autocomplete for the main search input
+                    setupMainSearchAutocomplete();
+                    // Populate footer categories
+                    populateFooterCategories();
+                })
+                .catch(err => {
+                    console.error("Error loading products:", err);
+                    document.getElementById('products-container').innerHTML = "<p class='text-red-600'>שגיאה בטעינת מוצרים. אנא נסה שוב מאוחר יותר.</p>";
+                });
+
+            // Attach event listener for sort select
+            document.getElementById('sort-select').addEventListener('change', applyFilters);
+
+            // Set initial display mode for buttons
+            updateDisplayModeButtons();
+
+            // Show welcome popup on page load
+            showWelcomePopup();
+        });
     </script>
 </body>
 </html>
