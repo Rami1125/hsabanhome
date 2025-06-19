@@ -310,7 +310,7 @@ CONFIRMATION: NO SVG graphics used. NO Mermaid JS used.
         // החלף בכתובת ה-URL של פריסת ה-Apps Script שלך
         const APPS_SCRIPT_WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbyzdkvb4wOMILaPIq-oalk6IRA7UKxCfcsRYW0VPjF5LHO3qYLewgicT8Ua6GCdQnTn/exec'; // הדבק כאן את כתובת ה-URL שקיבלת מהפריסה
         // החלף במזהה הגיליון שלך ב-Google Sheets
-        const SPREADSHEET_ID = '1e9gAjJA4e1MY4pATx1wVsx1IJZoD4jzKkcnHRvZKv5s'; // הדבק כאן את מזהה הגיליון שלך
+        const SPREADSHEET_ID = 'https://script.google.com/macros/s/1e9gAjJA4e1MY4pATx1wVsx1IJZoD4jzKkcnHRvZKv5s/exec'; // הדבק כאן את מזהה הגיליון שלך
         // מספר וואטסאפ לשיתוף
         const whatsappNumber = '972508860896'; 
         // מפתח API עבור Gemini (אין צורך להזין - Canvas מספק אוטומטית)
@@ -381,6 +381,23 @@ CONFIRMATION: NO SVG graphics used. NO Mermaid JS used.
             const fetchProductsFromSheet = async () => {
                 productsContainer.innerHTML = '<p class="text-center text-blue-600 text-xl py-16">טוען מוצרים... אנא המתן.</p>';
                 try {
+                    // בדיקה האם כתובות ה-URL וה-ID הוגדרו נכון
+                    if (APPS_SCRIPT_WEB_APP_URL === 'https://script.google.com/macros/s/AKfycbzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz/exec' || SPREADSHEET_ID === 'YOUR_SPREADSHEET_ID_HERE') {
+                        const errorMessage = `
+                            <p class="text-red-500 col-span-full text-center text-lg font-bold">
+                                שגיאה: יש להגדיר את כתובת ה-URL של Apps Script Web App ומזהה הגיליון.
+                            </p>
+                            <p class="text-gray-700 text-center mt-2">
+                                אנא ודא שהקבועים <code class="font-mono bg-gray-200 p-1 rounded">APPS_SCRIPT_WEB_APP_URL</code> ו- <code class="font-mono bg-gray-200 p-1 rounded">SPREADSHEET_ID</code> 
+                                בתחילת קוד ה-JavaScript הוחלפו בערכים הנכונים שלך.
+                                (פתח את הקוד ב-Canvas וחפש את הקטע "*** הגדרות חשובות ***").
+                            </p>
+                        `;
+                        productsContainer.innerHTML = errorMessage;
+                        console.error('Configuration Error: APPS_SCRIPT_WEB_APP_URL or SPREADSHEET_ID not updated.');
+                        return [];
+                    }
+
                     const url = `${APPS_SCRIPT_WEB_APP_URL}?id=${SPREADSHEET_ID}`;
                     console.log('Attempting to fetch from URL:', url); // Log the URL for debugging
                     const response = await fetch(url);
@@ -407,7 +424,7 @@ CONFIRMATION: NO SVG graphics used. NO Mermaid JS used.
                     }));
                 } catch (error) {
                     console.error("Failed to fetch products from Google Sheet:", error);
-                    productsContainer.innerHTML = `<p class="text-red-500 col-span-full text-center">שגיאה בטעינת מוצרים מהגיליון. אנא ודא שה-URL והמזהה נכונים בתוך קוד ה-JavaScript. פרטי השגיאה בקונסול הדפדפן.</p>`;
+                    productsContainer.innerHTML = `<p class="text-red-500 col-span-full text-center">שגיאה בטעינת מוצרים מהגיליון. אנא ודא שה-URL והמזהה נכונים בתוך קוד ה-JavaScript, ושהפריסה של Apps Script פעילה עם ההרשאות המתאימות. פרטי השגיאה המלאים בקונסול הדפדפן (F12).</p>`;
                     return [];
                 }
             };
@@ -996,7 +1013,7 @@ CONFIRMATION: NO SVG graphics used. NO Mermaid JS used.
             printOrderBtn.addEventListener('click', () => printContent(cartItemsContainer.innerHTML + document.getElementById('order-form-container').innerHTML, 'סיכום הזמנה מח.סבן חומרי בניין'));
             clearCartBtn.addEventListener('click', clearCart);
 
-            // כפתור הדפסת תשובת AI
+            // כפתור הדפסה של תשובת AI
             printAiOutputBtn.addEventListener('click', () => {
                 const aiOutputContent = document.getElementById('modal-ai-output').innerHTML;
                 printContent(aiOutputContent, 'תשובת AI למוצר');
@@ -1022,7 +1039,10 @@ CONFIRMATION: NO SVG graphics used. NO Mermaid JS used.
                     populateFilters(allProducts);
                     renderProducts(allProducts); // רנדר את כל המוצרים בהתחלה
                 } else {
-                    productsContainer.innerHTML = `<p class="text-red-500 col-span-full text-center">לא הצלחנו לחלץ מוצרים מגיליון ה-Google Sheets. ודא שה-URL והמזהה נכונים בתוך קוד ה-JavaScript. פרטי השגיאה בקונסול הדפדפן.</p>`;
+                    // הודעה זו תופיע רק אם fetchProductsFromSheet החזיר מערך ריק ולא בגלל בעיית קונפיגורציה
+                    if (!document.getElementById('products-container').innerHTML.includes('שגיאה: יש להגדיר את כתובת ה-URL')) {
+                        productsContainer.innerHTML = `<p class="text-red-500 col-span-full text-center">לא הצלחנו לחלץ מוצרים מגיליון ה-Google Sheets. ודא שהגיליון מכיל נתונים ושגיליון ה-Apps Script פרוס כהלכה.</p>`;
+                    }
                 }
                 updateCartDisplay(); // אתחל תצוגת עגלה עם 0 פריטים
             };
