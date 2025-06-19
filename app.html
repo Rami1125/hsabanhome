@@ -313,6 +313,10 @@ CONFIRMATION: NO SVG graphics used. NO Mermaid JS used.
         const SPREADSHEET_ID = '1e9gAjJA4e1MY4pATx1wVsx1IJZoD4jzKkcnHRvZKv5s'; // הדבק כאן את מזהה הגיליון שלך
         // מספר וואטסאפ לשיתוף
         const whatsappNumber = '972508860896'; 
+        // מפתח API עבור Gemini (אין צורך להזין - Canvas מספק אוטומטית)
+        const apiKey = "AIzaSyCNn7GZMsQPCdRSfgz_o08M1YV63CkA3Ow
+"; 
+        const GEMINI_API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
         // *********************
 
         document.addEventListener('DOMContentLoaded', () => {
@@ -321,8 +325,7 @@ CONFIRMATION: NO SVG graphics used. NO Mermaid JS used.
 
             // הגדרת כלי ה-AI עם אייקונים וקישורי תמונות
             const aiTools = [
-                { id: 'f
-', name: 'עוזר תכנון פרויקטים', icon: '👷', imageUrl: 'https://placehold.co/100x100/2196F3/FFFFFF?text=תכנון' }, // החלף בקישור שלך
+                { id: 'project-planner', name: 'עוזר תכנון פרויקטים', icon: '👷', imageUrl: 'https://placehold.co/100x100/2196F3/FFFFFF?text=תכנון' }, // החלף בקישור שלך
                 { id: 'material-calculator', name: 'מחשבון חומרים', icon: '🧮', imageUrl: 'https://placehold.co/100x100/4CAF50/FFFFFF?text=מחשבון' }, // החלף בקישור שלך
                 { id: 'compare-products', name: 'השוואת מוצרים', icon: '⚖️', imageUrl: 'https://placehold.co/100x100/FFC107/FFFFFF?text=השוואה' }, // החלף בקישור שלך
                 { id: 'order-assistant', name: 'עוזר הזמנה', icon: '🛒', imageUrl: 'https://placehold.co/100x100/9C27B0/FFFFFF?text=הזמנה' }, // החלף בקישור שלך
@@ -663,9 +666,9 @@ CONFIRMATION: NO SVG graphics used. NO Mermaid JS used.
             
             /**
              * פונקציה לטיפול בכלי ה-AI בתוך מודאל המוצר.
-             * מדמה תגובת AI ומציגה אותה.
+             * מבצעת קריאת API למודל Gemini ומציגה את התשובה.
              */
-            const handleModalAITool = (tool, product) => {
+            const handleModalAITool = async (tool, product) => { // הפונקציה הפכה ל-async
                 const outputEl = document.getElementById('modal-ai-output');
                 outputEl.classList.add('hidden'); // הסתר קודם
                 wasteDisposalTools.classList.add('hidden'); // הסתר כלי פינוי פסולת
@@ -678,26 +681,67 @@ CONFIRMATION: NO SVG graphics used. NO Mermaid JS used.
 
                 outputEl.classList.remove('hidden');
                 printAiOutputBtn.classList.remove('hidden'); // הצג כפתור הדפסה של AI
-                outputEl.innerHTML = '<p class="animate-pulse">חושב...</p>';
-                
-                // הדמיית תגובת AI
-                setTimeout(() => {
-                    let aiResponse = '';
-                    switch(tool) {
-                        case 'enhanced-description':
-                            aiResponse = `<strong>תיאור משופר:</strong> ${product.description} מוצר זה מיוצר מהחומרים האיכותיים ביותר, ומבטיח עמידות ואמינות לאורך שנים. אידיאלי עבור פרויקטים מקצועיים וביתיים כאחד, ומספק פתרון כולל לצרכי הבנייה שלך.`;
-                            break;
-                        case 'related-products':
-                             const related = allProducts.filter(p => p.category === product.category && p.id !== product.id).slice(0, 3);
-                             aiResponse = '<strong>מוצרים קשורים שכדאי לבדוק:</strong><ul class="list-disc pr-4 mt-2">' + related.map(p => `<li>${p.name}</li>`).join('') + '</ul>';
-                             if(related.length === 0) aiResponse = 'לא נמצאו מוצרים קשורים.';
-                            break;
-                        case 'problem-solver':
-                             aiResponse = `<strong>פתרון בעיות נפוצות עם ${product.name}:</strong><ul class="list-disc pr-4 mt-2"><li>ודא שהמשטח נקי ויבש לפני היישום.</li><li>עבוד בסביבה מאווררת היטב.</li><li>עקוב אחר הוראות היצרן במדויק.</li></ul>`;
-                            break;
+                outputEl.innerHTML = '<p class="animate-pulse">חושב... 🧠</p>'; // הודעת טעינה
+
+                let promptText = '';
+                switch(tool) {
+                    case 'enhanced-description':
+                        promptText = `כתוב תיאור שיווקי משופר עבור המוצר הבא, המתאים לקטלוג מוצרים לחומרי בניין:
+                        שם המוצר: ${product.name}
+                        מותג: ${product.brand}
+                        תיאור קיים: ${product.description}
+                        הדגש יתרונות, איכות ושימושים נפוצים. התשובה צריכה להיות בעברית.`;
+                        break;
+                    case 'related-products':
+                        promptText = `אני מחפש מוצרים קשורים למוצר הבא בקטלוג חומרי בניין:
+                        שם המוצר: ${product.name}
+                        תיאור: ${product.description}
+                        קטגוריה: ${product.category}
+                        הצע 3-5 מוצרים רלוונטיים שיכולים להשלים או להיות תחליף, והסבר בקצרה מדוע כל אחד קשור. התשובה צריכה להיות בעברית.`;
+                        break;
+                    case 'problem-solver':
+                        promptText = `מהן בעיות נפוצות שיכולות להתעורר עם שימוש במוצר הבא בתחום הבנייה, וכיצד ניתן לפתור אותן?
+                        שם המוצר: ${product.name}
+                        תיאור: ${product.description}
+                        סוג: ${product.type}
+                        הצג 3-4 בעיות נפוצות ופתרונות קצרים לכל אחת. התשובה צריכה להיות בעברית.`;
+                        break;
+                    default:
+                        outputEl.innerHTML = '<p class="text-red-400">כלי AI זה אינו נתמך כרגע.</p>';
+                        return;
+                }
+
+                try {
+                    const chatHistory = [];
+                    chatHistory.push({ role: "user", parts: [{ text: promptText }] });
+                    const payload = { contents: chatHistory };
+
+                    const response = await fetch(GEMINI_API_URL, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    });
+
+                    if (!response.ok) {
+                        const errorData = await response.json();
+                        console.error('Gemini API Error:', errorData);
+                        outputEl.innerHTML = `<p class="text-red-400">שגיאת API: ${errorData.error.message || response.statusText}</p>`;
+                        return;
                     }
-                     outputEl.innerHTML = aiResponse;
-                }, 1500);
+
+                    const result = await response.json();
+                    if (result.candidates && result.candidates.length > 0 &&
+                        result.candidates[0].content && result.candidates[0].content.parts &&
+                        result.candidates[0].content.parts.length > 0) {
+                        const text = result.candidates[0].content.parts[0].text;
+                        outputEl.innerHTML = text;
+                    } else {
+                        outputEl.innerHTML = '<p class="text-yellow-400">לא התקבלה תשובה מובנית מה-AI.</p>';
+                    }
+                } catch (error) {
+                    console.error('Error calling Gemini API:', error);
+                    outputEl.innerHTML = `<p class="text-red-400">שגיאה בתקשורת עם שירותי ה-AI: ${error.message}</p>`;
+                }
             };
 
             // --- פונקציות עגלת קניות ---
@@ -727,7 +771,7 @@ CONFIRMATION: NO SVG graphics used. NO Mermaid JS used.
                 } else {
                     cartItemsContainer.innerHTML = cart.map((item, index) => `
                         <div class="flex justify-between items-center bg-blue-50 p-3 rounded-md shadow-sm">
-                            <span class="text-blue-800 font-medium">${index + 1}. ${item.name} (${item.brand})</span>
+                            <span class="text-blue-800 font-medium">${index + 1}. ${item.name} (מק"ט: ${item.sku || 'N/A'})</span>
                             <button class="text-red-500 hover:text-red-700 font-bold text-lg" data-cart-index="${index}">&times;</button>
                         </div>
                     `).join('');
@@ -800,12 +844,6 @@ CONFIRMATION: NO SVG graphics used. NO Mermaid JS used.
                     alert('עגלת הקניות ריקה מכדי לשתף.');
                     return;
                 }
-                // Removed mandatory check for all fields to allow partial orders
-                // if (!customerNameInput.value.trim() || !customerPhoneInput.value.trim() || !deliveryAddressInput.value.trim() || !deliveryTypeSelect.value) {
-                //     alert('אנא מלא את כל פרטי ההזמנה הנדרשים: שם, טלפון, כתובת אספקה וסוג הובלה.');
-                //     return;
-                // }
-
                 const message = getWhatsAppMessage();
                 const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${message}`;
                 window.open(whatsappUrl, '_blank');
