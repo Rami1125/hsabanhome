@@ -803,21 +803,9 @@
     </div>
 
     <!-- Product Modal (Updated with new LLM feature button and display) -->
-<div id="product-modal" class="fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center z-50 hidden p-4">
-        <div class="bg-white rounded-lg shadow-lg p-6 border-2 border-primary max-w-6xl lg:max-w-7xl w-full relative overflow-hidden md:max-h-[90vh]">
-
-        <button onclick="closeModal()" class="absolute top-2 left-2 text-gray-500 hover:text-red-500 text-xl z-10">&times;</button>
-        <div class="modal-content-scrollable">
-            <img id="modal-product-image" src="" alt="מוצר" class="w-full h-96 object-contain rounded-xl border-4 border-primary shadow-lg mx-auto mb-4 modal-image"/>
-            
-            <h2 id="modal-product-name" class="text-xl font-bold mb-2 modal-title"></h2>
-            <p id="modal-product-description" class="text-gray-600 text-sm mb-2 modal-description"></p>
-            <span id="modal-product-price" class="text-primary font-bold text-lg modal-price"></span>
-            
-            <div class="mt-4 flex flex-wrap gap-2 justify-center">
-                <button onclick="addToCartFromModal()" class="bg-primary text-white px-6 py-3 rounded-button hover:bg-primary/90 transition shine-button">הוסף לעגלה</button>
-            </div>
-
+    <div id="product-modal" class="fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center z-50 hidden p-4">
+       <div class="bg-white rounded-lg shadow-lg p-6 max-w-6xl lg:max-w-7xl w-full relative overflow-hidden md:max-h-[90vh]">
+    </div>            <button onclick="closeModal()" class="absolute top-2 left-2 text-gray-500 hover:text-red-500 text-xl z-10">&times;</button>
             
             <!-- Scrollable content area within the modal -->
             <div class="modal-content-scrollable">
@@ -1012,7 +1000,7 @@
 
     <!-- Cart Modal -->
     <div id="cart-modal" class="fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center z-50 hidden p-4">
-        <div class="glass-effect rounded-lg shadow-lg p-6 max-w-lg w-full relative overflow-hidden md:">
+        <div class="glass-effect rounded-lg shadow-lg p-6 max-w-lg w-full relative overflow-hidden md:max-h-[90vh]">
             <button onclick="closeCartModal()" class="absolute top-2 left-2 text-gray-500 hover:text-red-500 text-xl z-10">&times;</button>
             <h2 class="text-2xl font-bold mb-4 text-gray-800">עגלת הקניות שלך</h2>
             
@@ -1035,8 +1023,7 @@
 
     <!-- Project Planner Modal - New HTML for the LLM feature -->
     <div id="project-planner-modal" class="fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center z-50 hidden p-4">
-            <div class="bg-white rounded-lg shadow-lg p-6 border-2 border-primary max-w-6xl lg:max-w-7xl w-full relative overflow-hidden md:max-h-[90vh]">
-
+        <div class="bg-white rounded-lg shadow-lg p-6 max-w-lg w-full relative overflow-hidden md:max-h-[90vh]">
             <button onclick="closeProjectPlannerModal()" class="absolute top-2 left-2 text-gray-500 hover:text-red-500 text-xl z-10">&times;</button>
             <h2 class="text-2xl font-bold mb-4 text-gray-800 text-center">✨ עוזר תכנון פרויקטים ✨</h2>
             
@@ -1076,8 +1063,7 @@
 
     <!-- NEW Product Comparison Modal -->
     <div id="product-comparison-modal" class="fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center z-50 hidden p-4">
-              <div class="bg-white rounded-lg shadow-lg p-6 border-2 border-primary max-w-6xl lg:max-w-7xl w-full relative overflow-hidden md:max-h-[90vh]">
-
+        <div class="bg-white rounded-lg shadow-lg p-6 max-w-lg w-full relative overflow-hidden md:max-h-[90vh]">
             <button onclick="closeProductComparisonModal()" class="absolute top-2 left-2 text-gray-500 hover:text-red-500 text-xl z-10">&times;</button>
             <h2 class="text-2xl font-bold mb-4 text-gray-800 text-center">✨ השוואת מוצרים ✨</h2>
             
