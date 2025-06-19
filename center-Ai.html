@@ -543,13 +543,13 @@
                 <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSUVp7CP06twn9tobIG19ihDfKLm9MmowW73Q&s" alt="לוגו ח.סבן" class="h-12">
                 <h1 class="text-2xl font-bold text-primary mr-3">ח.סבן חומרי בניין</h1>
             </div>
-            
             <nav class="hidden md:flex space-x-6 space-x-reverse">
-                <a href="https://readdy.ai/home/20fb88f3-f689-4ee4-95ee-53c5efe8bc7d/f195f37e-9e34-4662-a971-05a152507a0f" data-readdy="true" class="text-gray-800 hover:text-primary highlight-hover py-2">ראשי</a>
-                <a href="javascript:void(0);" class="text-primary font-semibold highlight-hover py-2 border-b-2 border-primary">מוצרים</a>
-                <a href="javascript:void(0);" class="text-gray-800 hover:text-primary highlight-hover py-2">מחלקת חישובים</a>
-                <a href="javascript:void(0);" class="text-gray-800 hover:text-primary highlight-hover py-2">סניפים</a>
-                <a href="javascript:void(0);" class="text-gray-800 hover:text-primary highlight-hover py-2">צור קשר</a>
+                <a href="https://rami1125.github.io/hsabanhome/index3.html" class="text-gray-800 hover:text-primary highlight-hover py-2">ראשי</a>
+                <a href="#vision" class="text-gray-800 hover:text-primary highlight-hover py-2">החזון</a>
+                <a href="https://rami1125.github.io/hsabanhome" class="text-primary font-semibold highlight-hover py-2 border-b-2 border-primary">מוצרים</a>
+                <a href="#calculator" class="text-gray-800 hover:text-primary highlight-hover py-2">מחלקת חישובים</a>
+                <a href="#branches" class="text-gray-800 hover:text-primary highlight-hover py-2">סניפים</a>
+                <a href="#testimonials" class="text-gray-800 hover:text-primary highlight-hover py-2">המלצות</a>
             </nav>
             
             <div class="flex items-center space-x-4 space-x-reverse">
@@ -598,13 +598,13 @@
         
         <!-- Mobile Menu -->
         <div id="mobile-menu" class="md:hidden glass-effect py-4 px-4 hidden">
- <nav class="hidden md:flex space-x-6 space-x-reverse">
-                <a href="https://rami1125.github.io/hsabanhome/index3.html" class="text-gray-800 hover:text-primary highlight-hover py-2">ראשי</a>
-                <a href="#vision" class="text-gray-800 hover:text-primary highlight-hover py-2">החזון</a>
-                <a href="https://rami1125.github.io/hsabanhome" class="text-primary font-semibold highlight-hover py-2 border-b-2 border-primary">מוצרים</a>
-                <a href="#calculator" class="text-gray-800 hover:text-primary highlight-hover py-2">מחלקת חישובים</a>
-                <a href="#branches" class="text-gray-800 hover:text-primary highlight-hover py-2">סניפים</a>
-                <a href="#testimonials" class="text-gray-800 hover:text-primary highlight-hover py-2">המלצות</a>
+               <nav class="flex flex-col space-y-3">
+                <a href="index.html" class="text-gray-800 hover:text-primary py-2 border-b border-gray-100">ראשי</a>
+                <a href="#vision" class="text-gray-800 hover:text-primary py-2 border-b border-gray-100">החזון</a>
+                <a href="https://rami1125.github.io/hsabanhome/" class="text-primary font-semibold py-2 border-b border-gray-100">מוצרים</a>
+                <a href="#calculator" class="text-gray-800 hover:text-primary py-2 border-b border-gray-100">מחלקת חישובים</a>
+                <a href="#branches" class="text-gray-800 hover:text-primary py-2 border-b border-gray-100">סניפים</a>
+                <a href="#testimonials" class="text-gray-800 hover:text-primary py-2">המלצות</a>
             </nav>
         </div>
     </header>
@@ -699,17 +699,18 @@
         </div>
     </div>
 
-    <!-- Product Modal (Updated with new LLM feature button and display) -->
     <div id="product-modal" class="fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center z-50 hidden p-4">
-    <div class="bg-white rounded-lg shadow-lg p-6 max-w-3xl w-full relative overflow-hidden md:max-h-[90vh]">            <button onclick="closeModal()" class="absolute top-2 left-2 text-gray-500 hover:text-red-500 text-xl z-10">&times;</button>
-            
-            <!-- Scrollable content area within the modal -->
-            <div class="modal-content-scrollable">
-                <img src="" alt="מוצר" class="w-full h-48 object-cover rounded mb-4 modal-image"/>
-                <h2 class="text-xl font-bold mb-2 modal-title"></h2>
-                <p class="text-gray-600 text-sm mb-2 modal-description"></p>
-                <span class="text-primary font-bold text-lg modal-price"></span>
-                
+    <div class="bg-white rounded-lg shadow-lg p-6 max-w-3xl lg:max-w-5xl w-full relative overflow-hidden md:max-h-[90vh]">
+        <button onclick="closeModal()" class="absolute top-2 left-2 text-gray-500 hover:text-red-500 text-xl z-10">&times;</button>
+        
+        <div class="modal-content-scrollable">
+            <img src="" alt="מוצר" class="w-full h-96 object-contain rounded-xl border-4 border-primary shadow-lg mx-auto mb-4 modal-image"/>
+            <h2 class="text-xl font-bold mb-2 modal-title"></h2>
+            <p class="text-gray-600 text-sm mb-2 modal-description"></p>
+            <span class="text-primary font-bold text-lg modal-price"></span>
+        </div>
+    </div>
+</div>                
                 <div class="mt-4 flex flex-wrap gap-2 justify-center">
                     <button onclick="addToCartFromModal()" class="bg-primary text-white px-6 py-3 rounded-button hover:bg-primary/90 transition shine-button">הוסף לעגלה</button>
                     <!-- Existing button for LLM feature -->
@@ -1697,7 +1698,7 @@
 
             heroContainer.innerHTML = heroCategories.map(cat => `
                 <div class="hero-image-item glass-card">
-                    <img src="${cat.imageUrl}" onerror="this.onerror=null;this.src='https://readdy.ai/api/search-image?query=Professional%2520power%2520drill%252C%2520construction%2520tool%252C%2520detailed%2520product%2520photography%2520on%2520clean%2520white%2520background%252C%2520high%2520quality%2520tool%252C%2520soft%2520blue%2520lighting&width=600&height=400&seq=15&orientation=landscape';" alt="${cat.name}">
+                    <img src="${cat.imageUrl}" onerror="this.onerror=null;this.src='https://readdy.ai/api/search-image?query=Electrical%2520socket%252C%2520power%2520outlet%252C%2520electrical%2520supplies%252C%2520detailed%2520product%2520photography%2520on%2520clean%2520white%2520background%252C%2520soft%2520blue%2520lighting&width=600&height=400&seq=20&orientation=landscape';" alt="${cat.name}">
                     <div class="hero-image-overlay">
                         <a href="${cat.linkUrl}" class="bg-primary text-white px-4 py-2 rounded-button shine-button">לדף המוצר</a>
                     </div>
@@ -1754,8 +1755,7 @@
                 chatHistory.push({ role: "user", parts: [{ text: prompt }] });
 
                 const payload = { contents: chatHistory };
-                const apiKey = "AIzaSyCNn7GZMsQPCdRSfgz_o08M1YV63CkA3Ow
-"; 
+                const apiKey = "AIzaSyCNn7GZMsQPCdRSfgz_o08M1YV63CkA3Ow"; 
                 const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
 
                 const response = await fetch(apiUrl, {
@@ -1832,8 +1832,7 @@
                 chatHistory.push({ role: "user", parts: [{ text: prompt }] });
 
                 const payload = { contents: chatHistory };
-                const apiKey = "AIzaSyCNn7GZMsQPCdRSfgz_o08M1YV63CkA3Ow
-"; 
+                const apiKey = "AIzaSyCNn7GZMsQPCdRSfgz_o08M1YV63CkA3Ow"; 
                 const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
 
                 const response = await fetch(apiUrl, {
@@ -1897,8 +1896,7 @@
                 chatHistory.push({ role: "user", parts: [{ text: prompt }] });
 
                 const payload = { contents: chatHistory };
-                const apiKey = "AIzaSyCNn7GZMsQPCdRSfgz_o08M1YV63CkA3Ow
-"; 
+                const apiKey = "AIzaSyCNn7GZMsQPCdRSfgz_o08M1YV63CkA3Ow"; 
                 const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
 
                 const response = await fetch(apiUrl, {
@@ -1963,8 +1961,7 @@
                 chatHistory.push({ role: "user", parts: [{ text: prompt }] });
 
                 const payload = { contents: chatHistory };
-                const apiKey = "AIzaSyCNn7GZMsQPCdRSfgz_o08M1YV63CkA3Ow
-"; 
+                const apiKey = "AIzaSyCNn7GZMsQPCdRSfgz_o08M1YV63CkA3Ow"; 
                 const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
 
                 const response = await fetch(apiUrl, {
@@ -2052,8 +2049,7 @@
                 chatHistory.push({ role: "user", parts: [{ text: prompt }] });
 
                 const payload = { contents: chatHistory };
-                const apiKey = "AIzaSyCNn7GZMsQPCdRSfgz_o08M1YV63CkA3Ow
-"; 
+                const apiKey = "AIzaSyCNn7GZMsQPCdRSfgz_o08M1YV63CkA3Ow"; 
                 const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
 
                 const response = await fetch(apiUrl, {
@@ -2131,8 +2127,7 @@
                 chatHistory.push({ role: "user", parts: [{ text: prompt }] });
 
                 const payload = { contents: chatHistory };
-                const apiKey = "AIzaSyCNn7GZMsQPCdRSfgz_o08M1YV63CkA3Ow
-"; 
+                const apiKey = "AIzaSyCNn7GZMsQPCdRSfgz_o08M1YV63CkA3Ow"; 
                 const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
 
                 const response = await fetch(apiUrl, {
@@ -2322,8 +2317,7 @@
                 chatHistory.push({ role: "user", parts: [{ text: prompt }] });
 
                 const payload = { contents: chatHistory };
-                const apiKey = "AIzaSyCNn7GZMsQPCdRSfgz_o08M1YV63CkA3Ow
-"; 
+                const apiKey = "AIzaSyCNn7GZMsQPCdRSfgz_o08M1YV63CkA3Ow"; 
                 const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
 
                 const response = await fetch(apiUrl, {
@@ -2454,8 +2448,7 @@
                 chatHistory.push({ role: "user", parts: [{ text: prompt }] });
 
                 const payload = { contents: chatHistory };
-                const apiKey = "AIzaSyCNn7GZMsQPCdRSfgz_o08M1YV63CkA3Ow
-"; 
+                const apiKey = "AIzaSyCNn7GZMsQPCdRSfgz_o08M1YV63CkA3Ow"; 
                 const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
 
                 const response = await fetch(apiUrl, {
@@ -2642,8 +2635,7 @@
                 chatHistory.push({ role: "user", parts: [{ text: prompt }] });
 
                 const payload = { contents: chatHistory };
-                const apiKey = "AIzaSyCNn7GZMsQPCdRSfgz_o08M1YV63CkA3Ow
-"; 
+                const apiKey = "AIzaSyCNn7GZMsQPCdRSfgz_o08M1YV63CkA3Ow"; 
                 const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
 
                 const response = await fetch(apiUrl, {
