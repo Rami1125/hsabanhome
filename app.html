@@ -307,10 +307,12 @@ CONFIRMATION: NO SVG graphics used. NO Mermaid JS used.
 
     <script>
         // *** הגדרות חשובות ***
-        // החלף בכתובת ה-URL של פריסת ה-Apps Script שלך
-        const APPS_SCRIPT_WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbyzdkvb4wOMILaPIq-oalk6IRA7UKxCfcsRYW0VPjF5LHO3qYLewgicT8Ua6GCdQnTn/exec'; // הדבק כאן את כתובת ה-URL שקיבלת מהפריסה
-        // החלף במזהה הגיליון שלך ב-Google Sheets
-        const SPREADSHEET_ID = 'https://script.google.com/macros/s/1e9gAjJA4e1MY4pATx1wVsx1IJZoD4jzKkcnHRvZKv5s/exec'; // הדבק כאן את מזהה הגיליון שלך
+        // החלף בכתובת ה-URL של פריסת ה-Apps Script שלך. וודא שהקישור נמצא בתוך גרשיים בודדים ('...').
+        // לדוגמה: 'https://script.google.com/macros/s/abcdefg1234567890/exec'
+        const APPS_SCRIPT_WEB_APP_URL = 'AKfycbyzdkvb4wOMILaPIq-oalk6IRA7UKxCfcsRYW0VPjF5LHO3qYLewgicT8Ua6GCdQnTn'; 
+        // החלף במזהה הגיליון שלך ב-Google Sheets. וודא שהמזהה נמצא בתוך גרשיים בודדים ('...').
+        // לדוגמה: '1A2B3C4D5E6F7G8H9I0J'
+        const SPREADSHEET_ID = '1e9gAjJA4e1MY4pATx1wVsx1IJZoD4jzKkcnHRvZKv5s'; 
         // מספר וואטסאפ לשיתוף
         const whatsappNumber = '972508860896'; 
         // מפתח API עבור Gemini (אין צורך להזין - Canvas מספק אוטומטית)
@@ -326,7 +328,7 @@ CONFIRMATION: NO SVG graphics used. NO Mermaid JS used.
             // הגדרת כלי ה-AI עם אייקונים וקישורי תמונות
             const aiTools = [
                 { id: 'project-planner', name: 'עוזר תכנון פרויקטים', icon: '👷', imageUrl: 'https://placehold.co/100x100/2196F3/FFFFFF?text=תכנון' }, // החלף בקישור שלך
-                { id: 'material-calculator', name: 'מחשבון חומרים', icon: '🧮', imageUrl: 'https://placehold.co/100x100/4CAF50/FFFFFF?text=מחשבון' }, // החלף בקישור שלך
+                { id: 'material-calculator', name: 'מחשבון חומרים', icon: '�', imageUrl: 'https://placehold.co/100x100/4CAF50/FFFFFF?text=מחשבון' }, // החלף בקישור שלך
                 { id: 'compare-products', name: 'השוואת מוצרים', icon: '⚖️', imageUrl: 'https://placehold.co/100x100/FFC107/FFFFFF?text=השוואה' }, // החלף בקישור שלך
                 { id: 'order-assistant', name: 'עוזר הזמנה', icon: '🛒', imageUrl: 'https://placehold.co/100x100/9C27B0/FFFFFF?text=הזמנה' }, // החלף בקישור שלך
                 { id: 'problem-solver', name: 'פתרון בעיות', icon: '🛠️', imageUrl: 'https://placehold.co/100x100/FF5722/FFFFFF?text=בעיות' }, // החלף בקישור שלך
@@ -382,14 +384,14 @@ CONFIRMATION: NO SVG graphics used. NO Mermaid JS used.
                 productsContainer.innerHTML = '<p class="text-center text-blue-600 text-xl py-16">טוען מוצרים... אנא המתן.</p>';
                 try {
                     // בדיקה האם כתובות ה-URL וה-ID הוגדרו נכון
-                    if (APPS_SCRIPT_WEB_APP_URL === 'https://script.google.com/macros/s/AKfycbzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz/exec' || SPREADSHEET_ID === 'YOUR_SPREADSHEET_ID_HERE') {
+                    if (APPS_SCRIPT_WEB_APP_URL === 'YOUR_APPS_SCRIPT_URL_HERE' || SPREADSHEET_ID === 'YOUR_SPREADSHEET_ID_HERE') {
                         const errorMessage = `
                             <p class="text-red-500 col-span-full text-center text-lg font-bold">
                                 שגיאה: יש להגדיר את כתובת ה-URL של Apps Script Web App ומזהה הגיליון.
                             </p>
                             <p class="text-gray-700 text-center mt-2">
                                 אנא ודא שהקבועים <code class="font-mono bg-gray-200 p-1 rounded">APPS_SCRIPT_WEB_APP_URL</code> ו- <code class="font-mono bg-gray-200 p-1 rounded">SPREADSHEET_ID</code> 
-                                בתחילת קוד ה-JavaScript הוחלפו בערכים הנכונים שלך.
+                                בתחילת קוד ה-JavaScript הוחלפו בערכים הנכונים שלך, ושהם נמצאים בתוך גרשיים בודדים.
                                 (פתח את הקוד ב-Canvas וחפש את הקטע "*** הגדרות חשובות ***").
                             </p>
                         `;
@@ -1052,3 +1054,4 @@ CONFIRMATION: NO SVG graphics used. NO Mermaid JS used.
     </script>
 </body>
 </html>
+�
