@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <!-- 
 Chosen Palette: Dynamic Pastel Palette
-Application Structure Plan: The application structure now directly embeds all product cards for a single-page experience. Key elements include a dynamic header for the company name and cart, and a dedicated AI Tools section on the right side. The main content area has dynamic category tiles and a product grid. Clicking a product opens a full-screen modal with detailed information, integrated calculators, and contextual AI tools. A separate cart modal manages orders. This structure prioritizes direct content embedding as requested, with AI tools prominently displayed in a dedicated, accessible area.
+Application Structure Plan: The application structure is designed for a dynamic product catalog powered by Google Sheets. It features a header with company name and a cart icon. AI tools are now prominently displayed on the right side as large, image-backed buttons. The main content area dynamically displays categories as colorful tiles and products in a grid. Product details open in a full-screen modal with integrated calculators and contextual AI features. A dedicated cart modal handles order management and includes WhatsApp sharing and professional printing functionalities. This structure prioritizes modularity and dynamic data loading.
 Visualization & Content Choices: 
-- Report Info: Product Data (all details) -> Goal: Direct Embedding & Performance -> Viz/Presentation: All product HTML directly included in index.html -> Interaction: Faster initial load (no fetch delay for products) -> Justification: Directly addresses user's explicit request to copy all code, and potentially improves perceived load time of products. -> Library/Method: HTML.
-- Report Info: AI Tools -> Goal: Accessibility & Enhanced UI -> Viz/Presentation: Large, square, rounded buttons with image background placeholders -> Interaction: Direct access to AI features -> Justification: User requested specific UI/UX for AI tools (prominent, stacked, image backgrounds) for better visibility and branding. -> Library/Method: HTML/CSS (Tailwind) with placeholder image URLs.
-- Report Info: Printing functionality (AI output, Cart) -> Goal: Professional Output -> Viz/Presentation: Print function using a new window/iframe -> Interaction: User triggers print via button -> Justification: Ensures clean, professional prints without interfering with main page layout, addressing previous blank page issue. -> Library/Method: JavaScript (window.open, document.write).
+- Report Info: Product Data from Google Sheet -> Goal: Dynamic Loading & Centralized Management -> Viz/Presentation: Fetch JSON from Apps Script, then dynamically create product cards -> Interaction: Products appear after fetch, filters apply to fetched data -> Justification: Allows easy product updates via Google Sheet without touching code, replaces static embedded HTML. -> Library/Method: JavaScript Fetch API.
+- Report Info: AI Tools -> Goal: Accessibility & Enhanced UI -> Viz/Presentation: Large, square, rounded buttons with user-defined image backgrounds -> Interaction: Direct access to AI features -> Justification: User requested prominent, stacked buttons with custom backgrounds for branding. -> Library/Method: HTML/CSS (Tailwind) with dynamic `background-image` in JS.
+- Report Info: Printing functionality (AI output, Cart) -> Goal: Professional Output -> Viz/Presentation: Print function using a new window/iframe -> Interaction: User triggers print via button -> Justification: Ensures clean, professional prints without interfering with main page layout, preventing blank page issues. -> Library/Method: JavaScript (window.open, document.write).
 CONFIRMATION: NO SVG graphics used. NO Mermaid JS used.
 -->
 <html lang="he" dir="rtl">
@@ -40,6 +40,21 @@ CONFIRMATION: NO SVG graphics used. NO Mermaid JS used.
             color: white; /* Text color for buttons */
             text-shadow: 0 0 5px rgba(0,0,0,0.5); /* Text shadow for readability on image */
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            position: relative; /* For icon positioning */
+            overflow: hidden; /* Ensure background image fits */
+        }
+        .ai-button-square span {
+            z-index: 1; /* Ensure text/icon is above background */
+        }
+        .ai-button-square::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.3); /* Dark overlay for text readability */
+            z-index: 0;
         }
         .ai-button-square:hover {
             transform: translateY(-3px) scale(1.03);
@@ -150,45 +165,7 @@ CONFIRMATION: NO SVG graphics used. NO Mermaid JS used.
                     <!-- Products Section -->
                     <section id="products-section">
                         <div id="products-container" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-                            <!-- Products will be directly embedded here -->
-                             <!-- START OF EMBEDDED PRODUCTS FROM center2 (1).html -->
-                             <div class="product-card bg-white rounded-lg shadow-md p-4 text-center cursor-pointer transform hover:scale-105 transition-transform duration-200" data-product-id="prod1" data-category="בלוקים" data-brand="איתונג" data-type="בלוק" data-department="בנייה">
-                                <img src="https://placehold.co/400x300/a7f3d0/065f46?text=בלוק+איטונג" alt="בלוק איטונג" class="w-full h-32 object-cover mb-4 rounded">
-                                <h3 class="text-lg font-semibold text-gray-800">בלוק איטונג 20 ס"מ</h3>
-                                <p class="text-gray-600 text-sm">בלוק איטונג איכותי לבנייה קלה ומהירה. עמידות גבוהה ובידוד תרמי מעולה.</p>
-                                <div class="mt-4 text-blue-600 font-bold">12.50 ש"ח/יחידה</div>
-                            </div>
-                            <div class="product-card bg-white rounded-lg shadow-md p-4 text-center cursor-pointer transform hover:scale-105 transition-transform duration-200" data-product-id="prod2" data-category="מלט" data-brand="נשר" data-type="מלט" data-department="בנייה">
-                                <img src="https://placehold.co/400x300/bfdbfe/1e40af?text=מלט+פורטלנד" alt="מלט פורטלנד" class="w-full h-32 object-cover mb-4 rounded">
-                                <h3 class="text-lg font-semibold text-gray-800">מלט פורטלנד 50 ק"ג</h3>
-                                <p class="text-gray-600 text-sm">מלט תקני לשימושים כלליים בבנייה, מתאים ליציקות, טיח ועוד.</p>
-                                <div class="mt-4 text-blue-600 font-bold">28.00 ש"ח/שק</div>
-                            </div>
-                            <div class="product-card bg-white rounded-lg shadow-md p-4 text-center cursor-pointer transform hover:scale-105 transition-transform duration-200" data-product-id="prod3" data-category="צבע" data-brand="טמבור" data-type="צבע אקרילי" data-department="גימור">
-                                <img src="https://placehold.co/400x300/fecaca/991b1b?text=צבע+אקרילי" alt="צבע אקרילי" class="w-full h-32 object-cover mb-4 rounded">
-                                <h3 class="text-lg font-semibold text-gray-800">צבע אקרילי קירות 5 ליטר</h3>
-                                <p class="text-gray-600 text-sm">צבע אקרילי איכותי ועמיד לקירות פנים וחוץ, בעל כושר כיסוי גבוה.</p>
-                                <div class="mt-4 text-blue-600 font-bold">85.00 ש"ח/יחידה</div>
-                            </div>
-                            <div class="product-card bg-white rounded-lg shadow-md p-4 text-center cursor-pointer transform hover:scale-105 transition-transform duration-200" data-product-id="prod4" data-category="אינסטלציה" data-brand="ח.סבן" data-type="צינור" data-department="אינסטלציה">
-                                <img src="https://placehold.co/400x300/dbeafe/1e3a8a?text=צינור+PVC" alt="צינור PVC" class="w-full h-32 object-cover mb-4 rounded">
-                                <h3 class="text-lg font-semibold text-gray-800">צינור PVC 3/4 אינץ'</h3>
-                                <p class="text-gray-600 text-sm">צינור PVC גמיש ועמיד, מתאים למערכות מים וניקוז.</p>
-                                <div class="mt-4 text-blue-600 font-bold">15.00 ש"ח/מטר</div>
-                            </div>
-                            <div class="product-card bg-white rounded-lg shadow-md p-4 text-center cursor-pointer transform hover:scale-105 transition-transform duration-200" data-product-id="prod5" data-category="חשמל" data-brand="געש" data-type="כבל" data-department="חשמל">
-                                <img src="https://placehold.co/400x300/fee2e2/991b1b?text=כבל+חשמל" alt="כבל חשמל" class="w-full h-32 object-cover mb-4 rounded">
-                                <h3 class="text-lg font-semibold text-gray-800">כבל חשמל 3x2.5 מ"מ</h3>
-                                <p class="text-gray-600 text-sm">כבל חשמל תקני ואיכותי להתקנות ביתיות ותעשייתיות.</p>
-                                <div class="mt-4 text-blue-600 font-bold">8.00 ש"ח/מטר</div>
-                            </div>
-                            <div class="product-card bg-white rounded-lg shadow-md p-4 text-center cursor-pointer transform hover:scale-105 transition-transform duration-200" data-product-id="prod6" data-category="ריצוף" data-brand="נגב קרמיקה" data-type="קרמיקה" data-department="גימור">
-                                <img src="https://placehold.co/400x300/ecfdf5/047857?text=אריח+קרמיקה" alt="אריח קרמיקה" class="w-full h-32 object-cover mb-4 rounded">
-                                <h3 class="text-lg font-semibold text-gray-800">אריח קרמיקה 60x60 ס"מ</h3>
-                                <p class="text-gray-600 text-sm">אריח קרמיקה יוקרתי ועמיד, מתאים לריצוף פנים וחוץ.</p>
-                                <div class="mt-4 text-blue-600 font-bold">60.00 ש"ח/מ"ר</div>
-                            </div>
-                             <!-- END OF EMBEDDED PRODUCTS FROM center2 (1).html -->
+                            <!-- Products will be dynamically loaded here from Google Sheet -->
                         </div>
                          <p id="no-results" class="text-center text-gray-500 text-xl hidden py-16">לא נמצאו מוצרים התואמים את הסינון.</p>
                     </section>
@@ -261,23 +238,29 @@ CONFIRMATION: NO SVG graphics used. NO Mermaid JS used.
     </div>
 
     <script>
+        // *** הגדרות חשובות ***
+        // החלף בכתובת ה-URL של פריסת ה-Apps Script שלך
+        const APPS_SCRIPT_WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbyzdkvb4wOMILaPIq-oalk6IRA7UKxCfcsRYW0VPjF5LHO3qYLewgicT8Ua6GCdQnTn/exec'; // הדבק כאן את כתובת ה-URL שקיבלת מהפריסה
+        // החלף במזהה הגיליון שלך ב-Google Sheets
+        const SPREADSHEET_ID = '1e9gAjJA4e1MY4pATx1wVsx1IJZoD4jzKkcnHRvZKv5s'; // הדבק כאן את מזהה הגיליון שלך
+        // מספר וואטסאפ לשיתוף
+        const whatsappNumber = '972508860896'; 
+        // *********************
+
         document.addEventListener('DOMContentLoaded', () => {
             let allProducts = [];
             let cart = []; // גלובלי לעגלה
 
-            // מספר וואטסאפ לשיתוף
-            const whatsappNumber = '972508860896'; 
-
-            // הגדרת כלי ה-AI עם אייקונים משופרים וקישורי תמונות (PLACHOLDER - יש להחליף ידנית!)
+            // הגדרת כלי ה-AI עם אייקונים וקישורי תמונות
             const aiTools = [
-                { id: 'project-planner', name: 'עוזר תכנון פרויקטים', icon: '👷', imageUrl: 'https://placehold.co/100x100/2196F3/FFFFFF?text=תכנון' },
-                { id: 'material-calculator', name: 'מחשבון חומרים', icon: '🧮', imageUrl: 'https://placehold.co/100x100/4CAF50/FFFFFF?text=מחשבון' },
-                { id: 'compare-products', name: 'השוואת מוצרים', icon: '⚖️', imageUrl: 'https://placehold.co/100x100/FFC107/FFFFFF?text=השוואה' },
-                { id: 'order-assistant', name: 'עוזר הזמנה', icon: '🛒', imageUrl: 'https://placehold.co/100x100/9C27B0/FFFFFF?text=הזמנה' },
-                { id: 'problem-solver', name: 'פתרון בעיות', icon: '🛠️', imageUrl: 'https://placehold.co/100x100/FF5722/FFFFFF?text=בעיות' },
-                { id: 'alternative-products', name: 'הצעת חלופות', icon: '💡', imageUrl: 'https://placehold.co/100x100/00BCD4/FFFFFF?text=חלופות' },
-                { id: 'pro-assistant', name: 'עוזר מקצועי', icon: '🧑‍🔧', imageUrl: 'https://placehold.co/100x100/8BC34A/FFFFFF?text=מקצועי' },
-                { id: 'q-and-a', name: 'שאלות ותשובות', icon: '💬', imageUrl: 'https://placehold.co/100x100/607D8B/FFFFFF?text=שאלות' }
+                { id: 'project-planner', name: 'עוזר תכנון פרויקטים', icon: '👷', imageUrl: 'https://placehold.co/100x100/2196F3/FFFFFF?text=תכנון' }, // החלף בקישור שלך
+                { id: 'material-calculator', name: 'מחשבון חומרים', icon: '🧮', imageUrl: 'https://placehold.co/100x100/4CAF50/FFFFFF?text=מחשבון' }, // החלף בקישור שלך
+                { id: 'compare-products', name: 'השוואת מוצרים', icon: '⚖️', imageUrl: 'https://placehold.co/100x100/FFC107/FFFFFF?text=השוואה' }, // החלף בקישור שלך
+                { id: 'order-assistant', name: 'עוזר הזמנה', icon: '🛒', imageUrl: 'https://placehold.co/100x100/9C27B0/FFFFFF?text=הזמנה' }, // החלף בקישור שלך
+                { id: 'problem-solver', name: 'פתרון בעיות', icon: '🛠️', imageUrl: 'https://placehold.co/100x100/FF5722/FFFFFF?text=בעיות' }, // החלף בקישור שלך
+                { id: 'alternative-products', name: 'הצעת חלופות', icon: '💡', imageUrl: 'https://placehold.co/100x100/00BCD4/FFFFFF?text=חלופות' }, // החלף בקישור שלך
+                { id: 'pro-assistant', name: 'עוזר מקצועי', icon: '🧑‍🔧', imageUrl: 'https://placehold.co/100x100/8BC34A/FFFFFF?text=מקצועי' }, // החלף בקישור שלך
+                { id: 'q-and-a', name: 'שאלות ותשובות', icon: '💬', imageUrl: 'https://placehold.co/100x100/607D8B/FFFFFF?text=שאלות' } // החלף בקישור שלך
             ];
 
             // אלמנטים מרכזיים ב-DOM
@@ -312,26 +295,37 @@ CONFIRMATION: NO SVG graphics used. NO Mermaid JS used.
             const closeFilterBtn = document.getElementById('close-filter-sidebar');
 
             /**
-             * פונקציה לחילוץ נתוני מוצרים מאלמנטי ה-HTML המוטמעים ישירות.
-             * מזהה כרטיסי מוצר ומחלצת מהם נתונים רלוונטיים.
+             * פונקציה לשליפת מוצרים מגיליון Google Sheets.
+             * משתמשת ב-Apps Script Web App כ-API.
              */
-            const extractProductsFromEmbeddedHTML = () => {
-                const productElements = document.querySelectorAll('#products-container .product-card');
-                const products = Array.from(productElements).map(card => {
-                    const id = card.dataset.productId || Math.random().toString(36).substring(2, 11); // Generate unique ID if missing
-                    const name = card.querySelector('h3')?.textContent.trim() || card.dataset.name || 'שם לא זמין';
-                    const brand = card.dataset.brand || 'מותג לא ידוע';
-                    const type = card.dataset.type || 'סוג לא ידוע';
-                    const department = card.dataset.department || 'מחלקה לא ידועה';
-                    const category = card.dataset.category || 'קטגוריה לא ידועה';
-                    const image = card.querySelector('img')?.src || 'https://placehold.co/400x300/e2e8f0/cbd5e0?text=No+Image';
-                    const description = card.querySelector('p')?.textContent.trim() || 'אין תיאור זמין.';
-                    
-                    return { id, name, brand, type, department, category, image, description, html: card.outerHTML };
-                });
-                return products.filter(p => p.name !== 'שם לא זמין');
-            };
+            const fetchProductsFromSheet = async () => {
+                productsContainer.innerHTML = '<p class="text-center text-blue-600 text-xl py-16">טוען מוצרים... אנא המתן.</p>';
+                try {
+                    const response = await fetch(`${APPS_SCRIPT_WEB_APP_URL}?id=${SPREADSHEET_ID}`);
+                    if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+                    const data = await response.json();
+                    if (data.error) throw new Error(data.error); // טיפול בשגיאות מהסקריפט
 
+                    // המרת הנתונים מהגיליון לפורמט שאנחנו מצפים לו
+                    return data.map(item => ({
+                        id: item['מק"ט'] || Math.random().toString(36).substring(2, 11),
+                        name: item.title || 'שם לא זמין',
+                        price: item.price || 'מחיר לא זמין',
+                        description: item.description || 'אין תיאור זמין.',
+                        image: item.image || 'https://placehold.co/400x300/e2e8f0/cbd5e0?text=No+Image',
+                        category: item.category || 'קטגוריה לא ידועה',
+                        // ממפים את category גם ל-department לצורך הסינון
+                        department: item.category || 'מחלקה לא ידועה', 
+                        brand: item.brand || 'מותג לא ידוע',
+                        availability: item.availability || 'זמינות לא ידועה'
+                    }));
+                } catch (error) {
+                    console.error("Failed to fetch products from Google Sheet:", error);
+                    productsContainer.innerHTML = `<p class="text-red-500 col-span-full text-center">שגיאה בטעינת מוצרים מהגיליון. אנא ודא שה-URL והמזהה נכונים.</p>`;
+                    return [];
+                }
+            };
+            
             /**
              * פונקציה ליצירת צבע פסטל אקראי.
              * משמשת לאריחי קטגוריות.
@@ -368,21 +362,29 @@ CONFIRMATION: NO SVG graphics used. NO Mermaid JS used.
 
             /**
              * פונקציה לרינדור מוצרים ב-DOM.
-             * מציגה או מסתירה הודעת "לא נמצאו מוצרים".
+             * יוצרת את אלמנטי ה-HTML של כרטיסי המוצרים באופן דינמי.
              */
             const renderProducts = (productsToRender) => {
-                // Remove existing products from the DOM before rendering
-                const currentProducts = productsContainer.querySelectorAll('.product-card');
-                currentProducts.forEach(product => product.remove());
-
+                productsContainer.innerHTML = ''; // נקה את המיכל לפני רינדור
                 if (productsToRender.length === 0) {
                     noResults.classList.remove('hidden');
                 } else {
                     noResults.classList.add('hidden');
                     productsToRender.forEach(p => {
-                        const div = document.createElement('div');
-                        div.innerHTML = p.html;
-                        productsContainer.appendChild(div.firstElementChild);
+                        const productCardHtml = `
+                            <div class="product-card bg-white rounded-lg shadow-md p-4 text-center cursor-pointer transform hover:scale-105 transition-transform duration-200" 
+                                 data-product-id="${p.id}" 
+                                 data-category="${p.category}" 
+                                 data-brand="${p.brand}" 
+                                 data-type="${p.type}" 
+                                 data-department="${p.department}">
+                                <img src="${p.image}" alt="${p.name}" class="w-full h-32 object-cover mb-4 rounded" onerror="this.src='https://placehold.co/400x300/e2e8f0/cbd5e0?text=No+Image';">
+                                <h3 class="text-lg font-semibold text-gray-800">${p.name}</h3>
+                                <p class="text-gray-600 text-sm">${p.description}</p>
+                                <div class="mt-4 text-blue-600 font-bold">${p.price} ש"ח</div>
+                            </div>
+                        `;
+                        productsContainer.insertAdjacentHTML('beforeend', productCardHtml);
                     });
                 }
             };
@@ -835,8 +837,7 @@ CONFIRMATION: NO SVG graphics used. NO Mermaid JS used.
 
             // --- אתחול האפליקציה ---
             const init = async () => {
-                // שלוף מוצרים ישירות מה-HTML המוטמע
-                allProducts = extractProductsFromEmbeddedHTML(); 
+                allProducts = await fetchProductsFromSheet(); // שלוף מוצרים מגיליון Sheets
                 
                 populateAITools(); // אכלס כפתורי AI
                 
@@ -845,7 +846,7 @@ CONFIRMATION: NO SVG graphics used. NO Mermaid JS used.
                     populateFilters(allProducts);
                     renderProducts(allProducts); // רנדר את כל המוצרים בהתחלה
                 } else {
-                    productsContainer.innerHTML = `<p class="text-red-500 col-span-full text-center">לא הצלחנו לחלץ מוצרים מקוד המקור המוטמע.</p>`;
+                    productsContainer.innerHTML = `<p class="text-red-500 col-span-full text-center">לא הצלחנו לחלץ מוצרים מגיליון ה-Google Sheets. ודא שהגיליון מכיל נתונים ושגיליון ה-Apps Script פרוס כהלכה.</p>`;
                 }
                 updateCartDisplay(); // אתחל תצוגת עגלה עם 0 פריטים
             };
