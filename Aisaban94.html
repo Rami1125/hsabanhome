@@ -1,0 +1,857 @@
+<!DOCTYPE html>
+<!-- 
+Chosen Palette: Dynamic Pastel Palette
+Application Structure Plan: The application structure now directly embeds all product cards for a single-page experience. Key elements include a dynamic header for the company name and cart, and a dedicated AI Tools section on the right side. The main content area has dynamic category tiles and a product grid. Clicking a product opens a full-screen modal with detailed information, integrated calculators, and contextual AI tools. A separate cart modal manages orders. This structure prioritizes direct content embedding as requested, with AI tools prominently displayed in a dedicated, accessible area.
+Visualization & Content Choices: 
+- Report Info: Product Data (all details) -> Goal: Direct Embedding & Performance -> Viz/Presentation: All product HTML directly included in index.html -> Interaction: Faster initial load (no fetch delay for products) -> Justification: Directly addresses user's explicit request to copy all code, and potentially improves perceived load time of products. -> Library/Method: HTML.
+- Report Info: AI Tools -> Goal: Accessibility & Enhanced UI -> Viz/Presentation: Large, square, rounded buttons with image background placeholders -> Interaction: Direct access to AI features -> Justification: User requested specific UI/UX for AI tools (prominent, stacked, image backgrounds) for better visibility and branding. -> Library/Method: HTML/CSS (Tailwind) with placeholder image URLs.
+- Report Info: Printing functionality (AI output, Cart) -> Goal: Professional Output -> Viz/Presentation: Print function using a new window/iframe -> Interaction: User triggers print via button -> Justification: Ensures clean, professional prints without interfering with main page layout, addressing previous blank page issue. -> Library/Method: JavaScript (window.open, document.write).
+CONFIRMATION: NO SVG graphics used. NO Mermaid JS used.
+-->
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>קטלוג מוצרים משודרג - ח.סבן חומרי בניין 1994 בע"מ</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { 
+            font-family: 'Assistant', sans-serif; 
+            background: linear-gradient(to bottom, #e0f2f7, #ffffff); /* Light gradient background */
+        }
+        .glass-effect {
+            backdrop-filter: blur(20px) saturate(180%);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
+        }
+        .ai-button-square {
+            width: 100px; /* Fixed width for square button */
+            height: 100px; /* Fixed height for square button */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px; /* Rounded corners */
+            transition: transform 0.2s, box-shadow 0.2s;
+            background-size: cover;
+            background-position: center;
+            color: white; /* Text color for buttons */
+            text-shadow: 0 0 5px rgba(0,0,0,0.5); /* Text shadow for readability on image */
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+        .ai-button-square:hover {
+            transform: translateY(-3px) scale(1.03);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+        }
+        .category-tile:hover {
+            transform: translateY(-5px) scale(1.03);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 25px rgba(0,0,0,0.15);
+        }
+        /* General print styles */
+        @media print {
+            body { 
+                background: none !important; 
+                margin: 0; 
+                padding: 0;
+            }
+            .no-print {
+                display: none !important;
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800">
+
+    <!-- Filter Sidebar (Off-canvas) -->
+    <aside id="filter-sidebar" class="fixed top-0 left-0 h-full w-80 bg-white shadow-2xl z-50 transform -translate-x-full transition-transform duration-300 ease-in-out no-print">
+        <div class="p-6 h-full flex flex-col">
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="text-xl font-bold text-blue-600">סינון מתקדם</h3>
+                <button id="close-filter-sidebar" class="text-gray-500 hover:text-gray-800">&times;</button>
+            </div>
+            <div class="space-y-4 flex-grow overflow-y-auto pr-2">
+                <div>
+                    <label for="search-input" class="block text-sm font-medium text-gray-700 mb-1">חיפוש שם מוצר</label>
+                    <input type="text" id="search-input" placeholder="לדוגמה: מלט" class="w-full border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring-blue-500">
+                </div>
+                <div>
+                    <label for="brand-filter" class="block text-sm font-medium text-gray-700 mb-1">סינון לפי מותג</label>
+                    <select id="brand-filter" class="w-full border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring-blue-500">
+                        <option value="">כל המותגים</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="type-filter" class="block text-sm font-medium text-gray-700 mb-1">סינון לפי סוג מוצר</label>
+                    <select id="type-filter" class="w-full border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring-blue-500">
+                        <option value="">כל הסוגים</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="department-filter" class="block text-sm font-medium text-gray-700 mb-1">סינון לפי מחלקה</label>
+                    <select id="department-filter" class="w-full border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring-blue-500">
+                        <option value="">כל המחלקות</option>
+                    </select>
+                </div>
+            </div>
+            <div class="mt-6">
+                <button id="apply-filters-btn" class="w-full bg-blue-600 text-white font-bold py-2 px-4 rounded-md hover:bg-blue-700 transition-colors">החל סינון</button>
+                 <button id="clear-filters-btn" class="w-full bg-gray-200 text-gray-700 font-bold py-2 px-4 rounded-md hover:bg-gray-300 transition-colors mt-2">נקה הכל</button>
+            </div>
+        </div>
+    </aside>
+    <div id="sidebar-overlay" class="fixed inset-0 bg-black bg-opacity-50 z-40 hidden no-print"></div>
+
+    <!-- Main Content -->
+    <div id="main-content" class="transition-transform duration-300 ease-in-out">
+        <!-- Header & AI Tools -->
+        <header class="sticky top-0 bg-white/80 backdrop-blur-sm shadow-md z-30 p-4 no-print">
+            <div class="container mx-auto">
+                <div class="flex justify-between items-center">
+                    <h1 class="text-2xl font-bold text-blue-600">ח.סבן חומרי בניין</h1>
+                    <button id="open-cart-btn" class="relative bg-blue-100 text-blue-800 p-2 rounded-full shadow-sm hover:bg-blue-200 transition">
+                        🛒 <span id="cart-counter" class="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">0</span>
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <main class="container mx-auto p-4 md:p-8">
+            <div class="flex flex-col md:flex-row-reverse gap-8">
+                <!-- AI Tools Section (Right Side) -->
+                <section id="ai-tools-section" class="w-full md:w-1/4 flex flex-col items-end space-y-4 no-print">
+                    <h2 class="text-2xl font-bold text-gray-700 mb-4 text-right">כלי AI לשירותך:</h2>
+                    <div id="ai-tools-container" class="grid grid-cols-2 gap-4">
+                        <!-- AI Tool Buttons will be injected here by JS -->
+                    </div>
+                </section>
+
+                <!-- Main Product and Category Content (Left/Center) -->
+                <div class="w-full md:w-3/4">
+                    <!-- Categories Section -->
+                    <section id="categories-section" class="mb-12">
+                        <div class="flex justify-between items-center mb-6">
+                            <h2 class="text-3xl font-bold">קטגוריות מוצרים</h2>
+                            <button id="advanced-filter-btn" class="flex items-center bg-gray-200 text-gray-800 font-semibold py-2 px-4 rounded-md hover:bg-gray-300 transition">
+                                <span>סינון מתקדם</span>
+                                <span class="mr-2 text-lg">+</span>
+                            </button>
+                        </div>
+                        <div id="categories-grid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
+                            <!-- Category tiles will be injected here -->
+                        </div>
+                    </section>
+                    
+                    <!-- Products Section -->
+                    <section id="products-section">
+                        <div id="products-container" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                            <!-- Products will be directly embedded here -->
+                             <!-- START OF EMBEDDED PRODUCTS FROM center2 (1).html -->
+                             <div class="product-card bg-white rounded-lg shadow-md p-4 text-center cursor-pointer transform hover:scale-105 transition-transform duration-200" data-product-id="prod1" data-category="בלוקים" data-brand="איתונג" data-type="בלוק" data-department="בנייה">
+                                <img src="https://placehold.co/400x300/a7f3d0/065f46?text=בלוק+איטונג" alt="בלוק איטונג" class="w-full h-32 object-cover mb-4 rounded">
+                                <h3 class="text-lg font-semibold text-gray-800">בלוק איטונג 20 ס"מ</h3>
+                                <p class="text-gray-600 text-sm">בלוק איטונג איכותי לבנייה קלה ומהירה. עמידות גבוהה ובידוד תרמי מעולה.</p>
+                                <div class="mt-4 text-blue-600 font-bold">12.50 ש"ח/יחידה</div>
+                            </div>
+                            <div class="product-card bg-white rounded-lg shadow-md p-4 text-center cursor-pointer transform hover:scale-105 transition-transform duration-200" data-product-id="prod2" data-category="מלט" data-brand="נשר" data-type="מלט" data-department="בנייה">
+                                <img src="https://placehold.co/400x300/bfdbfe/1e40af?text=מלט+פורטלנד" alt="מלט פורטלנד" class="w-full h-32 object-cover mb-4 rounded">
+                                <h3 class="text-lg font-semibold text-gray-800">מלט פורטלנד 50 ק"ג</h3>
+                                <p class="text-gray-600 text-sm">מלט תקני לשימושים כלליים בבנייה, מתאים ליציקות, טיח ועוד.</p>
+                                <div class="mt-4 text-blue-600 font-bold">28.00 ש"ח/שק</div>
+                            </div>
+                            <div class="product-card bg-white rounded-lg shadow-md p-4 text-center cursor-pointer transform hover:scale-105 transition-transform duration-200" data-product-id="prod3" data-category="צבע" data-brand="טמבור" data-type="צבע אקרילי" data-department="גימור">
+                                <img src="https://placehold.co/400x300/fecaca/991b1b?text=צבע+אקרילי" alt="צבע אקרילי" class="w-full h-32 object-cover mb-4 rounded">
+                                <h3 class="text-lg font-semibold text-gray-800">צבע אקרילי קירות 5 ליטר</h3>
+                                <p class="text-gray-600 text-sm">צבע אקרילי איכותי ועמיד לקירות פנים וחוץ, בעל כושר כיסוי גבוה.</p>
+                                <div class="mt-4 text-blue-600 font-bold">85.00 ש"ח/יחידה</div>
+                            </div>
+                            <div class="product-card bg-white rounded-lg shadow-md p-4 text-center cursor-pointer transform hover:scale-105 transition-transform duration-200" data-product-id="prod4" data-category="אינסטלציה" data-brand="ח.סבן" data-type="צינור" data-department="אינסטלציה">
+                                <img src="https://placehold.co/400x300/dbeafe/1e3a8a?text=צינור+PVC" alt="צינור PVC" class="w-full h-32 object-cover mb-4 rounded">
+                                <h3 class="text-lg font-semibold text-gray-800">צינור PVC 3/4 אינץ'</h3>
+                                <p class="text-gray-600 text-sm">צינור PVC גמיש ועמיד, מתאים למערכות מים וניקוז.</p>
+                                <div class="mt-4 text-blue-600 font-bold">15.00 ש"ח/מטר</div>
+                            </div>
+                            <div class="product-card bg-white rounded-lg shadow-md p-4 text-center cursor-pointer transform hover:scale-105 transition-transform duration-200" data-product-id="prod5" data-category="חשמל" data-brand="געש" data-type="כבל" data-department="חשמל">
+                                <img src="https://placehold.co/400x300/fee2e2/991b1b?text=כבל+חשמל" alt="כבל חשמל" class="w-full h-32 object-cover mb-4 rounded">
+                                <h3 class="text-lg font-semibold text-gray-800">כבל חשמל 3x2.5 מ"מ</h3>
+                                <p class="text-gray-600 text-sm">כבל חשמל תקני ואיכותי להתקנות ביתיות ותעשייתיות.</p>
+                                <div class="mt-4 text-blue-600 font-bold">8.00 ש"ח/מטר</div>
+                            </div>
+                            <div class="product-card bg-white rounded-lg shadow-md p-4 text-center cursor-pointer transform hover:scale-105 transition-transform duration-200" data-product-id="prod6" data-category="ריצוף" data-brand="נגב קרמיקה" data-type="קרמיקה" data-department="גימור">
+                                <img src="https://placehold.co/400x300/ecfdf5/047857?text=אריח+קרמיקה" alt="אריח קרמיקה" class="w-full h-32 object-cover mb-4 rounded">
+                                <h3 class="text-lg font-semibold text-gray-800">אריח קרמיקה 60x60 ס"מ</h3>
+                                <p class="text-gray-600 text-sm">אריח קרמיקה יוקרתי ועמיד, מתאים לריצוף פנים וחוץ.</p>
+                                <div class="mt-4 text-blue-600 font-bold">60.00 ש"ח/מ"ר</div>
+                            </div>
+                             <!-- END OF EMBEDDED PRODUCTS FROM center2 (1).html -->
+                        </div>
+                         <p id="no-results" class="text-center text-gray-500 text-xl hidden py-16">לא נמצאו מוצרים התואמים את הסינון.</p>
+                    </section>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Product Modal (Full Screen) -->
+    <div id="product-modal" class="fixed inset-0 z-50 bg-black/50 hidden overflow-y-auto p-4 no-print">
+        <div id="modal-content-wrapper" class="relative w-full max-w-5xl min-h-[90vh] my-8 mx-auto rounded-2xl shadow-2xl transition-all duration-300 scale-95 opacity-0">
+             <div id="modal-glass-bg" class="absolute inset-0 rounded-2xl glass-effect"></div>
+             <div class="relative p-6 md:p-8 text-white h-full">
+                <button id="close-modal" class="absolute top-4 right-4 text-white/70 hover:text-white text-3xl font-bold">&times;</button>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <!-- Left Side: Image & Basic Info -->
+                    <div>
+                        <h2 id="modal-product-name" class="text-4xl font-bold mb-2"></h2>
+                        <p id="modal-product-brand" class="text-lg opacity-80 mb-4"></p>
+                        <img id="modal-product-image" src="" alt="" class="w-full h-auto max-h-96 object-contain rounded-lg bg-white/20 p-2 mb-4">
+                        <p id="modal-product-description" class="text-base"></p>
+                        <button id="add-to-cart-btn" class="mt-4 w-full bg-green-500 text-white font-bold py-3 px-6 rounded-lg hover:bg-green-600 transition shadow-lg">הוסף לעגלה</button>
+                    </div>
+                    <!-- Right Side: Calculators & AI Tools -->
+                    <div class="flex flex-col space-y-6">
+                        <!-- Calculator Area -->
+                        <div id="calculator-container" class="bg-white/10 p-4 rounded-lg">
+                            <h3 class="text-xl font-bold mb-4">מחשבון חומרים</h3>
+                            <div id="calculator-content"></div>
+                            <p id="calculator-result" class="mt-4 text-lg font-bold bg-white/20 p-2 rounded-md text-center"></p>
+                        </div>
+                        <!-- AI Tools Area -->
+                        <div class="bg-white/10 p-4 rounded-lg flex-grow">
+                             <h3 class="text-xl font-bold mb-4">כלים חכמים למוצר זה</h3>
+                             <div id="modal-ai-tools" class="space-y-2">
+                                <!-- Contextual AI buttons go here -->
+                                <button data-tool="enhanced-description" class="w-full text-right bg-white/20 p-2 rounded-md hover:bg-white/30 transition">תיאור שיווקי משופר</button>
+                                <button data-tool="related-products" class="w-full text-right bg-white/20 p-2 rounded-md hover:bg-white/30 transition">מצא מוצרים קשורים</button>
+                                <button data-tool="problem-solver" class="w-full text-right bg-white/20 p-2 rounded-md hover:bg-white/30 transition">עזרה בפתרון בעיות</button>
+                             </div>
+                             <div id="modal-ai-output" class="mt-4 p-3 bg-black/20 rounded-md h-32 overflow-y-auto hidden"></div>
+                             <button id="print-ai-output-btn" class="mt-4 w-full bg-blue-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-blue-600 transition shadow-md hidden">הדפס תשובת AI</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Shopping Cart Modal -->
+    <div id="cart-modal" class="fixed inset-0 z-50 bg-black/50 hidden overflow-y-auto p-4 no-print">
+        <div id="cart-modal-content-wrapper" class="relative w-full max-w-xl min-h-[50vh] my-8 mx-auto bg-white rounded-2xl shadow-2xl p-6 md:p-8 transform scale-95 opacity-0 transition-all duration-300">
+            <button id="close-cart-modal" class="absolute top-4 right-4 text-gray-500 hover:text-gray-800 text-3xl font-bold">&times;</button>
+            <h2 class="text-3xl font-bold text-blue-600 mb-6 text-center">עגלת הקניות שלך</h2>
+            <div id="cart-items-container" class="space-y-3 overflow-y-auto max-h-[calc(80vh-180px)] mb-6">
+                <!-- Cart items will be loaded here -->
+            </div>
+            <div class="flex flex-col md:flex-row justify-center gap-4">
+                <button id="whatsapp-share-btn" class="flex-grow bg-green-500 text-white font-bold py-3 px-6 rounded-lg hover:bg-green-600 transition shadow-md">
+                    <span class="ml-2">שתף ב-WhatsApp</span> 💬
+                </button>
+                <button id="print-order-btn" class="flex-grow bg-blue-500 text-white font-bold py-3 px-6 rounded-lg hover:bg-blue-600 transition shadow-md">
+                    <span class="ml-2">הדפס הזמנה</span> 🖨️
+                </button>
+                <button id="clear-cart-btn" class="flex-grow bg-red-500 text-white font-bold py-3 px-6 rounded-lg hover:bg-red-600 transition shadow-md">
+                    <span class="ml-2">נקה עגלה</span> 🗑️
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            let allProducts = [];
+            let cart = []; // גלובלי לעגלה
+
+            // מספר וואטסאפ לשיתוף
+            const whatsappNumber = '972508860896'; 
+
+            // הגדרת כלי ה-AI עם אייקונים משופרים וקישורי תמונות (PLACHOLDER - יש להחליף ידנית!)
+            const aiTools = [
+                { id: 'project-planner', name: 'עוזר תכנון פרויקטים', icon: '👷', imageUrl: 'https://placehold.co/100x100/2196F3/FFFFFF?text=תכנון' },
+                { id: 'material-calculator', name: 'מחשבון חומרים', icon: '🧮', imageUrl: 'https://placehold.co/100x100/4CAF50/FFFFFF?text=מחשבון' },
+                { id: 'compare-products', name: 'השוואת מוצרים', icon: '⚖️', imageUrl: 'https://placehold.co/100x100/FFC107/FFFFFF?text=השוואה' },
+                { id: 'order-assistant', name: 'עוזר הזמנה', icon: '🛒', imageUrl: 'https://placehold.co/100x100/9C27B0/FFFFFF?text=הזמנה' },
+                { id: 'problem-solver', name: 'פתרון בעיות', icon: '🛠️', imageUrl: 'https://placehold.co/100x100/FF5722/FFFFFF?text=בעיות' },
+                { id: 'alternative-products', name: 'הצעת חלופות', icon: '💡', imageUrl: 'https://placehold.co/100x100/00BCD4/FFFFFF?text=חלופות' },
+                { id: 'pro-assistant', name: 'עוזר מקצועי', icon: '🧑‍🔧', imageUrl: 'https://placehold.co/100x100/8BC34A/FFFFFF?text=מקצועי' },
+                { id: 'q-and-a', name: 'שאלות ותשובות', icon: '💬', imageUrl: 'https://placehold.co/100x100/607D8B/FFFFFF?text=שאלות' }
+            ];
+
+            // אלמנטים מרכזיים ב-DOM
+            const productsContainer = document.getElementById('products-container');
+            const categoriesGrid = document.getElementById('categories-grid');
+            const aiToolsContainer = document.getElementById('ai-tools-container');
+            const noResults = document.getElementById('no-results');
+
+            // --- אלמנטים של מודאל המוצר ---
+            const productModal = document.getElementById('product-modal');
+            const modalContentWrapper = document.getElementById('modal-content-wrapper');
+            const modalGlassBg = document.getElementById('modal-glass-bg');
+            const closeModalBtn = document.getElementById('close-modal');
+            const addToCartBtn = document.getElementById('add-to-cart-btn');
+            const printAiOutputBtn = document.getElementById('print-ai-output-btn');
+
+            // --- אלמנטים של מודאל עגלת הקניות ---
+            const cartModal = document.getElementById('cart-modal');
+            const cartModalContentWrapper = document.getElementById('cart-modal-content-wrapper');
+            const openCartBtn = document.getElementById('open-cart-btn');
+            const closeCartModalBtn = document.getElementById('close-cart-modal');
+            const cartItemsContainer = document.getElementById('cart-items-container');
+            const cartCounter = document.getElementById('cart-counter');
+            const whatsappShareBtn = document.getElementById('whatsapp-share-btn');
+            const printOrderBtn = document.getElementById('print-order-btn');
+            const clearCartBtn = document.getElementById('clear-cart-btn');
+
+            // --- אלמנטים של סרגל הצד (פילטרים) ---
+            const filterSidebar = document.getElementById('filter-sidebar');
+            const sidebarOverlay = document.getElementById('sidebar-overlay');
+            const openFilterBtn = document.getElementById('advanced-filter-btn');
+            const closeFilterBtn = document.getElementById('close-filter-sidebar');
+
+            /**
+             * פונקציה לחילוץ נתוני מוצרים מאלמנטי ה-HTML המוטמעים ישירות.
+             * מזהה כרטיסי מוצר ומחלצת מהם נתונים רלוונטיים.
+             */
+            const extractProductsFromEmbeddedHTML = () => {
+                const productElements = document.querySelectorAll('#products-container .product-card');
+                const products = Array.from(productElements).map(card => {
+                    const id = card.dataset.productId || Math.random().toString(36).substring(2, 11); // Generate unique ID if missing
+                    const name = card.querySelector('h3')?.textContent.trim() || card.dataset.name || 'שם לא זמין';
+                    const brand = card.dataset.brand || 'מותג לא ידוע';
+                    const type = card.dataset.type || 'סוג לא ידוע';
+                    const department = card.dataset.department || 'מחלקה לא ידועה';
+                    const category = card.dataset.category || 'קטגוריה לא ידועה';
+                    const image = card.querySelector('img')?.src || 'https://placehold.co/400x300/e2e8f0/cbd5e0?text=No+Image';
+                    const description = card.querySelector('p')?.textContent.trim() || 'אין תיאור זמין.';
+                    
+                    return { id, name, brand, type, department, category, image, description, html: card.outerHTML };
+                });
+                return products.filter(p => p.name !== 'שם לא זמין');
+            };
+
+            /**
+             * פונקציה ליצירת צבע פסטל אקראי.
+             * משמשת לאריחי קטגוריות.
+             */
+            const generatePastelColor = () => {
+                return `hsl(${Math.random() * 360}, 70%, 85%)`;
+            };
+            
+            /**
+             * פונקציה ליצירת צבע רקע זכוכיתי אקראי.
+             * משמשת למודאל המוצר.
+             */
+            const generateGlassBgColor = () => {
+                const hue = Math.random() * 360;
+                return `hsla(${hue}, 90%, 55%, 0.3)`;
+            };
+
+            /**
+             * פונקציה לאכלוס אריחי הקטגוריות ב-DOM.
+             */
+            const populateCategories = (products) => {
+                const categories = [...new Set(products.map(p => p.category))];
+                categoriesGrid.innerHTML = categories.map(cat => {
+                    const color = generatePastelColor();
+                    return `
+                        <div class="category-tile cursor-pointer p-6 rounded-xl text-center transition duration-300" 
+                             style="background-color: ${color};"
+                             data-category="${cat}">
+                            <h3 class="text-xl font-bold text-gray-800">${cat}</h3>
+                        </div>
+                    `;
+                }).join('');
+            };
+
+            /**
+             * פונקציה לרינדור מוצרים ב-DOM.
+             * מציגה או מסתירה הודעת "לא נמצאו מוצרים".
+             */
+            const renderProducts = (productsToRender) => {
+                // Remove existing products from the DOM before rendering
+                const currentProducts = productsContainer.querySelectorAll('.product-card');
+                currentProducts.forEach(product => product.remove());
+
+                if (productsToRender.length === 0) {
+                    noResults.classList.remove('hidden');
+                } else {
+                    noResults.classList.add('hidden');
+                    productsToRender.forEach(p => {
+                        const div = document.createElement('div');
+                        div.innerHTML = p.html;
+                        productsContainer.appendChild(div.firstElementChild);
+                    });
+                }
+            };
+
+            /**
+             * פונקציה לאכלוס אפשרויות הסינון (מותגים, סוגים, מחלקות).
+             */
+            const populateFilters = (products) => {
+                const brands = [...new Set(products.map(p => p.brand))];
+                const types = [...new Set(products.map(p => p.type))];
+                const departments = [...new Set(products.map(p => p.department))];
+
+                const brandFilter = document.getElementById('brand-filter');
+                brandFilter.innerHTML = '<option value="">כל המותגים</option>' + brands.map(b => `<option value="${b}">${b}</option>`).join('');
+
+                const typeFilter = document.getElementById('type-filter');
+                typeFilter.innerHTML = '<option value="">כל הסוגים</option>' + types.map(t => `<option value="${t}">${t}</option>`).join('');
+
+                const departmentFilter = document.getElementById('department-filter');
+                departmentFilter.innerHTML = '<option value="">כל המחלקות</option>' + departments.map(d => `<option value="${d}">${d}</option>`).join('');
+            };
+
+            /**
+             * פונקציה להפעלת הסינון על רשימת המוצרים.
+             */
+            const applyFilters = () => {
+                const searchTerm = document.getElementById('search-input').value.toLowerCase();
+                const selectedBrand = document.getElementById('brand-filter').value;
+                const selectedType = document.getElementById('type-filter').value;
+                const selectedDepartment = document.getElementById('department-filter').value;
+
+                let filtered = allProducts.filter(p => {
+                    const nameMatch = p.name.toLowerCase().includes(searchTerm);
+                    const brandMatch = !selectedBrand || p.brand === selectedBrand;
+                    const typeMatch = !selectedType || p.type === selectedType;
+                    const departmentMatch = !selectedDepartment || p.department === selectedDepartment;
+                    return nameMatch && brandMatch && typeMatch && departmentMatch;
+                });
+                renderProducts(filtered);
+                closeSidebar();
+            };
+            
+            /**
+             * פונקציה לניקוי כל המסננים.
+             */
+            const clearFilters = () => {
+                document.getElementById('search-input').value = '';
+                document.getElementById('brand-filter').value = '';
+                document.getElementById('type-filter').value = '';
+                document.getElementById('department-filter').value = '';
+                renderProducts(allProducts);
+                closeSidebar();
+            };
+
+            /**
+             * פונקציה לאכלוס כפתורי כלי ה-AI בראש הדף.
+             */
+            const populateAITools = () => {
+                aiToolsContainer.innerHTML = aiTools.map(tool => `
+                    <button class="ai-button-square relative text-center" 
+                            data-tool-id="${tool.id}" 
+                            style="background-image: url('${tool.imageUrl}');">
+                        <span class="text-xl font-bold">${tool.icon}</span>
+                        <span class="text-sm font-semibold mt-1">${tool.name}</span>
+                    </button>
+                `).join('');
+            };
+            
+            /**
+             * פונקציות לפתיחה וסגירה של סרגל הצד (פילטרים).
+             */
+            const openSidebar = () => {
+                filterSidebar.classList.remove('-translate-x-full');
+                sidebarOverlay.classList.remove('hidden');
+                document.getElementById('main-content').classList.add('md:translate-x-[-10rem]');
+            };
+
+            const closeSidebar = () => {
+                filterSidebar.classList.add('-translate-x-full');
+                sidebarOverlay.classList.add('hidden');
+                document.getElementById('main-content').classList.remove('md:translate-x-[-10rem]');
+            };
+            
+            /**
+             * פונקציות להצגה והסתרה של מודאל המוצר במסך מלא.
+             */
+            const showProductModal = (productId) => {
+                const product = allProducts.find(p => p.id === productId);
+                if (!product) return;
+
+                document.getElementById('modal-product-name').textContent = product.name;
+                document.getElementById('modal-product-brand').textContent = `מותג: ${product.brand}`;
+                document.getElementById('modal-product-image').src = product.image;
+                document.getElementById('modal-product-image').alt = product.name;
+                document.getElementById('modal-product-description').textContent = product.description;
+                addToCartBtn.dataset.productId = product.id; // Store product ID for adding to cart
+
+                modalGlassBg.style.backgroundColor = generateGlassBgColor();
+
+                renderCalculatorForProduct(product);
+                
+                document.getElementById('modal-ai-output').classList.add('hidden');
+                printAiOutputBtn.classList.add('hidden'); // הסתר כפתור הדפסה של AI בהתחלה
+
+                productModal.classList.remove('hidden');
+                setTimeout(() => {
+                    modalContentWrapper.classList.remove('scale-95', 'opacity-0');
+                }, 10);
+            };
+            
+            const hideProductModal = () => {
+                modalContentWrapper.classList.add('scale-95', 'opacity-0');
+                 setTimeout(() => {
+                    productModal.classList.add('hidden');
+                 }, 300);
+            };
+            
+            /**
+             * פונקציה לרינדור המחשבון המתאים בתוך מודאל המוצר, בהתאם לסוג המוצר.
+             */
+            const renderCalculatorForProduct = (product) => {
+                const container = document.getElementById('calculator-content');
+                const resultEl = document.getElementById('calculator-result');
+                container.innerHTML = '';
+                resultEl.textContent = '';
+                let calculatorType = 'none';
+
+                if (product.type.includes('בלוק') || product.type.includes('לבנים')) {
+                    calculatorType = 'blocks';
+                    container.innerHTML = `
+                        <p class="text-sm opacity-80 mb-2">חשב כמות בלוקים לקיר</p>
+                        <div class="grid grid-cols-2 gap-2">
+                            <input type="number" id="calc-length" placeholder="אורך הקיר (מ')" class="p-2 rounded bg-white/20 placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-white">
+                            <input type="number" id="calc-height" placeholder="גובה הקיר (מ')" class="p-2 rounded bg-white/20 placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-white">
+                        </div>
+                        <button id="calc-btn" class="w-full mt-2 bg-white/30 p-2 rounded hover:bg-white/40 transition">חשב</button>
+                    `;
+                } else if (product.type.includes('צבע')) {
+                    calculatorType = 'paint';
+                    container.innerHTML = `
+                         <p class="text-sm opacity-80 mb-2">חשב כמות צבע נדרשת</p>
+                        <input type="number" id="calc-area" placeholder="שטח לצביעה (מ'ר)" class="w-full p-2 rounded bg-white/20 placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-white">
+                        <button id="calc-btn" class="w-full mt-2 bg-white/30 p-2 rounded hover:bg-white/40 transition">חשב</button>
+                    `;
+                } else if (product.type.includes('בטון') || product.type.includes('מלט')) {
+                     calculatorType = 'volume';
+                     container.innerHTML = `
+                         <p class="text-sm opacity-80 mb-2">חשב נפח נדרש</p>
+                         <div class="grid grid-cols-3 gap-2">
+                             <input type="number" id="calc-length" placeholder="אורך (מ')" class="p-2 rounded bg-white/20 placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-white">
+                             <input type="number" id="calc-width" placeholder="רוחב (מ')" class="p-2 rounded bg-white/20 placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-white">
+                             <input type="number" id="calc-depth" placeholder="עומק (מ')" class="p-2 rounded bg-white/20 placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-white">
+                         </div>
+                         <button id="calc-btn" class="w-full mt-2 bg-white/30 p-2 rounded hover:bg-white/40 transition">חשב</button>
+                     `;
+                } else {
+                     container.innerHTML = `<p class="text-center opacity-70">אין מחשבון זמין עבור מוצר זה.</p>`;
+                }
+
+                const calcBtn = document.getElementById('calc-btn');
+                if(calcBtn) {
+                    calcBtn.addEventListener('click', () => {
+                        let resultText = 'יש להזין ערכים תקינים.';
+                        try {
+                            if (calculatorType === 'blocks') {
+                                const length = parseFloat(document.getElementById('calc-length').value);
+                                const height = parseFloat(document.getElementById('calc-height').value);
+                                if(isNaN(length) || isNaN(height) || length <= 0 || height <= 0) throw new Error();
+                                const area = length * height;
+                                const blocks = Math.ceil(area * 12.5); // Standard assumption for blocks per sqm
+                                resultText = `נדרשים כ-${blocks} בלוקים עבור ${area.toFixed(2)} מ"ר.`;
+                            } else if (calculatorType === 'paint') {
+                                const area = parseFloat(document.getElementById('calc-area').value);
+                                if(isNaN(area) || area <= 0) throw new Error();
+                                const liters = Math.ceil(area / 10); // Standard assumption 10sqm/liter
+                                resultText = `נדרשים כ-${liters} ליטר צבע.`;
+                            } else if (calculatorType === 'volume') {
+                                const length = parseFloat(document.getElementById('calc-length').value);
+                                const width = parseFloat(document.getElementById('calc-width').value);
+                                const depth = parseFloat(document.getElementById('calc-depth').value);
+                                if(isNaN(length) || isNaN(width) || isNaN(depth) || length <= 0 || width <= 0 || depth <= 0) throw new Error();
+                                const volume = (length * width * depth).toFixed(3);
+                                resultText = `הנפח הנדרש הוא ${volume} מטר קוב.`;
+                            }
+                        } catch(e) { /* use default error message */ }
+                        resultEl.textContent = resultText;
+                    });
+                }
+            };
+            
+            /**
+             * פונקציה לטיפול בכלי ה-AI בתוך מודאל המוצר.
+             * מדמה תגובת AI ומציגה אותה.
+             */
+            const handleModalAITool = (tool, product) => {
+                const outputEl = document.getElementById('modal-ai-output');
+                outputEl.classList.remove('hidden');
+                printAiOutputBtn.classList.remove('hidden'); // הצג כפתור הדפסה של AI
+                outputEl.innerHTML = '<p class="animate-pulse">חושב...</p>';
+                
+                // הדמיית תגובת AI
+                setTimeout(() => {
+                    let aiResponse = '';
+                    switch(tool) {
+                        case 'enhanced-description':
+                            aiResponse = `<strong>תיאור משופר:</strong> ${product.description} מוצר זה מיוצר מהחומרים האיכותיים ביותר, ומבטיח עמידות ואמינות לאורך שנים. אידיאלי עבור פרויקטים מקצועיים וביתיים כאחד, ומספק פתרון כולל לצרכי הבנייה שלך.`;
+                            break;
+                        case 'related-products':
+                             const related = allProducts.filter(p => p.category === product.category && p.id !== product.id).slice(0, 3);
+                             aiResponse = '<strong>מוצרים קשורים שכדאי לבדוק:</strong><ul class="list-disc pr-4 mt-2">' + related.map(p => `<li>${p.name}</li>`).join('') + '</ul>';
+                             if(related.length === 0) aiResponse = 'לא נמצאו מוצרים קשורים.';
+                            break;
+                        case 'problem-solver':
+                             aiResponse = `<strong>פתרון בעיות נפוצות עם ${product.name}:</strong><ul class="list-disc pr-4 mt-2"><li>ודא שהמשטח נקי ויבש לפני היישום.</li><li>עבוד בסביבה מאווררת היטב.</li><li>עקוב אחר הוראות היצרן במדויק.</li></ul>`;
+                            break;
+                    }
+                     outputEl.innerHTML = aiResponse;
+                }, 1500);
+            };
+
+            // --- פונקציות עגלת קניות ---
+            /**
+             * מוסיפה מוצר לעגלת הקניות ומעדכנת את התצוגה.
+             */
+            const addProductToCart = (productId) => {
+                const product = allProducts.find(p => p.id === productId);
+                if (product) {
+                    cart.push(product);
+                    updateCartDisplay();
+                    alert(`המוצר "${product.name}" נוסף לעגלה!`);
+                }
+            };
+
+            /**
+             * מעדכנת את תצוגת עגלת הקניות ואת מונה הפריטים.
+             */
+            const updateCartDisplay = () => {
+                if (!cartItemsContainer) return; // Ensure element exists
+
+                if (cart.length === 0) {
+                    cartItemsContainer.innerHTML = '<p class="text-gray-600 text-center">עגלת הקניות ריקה.</p>';
+                } else {
+                    cartItemsContainer.innerHTML = cart.map((item, index) => `
+                        <div class="flex justify-between items-center bg-blue-50 p-3 rounded-md shadow-sm">
+                            <span class="text-blue-800 font-medium">${index + 1}. ${item.name} (${item.brand})</span>
+                            <button class="text-red-500 hover:text-red-700 font-bold text-lg" data-cart-index="${index}">&times;</button>
+                        </div>
+                    `).join('');
+                }
+                cartCounter.textContent = cart.length;
+            };
+
+            /**
+             * מסירה פריט מעגלת הקניות לפי אינדקס.
+             */
+            const removeFromCart = (index) => {
+                cart.splice(index, 1);
+                updateCartDisplay();
+            };
+
+            /**
+             * מנקה את כל עגלת הקניות.
+             */
+            const clearCart = () => {
+                cart = [];
+                updateCartDisplay();
+                alert('העגלה נוקתה בהצלחה!');
+            };
+
+            /**
+             * יוצרת הודעת WhatsApp מפורמטת מפריטי העגלה.
+             */
+            const getWhatsAppMessage = () => {
+                if (cart.length === 0) {
+                    return 'עגלת הקניות ריקה.';
+                }
+                let message = 'שלום, ברצוני לבצע הזמנה מ-"ח.סבן חומרי בניין 1994 בע"מ".\n\nפרטי ההזמנה שלי:\n';
+                cart.forEach((item, index) => {
+                    message += `${index + 1}. ${item.name} (${item.brand})\n`;
+                });
+                message += `\nסה"כ ${cart.length} פריטים.\n`;
+                message += 'אודה לכם על יצירת קשר לתיאום הפרטים הסופיים.';
+                return encodeURIComponent(message);
+            };
+
+            /**
+             * משתפת את ההזמנה ב-WhatsApp.
+             */
+            const shareOrderOnWhatsApp = () => {
+                if (cart.length === 0) {
+                    alert('עגלת הקניות ריקה מכדי לשתף.');
+                    return;
+                }
+                const message = getWhatsAppMessage();
+                const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${message}`;
+                window.open(whatsappUrl, '_blank');
+            };
+
+            /**
+             * פונקציית הדפסה כללית ומקצועית באמצעות iframe/new window.
+             * מדפיסה תוכן נבחר מבלי לשבש את הדף הראשי.
+             */
+            const printContent = (contentHtml, title = 'מסמך להדפסה') => {
+                const printWindow = window.open('', '_blank');
+                printWindow.document.write(`
+                    <!DOCTYPE html>
+                    <html lang="he" dir="rtl">
+                    <head>
+                        <meta charset="UTF-8">
+                        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                        <title>${title}</title>
+                        <link rel="preconnect" href="https://fonts.googleapis.com">
+                        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+                        <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@400;600;700&display=swap" rel="stylesheet">
+                        <style>
+                            body { 
+                                font-family: 'Assistant', sans-serif; 
+                                margin: 20mm; 
+                                color: black; 
+                                direction: rtl;
+                                background: none;
+                            }
+                            h2 {
+                                text-align: center;
+                                margin-bottom: 25px;
+                                font-size: 16pt;
+                                font-weight: bold;
+                                color: #222;
+                            }
+                            ul {
+                                list-style-type: none;
+                                padding: 0;
+                                margin-top: 20px;
+                            }
+                            li {
+                                margin-bottom: 10px;
+                                padding-bottom: 5px;
+                                border-bottom: 1px dotted #ccc;
+                                font-size: 11pt;
+                                line-height: 1.6;
+                            }
+                            p {
+                                margin-bottom: 10px;
+                            }
+                            strong {
+                                font-weight: bold;
+                            }
+                        </style>
+                    </head>
+                    <body>
+                        <h2>${title}</h2>
+                        ${contentHtml}
+                    </body>
+                    </html>
+                `);
+                printWindow.document.close();
+                printWindow.focus();
+                printWindow.print();
+                printWindow.close();
+            };
+
+
+            // --- מאזיני אירועים ---
+            document.body.addEventListener('click', (e) => {
+                // פתיחת מודאל מוצר
+                const productCard = e.target.closest('.product-card');
+                if (productCard) {
+                    showProductModal(productCard.dataset.productId);
+                }
+
+                // סינון לפי אריח קטגוריה
+                const categoryTile = e.target.closest('.category-tile');
+                if (categoryTile) {
+                    const category = categoryTile.dataset.category;
+                    const filtered = allProducts.filter(p => p.category === category);
+                    renderProducts(filtered);
+                }
+                
+                 // טיפול בלחיצות על כלי AI בתוך המודאל
+                const modalAIToolBtn = e.target.closest('#modal-ai-tools button');
+                if (modalAIToolBtn) {
+                    const tool = modalAIToolBtn.dataset.tool;
+                    const productName = document.getElementById('modal-product-name').textContent;
+                    const product = allProducts.find(p => p.name === productName);
+                    if(product) {
+                        handleModalAITool(tool, product);
+                    }
+                }
+
+                // הסרת פריט מעגלה
+                if (e.target.dataset.cartIndex !== undefined) {
+                    removeFromCart(parseInt(e.target.dataset.cartIndex));
+                }
+            });
+            
+            closeModalBtn.addEventListener('click', hideProductModal);
+            productModal.addEventListener('click', (e) => {
+                if(e.target === productModal) { // סגור רק בלחיצה על הרקע הכהה
+                    hideProductModal();
+                }
+            });
+
+            // מאזיני אירועים לעגלת קניות
+            openCartBtn.addEventListener('click', () => {
+                cartModal.classList.remove('hidden');
+                setTimeout(() => {
+                    cartModalContentWrapper.classList.remove('scale-95', 'opacity-0');
+                }, 10);
+                updateCartDisplay();
+            });
+            closeCartModalBtn.addEventListener('click', () => {
+                cartModalContentWrapper.classList.add('scale-95', 'opacity-0');
+                setTimeout(() => {
+                    cartModal.classList.add('hidden');
+                }, 300);
+            });
+            cartModal.addEventListener('click', (e) => {
+                if(e.target === cartModal) {
+                    cartModalContentWrapper.classList.add('scale-95', 'opacity-0');
+                    setTimeout(() => {
+                        cartModal.classList.add('hidden');
+                    }, 300);
+                }
+            });
+
+            // כפתור הוספה לעגלה במודאל המוצר
+            addToCartBtn.addEventListener('click', (e) => {
+                const productId = e.currentTarget.dataset.productId;
+                addProductToCart(productId);
+            });
+
+            whatsappShareBtn.addEventListener('click', shareOrderOnWhatsApp);
+            printOrderBtn.addEventListener('click', () => printContent(cartItemsContainer.innerHTML, 'סיכום הזמנה מח.סבן חומרי בניין'));
+            clearCartBtn.addEventListener('click', clearCart);
+
+            // כפתור הדפסת תשובת AI
+            printAiOutputBtn.addEventListener('click', () => {
+                const aiOutputContent = document.getElementById('modal-ai-output').innerHTML;
+                printContent(aiOutputContent, 'תשובת AI למוצר');
+            });
+
+
+            // מאזיני אירועים לסרגל הצד (פילטרים)
+            openFilterBtn.addEventListener('click', openSidebar);
+            closeFilterBtn.addEventListener('click', closeSidebar);
+            sidebarOverlay.addEventListener('click', closeSidebar);
+            document.getElementById('apply-filters-btn').addEventListener('click', applyFilters);
+            document.getElementById('clear-filters-btn').addEventListener('click', clearFilters);
+
+
+            // --- אתחול האפליקציה ---
+            const init = async () => {
+                // שלוף מוצרים ישירות מה-HTML המוטמע
+                allProducts = extractProductsFromEmbeddedHTML(); 
+                
+                populateAITools(); // אכלס כפתורי AI
+                
+                if(allProducts.length > 0) {
+                    populateCategories(allProducts);
+                    populateFilters(allProducts);
+                    renderProducts(allProducts); // רנדר את כל המוצרים בהתחלה
+                } else {
+                    productsContainer.innerHTML = `<p class="text-red-500 col-span-full text-center">לא הצלחנו לחלץ מוצרים מקוד המקור המוטמע.</p>`;
+                }
+                updateCartDisplay(); // אתחל תצוגת עגלה עם 0 פריטים
+            };
+
+            init();
+        });
+    </script>
+</body>
+</html>
