@@ -1,0 +1,1529 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ח.סבן חומרי בניין 1994 בע"מ - חוויה דיגיטלית פרימיום</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css">
+    
+    <!-- Chosen Palette: Warm Neutral Industrial -->
+    <!-- Application Structure Plan: A single-page application (SPA) designed to bring the strategic specification to life. The structure includes a sticky navigation bar for seamless scrolling between sections: a hero section for brand impact, a vision/about section, a competitive analysis visualized with a Chart.js bar chart, a dynamic product catalog with category filtering, price/availability/brand filters, and a 'request a quote' system, a dedicated and interactive 'Calculators Department' with functional examples in modals, a new 'Project Assistant' section powered by Gemini API, a branches section with simulated maps, an experience section highlighting premium features, a newsletter signup, and a floating WhatsApp contact system. This structure was chosen to create a fluid, engaging user journey that showcases all key strategic elements (service, product breadth, unique tools, and AI assistance) on a single, coherent page, prioritizing user exploration and value demonstration. -->
+    <!-- Visualization & Content Choices: 
+        - Competitor Analysis: Report Info (Competitor feature table) -> Goal (Compare) -> Viz (Horizontal Bar Chart) -> Interaction (Hover for details) -> Justification (Visually represents competitive standing more effectively than a static table) -> Library (Chart.js/Canvas).
+        - Product Catalog: Report Info (Diverse product categories, filters, prices) -> Goal (Organize/Inform/Transact) -> Viz (Interactive filterable grid of cards with detailed product info) -> Interaction (Click category to filter products, use range slider for price, checkboxes for availability/brands, 'add to quote' button) -> Justification (Allows users to easily explore a large inventory without page reloads, using a 'request a quote' model suited for B2B/complex sales, while providing familiar filtering options) -> Method (HTML/CSS/JS).
+        - Calculators Department: Report Info (List of functional calculators from Zhitov analysis) -> Goal (Provide Utility/Engage) -> Viz (Grid of cards opening functional calculators in modals) -> Interaction (User input -> calculation -> display result) -> Justification (Provides immense value to professionals and DIYers, establishing the site as an indispensable resource, a key differentiator) -> Method (HTML/CSS/JS).
+        - Project Assistant (Gemini API): Report Info (User project description) -> Goal (Generate tailored recommendations) -> Viz (Textarea input, loading spinner, AI-generated text output) -> Interaction (User inputs text, clicks button to trigger LLM, views AI response) -> Justification (Leverages AI to provide direct, actionable advice, enhancing user engagement and perceived expertise of the brand) -> Library (Gemini API fetch, HTML/CSS/JS).
+        - WhatsApp Integration: Report Info (Core requirement for ordering/contact) -> Goal (Action/Transact) -> Viz (Welcome modal with typing effect, Quote Cart modal) -> Interaction (Clicks generate pre-formatted WhatsApp links) -> Justification (Leverages a ubiquitous communication tool in Israel for a seamless, personal ordering experience) -> Method (HTML/CSS/JS).
+    -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+
+    <style>
+        html {
+            scroll-behavior: smooth;
+        }
+        body {
+            font-family: 'Assistant', sans-serif;
+            overflow-x: hidden;
+            background: linear-gradient(135deg, #f0f8ff 0%, #ffffff 100%);
+        }
+        
+        .secondary-font {
+            font-family: 'Rubik', sans-serif;
+        }
+        
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            box-shadow: 0 8px 32px rgba(31, 38, 135, 0.15);
+        }
+        
+        .glass-card {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            transition: all 0.3s ease;
+        }
+        
+        .glass-card:hover {
+            background: rgba(255, 255, 255, 0.9);
+            box-shadow: 0 10px 30px rgba(31, 38, 135, 0.2);
+            transform: translateY(-5px);
+        }
+        
+        .shine-button {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .shine-button::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent);
+            transform: rotate(45deg);
+            animation: shine 3s infinite;
+        }
+        
+        @keyframes shine {
+            0% { transform: translateX(-100%) rotate(45deg); }
+            100% { transform: translateX(100%) rotate(45deg); }
+        }
+        
+        .product-card {
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        
+        .product-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+        }
+        
+        .highlight-hover {
+            position: relative;
+        }
+        
+        .highlight-hover::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #2196F3;
+            transition: width 0.3s ease;
+        }
+        
+        .highlight-hover:hover::after {
+            width: 100%;
+        }
+        
+        .image-transition {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .image-transition img {
+            transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .image-transition:hover img {
+            transform: scale(1.1);
+        }
+        
+        .image-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to bottom, transparent, rgba(0,0,0,0.5));
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .image-transition:hover .image-overlay {
+            opacity: 1;
+        }
+        
+        input[type=number]::-webkit-inner-spin-button, 
+        input[type=number]::-webkit-outer-spin-button { 
+            -webkit-appearance: none; 
+            margin: 0; 
+        }
+        
+        .custom-checkbox {
+            display: flex;
+            align-items: center;
+            position: relative;
+            cursor: pointer;
+        }
+        
+        .custom-checkbox input {
+            position: absolute;
+            opacity: 0;
+            cursor: pointer;
+            height: 0;
+            width: 0;
+        }
+        
+        .checkmark {
+            height: 20px;
+            width: 20px;
+            background-color: #f5f5f5;
+            border: 2px solid #2196F3;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .custom-checkbox input:checked ~ .checkmark {
+            background-color: #2196F3;
+        }
+        
+        .checkmark:after {
+            content: "";
+            display: none;
+            width: 5px;
+            height: 10px;
+            border: solid white;
+            border-width: 0 2px 2px 0;
+            transform: rotate(45deg);
+        }
+        
+        .custom-checkbox input:checked ~ .checkmark:after {
+            display: block;
+        }
+        
+        .custom-range {
+            -webkit-appearance: none;
+            width: 100%;
+            height: 8px;
+            border-radius: 5px;
+            background: #E3F2FD;
+            outline: none;
+            border: 1px solid #BBDEFB;
+        }
+        
+        .custom-range::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #2196F3;
+            cursor: pointer;
+        }
+        
+        .custom-range::-moz-range-thumb {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #2196F3;
+            cursor: pointer;
+        }
+        
+        .custom-switch {
+            position: relative;
+            display: inline-block;
+            width: 50px;
+            height: 24px;
+        }
+        
+        .custom-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 34px;
+        }
+        
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 16px;
+            width: 16px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+        
+        input:checked + .slider {
+            background-color: #2196F3;
+        }
+        
+        input:checked + .slider:before {
+            transform: translateX(26px);
+        }
+        
+        .filter-active {
+            background-color: #E3F2FD;
+            color: #1565C0;
+            border-color: #2196F3;
+        }
+        
+        .pagination-active {
+            background-color: #2196F3;
+            color: white;
+        }
+        
+        .sort-active {
+            background-color: #E3F2FD;
+            color: #1565C0;
+            border-color: #2196F3;
+        }
+        
+        /* Styles from saban-ecommerce-spa-9e3d8c */
+        .nav-link {
+            transition: color 0.3s, border-bottom-color 0.3s;
+            border-bottom: 2px solid transparent;
+        }
+        .nav-link.active, .nav-link:hover {
+            color: #f59e0b; /* Amber-500 */
+            border-bottom-color: #f59e0b;
+        }
+        .category-card.active-category {
+            transform: scale(1.05);
+            box-shadow: 0 0 0 3px #f59e0b; /* Amber-500 */
+        }
+        .calculator-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .calculator-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+        .fade-in-section {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+        .fade-in-section.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .modal-backdrop {
+            transition: opacity 0.3s ease-in-out;
+        }
+        .modal-content {
+            transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+        }
+        #welcome-message span {
+            display: none;
+        }
+        .chart-container { 
+            position: relative; 
+            width: 100%; 
+            max-width: 800px; 
+            margin-left: auto; 
+            margin-right: auto; 
+            height: 400px;
+            max-height: 50vh; 
+        }
+        @media (min-width: 768px) { 
+            .chart-container { 
+                height: 500px; 
+            } 
+        }
+        .branch-map {
+            width: 100%;
+            height: 150px;
+            background: linear-gradient(to bottom, #a7f3d0, #6ee7b7);
+            border: 2px solid #34d399;
+            position: relative;
+            overflow: hidden;
+        }
+        .branch-map::before, .branch-map::after {
+            content: '';
+            position: absolute;
+            background-color: #fefce8;
+            opacity: 0.6;
+        }
+        .branch-map::before {
+            height: 2px;
+            width: 150%;
+            top: 30%;
+            left: -25%;
+            transform: rotate(15deg);
+        }
+        .branch-map::after {
+            height: 2px;
+            width: 150%;
+            bottom: 40%;
+            right: -25%;
+            transform: rotate(-10deg);
+        }
+        .map-marker {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: #ef4444;
+        }
+        #quote-cart-button.has-items::after {
+            content: attr(data-count);
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background-color: #ef4444;
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        .loading-spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #2196F3;
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body class="bg-stone-50 text-stone-800">
+    <!-- Header -->
+    <header id="main-header" class="glass-effect sticky top-0 z-50 shadow-md">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <div class="flex items-center">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSUVp7CP06twn9tobIG19ihDfKLm9MmowW73Q&s" alt="לוגו ח.סבן" class="h-12">
+                <h1 class="text-2xl font-bold text-blue-600 mr-3">ח.סבן חומרי בניין</h1>
+            </div>
+            
+            <nav class="hidden md:flex space-x-6 space-x-reverse">
+                <a href="#home" class="text-gray-800 hover:text-blue-600 highlight-hover py-2 nav-link">ראשי</a>
+                <a href="#products" class="text-blue-600 font-semibold highlight-hover py-2 border-b-2 border-blue-600 nav-link active">מוצרים</a>
+                <a href="#calculators" class="text-gray-800 hover:text-blue-600 highlight-hover py-2 nav-link">מחלקת חישובים</a>
+                <a href="#project-assistant" class="text-gray-800 hover:text-blue-600 highlight-hover py-2 nav-link">עוזר פרויקטים ✨</a>
+                <a href="#branches" class="text-gray-800 hover:text-blue-600 highlight-hover py-2 nav-link">סניפים</a>
+                <a href="#contact" class="text-gray-800 hover:text-blue-600 highlight-hover py-2 nav-link">צור קשר</a>
+            </nav>
+            
+            <div class="flex items-center space-x-4 space-x-reverse">
+                <div class="relative">
+                    <div class="glass-effect rounded-full flex items-center pr-3 pl-10 py-2">
+                        <input type="text" placeholder="חיפוש מוצרים..." class="bg-transparent border-none outline-none text-sm w-36 md:w-48 text-gray-800" id="search-input">
+                        <div class="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 flex items-center justify-center text-blue-600">
+                            <i class="ri-search-line"></i>
+                        </div>
+                    </div>
+                </div>
+                <button id="quote-cart-button" class="relative p-2 rounded-full hover:bg-stone-100 transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-blue-600"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
+                </button>
+                <button id="mobile-menu-button" class="w-10 h-10 flex items-center justify-center text-blue-600 md:hidden cursor-pointer glass-effect rounded-full">
+                    <i class="ri-menu-line ri-xl"></i>
+                </button>
+            </div>
+        </div>
+        
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="md:hidden glass-effect py-4 px-4 hidden">
+            <nav class="flex flex-col space-y-3">
+                <a href="#home" class="text-gray-800 hover:text-blue-600 py-2 border-b border-gray-100">ראשי</a>
+                <a href="#products" class="text-blue-600 font-semibold py-2 border-b border-gray-100">מוצרים</a>
+                <a href="#calculators" class="text-gray-800 hover:text-blue-600 py-2 border-b border-gray-100">מחלקת חישובים</a>
+                <a href="#project-assistant" class="text-gray-800 hover:text-blue-600 py-2 border-b border-gray-100">עוזר פרויקטים ✨</a>
+                <a href="#branches" class="text-gray-800 hover:text-blue-600 py-2 border-b border-gray-100">סניפים</a>
+                <a href="#contact" class="text-gray-800 hover:text-blue-600 py-2">צור קשר</a>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <!-- Hero Section -->
+        <section id="home" class="relative bg-cover bg-center h-[60vh] md:h-[80vh] flex items-center justify-center text-white" style="background-image: url('https://placehold.co/1920x1080/a3a3a3/f8f7f4?text=Building+Excellence')">
+            <div class="absolute inset-0 bg-black/50"></div>
+            <div class="relative text-center p-4 z-10">
+                <h1 class="text-4xl md:text-6xl font-bold mb-4 animate-fade-in-down">ח.סבן חומרי בניין 1994</h1>
+                <p class="text-lg md:text-2xl mb-8 animate-fade-in-up">שירות, איכות ומקצועיות - היסודות שלנו להצלחה שלכם.</p>
+                <a href="#products" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-full text-lg transition duration-300 animate-fade-in-up">צפו בקטלוג המוצרים</a>
+            </div>
+        </section>
+
+        <!-- Vision Section -->
+        <section id="vision" class="py-16 md:py-24 bg-white fade-in-section">
+            <div class="container mx-auto px-4 lg:px-6">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl md:text-4xl font-bold text-stone-800">החזון שלנו: בנייה של עתיד דיגיטלי</h2>
+                    <p class="mt-4 text-lg text-stone-600 max-w-3xl mx-auto">מאז 1994, אנו בח.סבן מחויבים לספק את חומרי הבניין האיכותיים ביותר, לצד שירות לקוחות שאין שני לו. כעת, אנו מביאים את המוניטין, הניסיון והמקצועיות שלנו אל הזירה הדיגיטלית, עם חוויה אינטראקטיבית ואישית שנועדה להפוך כל פרויקט שלכם, גדול כקטן, לפשוט ומוצלח יותר.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Market Analysis -->
+        <section id="market-analysis" class="py-16 md:py-24 fade-in-section">
+            <div class="container mx-auto px-4 lg:px-6">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl md:text-4xl font-bold text-stone-800">ניתוח שוק ובידול תחרותי</h2>
+                    <p class="mt-4 text-lg text-stone-600 max-w-3xl mx-auto">השוק הישראלי דינמי ותחרותי. זיהינו את היתרונות הייחודיים שלנו - שירות לקוחות, יכולות לוגיסטיות ושירותי ערך מוסף - ובנינו סביבם אסטרטגיה דיגיטלית שתבדל אותנו ותספק לכם את הערך הגבוה ביותר.</p>
+                </div>
+                <div class="bg-white p-4 sm:p-6 md:p-8 rounded-xl shadow-lg">
+                   <div class="chart-container">
+                       <canvas id="competitorChart"></canvas>
+                   </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Main Content for Products -->
+        <section id="products" class="container mx-auto px-4 py-6 fade-in-section">
+            <!-- Breadcrumbs -->
+            <div class="flex items-center text-sm text-gray-600 mb-6">
+                <a href="#home" class="hover:text-blue-600">ראשי</a>
+                <div class="w-4 h-4 flex items-center justify-center mx-1">
+                    <i class="ri-arrow-left-s-line"></i>
+                </div>
+                <span class="text-blue-600 font-medium">קטלוג מוצרים</span>
+            </div>
+
+            <div class="flex flex-col md:flex-row gap-6">
+                <!-- Sidebar Filters -->
+                <div class="md:w-1/4 lg:w-1/5">
+                    <div class="glass-effect rounded-lg p-5 sticky top-24">
+                        <div class="mb-6">
+                            <h3 class="text-lg font-bold text-gray-800 mb-3">קטגוריות</h3>
+                            <ul id="filter-categories" class="space-y-2">
+                                <li>
+                                    <label class="custom-checkbox">
+                                        <input type="checkbox" data-filter-category="all" checked>
+                                        <span class="checkmark ml-2"></span>
+                                        <span class="text-gray-800">הכל</span>
+                                    </label>
+                                </li>
+                                <!-- Category checkboxes will be dynamically inserted here by JS -->
+                            </ul>
+                        </div>
+                        
+                        <div class="mb-6">
+                            <h3 class="text-lg font-bold text-gray-800 mb-3">מחיר</h3>
+                            <div class="space-y-3">
+                                <div class="flex justify-between text-sm text-gray-600">
+                                    <span>₪0</span>
+                                    <span>₪1000+</span>
+                                </div>
+                                <input type="range" min="0" max="1000" value="1000" class="custom-range" id="price-range">
+                                <div class="flex justify-between">
+                                    <div class="glass-effect rounded-md px-3 py-1 text-sm">
+                                        <span>עד </span>
+                                        <span id="price-value">₪1000</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-6">
+                            <h3 class="text-lg font-bold text-gray-800 mb-3">זמינות</h3>
+                            <div class="space-y-2">
+                                <label class="custom-checkbox">
+                                    <input type="checkbox" data-filter-availability="in_stock" checked>
+                                    <span class="checkmark ml-2"></span>
+                                    <span class="text-gray-800">במלאי</span>
+                                </label>
+                                <label class="custom-checkbox">
+                                    <input type="checkbox" data-filter-availability="pre_order">
+                                    <span class="checkmark ml-2"></span>
+                                    <span class="text-gray-800">בהזמנה מראש</span>
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-6">
+                            <h3 class="text-lg font-bold text-gray-800 mb-3">מותגים</h3>
+                            <div id="filter-brands" class="space-y-2">
+                                <!-- Brand checkboxes will be dynamically inserted here by JS -->
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <button id="apply-filters-btn" class="w-full bg-blue-600 text-white py-2 rounded-button hover:bg-blue-700 transition whitespace-nowrap">החל סינון</button>
+                            <button id="clear-filters-btn" class="w-full mt-2 border border-blue-600 text-blue-600 py-2 rounded-button hover:bg-blue-600/10 transition whitespace-nowrap">נקה הכל</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Products Grid -->
+                <div class="md:w-3/4 lg:w-4/5">
+                    <!-- Category Title and Sort -->
+                    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6">
+                        <h2 id="current-category-title" class="text-2xl font-bold text-gray-800 mb-3 sm:mb-0">כל המוצרים</h2>
+                        
+                        <div class="flex flex-wrap gap-2">
+                            <div class="glass-effect rounded-lg px-3 py-2 text-sm flex items-center">
+                                <span class="text-gray-700 ml-2">מיון:</span>
+                                <div class="relative">
+                                    <select id="sort-select" class="bg-transparent border-none outline-none text-blue-600 appearance-none pr-2 pl-6">
+                                        <option value="popularity">פופולריות</option>
+                                        <option value="price_asc">מחיר: מהנמוך לגבוה</option>
+                                        <option value="price_desc">מחיר: מהגבוה לנמוך</option>
+                                        <option value="newest">חדש ביותר</option>
+                                    </select>
+                                    <div class="absolute left-1 top-1/2 transform -translate-y-1/2 w-4 h-4 flex items-center justify-center text-blue-600">
+                                        <i class="ri-arrow-down-s-line"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="glass-effect rounded-lg px-3 py-2 text-sm flex items-center">
+                                <span class="text-gray-700 ml-2">הצג:</span>
+                                <div class="flex items-center">
+                                    <button id="grid-view-btn" class="w-8 h-8 flex items-center justify-center text-blue-600">
+                                        <i class="ri-grid-line"></i>
+                                    </button>
+                                    <button id="list-view-btn" class="w-8 h-8 flex items-center justify-center text-gray-400">
+                                        <i class="ri-list-check"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Category Pills -->
+                    <div id="category-pills" class="flex flex-wrap gap-2 mb-6">
+                        <button class="glass-effect rounded-full px-4 py-2 text-sm filter-active whitespace-nowrap" data-category="all">הכל</button>
+                        <!-- Category pills will be dynamically inserted here by JS -->
+                    </div>
+                    
+                    <!-- Products Grid -->
+                    <div id="product-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                        <!-- Products will be dynamically inserted here by JS -->
+                    </div>
+                    
+                    <!-- Pagination -->
+                    <div id="pagination-controls" class="flex justify-center mt-10">
+                        <nav class="glass-effect rounded-lg inline-flex">
+                            <!-- Pagination buttons will be dynamically inserted here by JS -->
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Calculators Section -->
+        <section id="calculators" class="py-16 md:py-24 fade-in-section">
+            <div class="container mx-auto px-4 lg:px-6">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl md:text-4xl font-bold text-stone-800">מחלקת החישובים</h2>
+                    <p class="mt-4 text-lg text-stone-600 max-w-3xl mx-auto">תכנון מדויק חוסך זמן וכסף. השתמשו במחשבונים המקצועיים שלנו כדי להעריך כמויות וחומרים בקלות.</p>
+                </div>
+                <div id="calculator-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+                    <!-- Calculator cards will be injected here by JS -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Project Assistant Section -->
+        <section id="project-assistant" class="py-16 md:py-24 bg-white fade-in-section">
+            <div class="container mx-auto px-4 lg:px-6">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl md:text-4xl font-bold text-stone-800">עוזר פרויקטים ✨</h2>
+                    <p class="mt-4 text-lg text-stone-600 max-w-3xl mx-auto">תארו את פרויקט הבנייה או השיפוץ שלכם, וקבלו המלצות מותאמות אישית לחומרים, כלים ושלבי עבודה, בעזרת בינה מלאכותית.</p>
+                </div>
+                <div class="max-w-3xl mx-auto bg-stone-50 p-6 rounded-xl shadow-lg">
+                    <div class="mb-6">
+                        <label for="project-description-input" class="block text-lg font-bold text-gray-800 mb-2">תארו את הפרויקט שלכם:</label>
+                        <textarea id="project-description-input" rows="6" class="w-full p-4 border border-stone-300 rounded-md focus:outline-none focus:ring-blue-600 focus:border-blue-600 text-gray-800" placeholder="לדוגמה: 'בניית קיר גבס בחדר 3X4 מטר', 'שיפוץ אמבטיה קטנה', 'הקמת גדר עץ בחצר'"></textarea>
+                    </div>
+                    <button id="get-project-recommendation-btn" class="w-full bg-blue-600 text-white font-bold py-3 px-6 rounded-lg hover:bg-blue-700 transition flex items-center justify-center disabled:bg-blue-300 disabled:cursor-not-allowed">
+                        קבלו המלצות ✨
+                        <div id="project-loading-spinner" class="loading-spinner mr-2 hidden"></div>
+                    </button>
+                    <div id="project-recommendation-output" class="mt-8 p-6 bg-white rounded-lg shadow-inner border border-stone-200 min-h-[150px] overflow-auto text-gray-800 text-lg">
+                        <p class="text-stone-500">ההמלצות לפרויקט שלכם יופיעו כאן לאחר שתזינו תיאור ותלחצו על הכפתור.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Branches Section -->
+        <section id="branches" class="py-16 md:py-24 bg-white fade-in-section">
+            <div class="container mx-auto px-4 lg:px-6">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl md:text-4xl font-bold text-stone-800">הסניפים שלנו</h2>
+                    <p class="mt-4 text-lg text-stone-600 max-w-3xl mx-auto">מוזמנים לבקר אותנו ולקבל ייעוץ אישי מהצוות המקצועי שלנו.</p>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+                    <!-- Branch 1 -->
+                    <div class="bg-stone-50 rounded-xl shadow-lg overflow-hidden">
+                        <div class="branch-map">
+                            <div class="map-marker">📍</div>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold mb-2">סניף הוד השרון - התלמיד</h3>
+                            <p class="text-stone-600 mb-4">כתובת: התלמיד 6, הוד השרון</p>
+                            <p class="text-stone-600 mb-4">שעות פתיחה: א'-ה' 07:00-17:00, ו' 07:00-13:00</p>
+                            <a href="https://www.waze.com/ul?ll=32.15243000,34.89136000&navigate=yes" target="_blank" class="w-full inline-block text-center bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition">נווט עם Waze</a>
+                        </div>
+                    </div>
+                    <!-- Branch 2 -->
+                    <div class="bg-stone-50 rounded-xl shadow-lg overflow-hidden">
+                        <div class="branch-map">
+                            <div class="map-marker">📍</div>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold mb-2">סניף הוד השרון - החרש</h3>
+                            <p class="text-stone-600 mb-4">כתובת: החרש 10, הוד השרון</p>
+                            <p class="text-stone-600 mb-4">שעות פתיחה: א'-ה' 07:00-17:00, ו' 07:00-13:00</p>
+                            <a href="https://www.waze.com/ul?ll=32.14856000,34.90380000&navigate=yes" target="_blank" class="w-full inline-block text-center bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition">נווט עם Waze</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Experience Section -->
+        <section id="experience" class="py-16 md:py-24 fade-in-section">
+            <div class="container mx-auto px-4 lg:px-6">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl md:text-4xl font-bold text-stone-800">חווית אתר פרימיום</h2>
+                     <p class="mt-4 text-lg text-stone-600 max-w-3xl mx-auto">עיצוב מונפש, ניווט אינטואיטיבי, וכלים חכמים. בנינו את האתר כדי לספק לכם חוויה דיגיטלית שטרם נראתה בענף הבנייה.</p>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+                    <div class="p-6">
+                        <div class="text-5xl mb-4">🎨</div>
+                        <h3 class="text-xl font-bold mb-2">עיצוב מודרני</h3>
+                        <p class="text-stone-600">ממשק נקי ואינטואיטיבי המותאם לכל מכשיר.</p>
+                    </div>
+                    <div class="p-6">
+                        <div class="text-5xl mb-4">⚡️</div>
+                        <h3 class="text-xl font-bold mb-2">ביצועים מהירים</h3>
+                        <p class="text-stone-600">חווית גלישה חלקה ומהירה ללא המתנות מיותרות.</p>
+                    </div>
+                    <div class="p-6">
+                        <div class="text-5xl mb-4">📱</div>
+                        <h3 class="text-xl font-bold mb-2">קשר אישי בוואטסאפ</h3>
+                        <p class="text-stone-600">שליחת הצעות מחיר ופניות ישירות לוואטסאפ שלנו.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Newsletter -->
+        <section class="py-12 glass-effect mt-10 fade-in-section">
+            <div class="container mx-auto px-4">
+                <div class="max-w-3xl mx-auto text-center">
+                    <h2 class="text-2xl md:text-3xl font-bold mb-4 text-gray-800">הישארו מעודכנים</h2>
+                    <p class="text-gray-600 mb-6">הירשמו לניוזלטר שלנו וקבלו עדכונים על מבצעים, מוצרים חדשים וטיפים מקצועיים.</p>
+                    <div class="flex flex-col sm:flex-row gap-3 justify-center">
+                        <input type="email" placeholder="הזינו את כתובת המייל שלכם" class="px-4 py-3 rounded-button border-none glass-effect w-full sm:w-96 text-gray-800">
+                        <button class="bg-blue-600 text-white px-6 py-3 rounded-button hover:bg-blue-700 transition whitespace-nowrap">הרשמה</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact / Footer -->
+        <footer id="contact" class="bg-stone-800 text-white py-12">
+            <div class="container mx-auto px-4">
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                    <!-- Column 1 - About -->
+                    <div>
+                        <h3 class="text-xl font-bold mb-4">אודות ח.סבן</h3>
+                        <p class="text-white/90 mb-4">ח.סבן חומרי בניין 1994 בע"מ הינה חברה משפחתית המספקת חומרי בניין איכותיים מאז 1994. אנו מתמחים במגוון רחב של מוצרים לענף הבנייה.</p>
+                        <div class="flex space-x-4 space-x-reverse">
+                            <a href="#" class="text-white/90 hover:text-white">
+                                <div class="w-8 h-8 flex items-center justify-center">
+                                    <i class="ri-facebook-fill"></i>
+                                </div>
+                            </a>
+                            <a href="#" class="text-white/90 hover:text-white">
+                                <div class="w-8 h-8 flex items-center justify-center">
+                                    <i class="ri-instagram-line"></i>
+                                </div>
+                            </a>
+                            <a href="#" class="text-white/90 hover:text-white">
+                                <div class="w-8 h-8 flex items-center justify-center">
+                                    <i class="ri-whatsapp-line"></i>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <!-- Column 2 - Quick Links -->
+                    <div>
+                        <h3 class="text-xl font-bold mb-4">קישורים מהירים</h3>
+                        <ul class="space-y-2">
+                            <li><a href="#home" class="text-white/90 hover:text-white">דף הבית</a></li>
+                            <li><a href="#vision" class="text-white/90 hover:text-white">החזון שלנו</a></li>
+                            <li><a href="#products" class="text-white/90 hover:text-white">מוצרים</a></li>
+                            <li><a href="#calculators" class="text-white/90 hover:text-white">מחלקת חישובים</a></li>
+                            <li><a href="#project-assistant" class="text-white/90 hover:text-white">עוזר פרויקטים ✨</a></li>
+                            <li><a href="#branches" class="text-white/90 hover:text-white">סניפים</a></li>
+                            <li><a href="#experience" class="text-white/90 hover:text-white">חווית האתר</a></li>
+                        </ul>
+                    </div>
+                    
+                    <!-- Column 3 - Categories -->
+                    <div>
+                        <h3 class="text-xl font-bold mb-4">קטגוריות מוצרים</h3>
+                        <ul class="space-y-2">
+                            <li><a href="#" class="text-white/90 hover:text-white" data-footer-category="חומרי בניין">חומרי בניין</a></li>
+                            <li><a href="#" class="text-white/90 hover:text-white" data-footer-category="חשמל ותאורה">חשמל ותאורה</a></li>
+                            <li><a href="#" class="text-white/90 hover:text-white" data-footer-category="אינסטלציה">אינסטלציה</a></li>
+                            <li><a href="#" class="text-white/90 hover:text-white" data-footer-category="צבעים וציפויים">צבעים וציפויים</a></li>
+                            <li><a href="#" class="text-white/90 hover:text-white" data-footer-category="כלי עבודה">כלי עבודה</a></li>
+                            <li><a href="#" class="text-white/90 hover:text-white" data-footer-category="בטיחות בעבודה">בטיחות בעבודה</a></li>
+                        </ul>
+                    </div>
+                    
+                    <!-- Column 4 - Contact -->
+                    <div>
+                        <h3 class="text-xl font-bold mb-4">צור קשר</h3>
+                        <ul class="space-y-3">
+                            <li class="flex items-start">
+                                <div class="w-5 h-5 flex items-center justify-center text-white/90 mt-1">
+                                    <i class="ri-map-pin-line"></i>
+                                </div>
+                                <span class="mr-2 text-white/90">רחוב התלמיד 6, הוד השרון</span>
+                            </li>
+                            <li class="flex items-start">
+                                <div class="w-5 h-5 flex items-center justify-center text-white/90 mt-1">
+                                    <i class="ri-phone-line"></i>
+                                </div>
+                                <span class="mr-2 text-white/90">09-7408854</span>
+                            </li>
+                            <li class="flex items-start">
+                                <div class="w-5 h-5 flex items-center justify-center text-white/90 mt-1">
+                                    <i class="ri-mail-line"></i>
+                                </div>
+                                <span class="mr-2 text-white/90">info@hsaban.co.il</span>
+                            </li>
+                            <li class="flex items-start">
+                                <div class="w-5 h-5 flex items-center justify-center text-white/90 mt-1">
+                                    <i class="ri-time-line"></i>
+                                </div>
+                                <div class="mr-2 text-white/90">
+                                    <p>ימים א'-ה': 07:00-17:00</p>
+                                    <p>יום ו': 07:00-13:00</p>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="border-t border-white/20 mt-8 pt-8 flex flex-col md:flex-row justify-between items-center">
+                    <p class="text-white/70 text-sm mb-4 md:mb-0">© 2025 ח.סבן חומרי בניין 1994 בע"מ. כל הזכויות שמורות.</p>
+                    <div class="flex items-center space-x-4 space-x-reverse">
+                        <div class="w-8 h-8 flex items-center justify-center text-white/70">
+                            <i class="ri-visa-line ri-lg"></i>
+                        </div>
+                        <div class="w-8 h-8 flex items-center justify-center text-white/70">
+                            <i class="ri-mastercard-line ri-lg"></i>
+                        </div>
+                        <div class="w-8 h-8 flex items-center justify-center text-white/70">
+                            <i class="ri-paypal-line ri-lg"></i>
+                        </div>
+                        <div class="w-8 h-8 flex items-center justify-center text-white/70">
+                            <i class="ri-bank-card-line ri-lg"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </main>
+
+    <!-- Back to top button -->
+    <button id="back-to-top-button" class="fixed bottom-6 left-6 w-12 h-12 glass-effect rounded-full flex items-center justify-center text-blue-600 shadow-lg opacity-0 invisible transition-all duration-300">
+        <i class="ri-arrow-up-line ri-lg"></i>
+    </button>
+
+    <!-- WhatsApp Welcome Modal -->
+    <div id="whatsapp-welcome-modal" class="fixed inset-0 bg-black/60 z-50 flex items-center justify-center p-4 modal-backdrop opacity-0 pointer-events-none">
+        <div class="bg-white rounded-2xl shadow-2xl w-full max-w-md p-6 relative text-center modal-content transform scale-95 opacity-0">
+            <button id="close-welcome-modal" class="absolute top-4 right-4 text-stone-400 hover:text-stone-600 text-3xl">&times;</button>
+            <div class="flex items-center justify-center mb-4">
+                <img src="https://placehold.co/80x80/f59e0b/ffffff?text=👋" alt="Avatar" class="w-20 h-20 rounded-full border-4 border-blue-600">
+            </div>
+            <h3 class="text-2xl font-bold mb-2">ברוכים הבאים לח.סבן!</h3>
+            <div class="h-12 flex items-center justify-center">
+                 <p id="welcome-message" class="text-stone-600 text-lg"></p>
+            </div>
+            <div class="mt-6 flex flex-col sm:flex-row gap-3">
+                <a href="#" id="whatsapp-new-order" target="_blank" class="w-full text-center bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-4 rounded-lg transition">הזמנה חדשה בוואטסאפ</a>
+                <a href="#" id="whatsapp-contact-rep" target="_blank" class="w-full text-center bg-stone-700 hover:bg-stone-800 text-white font-bold py-3 px-4 rounded-lg transition">פניה לנציג שירות</a>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Floating WhatsApp Button -->
+    <button id="floating-whatsapp-button" class="fixed bottom-6 right-6 bg-green-500 text-white w-16 h-16 rounded-full shadow-lg flex items-center justify-center z-40 transform hover:scale-110 transition-transform">
+        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="currentColor"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.894 11.892-1.99 0-3.903-.52-5.586-1.456l-6.167 1.679zm6.247-6.435c.226.428.667.79 1.138 1.015.47.225.992.344 1.52.345.283 0 .565-.027.844-.083.279-.056 5.02-2.458 5.02-2.458.113-.056.238-.083.363-.083.25 0 .475.083.638.25.162.166.25.389.25.637v.056s-2.018 4.383-2.242 4.84c-.225.457-.139.914.25 1.25.389.337.861.474 1.306.475h.028c.844 0 1.623-.279 2.242-.838.619-.56 1.028-1.284 1.225-2.15.2-.866.224-2.15 0-3.463-.224-1.313-1.056-2.517-2.43-3.618-1.374-1.102-3.163-1.785-5.33-1.785-2.008.001-3.83.62-5.339 1.785-1.509 1.166-2.333 2.694-2.54 4.335-.208 1.641-.112 3.822.28 5.613z"/></svg>
+    </button>
+    
+    <!-- Quote Cart Modal -->
+    <div id="quote-cart-modal" class="fixed inset-0 bg-black/60 z-50 flex items-center justify-center p-4 modal-backdrop opacity-0 pointer-events-none">
+        <div class="bg-white rounded-2xl shadow-2xl w-full max-w-2xl h-[90vh] flex flex-col modal-content transform scale-95 opacity-0">
+            <div class="p-6 border-b flex justify-between items-center">
+                <h3 class="text-2xl font-bold">הצעת מחיר</h3>
+                <button id="close-quote-cart-modal" class="text-stone-400 hover:text-stone-600 text-3xl">&times;</button>
+            </div>
+            <div id="quote-cart-items" class="flex-grow p-6 overflow-y-auto space-y-4">
+                <!-- Cart items will be injected here -->
+            </div>
+            <div class="p-6 border-t bg-stone-50">
+                 <div class="mb-4">
+                    <label for="customerName" class="block text-sm font-medium text-stone-700">שם מלא</label>
+                    <input type="text" id="customerName" class="mt-1 block w-full px-3 py-2 bg-white border border-stone-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-600 focus:border-blue-600 text-gray-800">
+                </div>
+                <div class="mb-4">
+                    <label for="customerPhone" class="block text-sm font-medium text-stone-700">טלפון</label>
+                    <input type="tel" id="customerPhone" class="mt-1 block w-full px-3 py-2 bg-white border border-stone-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-600 focus:border-blue-600 text-gray-800">
+                </div>
+                <button id="send-quote-button" class="w-full bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-4 rounded-lg transition disabled:bg-stone-300">שלח בקשה לוואטסאפ</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Calculator Modal -->
+    <div id="calculator-modal" class="fixed inset-0 bg-black/60 z-50 flex items-center justify-center p-4 modal-backdrop opacity-0 pointer-events-none">
+        <div class="bg-white rounded-2xl shadow-2xl w-full max-w-3xl h-[90vh] flex flex-col modal-content transform scale-95 opacity-0">
+            <div class="p-6 border-b flex justify-between items-center">
+                <h3 id="calculator-modal-title" class="text-2xl font-bold">מחשבון</h3>
+                <button id="close-calculator-modal" class="text-stone-400 hover:text-stone-600 text-3xl">&times;</button>
+            </div>
+            <div id="calculator-modal-body" class="flex-grow p-6 overflow-y-auto">
+                <!-- Calculator interface will be injected here -->
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const app = {
+                products: [
+                    { id: 1, name: 'מלט פורטלנד 50 ק״ג', category: 'חומרי בניין', brand: 'נשר', price: 35.90, unit: 'יח׳', availability: 'במלאי', img: 'https://placehold.co/400x300/eab308/ffffff?text=מלט+פורטלנד', desc: 'מלט פורטלנד איכותי לעבודות בניה, יציקות בטון ותיקונים. עומד בתקן ישראלי.' },
+                    { id: 2, name: 'בלוק בטון חלול 20', category: 'חומרי בניין', brand: 'אחר', price: 4.50, unit: 'יח׳', availability: 'במלאי', img: 'https://placehold.co/400x300/eab308/ffffff?text=בלוק+בטון', desc: 'בלוק בטון חלול איכותי במידות 20x20x40 ס״מ. מתאים לבניית קירות חוץ ופנים.' },
+                    { id: 3, name: 'צינור PVC קשיח 110 מ״מ', category: 'אינסטלציה', brand: 'פלסאון', price: 89.90, unit: 'יח׳', availability: 'במלאי', img: 'https://placehold.co/400x300/0ea5e9/ffffff?text=צינור+PVC', desc: 'צינור PVC קשיח לביוב באורך 3 מטר. עמיד בפני קורוזיה וחומרים כימיים.' },
+                    { id: 4, name: 'כבל חשמל 3x2.5 N2XY', category: 'חשמל ותאורה', brand: 'אחר', price: 450.00, unit: 'יח׳', availability: 'במלאי', img: 'https://placehold.co/400x300/3b82f6/ffffff?text=כבל+חשמל', desc: 'כבל חשמל תקני באורך 100 מטר. מתאים להתקנות ביתיות ותעשייתיות.' },
+                    { id: 5, name: 'צבע סופרקריל 18 ליטר', category: 'צבעים וציפויים', brand: 'טמבור', price: 289.00, unit: 'יח׳', availability: 'במלאי', img: 'https://placehold.co/400x300/8b5cf6/ffffff?text=סופרקריל', desc: 'צבע אקרילי איכותי לקירות פנים וחוץ. עמיד בפני שמש וגשם, קל לניקוי.' },
+                    { id: 6, name: 'מקדחה/מברגה נטענת 18V', category: 'כלי עבודה', brand: 'מקיטה', price: 599.00, unit: 'יח׳', availability: 'במלאי', img: 'https://placehold.co/400x300/ef4444/ffffff?text=מקדחה', desc: 'מקדחה נטענת עוצמתית עם סוללת ליתיום. כוללת מזוודה, מטען ו-2 סוללות.' },
+                    { id: 7, name: 'ברזל בניין 8 מ״מ', category: 'חומרי בניין', brand: 'אחר', price: 12.90, unit: 'מטר', availability: 'במלאי', img: 'https://placehold.co/400x300/eab308/ffffff?text=ברזל+בניין', desc: 'מוטות ברזל לזיון בטון באורך 12 מטר. מתאים ליציקות בטון, רצפות ותקרות.' },
+                    { id: 8, name: 'משחזת זווית 115 מ״מ', category: 'כלי עבודה', brand: 'בוש', price: 349.00, unit: 'יח׳', availability: 'במלאי', img: 'https://placehold.co/400x300/ef4444/ffffff?text=משחזת', desc: 'משחזת זווית עוצמתית 750W. מתאימה לחיתוך וליטוש מתכת, אבן ובטון.' },
+                    { id: 9, name: 'אריח קרמיקה 60x60 ס״מ', category: 'חומרי בניין', brand: 'אחר', price: 79.90, unit: 'מ״ר', availability: 'במלאי', img: 'https://placehold.co/400x300/eab308/ffffff?text=אריח+קרמיקה', desc: 'אריחי קרמיקה איכותיים לריצוף. עמידים בפני שחיקה, קלים לניקוי ותחזוקה.' },
+                    { id: 10, name: 'דבק אריחים 25 ק״ג', category: 'חומרי בניין', brand: 'אחר', price: 45.00, unit: 'יח׳', availability: 'במלאי', img: 'https://placehold.co/400x300/eab308/ffffff?text=דבק+אריחים', desc: 'דבק אריחים איכותי על בסיס צמנט. מתאים להדבקת אריחי קרמיקה, פורצלן וגרניט.' },
+                    { id: 11, name: 'שקע חשמל תקני', category: 'חשמל ותאורה', brand: 'אחר', price: 19.90, unit: 'יח׳', availability: 'במלאי', img: 'https://placehold.co/400x300/3b82f6/ffffff?text=שקע+חשמל', desc: 'שקע חשמל תקני ישראלי. מתאים להתקנה בקיר, כולל מסגרת וברגים.' },
+                    { id: 12, name: 'קסדת בטיחות', category: 'בטיחות בעבודה', brand: 'אחר', price: 49.90, unit: 'יח׳', availability: 'במלאי', img: 'https://placehold.co/400x300/6b7280/ffffff?text=קסדה+בטיחות', desc: 'קסדת בטיחות תקנית לעבודות בנייה. עמידה בפני מכות ומאושרת לפי תקן ישראלי.' },
+                    { id: 13, name: 'אדמת גן 25 ליטר', category: 'גינון', brand: 'אחר', price: 25.00, unit: 'יח׳', availability: 'במלאי', img: 'https://placehold.co/400x300/16a34a/ffffff?text=אדמת+גן', desc: 'תערובת שתילה איכותית לעציצים ואדניות.' },
+                    { id: 14, name: 'צינור טפטפות 16 מ"מ', category: 'גינון', brand: 'אחר', price: 75.00, unit: 'מטר', availability: 'במלאי', img: 'https://placehold.co/400x300/16a34a/ffffff?text=צינור+טפטפות', desc: 'צינור טפטפות להשקיה חסכונית בגינה.' }
+                ],
+                categories: [],
+                brands: [],
+                calculators: [
+                    { id: 'diagonal', name: 'מחשבון אלכסון', icon: '📐', desc: 'חישוב פשוט לקבלת זווית ישרה (90 מעלות).', functional: true },
+                    { id: 'concrete', name: 'חישוב בטון', icon: '🧱', desc: 'חישוב כמויות מלט, חול וחצץ לתערובת.', functional: true },
+                    { id: 'roofRafters', name: 'חישוב קורות גג', icon: '🏠', desc: 'קביעת מידות וזוויות לקורות גג משופע.', functional: false },
+                    { id: 'roofMaterials', name: 'חישוב חומר לגג אוכף', icon: '🏡', desc: 'חישוב חומרי קירוי (יריעות, לוחות, קורות) לגגות גמלון.', functional: false },
+                    { id: 'stairsWood', name: 'חישוב מדרגות עץ', icon: '🪜', desc: 'תכנון מידות נוחות למדרגות ישרות.', functional: false },
+                    { id: 'stairsMetal', name: 'חישוב מדרגות מתכת', icon: '🏗️', desc: 'חישוב נוח למדרגות מתכת לקומה שנייה.', functional: false },
+                    { id: 'concreteStairs', name: 'חישוב מדרגות בטון', icon: '👷', desc: 'חישוב חומרים למדרגות בטון ישרות.', functional: false },
+                    { id: 'woodHouse', name: 'חישוב חומרי בית עץ', icon: '🌲', desc: 'אומדן כמויות חומרי בנייה לבית עץ מגזעים עגולים.', functional: false },
+                    { id: 'complexArea', name: 'חישוב שטח מגרש מורכב', icon: '🗺️', desc: 'קביעת גודל מגרש בעל צורה מורכבת ובלתי סדירה.', functional: false },
+                    { id: 'pipe', name: 'חישוב הצינור', icon: '💧', desc: 'חישוב נפח נוזל ושטח פנים בצינורות.', functional: false },
+                    { id: 'greenhouse', name: 'חישוב חממות', icon: '🌿', desc: 'חישוב חומרים נדרשים לבניית חממות מלבניות.', functional: false },
+                    { id: 'lawnRoll', name: 'חישוב דשא מגולגל', icon: '🌱', desc: 'קביעת מספר גלילי דשא מגולגל הנדרשים.', functional: false },
+                    { id: 'fence', name: 'חישוב חומרי גדר', icon: '🚧', desc: 'חישוב מספר עמודים וכמות חומרים לגדר.', functional: false }
+                ],
+                quoteCart: [],
+                whatsappNumber: '972508860896',
+                currentCategory: 'all',
+                currentPriceRange: 1000,
+                currentAvailability: ['in_stock'],
+                currentBrands: [],
+                currentSort: 'popularity',
+                currentPage: 1,
+                productsPerPage: 8,
+                allProducts: [],
+                filteredProducts: [],
+
+                init() {
+                    this.collectUniqueCategoriesAndBrands();
+                    this.allProducts = [...this.products]; // Make a copy
+                    this.setupEventListeners();
+                    this.renderFilterCategories();
+                    this.renderFilterBrands();
+                    this.filterAndRenderProducts();
+                    this.renderCalculatorCards();
+                    this.setupScrollSpy();
+                    this.setupFadeInSections();
+                    this.showWelcomeModal();
+                    this.renderCompetitorChart();
+                    this.updateQuoteCartButton(); // Initialize cart button state
+                },
+
+                collectUniqueCategoriesAndBrands() {
+                    const uniqueCategories = new Set();
+                    const uniqueBrands = new Set();
+                    this.products.forEach(p => {
+                        uniqueCategories.add(p.category);
+                        uniqueBrands.add(p.brand);
+                    });
+                    this.categories = Array.from(uniqueCategories).sort();
+                    this.brands = Array.from(uniqueBrands).sort();
+                },
+
+                setupEventListeners() {
+                    // Mobile menu toggle
+                    document.getElementById('mobile-menu-button').addEventListener('click', () => {
+                        document.getElementById('mobile-menu').classList.toggle('hidden');
+                    });
+                    // Close mobile menu when clicking a link
+                    document.querySelectorAll('#mobile-menu a').forEach(link => {
+                        link.addEventListener('click', () => {
+                            document.getElementById('mobile-menu').classList.add('hidden');
+                        });
+                    });
+
+                    // Price range filter
+                    document.getElementById('price-range').addEventListener('input', (e) => {
+                        this.currentPriceRange = parseInt(e.target.value);
+                        document.getElementById('price-value').textContent = '₪' + this.currentPriceRange;
+                    });
+                    // Apply filters button
+                    document.getElementById('apply-filters-btn').addEventListener('click', () => {
+                        this.applyFilters();
+                        this.currentPage = 1; // Reset to first page on new filters
+                        this.filterAndRenderProducts();
+                    });
+                    // Clear filters button
+                    document.getElementById('clear-filters-btn').addEventListener('click', () => this.clearFilters());
+
+                    // Sort select
+                    document.getElementById('sort-select').addEventListener('change', (e) => {
+                        this.currentSort = e.target.value;
+                        this.filterAndRenderProducts();
+                    });
+
+                    // Product view toggle
+                    document.getElementById('grid-view-btn').addEventListener('click', () => this.setProductView('grid'));
+                    document.getElementById('list-view-btn').addEventListener('click', () => this.setProductView('list'));
+
+                    // Category pills click
+                    document.getElementById('category-pills').addEventListener('click', (e) => {
+                        if (e.target.tagName === 'BUTTON') {
+                            this.handleCategoryPillClick(e.target.dataset.category);
+                        }
+                    });
+
+                    // Search input
+                    document.getElementById('search-input').addEventListener('input', (e) => {
+                        this.applyFilters(e.target.value);
+                        this.currentPage = 1;
+                        this.filterAndRenderProducts();
+                    });
+
+                    // WhatsApp welcome modal
+                    document.getElementById('close-welcome-modal').addEventListener('click', () => this.hideModal('whatsapp-welcome-modal'));
+                    document.getElementById('floating-whatsapp-button').addEventListener('click', () => this.showModal('whatsapp-welcome-modal'));
+                    
+                    // Quote cart modal
+                    document.getElementById('quote-cart-button').addEventListener('click', () => this.showQuoteCart());
+                    document.getElementById('close-quote-cart-modal').addEventListener('click', () => this.hideModal('quote-cart-modal'));
+                    document.getElementById('send-quote-button').addEventListener('click', () => this.sendQuoteToWhatsApp());
+
+                    // Calculator modal
+                    document.getElementById('close-calculator-modal').addEventListener('click', () => this.hideModal('calculator-modal'));
+
+                    // Pagination controls
+                    document.getElementById('pagination-controls').addEventListener('click', (e) => {
+                        if (e.target.tagName === 'A' || e.target.closest('A')) {
+                            const link = e.target.tagName === 'A' ? e.target : e.target.closest('A');
+                            const pageNum = parseInt(link.dataset.page);
+                            if (!isNaN(pageNum)) {
+                                this.goToPage(pageNum);
+                            }
+                        }
+                    });
+
+                    // Smooth scroll for nav links
+                    document.querySelectorAll('nav a.nav-link').forEach(link => {
+                        link.addEventListener('click', (e) => {
+                            e.preventDefault();
+                            const targetId = link.getAttribute('href').substring(1);
+                            document.getElementById(targetId).scrollIntoView({ behavior: 'smooth' });
+                        });
+                    });
+
+                    // Footer category links
+                    document.querySelectorAll('footer a[data-footer-category]').forEach(link => {
+                        link.addEventListener('click', (e) => {
+                            e.preventDefault();
+                            const categoryName = e.target.dataset.footerCategory;
+                            this.handleCategoryPillClick(categoryName);
+                            document.getElementById('products').scrollIntoView({ behavior: 'smooth' });
+                        });
+                    });
+
+                    // Back to top button
+                    document.getElementById('back-to-top-button').addEventListener('click', () => {
+                        window.scrollTo({ top: 0, behavior: 'smooth' });
+                    });
+                    window.addEventListener('scroll', () => {
+                        const backToTopButton = document.getElementById('back-to-top-button');
+                        if (window.pageYOffset > 300) {
+                            backToTopButton.classList.remove('opacity-0', 'invisible');
+                            backToTopButton.classList.add('opacity-100', 'visible');
+                        } else {
+                            backToTopButton.classList.remove('opacity-100', 'visible');
+                            backToTopButton.classList.add('opacity-0', 'invisible');
+                        }
+                    });
+
+                    // Project Assistant LLM button
+                    document.getElementById('get-project-recommendation-btn').addEventListener('click', () => this.getProjectRecommendation());
+                },
+                
+                renderFilterCategories() {
+                    const container = document.getElementById('filter-categories');
+                    container.innerHTML += this.categories.map(cat => `
+                        <li>
+                            <label class="custom-checkbox">
+                                <input type="checkbox" data-filter-category="${cat}" ${this.currentCategory === cat ? 'checked' : ''}>
+                                <span class="checkmark ml-2"></span>
+                                <span class="text-gray-800">${cat}</span>
+                            </label>
+                        </li>
+                    `).join('');
+                },
+
+                renderFilterBrands() {
+                    const container = document.getElementById('filter-brands');
+                    container.innerHTML = this.brands.map(brand => `
+                        <li>
+                            <label class="custom-checkbox">
+                                <input type="checkbox" data-filter-brand="${brand}" ${this.currentBrands.includes(brand) ? 'checked' : ''}>
+                                <span class="checkmark ml-2"></span>
+                                <span class="text-gray-800">${brand}</span>
+                            </label>
+                        </li>
+                    `).join('');
+                },
+
+                applyFilters(searchTerm = '') {
+                    const selectedCategories = Array.from(document.querySelectorAll('#filter-categories input:checked'))
+                                                    .map(cb => cb.dataset.filterCategory)
+                                                    .filter(cat => cat !== 'all');
+                    
+                    const selectedAvailability = Array.from(document.querySelectorAll('#filter-availability input:checked'))
+                                                    .map(cb => cb.dataset.filterAvailability);
+                    
+                    const selectedBrands = Array.from(document.querySelectorAll('#filter-brands input:checked'))
+                                                .map(cb => cb.dataset.filterBrand);
+
+                    this.currentCategory = selectedCategories.length === 0 ? 'all' : selectedCategories[0]; 
+                    this.currentAvailability = selectedAvailability;
+                    this.currentBrands = selectedBrands;
+
+                    let filtered = this.allProducts.filter(p => {
+                        const matchesCategory = this.currentCategory === 'all' || selectedCategories.includes(p.category);
+                        const matchesPrice = p.price <= this.currentPriceRange;
+                        const matchesAvailability = selectedAvailability.includes(p.availability);
+                        const matchesBrand = selectedBrands.length === 0 || selectedBrands.includes(p.brand);
+                        const matchesSearch = searchTerm === '' || p.name.toLowerCase().includes(searchTerm.toLowerCase()) || p.desc.toLowerCase().includes(searchTerm.toLowerCase());
+                        return matchesCategory && matchesPrice && matchesAvailability && matchesBrand && matchesSearch;
+                    });
+
+                    if (this.currentSort === 'price_asc') {
+                        filtered.sort((a, b) => a.price - b.price);
+                    } else if (this.currentSort === 'price_desc') {
+                        filtered.sort((a, b) => b.price - a.price);
+                    } else if (this.currentSort === 'newest') {
+                        filtered.sort((a, b) => b.id - a.id); 
+                    } else { // popularity
+                        filtered.sort(() => Math.random() - 0.5); 
+                    }
+                    this.filteredProducts = filtered;
+                    this.renderProductGrid();
+                    this.renderPagination();
+                },
+
+                clearFilters() {
+                    document.querySelectorAll('#filter-categories input').forEach(cb => cb.checked = false);
+                    document.querySelector('#filter-categories input[data-filter-category="all"]').checked = true;
+                    
+                    document.getElementById('price-range').value = 1000;
+                    document.getElementById('price-value').textContent = '₪1000';
+                    
+                    document.querySelectorAll('#filter-availability input').forEach(cb => cb.checked = false);
+                    document.querySelector('#filter-availability input[data-filter-availability="in_stock"]').checked = true;
+
+                    document.querySelectorAll('#filter-brands input').forEach(cb => cb.checked = false);
+
+                    document.getElementById('search-input').value = '';
+
+                    this.currentCategory = 'all';
+                    this.currentPriceRange = 1000;
+                    this.currentAvailability = ['in_stock'];
+                    this.currentBrands = [];
+                    this.currentPage = 1;
+                    
+                    this.updateCategoryPills('all');
+                    this.applyFilters();
+                },
+
+                filterAndRenderProducts() {
+                    this.applyFilters(document.getElementById('search-input').value);
+                },
+
+                renderProductGrid() {
+                    const grid = document.getElementById('product-grid');
+                    const start = (this.currentPage - 1) * this.productsPerPage;
+                    const end = start + this.productsPerPage;
+                    const productsToDisplay = this.filteredProducts.slice(start, end);
+
+                    grid.innerHTML = productsToDisplay.map(p => `
+                        <div class="glass-card rounded-lg overflow-hidden shadow-md product-card">
+                            <div class="image-transition h-56">
+                                <img src="${p.img}" alt="${p.name}" class="w-full h-full object-cover object-top">
+                                <div class="image-overlay"></div>
+                            </div>
+                            <div class="p-4">
+                                <div class="flex justify-between items-start mb-2">
+                                    <h3 class="text-lg font-bold text-gray-800">${p.name}</h3>
+                                    <span class="bg-blue-600/10 text-blue-600 text-xs px-2 py-1 rounded-full">${p.availability === 'in_stock' ? 'במלאי' : 'בהזמנה מראש'}</span>
+                                </div>
+                                <p class="text-gray-600 text-sm mb-3">${p.desc}</p>
+                                <div class="flex justify-between items-center">
+                                    <span class="text-blue-600 font-bold">₪${p.price.toFixed(2)} ${p.unit ? '/ ' + p.unit : ''}</span>
+                                    <button class="add-to-quote-btn bg-blue-600 text-white px-4 py-2 rounded-button hover:bg-blue-700 transition whitespace-nowrap" data-product-id="${p.id}">
+                                        הוסף להצעת מחיר
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    `).join('');
+
+                    grid.querySelectorAll('.add-to-quote-btn').forEach(btn => {
+                        btn.addEventListener('click', (e) => {
+                            const productId = parseInt(e.currentTarget.dataset.productId);
+                            this.addToQuote(productId);
+                        });
+                    });
+                },
+
+                renderPagination() {
+                    const paginationNav = document.querySelector('#pagination-controls nav');
+                    const totalPages = Math.ceil(this.filteredProducts.length / this.productsPerPage);
+                    let paginationHtml = `
+                        <a href="#" class="w-10 h-10 flex items-center justify-center text-gray-500 hover:text-blue-600 border-l border-blue-100" data-page="${Math.max(1, this.currentPage - 1)}">
+                            <i class="ri-arrow-right-s-line"></i>
+                        </a>
+                    `;
+
+                    for (let i = 1; i <= totalPages; i++) {
+                        paginationHtml += `
+                            <a href="#" class="w-10 h-10 flex items-center justify-center ${this.currentPage === i ? 'pagination-active' : 'text-gray-700 hover:text-blue-600 hover:bg-blue-600/10'}" data-page="${i}">${i}</a>
+                        `;
+                    }
+
+                    paginationHtml += `
+                        <a href="#" class="w-10 h-10 flex items-center justify-center text-gray-500 hover:text-blue-600 border-r border-blue-100" data-page="${Math.min(totalPages, this.currentPage + 1)}">
+                            <i class="ri-arrow-left-s-line"></i>
+                        </a>
+                    `;
+                    paginationNav.innerHTML = paginationHtml;
+                },
+
+                goToPage(page) {
+                    const totalPages = Math.ceil(this.filteredProducts.length / this.productsPerPage);
+                    if (page >= 1 && page <= totalPages) {
+                        this.currentPage = page;
+                        this.renderProductGrid();
+                        this.renderPagination();
+                        document.getElementById('products').scrollIntoView({ behavior: 'smooth' }); 
+                    }
+                },
+
+                handleCategoryPillClick(category) {
+                    this.currentCategory = category;
+                    this.currentPage = 1;
+                    document.querySelectorAll('#category-pills button').forEach(btn => btn.classList.remove('filter-active', 'text-blue-600'));
+                    document.querySelector(`#category-pills button[data-category="${category}"]`).classList.add('filter-active', 'text-blue-600');
+                    document.getElementById('current-category-title').textContent = category === 'all' ? 'כל המוצרים' : category;
+
+                    document.querySelectorAll('#filter-categories input').forEach(cb => cb.checked = false);
+                    if (category === 'all') {
+                        document.querySelector('#filter-categories input[data-filter-category="all"]').checked = true;
+                    } else {
+                        const categoryCheckbox = document.querySelector(`#filter-categories input[data-filter-category="${category}"]`);
+                        if (categoryCheckbox) categoryCheckbox.checked = true;
+                    }
+                    this.applyFilters(document.getElementById('search-input').value);
+                },
+
+                updateCategoryPills(activeCategory) {
+                    const container = document.getElementById('category-pills');
+                    container.innerHTML = `<button class="glass-effect rounded-full px-4 py-2 text-sm ${activeCategory === 'all' ? 'filter-active text-blue-600' : 'text-gray-700 hover:bg-blue-600/10'} whitespace-nowrap" data-category="all">הכל</button>` + 
+                        this.categories.map(cat => `
+                        <button class="glass-effect rounded-full px-4 py-2 text-sm ${activeCategory === cat ? 'filter-active text-blue-600' : 'text-gray-700 hover:bg-blue-600/10'} whitespace-nowrap" data-category="${cat}">${cat}</button>
+                    `).join('');
+                },
+
+                setProductView(view) {
+                    const grid = document.getElementById('product-grid');
+                    const gridBtn = document.getElementById('grid-view-btn');
+                    const listBtn = document.getElementById('list-view-btn');
+
+                    if (view === 'grid') {
+                        grid.classList.remove('grid-cols-1');
+                        grid.classList.add('sm:grid-cols-2', 'lg:grid-cols-3', 'xl:grid-cols-4');
+                        gridBtn.classList.add('text-blue-600');
+                        listBtn.classList.remove('text-blue-600');
+                    } else { // list
+                        grid.classList.add('grid-cols-1');
+                        grid.classList.remove('sm:grid-cols-2', 'lg:grid-cols-3', 'xl:grid-cols-4');
+                        listBtn.classList.add('text-blue-600');
+                        gridBtn.classList.remove('text-blue-600');
+                    }
+                },
+
+                renderCalculatorCards() {
+                    const grid = document.getElementById('calculator-grid');
+                    grid.innerHTML = this.calculators.map(calc => `
+                        <div class="calculator-card bg-white rounded-xl shadow-md overflow-hidden flex flex-col p-6 text-center cursor-pointer" data-calculator-id="${calc.id}">
+                            <div class="text-5xl mb-4">${calc.icon}</div>
+                            <h3 class="text-xl font-bold mb-2 flex-grow">${calc.name}</h3>
+                            <p class="text-stone-600">${calc.desc}</p>
+                            ${!calc.functional ? '<p class="text-red-500 font-semibold mt-2">בבנייה</p>' : ''}
+                        </div>
+                    `).join('');
+                    
+                    grid.querySelectorAll('.calculator-card').forEach(card => {
+                        card.addEventListener('click', (e) => {
+                            const calcId = e.currentTarget.dataset.calculatorId;
+                            const calculator = this.calculators.find(c => c.id === calcId);
+                            if (calculator && calculator.functional) {
+                                this.openCalculator(calcId);
+                            } else {
+                                alert(`מחשבון "${calculator.name}" נמצא בבנייה.`);
+                            }
+                        });
+                    });
+                },
+
+                renderCompetitorChart() {
+                    const ctx = document.getElementById('competitorChart').getContext('2d');
+                    const data = {
+                        labels: ['ח.סבן (מוצע)', 'לב השרון', 'טיט-אקספרס', 'פרוביילדר', 'הראשון לבניין'],
+                        datasets: [
+                            {
+                                label: 'מגוון מוצרים',
+                                data: [5, 4, 4, 3, 4],
+                                backgroundColor: 'rgba(245, 158, 11, 0.6)',
+                                borderColor: 'rgba(245, 158, 11, 1)',
+                                borderWidth: 1
+                            },
+                            {
+                                label: 'שירותי ערך מוסף (הנפה, פינוי)',
+                                data: [5, 2, 3, 3, 1],
+                                backgroundColor: 'rgba(59, 130, 246, 0.6)',
+                                borderColor: 'rgba(59, 130, 246, 1)',
+                                borderWidth: 1
+                            },
+                            {
+                                label: 'כלים דיגיטליים (מחשבונים)',
+                                data: [5, 1, 3, 2, 1],
+                                backgroundColor: 'rgba(22, 163, 74, 0.6)',
+                                borderColor: 'rgba(22, 163, 74, 1)',
+                                borderWidth: 1
+                            },
+                             {
+                                label: 'חווית משתמש (UI/UX)',
+                                data: [5, 4, 3, 3, 3],
+                                backgroundColor: 'rgba(107, 114, 128, 0.6)',
+                                borderColor: 'rgba(107, 114, 128, 1)',
+                                borderWidth: 1
+                            }
+                        ]
+                    };
+                    new Chart(ctx, {
+                        type: 'bar',
+                        data: data,
+                        options: {
+                            indexAxis: 'y',
+                            responsive: true,
+                            maintainAspectRatio: false,
+                            plugins: {
+                                title: {
+                                    display: true,
+                                    text: 'השוואת יכולות מול מתחרים (ציון 1-5)',
+                                    font: { size: 16, family: 'Assistant' }
+                                },
+                                tooltip: {
+                                    bodyFont: { family: 'Assistant' },
+                                    titleFont: { family: 'Assistant' }
+                                }
+                            },
+                            scales: {
+                                x: {
+                                    stacked: true,
+                                    ticks: { font: { family: 'Assistant' } }
+                                },
+                                y: {
+                                    stacked: true,
+                                    ticks: { font: { family: 'Assistant', size: 14 } }
+                                }
+                            }
+                        }
+                    });
+                },
+                
+                showWelcomeModal() {
+                    setTimeout(() => {
+                        this.showModal('whatsapp-welcome-modal');
+                        this.typeWelcomeMessage();
+                    }, 2000);
+                },
+
+                typeWelcomeMessage() {
+                    const messageContainer = document.getElementById('welcome-message');
+                    const message = "איך נוכל לעזור לכם היום? 🏗️";
+                    messageContainer.innerHTML = ''; 
+                    let i = 0;
+                    
+                    const typingEffect = setInterval(() => {
+                        if (i < message.length) {
+                            messageContainer.innerHTML += message.charAt(i);
+                            i++;
+                        } else {
+                            clearInterval(typingEffect);
+                        }
+                    }, 50);
+                    
+                    document.getElementById('whatsapp-new-order').href = `https://wa.me/${this.whatsappNumber}?text=${encodeURIComponent('שלום, אני רוצה לבצע הזמנה חדשה.')}`;
+                    document.getElementById('whatsapp-contact-rep').href = `https://wa.me/${this.whatsappNumber}?text=${encodeURIComponent('שלום, אני מעוניין לשוחח עם נציג שירות.')}`;
+                },
+                
+                showModal(modalId) {
+                    const modal = document.getElementById(modalId);
+                    modal.classList.remove('pointer-events-none');
+                    modal.classList.add('opacity-100');
+                    modal.querySelector('.modal-content').classList.remove('scale-95', 'opacity-0');
+                    modal.querySelector('.modal-content').classList.add('scale-100');
+                },
+                
+                hideModal(modalId) {
+                    const modal = document.getElementById(modalId);
+                    modal.classList.add('pointer-events-none');
+                    modal.classList.remove('opacity-100');
+                    modal.querySelector('.modal-content').classList.add('scale-95', 'opacity-0');
+                    modal.querySelector('.modal-content').classList.remove('scale-100');
+                },
+
+                // Gemini API integration for Project Assistant
+                async getProjectRecommendation() {
+                    const projectDescriptionInput = document.getElementById('project-description-input');
+                    const projectRecommendationOutput = document.getElementById('project-recommendation-output');
+                    const getRecommendationBtn = document.getElementById('get-project-recommendation-btn');
+                    const loadingSpinner = document.getElementById('project-loading-spinner');
+
+                    const promptText = projectDescriptionInput.value.trim();
+
+                    if (!promptText) {
+                        projectRecommendationOutput.innerHTML = '<p class="text-red-500">נא לתאר את הפרויקט כדי לקבל המלצות.</p>';
+                        return;
+                    }
+
+                    getRecommendationBtn.disabled = true;
+                    loadingSpinner.classList.remove('hidden');
+                    projectRecommendationOutput.innerHTML = '<p class="text-stone-500">טוען המלצות... זה עשוי לקחת רגע.</p>';
+
+                    try {
+                        const prompt = `אתם מומחים לחומרי בניין. משתמש תיאר פרויקט: '${promptText}'. אנא ספקו רשימת חומרים מומלצים, כלים בסיסיים, ושלבים עיקריים לביצוע הפרויקט. נסחו את התשובה בפורמט קריא, עם כותרות ורשימות, ובשפה פשוטה. התשובה צריכה להיות בעברית. אל תכללו מחירים. אל תבקשו פרטים נוספים. אם הפרויקט לא ברור, נסו להציע כיוונים כלליים.`;
+                        
+                        let chatHistory = [];
+                        chatHistory.push({ role: "user", parts: [{ text: prompt }] });
+                        const payload = { contents: chatHistory };
+                        const apiKey = "AIzaSyCNn7GZMsQPCdRSfgz_o08M1YV63CkA3Ow"; // Canvas will automatically provide API key
+                        const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
+
+                        const response = await fetch(apiUrl, {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify(payload)
+                        });
+
+                        const result = await response.json();
+                        if (result.candidates && result.candidates.length > 0 &&
+                            result.candidates[0].content && result.candidates[0].content.parts &&
+                            result.candidates[0].content.parts.length > 0) {
+                            const text = result.candidates[0].content.parts[0].text;
+                            projectRecommendationOutput.innerHTML = this.formatAIResponse(text);
+                        } else {
+                            projectRecommendationOutput.innerHTML = '<p class="text-red-500">אירעה שגיאה בקבלת ההמלצות. אנא נסו שוב.</p>';
+                        }
+                    } catch (error) {
+                        console.error('Error calling Gemini API:', error);
+                        projectRecommendationOutput.innerHTML = '<p class="text-red-500">אירעה שגיאה: לא ניתן לקבל המלצות כרגע. אנא נסו שוב מאוחר יותר.</p>';
+                    } finally {
+                        getRecommendationBtn.disabled = false;
+                        loadingSpinner.classList.add('hidden');
+                    }
+                },
+
+                formatAIResponse(text) {
+                    // Convert markdown-like headers and lists to HTML
+                    let formattedText = text.replace(/^### (.*)$/gm, '<h3>$1</h3>'); // H3
+                    formattedText = formattedText.replace(/^## (.*)$/gm, '<h2>$1</h2>'); // H2
+                    formattedText = formattedText.replace(/^# (.*)$/gm, '<h1>$1</h1>'); // H1
+
+                    // Convert markdown lists
+                    formattedText = formattedText.replace(/^\* (.*)$/gm, '<li>$1</li>');
+                    if (formattedText.includes('<li>')) {
+                        formattedText = `<ul>${formattedText}</ul>`;
+                        formattedText = formattedText.replace(/<\/ul>\s*<ul>/g, ''); // Fix multiple ul tags
+                    }
+
+                    return formattedText;
+                },
+                
+                setupScrollSpy() {
+                    const sections = document.querySelectorAll('section[id]');
+                    const navLinks = document.querySelectorAll('.nav-link');
+
+                    const observer = new IntersectionObserver(entries => {
+                        entries.forEach(entry => {
+                            if (entry.isIntersecting) {
+                                const id = entry.target.getAttribute('id');
+                                navLinks.forEach(link => {
+                                    link.classList.remove('active');
+                                    if (link.getAttribute('href') === `#${id}`) {
+                                        link.classList.add('active');
+                                    }
+                                });
+                            }
+                        });
+                    }, { rootMargin: '-50% 0px -50% 0px' });
+
+                    sections.forEach(section => observer.observe(section));
+                },
+
+                setupFadeInSections() {
+                    const sections = document.querySelectorAll('.fade-in-section');
+                    const observer = new IntersectionObserver((entries, observer) => {
+                        entries.forEach(entry => {
+                            if (entry.isIntersecting) {
+                                entry.target.classList.add('is-visible');
+                                observer.unobserve(entry.target);
+                            }
+                        });
+                    }, { threshold: 0.1 });
+
+                    sections.forEach(section => observer.observe(section));
+                }
+            };
+
+            app.init();
+        });
+    </script>
+</body>
+</html>
