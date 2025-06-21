@@ -439,14 +439,15 @@
         
         /* Print-specific styles */
         @media print {
-            body * {
-                visibility: hidden;
+            /* Hide elements that are not necessary for print */
+            body > *:not(#print-content) {
+                display: none !important;
             }
-            #print-content, #print-content * {
-                visibility: visible !important;
-            }
+
+            /* Ensure print-content and its children are visible and styled for print */
             #print-content {
-                position: absolute;
+                display: block !important;
+                position: absolute; /* Take content out of normal flow */
                 left: 0;
                 top: 0;
                 width: 100%;
@@ -454,7 +455,16 @@
                 box-sizing: border-box;
                 direction: rtl; /* Ensure RTL for printing */
                 text-align: right; /* Ensure right-align for printing */
+                background-color: white !important; /* Force white background */
+                color: black !important; /* Force black text */
             }
+            #print-content * {
+                visibility: visible !important; /* Make sure all children are visible */
+                color: black !important; /* Ensure text is black */
+                box-shadow: none !important; /* Remove shadows */
+                text-shadow: none !important; /* Remove text shadows */
+            }
+            
             /* Ensure images scale correctly in print */
             #print-content img {
                 max-width: 100%;
@@ -472,6 +482,7 @@
                 text-align: center;
                 color: #2196F3;
                 margin-bottom: 15px;
+                page-break-after: avoid; /* Prevent headings from being at the bottom of a page */
             }
             #print-content .content {
                 border: 1px solid #eee;
@@ -479,10 +490,13 @@
                 border-radius: 8px;
                 background-color: #f9f9f9;
             }
-            #print-content ul {
-                list-style-type: disc;
-                padding-right: 20px;
+            #print-content ul, #print-content ol {
+                list-style-type: disc; /* Default for ul */
+                padding-right: 20px; /* Indent for lists */
                 margin-bottom: 10px;
+            }
+            #print-content ol {
+                list-style-type: decimal; /* Ensure ordered lists use numbers */
             }
             #print-content li {
                 margin-bottom: 5px;
@@ -496,9 +510,34 @@
                 font-size: 0.8em;
                 color: #666;
             }
-            /* Hide print/share buttons in print view */
-            #print-content .print-buttons {
+            /* Hide specific interactive elements within print-content if they somehow show */
+            #print-content button, 
+            #print-content .search-bar, /* If this exists within print-content */
+            #print-content .generate-guide-section /* If this exists within print-content */
+            {
                 display: none !important;
+            }
+
+            /* Ensure the AI response containers are always visible in print if they are meant to be printed */
+            #usage-ideas-container,
+            #summary-features-container,
+            #related-products-container,
+            #product-qa-section,
+            #description-generator-section,
+            #installation-guide-container,
+            #project-cost-estimate-container { /* NEW */
+                display: block !important;
+            }
+
+            /* Ensure the actual response divs within those containers are visible */
+            #usage-ideas-response,
+            #summary-features-response,
+            #related-products-response,
+            #product-qa-response,
+            #description-generator-response,
+            #installation-guide-response,
+            #project-cost-estimate-response { /* NEW */
+                display: block !important;
             }
         }
 
@@ -580,6 +619,14 @@
                                 <span class="description">קבל המלצות AI להרכבת הזמנה כולל פרטים והערות.</span>
                             </div>
                         </a>
+                        <!-- NEW AI Tool Link -->
+                        <a href="#" onclick="openCostEstimatorModal(); return false;">
+                            <i class="ri-calculator-line ri-lg text-red-600"></i>
+                            <div>
+                                <span class="font-bold">מחשבון עלויות פרויקט</span>
+                                <span class="description">קבל הערכת עלויות חומרים לפרויקט שלך.</span>
+                            </div>
+                        </a>
                     </div>
                 </div>
 
@@ -609,95 +656,220 @@
         </div>
     </header>
 
-    <!-- Breadcrumbs -->
-    <div class="container mx-auto px-4 py-3">
-        <div class="flex items-center text-sm text-gray-600">
-            <a href="https://readdy.ai/home/20fb88f3-f689-4ee4-95ee-53c5efe8bc7d/f195f37e-9e34-4662-a971-05a152507a0f" data-readdy="true" class="hover:text-primary">ראשי</a>
-            <div class="w-4 h-4 flex items-center justify-center mx-1">
-                <i class="ri-arrow-left-s-line"></i>
+    <!-- Main Content Area Wrapper for Print -->
+    <div id="print-content">
+        <!-- Breadcrumbs -->
+        <div class="container mx-auto px-4 py-3">
+            <div class="flex items-center text-sm text-gray-600">
+                <a href="https://readdy.ai/home/20fb88f3-f689-4ee4-95ee-53c5efe8bc7d/f195f37e-9e34-4662-a971-05a152507a0f" data-readdy="true" class="hover:text-primary">ראשי</a>
+                <div class="w-4 h-4 flex items-center justify-center mx-1">
+                    <i class="ri-arrow-left-s-line"></i>
+                </div>
+                <span class="text-primary font-medium">קטלוג מוצרים</span>
             </div>
-            <span class="text-primary font-medium">קטלוג מוצרים</span>
         </div>
-    </div>
 
-    <!-- Main Content Area -->
-    <div class="container mx-auto px-4 py-6">
-        <div class="w-full">
-            <!-- Category Title and Sort (now full width) -->
-            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6">
-                <h2 class="text-2xl font-bold text-gray-800 mb-3 sm:mb-0">כל המוצרים</h2>
-                
-                <div class="flex flex-wrap gap-2">
-                    <div class="glass-effect rounded-lg px-3 py-2 text-sm flex items-center">
-                        <span class="text-gray-700 ml-2">מיון:</span>
-                        <div class="relative">
-                            <select id="sort-select" class="bg-transparent border-none outline-none text-primary appearance-none pr-2 pl-6">
-                                <option value="popularity">פופולריות</option>
-                                <option value="price-asc">מחיר: מהנמוך לגבוה</option>
-                                <option value="price-desc">מחיר: מהגבוה לנמוך</option>
-                                <option value="newest">חדש ביותר</option>
-                            </select>
-                            <div class="absolute left-1 top-1/2 transform -translate-y-1/2 w-4 h-4 flex items-center justify-center text-primary">
-                                <i class="ri-arrow-down-s-line"></i>
+        <!-- Main Content Area -->
+        <div class="container mx-auto px-4 py-6">
+            <div class="w-full">
+                <!-- Category Title and Sort (now full width) -->
+                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-3 sm:mb-0">כל המוצרים</h2>
+                    
+                    <div class="flex flex-wrap gap-2">
+                        <div class="glass-effect rounded-lg px-3 py-2 text-sm flex items-center">
+                            <span class="text-gray-700 ml-2">מיון:</span>
+                            <div class="relative">
+                                <select id="sort-select" class="bg-transparent border-none outline-none text-primary appearance-none pr-2 pl-6">
+                                    <option value="popularity">פופולריות</option>
+                                    <option value="price-asc">מחיר: מהנמוך לגבוה</option>
+                                    <option value="price-desc">מחיר: מהגבוה לנמוך</option>
+                                    <option value="newest">חדש ביותר</option>
+                                </select>
+                                <div class="absolute left-1 top-1/2 transform -translate-y-1/2 w-4 h-4 flex items-center justify-center text-primary">
+                                    <i class="ri-arrow-down-s-line"></i>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="glass-effect rounded-lg px-3 py-2 text-sm flex items-center">
+                            <span class="text-gray-700 ml-2">הצג:</span>
+                            <div class="flex items-center">
+                                <button class="w-8 h-8 flex items-center justify-center text-primary">
+                                    <i class="ri-grid-line"></i>
+                                </button>
+                                <button class="w-8 h-8 flex items-center justify-center text-gray-400">
+                                    <i class="ri-list-check"></i>
+                                </button>
                             </div>
                         </div>
                     </div>
+                </div>
+
+                <!-- NEW: Prominent Search Bar for the main catalog -->
+                <div class="mb-8 relative">
+                    <div class="glass-effect rounded-full flex items-center px-4 py-3 shadow-md focus-within:ring-2 focus-within:ring-primary transition-all duration-300">
+                        <input type="text" id="main-search-input" placeholder="חיפוש מהיר של מוצרים בקטלוג..." 
+                            class="bg-transparent border-none outline-none text-base w-full pr-4" dir="rtl">
+                        <div class="w-6 h-6 flex items-center justify-center text-primary">
+                            <i class="ri-search-line ri-lg"></i>
+                        </div>
+                    </div>
+                    <div id="main-search-suggestions" class="autocomplete-suggestions hidden rounded-b-lg top-full right-0"></div>
+                </div>
+
+                <!-- Hero Image Section - Now dynamic -->
+                <div class="mb-8">
+                    <div class="hero-image-grid" id="dynamic-hero-categories">
+                        <!-- Dynamic content will be inserted here -->
+                    </div>
+                </div>
+                
+                <main>
+                    <div id="products-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-6"></div>
+                </main>
+
+                <!-- Pagination -->
+                <div class="flex justify-center mt-10">
+                    <nav class="glass-effect rounded-lg inline-flex">
+                        <a href="#" class="w-10 h-10 flex items-center justify-center text-gray-500 hover:text-primary border-l border-blue-100">
+                            <i class="ri-arrow-right-s-line"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 flex items-center justify-center pagination-active">1</a>
+                        <a href="#" class="w-10 h-10 flex items-center justify-center text-gray-700 hover:text-primary hover:bg-primary/10">2</a>
+                        <a href="#" class="w-10 h-10 flex items-center justify-center text-gray-700 hover:text-primary hover:bg-primary/10">3</a>
+                        <a href="#" class="w-10 h-10 flex items-center justify-center text-gray-700 hover:text-primary hover:bg-primary/10">4</a>
+                        <a href="#" class="w-10 h-10 flex items-center justify-center text-gray-700 hover:text-primary hover:bg-primary/10">5</a>
+                        <a href="#" class="w-10 h-10 flex items-center justify-center text-gray-500 hover:text-primary border-r border-blue-100">
+                            <i class="ri-arrow-left-s-line"></i>
+                        </a>
+                    </nav>
+                </div>
+            </div>
+        </div>
+
+        <!-- Newsletter -->
+        <section class="py-12 glass-effect mt-10">
+            <div class="container mx-auto px-4">
+                <div class="max-w-3xl mx-auto text-center">
+                    <h2 class="text-2xl md:text-3xl font-bold mb-4 text-gray-800">הישארו מעודכנים</h2>
+                    <p class="text-gray-600 mb-6">הירשמו לניוזלטר שלנו וקבלו עדכונים על מבצעים, מוצרים חדשים וטיפים מקצועיים.</p>
+                    <div class="flex flex-col sm:flex-row gap-3 justify-center">
+                        <input type="email" placeholder="הזינו את כתובת המייל שלכם" class="px-4 py-3 rounded-button border-none glass-effect w-full sm:w-96">
+                        <button class="bg-primary text-white px-6 py-3 rounded-button hover:bg-primary/90 transition whitespace-nowrap shine-button">הרשמה</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="bg-[#1565C0] text-white py-12 mt-10">
+            <div class="container mx-auto px-4">
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                    <!-- Column 1 - About -->
+                    <div>
+                        <h3 class="text-xl font-bold mb-4">אודות ח.סבן</h3>
+                        <p class="text-white/90 mb-4">ח.סבן חומרי בניין 1994 בע"מ הינה חברה משפחתית המספקת חומרי בניין איכותיים מאז 1994. אנו מתמחים במגוון רחב של מוצרים לענף הבנייה.</p>
+                        <div class="flex space-x-4 space-x-reverse">
+                            <a href="#" class="text-white/90 hover:text-white">
+                                <div class="w-8 h-8 flex items-center justify-center">
+                                    <i class="ri-facebook-fill"></i>
+                                </div>
+                            </a>
+                            <a href="#" class="text-white/90 hover:text-white">
+                                <div class="w-8 h-8 flex items-center justify-center">
+                                    <i class="ri-instagram-line"></i>
+                                </div>
+                            </a>
+                            <a href="#" class="text-white/90 hover:text-white">
+                                <div class="w-8 h-8 flex items-center justify-center">
+                                    <i class="ri-whatsapp-line"></i>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
                     
-                    <div class="glass-effect rounded-lg px-3 py-2 text-sm flex items-center">
-                        <span class="text-gray-700 ml-2">הצג:</span>
-                        <div class="flex items-center">
-                            <button class="w-8 h-8 flex items-center justify-center text-primary">
-                                <i class="ri-grid-line"></i>
-                            </button>
-                            <button class="w-8 h-8 flex items-center justify-center text-gray-400">
-                                <i class="ri-list-check"></i>
-                            </button>
+                    <!-- Column 2 - Quick Links -->
+                    <div>
+                        <h3 class="text-xl font-bold mb-4">קישורים מהירים</h3>
+                        <ul class="space-y-2">
+                            <li><a href="https://readdy.ai/home/20fb88f3-f689-4ee4-95ee-53c5efe8bc7d/f195f37e-9e34-4662-a971-05a152507a0f" data-readdy="true" class="text-white/90 hover:text-white">דף הבית</a></li>
+                            <li><a href="javascript:void(0);" class="text-white/90 hover:text-white">החזון שלנו</a></li>
+                            <li><a href="javascript:void(0);" class="text-white/90 hover:text-white">מוצרים</a></li>
+                            <li><a href="javascript:void(0);" class="text-white/90 hover:text-white">מחלקת חישובים</a></li>
+                            <li><a href="javascript:void(0);" class="text-white/90 hover:text-white">סניפים</a></li>
+                            <li><a href="javascript:void(0);" class="text-white/90 hover:text-white">המלצות</a></li>
+                        </ul>
+                    </div>
+                    
+                    <!-- Column 3 - Categories (Hardcoded for footer, dynamic in sidebar) -->
+                    <div>
+                        <h3 class="text-xl font-bold mb-4">קטגוריות מוצרים</h3>
+                        <ul class="space-y-2">
+                            <li><a href="#" class="text-white/90 hover:text-white">חומרי בניין</a></li>
+                            <li><a href="#" class="text-white/90 hover:text-white">חשמל ותאורה</a></li>
+                            <li><a href="#" class="text-white/90 hover:text-white">אינסטלציה</a></li>
+                            <li><a href="#" class="text-white/90 hover:text-white">צבעים וציפויים</a></li>
+                            <li><a href="#" class="text-white/90 hover:text-white">כלי עבודה</a></li>
+                            <li><a href="#" class="text-white/90 hover:text-white">בטיחות בעבודה</a></li>
+                        </ul>
+                    </div>
+                    
+                    <!-- Column 4 - Contact -->
+                    <div>
+                        <h3 class="text-xl font-bold mb-4">צור קשר</h3>
+                        <ul class="space-y-3">
+                            <li class="flex items-start">
+                                <div class="w-5 h-5 flex items-center justify-center text-white/90 mt-1">
+                                    <i class="ri-map-pin-line"></i>
+                                </div>
+                                <span class="mr-2 text-white/90">רחוב התלמיד 6, הוד השרון</span>
+                            </li>
+                            <li class="flex items-start">
+                                <div class="w-5 h-5 flex items-center justify-center text-white/90 mt-1">
+                                    <i class="ri-phone-line"></i>
+                                </div>
+                                <span class="mr-2 text-white/90">09-7408854</span>
+                            </li>
+                            <li class="flex items-start">
+                                <div class="w-5 h-5 flex items-center justify-center text-white/90 mt-1">
+                                    <i class="ri-mail-line"></i>
+                                </div>
+                                <span class="mr-2 text-white/90">info@hsaban.co.il</span>
+                            </li>
+                            <li class="flex items-start">
+                                <div class="w-5 h-5 flex items-center justify-center text-white/90 mt-1">
+                                    <i class="ri-time-line"></i>
+                                </div>
+                                <div class="mr-2 text-white/90">
+                                    <p>ימים א'-ה': 07:00-17:00</p>
+                                    <p>יום ו': 07:00-13:00</p>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="border-t border-white/20 mt-8 pt-8 flex flex-col md:flex-row justify-between items-center">
+                    <p class="text-white/70 text-sm mb-4 md:mb-0">© 2025 ח.סבן חומרי בניין 1994 בע"מ. כל הזכויות שמורות.</p>
+                    <div class="flex items-center space-x-4 space-x-reverse">
+                        <div class="w-8 h-8 flex items-center justify-center text-white/70">
+                            <i class="ri-visa-line ri-lg"></i>
+                        </div>
+                        <div class="w-8 h-8 flex items-center justify-center text-white/70">
+                            <i class="ri-mastercard-line ri-lg"></i>
+                        </div>
+                        <div class="w-8 h-8 flex items-center justify-center text-white/70">
+                            <i class="ri-paypal-line ri-lg"></i>
+                        </div>
+                        <div class="w-8 h-8 flex items-center justify-center text-white/70">
+                            <i class="ri-bank-card-line ri-lg"></i>
                         </div>
                     </div>
                 </div>
             </div>
-
-            <!-- NEW: Prominent Search Bar for the main catalog -->
-            <div class="mb-8 relative">
-                <div class="glass-effect rounded-full flex items-center px-4 py-3 shadow-md focus-within:ring-2 focus-within:ring-primary transition-all duration-300">
-                    <input type="text" id="main-search-input" placeholder="חיפוש מהיר של מוצרים בקטלוג..." 
-                           class="bg-transparent border-none outline-none text-base w-full pr-4" dir="rtl">
-                    <div class="w-6 h-6 flex items-center justify-center text-primary">
-                        <i class="ri-search-line ri-lg"></i>
-                    </div>
-                </div>
-                <div id="main-search-suggestions" class="autocomplete-suggestions hidden rounded-b-lg top-full right-0"></div>
-            </div>
-
-            <!-- Hero Image Section - Now dynamic -->
-            <div class="mb-8">
-                <div class="hero-image-grid" id="dynamic-hero-categories">
-                    <!-- Dynamic content will be inserted here -->
-                </div>
-            </div>
-            
-            <main>
-                <div id="products-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-6"></div>
-            </main>
-
-            <!-- Pagination -->
-            <div class="flex justify-center mt-10">
-                <nav class="glass-effect rounded-lg inline-flex">
-                    <a href="#" class="w-10 h-10 flex items-center justify-center text-gray-500 hover:text-primary border-l border-blue-100">
-                        <i class="ri-arrow-right-s-line"></i>
-                    </a>
-                    <a href="#" class="w-10 h-10 flex items-center justify-center pagination-active">1</a>
-                    <a href="#" class="w-10 h-10 flex items-center justify-center text-gray-700 hover:text-primary hover:bg-primary/10">2</a>
-                    <a href="#" class="w-10 h-10 flex items-center justify-center text-gray-700 hover:text-primary hover:bg-primary/10">3</a>
-                    <a href="#" class="w-10 h-10 flex items-center justify-center text-gray-700 hover:text-primary hover:bg-primary/10">4</a>
-                    <a href="#" class="w-10 h-10 flex items-center justify-center text-gray-700 hover:text-primary hover:bg-primary/10">5</a>
-                    <a href="#" class="w-10 h-10 flex items-center justify-center text-gray-500 hover:text-primary border-r border-blue-100">
-                        <i class="ri-arrow-left-s-line"></i>
-                    </a>
-                </nav>
-            </div>
-        </div>
-    </div>
+        </footer>
+    </div> <!-- End of #print-content -->
 
     <!-- Product Modal (Updated with new LLM feature button and display) -->
     <div id="product-modal" class="fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center z-50 hidden p-4">
@@ -1042,127 +1214,48 @@
         </div>
     </div>
 
-    <!-- Newsletter -->
-    <section class="py-12 glass-effect mt-10">
-        <div class="container mx-auto px-4">
-            <div class="max-w-3xl mx-auto text-center">
-                <h2 class="text-2xl md:text-3xl font-bold mb-4 text-gray-800">הישארו מעודכנים</h2>
-                <p class="text-gray-600 mb-6">הירשמו לניוזלטר שלנו וקבלו עדכונים על מבצעים, מוצרים חדשים וטיפים מקצועיים.</p>
-                <div class="flex flex-col sm:flex-row gap-3 justify-center">
-                    <input type="email" placeholder="הזינו את כתובת המייל שלכם" class="px-4 py-3 rounded-button border-none glass-effect w-full sm:w-96">
-                    <button class="bg-primary text-white px-6 py-3 rounded-button hover:bg-primary/90 transition whitespace-nowrap shine-button">הרשמה</button>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="bg-[#1565C0] text-white py-12 mt-10">
-        <div class="container mx-auto px-4">
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
-                <!-- Column 1 - About -->
-                <div>
-                    <h3 class="text-xl font-bold mb-4">אודות ח.סבן</h3>
-                    <p class="text-white/90 mb-4">ח.סבן חומרי בניין 1994 בע"מ הינה חברה משפחתית המספקת חומרי בניין איכותיים מאז 1994. אנו מתמחים במגוון רחב של מוצרים לענף הבנייה.</p>
-                    <div class="flex space-x-4 space-x-reverse">
-                        <a href="#" class="text-white/90 hover:text-white">
-                            <div class="w-8 h-8 flex items-center justify-center">
-                                <i class="ri-facebook-fill"></i>
-                            </div>
-                        </a>
-                        <a href="#" class="text-white/90 hover:text-white">
-                            <div class="w-8 h-8 flex items-center justify-center">
-                                <i class="ri-instagram-line"></i>
-                            </div>
-                        </a>
-                        <a href="#" class="text-white/90 hover:text-white">
-                            <div class="w-8 h-8 flex items-center justify-center">
-                                <i class="ri-whatsapp-line"></i>
-                            </div>
-                        </a>
-                    </div>
-                </div>
-                
-                <!-- Column 2 - Quick Links -->
-                <div>
-                    <h3 class="text-xl font-bold mb-4">קישורים מהירים</h3>
-                    <ul class="space-y-2">
-                        <li><a href="https://readdy.ai/home/20fb88f3-f689-4ee4-95ee-53c5efe8bc7d/f195f37e-9e34-4662-a971-05a152507a0f" data-readdy="true" class="text-white/90 hover:text-white">דף הבית</a></li>
-                        <li><a href="javascript:void(0);" class="text-white/90 hover:text-white">החזון שלנו</a></li>
-                        <li><a href="javascript:void(0);" class="text-white/90 hover:text-white">מוצרים</a></li>
-                        <li><a href="javascript:void(0);" class="text-white/90 hover:text-white">מחלקת חישובים</a></li>
-                        <li><a href="javascript:void(0);" class="text-white/90 hover:text-white">סניפים</a></li>
-                        <li><a href="javascript:void(0);" class="text-white/90 hover:text-white">המלצות</a></li>
-                    </ul>
-                </div>
-                
-                <!-- Column 3 - Categories (Hardcoded for footer, dynamic in sidebar) -->
-                <div>
-                    <h3 class="text-xl font-bold mb-4">קטגוריות מוצרים</h3>
-                    <ul class="space-y-2">
-                        <li><a href="#" class="text-white/90 hover:text-white">חומרי בניין</a></li>
-                        <li><a href="#" class="text-white/90 hover:text-white">חשמל ותאורה</a></li>
-                        <li><a href="#" class="text-white/90 hover:text-white">אינסטלציה</a></li>
-                        <li><a href="#" class="text-white/90 hover:text-white">צבעים וציפויים</a></li>
-                        <li><a href="#" class="text-white/90 hover:text-white">כלי עבודה</a></li>
-                        <li><a href="#" class="text-white/90 hover:text-white">בטיחות בעבודה</a></li>
-                    </ul>
-                </div>
-                
-                <!-- Column 4 - Contact -->
-                <div>
-                    <h3 class="text-xl font-bold mb-4">צור קשר</h3>
-                    <ul class="space-y-3">
-                        <li class="flex items-start">
-                            <div class="w-5 h-5 flex items-center justify-center text-white/90 mt-1">
-                                <i class="ri-map-pin-line"></i>
-                            </div>
-                            <span class="mr-2 text-white/90">רחוב התלמיד 6, הוד השרון</span>
-                        </li>
-                        <li class="flex items-start">
-                            <div class="w-5 h-5 flex items-center justify-center text-white/90 mt-1">
-                                <i class="ri-phone-line"></i>
-                            </div>
-                            <span class="mr-2 text-white/90">09-7408854</span>
-                        </li>
-                        <li class="flex items-start">
-                            <div class="w-5 h-5 flex items-center justify-center text-white/90 mt-1">
-                                <i class="ri-mail-line"></i>
-                            </div>
-                            <span class="mr-2 text-white/90">info@hsaban.co.il</span>
-                        </li>
-                        <li class="flex items-start">
-                            <div class="w-5 h-5 flex items-center justify-center text-white/90 mt-1">
-                                <i class="ri-time-line"></i>
-                            </div>
-                            <div class="mr-2 text-white/90">
-                                <p>ימים א'-ה': 07:00-17:00</p>
-                                <p>יום ו': 07:00-13:00</p>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-            </div>
+    <!-- NEW Project Cost Estimator Modal -->
+    <div id="cost-estimator-modal" class="fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center z-50 hidden p-4">
+        <div class="bg-white rounded-lg shadow-lg p-6 max-w-lg w-full relative overflow-hidden md:max-h-[90vh]">
+            <button onclick="closeCostEstimatorModal()" class="absolute top-2 left-2 text-gray-500 hover:text-red-500 text-xl z-10">&times;</button>
+            <h2 class="text-2xl font-bold mb-4 text-gray-800 text-center">✨ מחשבון עלויות פרויקט ✨</h2>
             
-            <div class="border-t border-white/20 mt-8 pt-8 flex flex-col md:flex-row justify-between items-center">
-                <p class="text-white/70 text-sm mb-4 md:mb-0">© 2025 ח.סבן חומרי בניין 1994 בע"מ. כל הזכויות שמורות.</p>
-                <div class="flex items-center space-x-4 space-x-reverse">
-                    <div class="w-8 h-8 flex items-center justify-center text-white/70">
-                        <i class="ri-visa-line ri-lg"></i>
+            <div class="modal-content-scrollable">
+                <div class="mb-4">
+                    <label for="cost-project-description" class="block text-gray-700 text-sm font-bold mb-2">תאר את הפרויקט שלך:</label>
+                    <textarea id="cost-project-description" rows="5" placeholder="לדוגמה: בניית גדר לבנים באורך 20 מטר, גובה 1.5 מטר." 
+                              class="w-full px-4 py-2 rounded-button border glass-effect focus:outline-none focus:ring-2 focus:ring-red-600"></textarea>
+                </div>
+                
+                <div class="flex justify-center mb-4">
+                    <button onclick="getProjectCostEstimate()" class="bg-red-600 text-white px-6 py-3 rounded-button hover:bg-red-700 transition shine-button flex items-center">
+                        <i class="ri-wallet-line ri-lg ml-2"></i> קבל הערכת עלויות
+                    </button>
+                </div>
+
+                <div id="project-cost-estimate-container" class="mt-4 hidden">
+                    <div id="project-cost-estimate-response" class="p-4 bg-gray-50 rounded-lg border border-gray-200 min-h-[100px] flex flex-col items-center justify-center text-gray-700 text-sm leading-relaxed">
+                        <p>הערכת העלויות תופיע כאן...</p>
                     </div>
-                    <div class="w-8 h-8 flex items-center justify-center text-white/70">
-                        <i class="ri-mastercard-line ri-lg"></i>
+                    <div id="cost-estimate-warning" class="text-red-600 text-xs text-center mt-4 hidden">
+                        * הערכה זו מבוססת על מחירי שוק כלליים ואינה מהווה הצעת מחיר מחייבת. יש להתייעץ עם אנשי מקצוע ולקבל הצעת מחיר מסודרת.
                     </div>
-                    <div class="w-8 h-8 flex items-center justify-center text-white/70">
-                        <i class="ri-paypal-line ri-lg"></i>
+                    <div class="flex gap-2 mt-4 justify-center">
+                        <button onclick="printAIContent('הערכת עלויות לפרויקט', 'פרויקט: ' + document.getElementById('cost-project-description').value, null, encodeURIComponent(document.getElementById('project-cost-estimate-response').innerHTML + '<br><br><p style=\'font-size:0.8em; color:red;\'>' + document.getElementById('cost-estimate-warning').innerHTML + '</p>'))" class="bg-gray-200 text-gray-700 px-4 py-2 rounded-button hover:bg-gray-300 transition text-xs flex items-center"><i class="ri-printer-line ml-1"></i> הדפסה / שמירה</button>
+                        <button onclick="shareCostEstimatorWhatsApp()" class="bg-green-500 text-white px-4 py-2 rounded-button hover:bg-green-600 transition text-xs flex items-center"><i class="ri-whatsapp-line ml-1"></i> שלח ל-WhatsApp</button>
                     </div>
-                    <div class="w-8 h-8 flex items-center justify-center text-white/70">
-                        <i class="ri-bank-card-line ri-lg"></i>
-                    </div>
+                </div>
+
+                <div id="project-cost-estimate-loading" class="hidden flex justify-center items-center mt-4">
+                    <div class="loader"></div>
+                    <span class="mr-2 text-red-600">טוען הערכת עלויות...</span>
+                </div>
+                <div id="project-cost-estimate-error" class="hidden text-red-600 text-center mt-4">
+                    אירעה שגיאה בטעינת הערכת העלויות. אנא נסה שוב.
                 </div>
             </div>
         </div>
-    </footer>
+    </div>
 
     <!-- Back to top button -->
     <button id="back-to-top" class="fixed bottom-6 left-6 w-12 h-12 glass-effect rounded-full flex items-center justify-center text-primary shadow-lg opacity-0 invisible transition-all duration-300">
@@ -1346,7 +1439,7 @@
                 <div onclick="openModal('${encodeURIComponent(prod.title)}', '${encodeURIComponent(prod.description)}', '${encodeURIComponent(prod.image)}', '${encodeURIComponent(prod["price "] || prod.price || "—")}', '${encodeURIComponent(JSON.stringify(prod))}')"
                     class="glass-card product-card cursor-pointer rounded-lg overflow-hidden shadow-md transition hover:shadow-xl bg-white">
                     <div class="image-transition h-56 relative">
-                        <img src="${prod.image}" onerror="this.onerror=null;this.src='https://readdy.ai/api/search-image?query=Electrical%2520socket%252C%2520power%2520outlet%252C%2520electrical%2520supplies%252C%2520detailed%2520product%2520photography%2520on%2520clean%2520white%2520background%252C%2520soft%2520blue%2520lighting&width=600&height=400&seq=20&orientation=landscape';" alt="${prod.title}" class="w-full h-full object-cover object-top">
+                        <img src="${prod.image}" onerror="this.onerror=null;this.src='https://readdy.ai/api/search-image?query=Electrical%2520socket%252C%2520power%2520outlet%252C%2520electrical%2520supplies%252C%2520detailed%2520product%2520photography%2520on%2520clean%252C%2520white%2520background%252C%2520soft%2520blue%2520lighting&width=600&height=400&seq=20&orientation=landscape';" alt="${prod.title}" class="w-full h-full object-cover object-top">
                         <div class="absolute inset-0 bg-black/10 opacity-0 hover:opacity-100 transition duration-300"></div>
                     </div>
                     <div class="p-4">
@@ -1497,17 +1590,25 @@
 
             document.getElementById('product-qa-section').classList.add('hidden');
             document.getElementById('product-qa-input').value = '';
+            document.getElementById('product-qa-response').innerHTML = '<p>התשובה לשאלתך תופיע כאן...</p>'; // Reset content
             document.getElementById('product-qa-loading').classList.add('hidden');
             document.getElementById('product-qa-error').classList.add('hidden');
 
             document.getElementById('description-generator-section').classList.add('hidden');
             document.getElementById('description-generator-input').value = '';
+            document.getElementById('description-generator-response').innerHTML = '<p>התיאור המשופר יופיע כאן...</p>'; // Reset content
             document.getElementById('description-generator-loading').classList.add('hidden');
             document.getElementById('description-generator-error').classList.add('hidden');
 
             document.getElementById('installation-guide-container').classList.add('hidden'); // NEW
             document.getElementById('installation-guide-loading').classList.add('hidden'); // NEW
             document.getElementById('installation-guide-error').classList.add('hidden'); // NEW
+
+            document.getElementById('project-cost-estimate-container').classList.add('hidden'); // NEW
+            document.getElementById('project-cost-estimate-loading').classList.add('hidden'); // NEW
+            document.getElementById('project-cost-estimate-error').classList.add('hidden'); // NEW
+            document.getElementById('cost-estimate-warning').classList.add('hidden'); // NEW
+            document.getElementById('cost-project-description').value = ''; // Clear description input for cost estimator
         }
 
         // Cart functions
@@ -1621,7 +1722,8 @@
             const notes = document.getElementById('order-notes').value;
 
             if (!name || !phone) {
-                alert("אנא מלא שם מלא ומספר טלפון."); // Changed to alert for simplicity, consider custom modal for better UX
+                // Using a custom modal/dialog instead of alert for better UX
+                showCustomAlert("אנא מלא שם מלא ומספר טלפון."); 
                 return;
             }
 
@@ -1653,8 +1755,25 @@
             cart.length = 0; // Clear the cart array
             updateCartUI();
             closeCartModal();
-            alert("ההזמנה נשלחה בהצלחה ל-WhatsApp!"); // Changed to alert for simplicity
+            showCustomAlert("ההזמנה נשלחה בהצלחה ל-WhatsApp!"); 
         }
+
+        // Custom Alert Function (Instead of window.alert)
+        function showCustomAlert(message) {
+            // For simplicity, we'll just log to console here.
+            // In a real app, you'd create a modal div that pops up with this message.
+            console.log("ALERT:", message); 
+            // Example of a basic modal (you'd need to add HTML for this)
+            /*
+            const alertModal = document.getElementById('custom-alert-modal');
+            const alertMessage = document.getElementById('custom-alert-message');
+            if (alertModal && alertMessage) {
+                alertMessage.innerText = message;
+                alertModal.classList.remove('hidden');
+            }
+            */
+        }
+
 
         // Function to dynamically populate the hero categories section
         function populateHeroCategories() {
@@ -1698,7 +1817,7 @@
 
             heroContainer.innerHTML = heroCategories.map(cat => `
                 <div class="hero-image-item glass-card">
-                    <img src="${cat.imageUrl}" onerror="this.onerror=null;this.src='https://readdy.ai/api/search-image?query=Electrical%2520socket%252C%2520power%2520outlet%252C%2520electrical%2520supplies%252C%2520detailed%2520product%2520photography%2520on%2520clean%2520white%2520background%252C%2520soft%2520blue%2520lighting&width=600&height=400&seq=20&orientation=landscape';" alt="${cat.name}">
+                    <img src="${cat.imageUrl}" onerror="this.onerror=null;this.src='https://readdy.ai/api/search-image?query=Electrical%2520socket%252C%2520power%2520outlet%252C%2520electrical%2520supplies%252C%2520detailed%2520product%2520photography%2520on%2520clean%252C%2520white%2520background%252C%2520soft%2520blue%2520lighting&width=600&height=400&seq=20&orientation=landscape';" alt="${cat.name}">
                     <div class="hero-image-overlay">
                         <a href="${cat.linkUrl}" class="bg-primary text-white px-4 py-2 rounded-button shine-button">לדף המוצר</a>
                     </div>
@@ -1929,7 +2048,7 @@
                 console.error("שגיאה בקריאה ל-Gemini API עבור סיכום ותכונות:", error);
                 summaryFeaturesResponse.innerHTML = '<p class="text-red-500">אירעה שגיאה בטעינת סיכום ותכונות. אנא נסה שוב מאוחר יותר.</p>';
                 summaryFeaturesContainer.classList.remove('hidden'); // Show response area
-                summaryFeaturesError.classList.remove('hidden');
+                    summaryFeaturesError.classList.remove('hidden');
             } finally {
                 summaryFeaturesLoading.classList.add('hidden'); // Hide loading spinner
             }
@@ -2468,7 +2587,7 @@
 
                     // Format the text for display (e.g., replace markdown list with HTML list)
                     const formattedText = text.split('\n').map(line => {
-                        if (line.startsWith('* ')) return `<p class="font-semibold text-gray-800 mt-2">${line.substring(2).trim()}</pاهرة`; // for bold headers
+                        if (line.startsWith('* ')) return `<p class="font-semibold text-gray-800 mt-2">${line.substring(2).trim()}</p>`; // for bold headers
                         if (line.startsWith('- ')) {
                             // Extract title and quantity for display
                             const match = line.match(/-\s*(.+?)\s*:\s*([\d.]+)\s*([א-ת\s'"ק"גטוןיח'\/?]+)/);
@@ -2527,13 +2646,13 @@
 
         function addSuggestedItemsToCart() {
             if (suggestedOrderProducts.length === 0) {
-                alert("אין מוצרים מוצעים להוספה לעגלה.");
+                showCustomAlert("אין מוצרים מוצעים להוספה לעגלה.");
                 return;
             }
             suggestedOrderProducts.forEach(item => {
                 addToCart(item); // Re-use existing addToCart function
             });
-            alert("המוצרים המוצעים נוספו לעגלה!");
+            showCustomAlert("המוצרים המוצעים נוספו לעגלה!");
             closeOrderAssistantModal(); // Close the modal after adding to cart
             openCartModal(new Event('click')); // Optionally open the cart modal to show new items
         }
@@ -2577,6 +2696,7 @@
                 .logo { display: block; margin: 0 auto 20px auto; max-height: 80px; }
                 .content { border: 1px solid #eee; padding: 15px; border-radius: 8px; background-color: #f9f9f9; }
                 ul { list-style-type: disc; padding-right: 20px; }
+                ol { list-style-type: decimal; padding-right: 20px; } /* Ensure ordered lists print correctly */
                 li { margin-bottom: 5px; }
                 p { margin-bottom: 10px; }
                 .product-image { max-width: 200px; height: auto; display: block; margin: 0 auto 15px auto; border-radius: 8px; }
@@ -2673,6 +2793,115 @@
             } finally {
                 installationGuideLoading.classList.add('hidden'); // Hide loading spinner
             }
+        }
+
+        // NEW LLM Feature: Project Cost Estimator functions
+        function openCostEstimatorModal() {
+            document.getElementById('cost-estimator-modal').classList.remove('hidden');
+            // Clear previous inputs and responses
+            document.getElementById('cost-project-description').value = '';
+            document.getElementById('project-cost-estimate-response').innerHTML = '<p>הערכת העלויות תופיע כאן...</p>'; // Reset content
+            document.getElementById('project-cost-estimate-container').classList.add('hidden'); // Hide container
+            document.getElementById('project-cost-estimate-loading').classList.add('hidden');
+            document.getElementById('project-cost-estimate-error').classList.add('hidden');
+            document.getElementById('cost-estimate-warning').classList.add('hidden'); // Hide warning on open
+            // Close AI tools dropdown if open
+            document.getElementById('ai-tools-dropdown-container').classList.remove('ai-tools-dropdown-open');
+        }
+
+        function closeCostEstimatorModal() {
+            document.getElementById('cost-estimator-modal').classList.add('hidden');
+        }
+
+        async function getProjectCostEstimate() {
+            const projectDescription = document.getElementById('cost-project-description').value.trim();
+            const responseDisplay = document.getElementById('project-cost-estimate-response');
+            const responseContainer = document.getElementById('project-cost-estimate-container');
+            const loadingSpinner = document.getElementById('project-cost-estimate-loading');
+            const errorDisplay = document.getElementById('project-cost-estimate-error');
+            const warningMessageElement = document.getElementById('cost-estimate-warning');
+
+            if (!projectDescription) {
+                responseDisplay.innerHTML = '<p class="text-red-500">אנא תאר את הפרויקט כדי לקבל הערכת עלויות.</p>';
+                responseContainer.classList.remove('hidden');
+                return;
+            }
+
+            loadingSpinner.classList.remove('hidden');
+            responseContainer.classList.add('hidden'); // Hide container during loading
+            errorDisplay.classList.add('hidden');
+            warningMessageElement.classList.add('hidden'); // Hide warning during loading
+
+            try {
+                let chatHistory = [];
+                const prompt = `אני זקוק להערכת עלויות חומרים לפרויקט בנייה/שיפוץ. אנא פרט את סוגי החומרים הנדרשים, כמויות משוערות, והערכת עלות משוערת לכל פריט, וכן עלות כוללת משוערת עבור כל החומרים. התשובה צריכה להיות בעברית, מפורטת ובפורמט של רשימה:
+                
+                *הערכת עלויות חומרים לפרויקט:*
+                - מלט (50 ק"ג): 10 שקים (עלות משוערת: 200 ₪)
+                - בלוקי איטונג (20 ס"מ): 150 יחידות (עלות משוערת: 1500 ₪)
+                - חול ים (שטוף): 2 טון (עלות משוערת: 300 ₪)
+                *סה"כ עלות חומרים משוערת: 2000 ₪*
+                
+                תיאור הפרויקט: ${projectDescription}
+                `;
+                
+                chatHistory.push({ role: "user", parts: [{ text: prompt }] });
+
+                const payload = { contents: chatHistory };
+                const apiKey = "AIzaSyCNn7GZMsQPCdRSfgz_o08M1YV63CkA3Ow"; 
+                const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
+
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                const result = await response.json();
+                
+                if (result.candidates && result.candidates.length > 0 &&
+                    result.candidates[0].content && result.candidates[0].content.parts &&
+                    result.candidates[0].content.parts.length > 0) {
+                    const text = result.candidates[0].content.parts[0].text;
+                    // Format the text for display (e.g., replace markdown list with HTML list)
+                    const formattedText = text.split('\n').map(line => {
+                        if (line.startsWith('* ')) return `<p class="font-semibold text-gray-800 mt-2">${line.substring(2).trim()}</p>`; // for bold headers
+                        if (line.startsWith('- ')) {
+                            return `<li>${line.substring(2).trim()}</li>`;
+                        }
+                        return `<p>${line.trim()}</p>`;
+                    }).join('');
+                    responseDisplay.innerHTML = `<div class="space-y-1">${formattedText}</div>`;
+                    responseContainer.classList.remove('hidden'); // Show container
+                    warningMessageElement.classList.remove('hidden'); // Show warning after response
+                } else {
+                    responseDisplay.innerHTML = '<p class="text-red-500">לא הצלחתי להפיק הערכת עלויות. אנא נסה לנסח מחדש את תיאור הפרויקט.</p>';
+                    responseContainer.classList.remove('hidden'); // Show container with error
+                    errorDisplay.classList.remove('hidden');
+                }
+            } catch (error) {
+                console.error("שגיאה בקריאה ל-Gemini API עבור הערכת עלויות:", error);
+                responseDisplay.innerHTML = '<p class="text-red-500">אירעה שגיאה בטעינת הערכת העלויות. אנא נסה שוב מאוחר יותר.</p>';
+                responseContainer.classList.remove('hidden'); // Show container with error
+                errorDisplay.classList.remove('hidden');
+            } finally {
+                loadingSpinner.classList.add('hidden');
+            }
+        }
+
+        // WhatsApp share for Project Cost Estimator
+        function shareCostEstimatorWhatsApp() {
+            const projectDescription = document.getElementById('cost-project-description').value.trim();
+            const responseContent = document.getElementById('project-cost-estimate-response').innerText;
+            const warningText = document.getElementById('cost-estimate-warning').innerText;
+
+            let message = `*הערכת עלויות פרויקט מח.סבן:*\n\n`;
+            message += `*תיאור הפרויקט:*\n${projectDescription}\n\n`;
+            message += responseContent;
+            message += `\n\n*${warningText}*\n\n`; // Include warning in WhatsApp message
+            
+            const encodedMessage = encodeURIComponent(message);
+            window.open(`https://wa.me/972508860896?text=${encodedMessage}`, '_blank');
         }
     </script>
 </body>
